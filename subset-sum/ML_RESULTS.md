@@ -1,5 +1,7 @@
 # Subset-sum probability classifier
 
+Series navigation: [reading order](../index.html#arc) · [Note IV: pairing in certified approximation](../Certified_Approximation_of_Subset_Sum.html).
+
 This experiment is discussed in [companion Note II](../Subset_Sum_as_a_Stress_Test.html) and reinterpreted for the random-target question in [Note III](../Probability_Valued_Subset_Sum.html).
 
 A random forest predicts the probability that a target can be formed from a list of positive integers. Every label is computed exactly by meet-in-the-middle. Targets are sampled independently of labels from the middle 40% of each list's total sum, then required to pass simple modular certificates. The model sees only summary features of the list and target, not the exact subset sums.

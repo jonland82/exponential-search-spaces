@@ -34,7 +34,7 @@
 \begin{document}
 \maketitle
 \vspace{-1em}
-\noindent\textcolor{paperaccent}{\footnotesize\textsc{Companion note III of III}}
+\noindent\textcolor{paperaccent}{\footnotesize\textsc{Companion note III of IV}}
 \par\noindent\textcolor{paperaccent}{\rule{.11\linewidth}{1.5pt}}\textcolor{paperline}{\rule{.89\linewidth}{.45pt}}
 \vspace{.65em}
 
@@ -157,6 +157,10 @@ At the classifier threshold \(\widehat p\le1\%\), \(2\) of \(43\) held-out propo
 \section{Next question}
 The useful research target is a cheap sequence of witnessed sets \(L\) and sound supersets \(U\) whose mass gap closes quickly for a meaningful target distribution. One can measure bound width after a fixed budget, or total work to reach a chosen \(\varepsilon\), against direct exact enumeration and sampling with exact labels. The present results motivate this experiment; they do not show a new complexity bound or exact subset-sum speedup.
 
+Note IV pursues a separate extension with one target fixed: if we only need to get close to the target, and know how close, can our framework avoid much of the exponential search? Its output is an actual subset and deterministic bounds on the best possible distance. This changes the accuracy required of coverage rather than introducing a random-target probability.
+
+Its main contribution is a controlled negative timing finding: in the key comparison, pairing gives no consistent additional timing benefit over the same additive approximation rule used sequentially on jointly certified inputs, while completing one additional input within the per-summary state cap. The probability and approximation notes are sibling extensions of Note II and can be read independently after the exact-search test.
+
 \vspace{.4em}
-\noindent\textbf{Series and reproducibility.} Note I: \emph{Certified Coverage of Exponential Search Spaces}. Note II: \emph{Subset Sum as a Stress Test for Certified Coverage}. Scripts, figures, and held-out predictions: \url{https://github.com/jonland82/exponential-search-spaces}.
+\noindent\textbf{Series and reproducibility.} Note I: \emph{Certified Coverage of Exponential Search Spaces}. Note II: \emph{Subset Sum as a Stress Test for Certified Coverage}. Note IV: \emph{Does Pairing Add Value to Certified Approximation? A Subset-Sum Experiment}. Scripts, figures, and held-out predictions: \url{https://github.com/jonland82/exponential-search-spaces}.
 \end{document}

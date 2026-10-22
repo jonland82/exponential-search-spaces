@@ -1,6 +1,8 @@
 # Subset sum as a test case
 
-This folder contains the reproducible work behind [Note II: Subset Sum as a Stress Test](../Subset_Sum_as_a_Stress_Test.html) and [Note III: Probability-Valued Subset Sum](../Probability_Valued_Subset_Sum.html). The [series landing page](../index.html) gives the short narrative; the notes give the paper-length argument.
+This folder contains the reproducible work behind Notes II, III, and IV. The [series landing page](../index.html) gives the narrative and reading order: start with [the framework](../Certified_Coverage_of_Exponential_Search_Spaces.html), then [the exact-search test](../Subset_Sum_as_a_Stress_Test.html). [Random-target probability](../Probability_Valued_Subset_Sum.html) and [pairing in fixed-target approximation](../Certified_Approximation_of_Subset_Sum.html) are sibling extensions of that test.
+
+[Note IV: Does Pairing Add Value to Certified Approximation?](../Certified_Approximation_of_Subset_Sum.html) reports a controlled negative timing result for fixed-target approximation. The key comparison finds no consistent additional timing gain over the same additive rule used sequentially, alongside one additional input finished within the state cap. Its [specification](APPROXIMATION_SPEC.md) establishes a common accuracy contract; its [results](APPROXIMATION_RESULTS.md) separate approximation, summary organization, and early witness discovery.
 
 Given a list of $n$ positive integers $w_1,\ldots,w_n$ and a target $t$, **subset sum** asks whether there is a choice $x_i\in\{0,1\}$ for each number, with $x_i=1$ meaning that $w_i$ is included, such that
 
@@ -30,6 +32,12 @@ The [machine-learning follow-up](ML_RESULTS.md) trains a classifier to estimate 
 
 The [probability-valued extension](PROBABILITY_EXTENSION.md) defines the chance that a randomly drawn target is reachable, gives exact upper and lower bounds from witnesses and residue certificates, and reinterprets the classifier results with list-level uncertainty intervals. Its charts separate [target probability from classifier error](probability_bounds.png) and compare [certified per-list bounds with exact values](instance_probability_bounds.png). Reproduce it with `python subset-sum/probability_extension.py` after the ML experiment.
 
-## Reading the raw data
+## Fixed-target approximation and the negative result
+
+For fixed-target approximation, run `python -m unittest discover -s subset-sum -p test_certified_approximation.py -v`, then `python subset-sum/approximation_experiment.py`. The full run uses 48 list-target instances, four tolerances, and four methods; the largest inputs also run without the common greedy witness search. `--quick` writes a separate smoke dataset, and `--report-only` regenerates reports from saved measurements. The numerical benchmark requires only Python's standard library; plotting additionally uses `matplotlib`.
+
+In [approximation_results.json](approximation_results.json), `cases` records weights, targets, seeds, and separately computed exact distances. Each comparison in `rows` records its absolute tolerance, greedy setting, and method results. `lower` and `upper` bound the optimal distance, `subset_indices` reconstructs the returned witness, and `status` distinguishes a certified answer from a summary-state limit. `peak_traced_mib` measures Python allocation in a separate run. [approximation_summary.json](approximation_summary.json) supplies aggregate counts and matched timing ratios.
+
+## Reading the earlier raw data
 
 In the JSON and CSV files, `n` is the number of weights, `target` is the integer being tested, and `group_id` identifies one weight list shared by its sampled targets. In `ml_predictions.csv`, `exact_yes` is the exact 0/1 answer, `probability_yes` is the calibrated forest's predicted YES probability, and `density_baseline_probability` is the comparison model's prediction. Timing fields named `seconds` use seconds; `peak_traced_mib` is Python-traced peak memory in mebibytes (MiB), where one MiB is $2^{20}$ bytes. Counts of sums refer to distinct sums unless a field says `attempts`; `visited_states` counts explored search branches.

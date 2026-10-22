@@ -1,5 +1,7 @@
 # Follow-up: hard no-solution subset-sum cases
 
+Series navigation: [reading order](../index.html#arc) · [Note IV: pairing in certified approximation](../Certified_Approximation_of_Subset_Sum.html).
+
 These measurements support [companion Note II](../Subset_Sum_as_a_Stress_Test.html).
 
 This experiment tests whether paired summaries add a benefit after cheap root certificates have failed.

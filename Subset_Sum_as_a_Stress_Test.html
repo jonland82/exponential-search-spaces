@@ -24,7 +24,7 @@ window.MathJax = {
   <a href="Subset_Sum_as_a_Stress_Test.tex">LaTeX source</a>
 </nav>
 <header>
-  <span class="series-label">Companion note II of III</span>
+  <span class="series-label">Companion note II of IV</span>
   <h1>Subset Sum as a Stress Test for Certified Coverage</h1>
   <div class="byline">Jonathan R. Landers<br>October 2026</div>
 </header>
@@ -115,13 +115,15 @@ window.MathJax = {
 <h2 id="interpretation">Interpretation</h2>
 <p>The first note’s coverage criterion counts only soundly eliminated or exactly represented states and charges for finding those representations. Here exact half-sum representation is easy to state but expensive to construct. The tested residue certificates were either decisive at the root on an easy family or nearly inactive after easy cases were excluded. Learned scores can order exact checks; they cannot delete a predicted NO without a sound verifier.</p>
 <p>This negative result is useful scope information. It motivates the third note’s narrower objective: for a specified random target, bound the <em>fraction of targets</em> that are reachable. That probability question admits exact upper and lower bounds even when one target’s decision answer remains binary.</p>
-<p><strong>Series and reproducibility.</strong> Note I: <em>Certified Coverage of Exponential Search Spaces</em>. Note III: <em>Probability-Valued Subset Sum</em>. Source, figures, and raw data: <a href="https://github.com/jonland82/exponential-search-spaces">https://github.com/jonland82/exponential-search-spaces</a>.</p>
+<p>Note IV takes a sibling branch: keep one target fixed and relax the required distance accuracy. Its controlled comparison finds no consistent additional timing benefit from pairing over the same additive approximation rule used sequentially in the key setting, while completing one additional input within the state cap. The two extensions separate the usefulness of their guarantees from the additional computational benefit demonstrated by pairing.</p>
+<p><strong>Series and reproducibility.</strong> Note I: <em>Certified Coverage of Exponential Search Spaces</em>. Note III: <em>Probability-Valued Subset Sum</em>. Note IV: <em>Does Pairing Add Value to Certified Approximation? A Subset-Sum Experiment</em>. Source, figures, and raw data: <a href="https://github.com/jonland82/exponential-search-spaces">https://github.com/jonland82/exponential-search-spaces</a>.</p>
 
 <footer>
   <p>Part of the <a href="index.html">Certified Coverage research sequence</a>.</p>
   <div class="link-row">
     <a href="Certified_Coverage_of_Exponential_Search_Spaces.html">Note I: Framework</a>
-    <a href="Probability_Valued_Subset_Sum.html">Continue to Note III</a>
+    <a href="Probability_Valued_Subset_Sum.html">Note III: Random-target probability</a>
+    <a href="Certified_Approximation_of_Subset_Sum.html">Note IV: Pairing in approximation</a>
     <a href="subset-sum/README.md">Methods and data</a>
   </div>
 </footer>

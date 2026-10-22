@@ -24,7 +24,7 @@ window.MathJax = {
   <a href="Probability_Valued_Subset_Sum.tex">LaTeX source</a>
 </nav>
 <header>
-  <span class="series-label">Companion note III of III</span>
+  <span class="series-label">Companion note III of IV</span>
   <h1>Probability-Valued Subset Sum: Certified Bounds and Learned Guidance</h1>
   <div class="byline">Jonathan R. Landers<br>October 2026</div>
 </header>
@@ -101,13 +101,16 @@ window.MathJax = {
 <p>At the classifier threshold <span class="math inline">\(\widehat p\le1\%\)</span>, <span class="math inline">\(2\)</span> of <span class="math inline">\(43\)</span> held-out proposed NO answers were actually YES. The list-bootstrap interval for that conditional error fraction was <span class="math inline">\(0\%\)</span>–<span class="math inline">\(10.7\%\)</span>; its zero lower endpoint does not certify zero future risk. A learned score can order which witnesses or certificates to seek, but cannot itself certify a NO decision.</p>
 <h2 id="next-question">Next question</h2>
 <p>The useful research target is a cheap sequence of witnessed sets <span class="math inline">\(L\)</span> and sound supersets <span class="math inline">\(U\)</span> whose mass gap closes quickly for a meaningful target distribution. One can measure bound width after a fixed budget, or total work to reach a chosen <span class="math inline">\(\varepsilon\)</span>, against direct exact enumeration and sampling with exact labels. The present results motivate this experiment; they do not show a new complexity bound or exact subset-sum speedup.</p>
-<p><strong>Series and reproducibility.</strong> Note I: <em>Certified Coverage of Exponential Search Spaces</em>. Note II: <em>Subset Sum as a Stress Test for Certified Coverage</em>. Scripts, figures, and held-out predictions: <a href="https://github.com/jonland82/exponential-search-spaces">https://github.com/jonland82/exponential-search-spaces</a>.</p>
+<p>Note IV pursues a separate extension with one target fixed: if we only need to get close to the target, and know how close, can our framework avoid much of the exponential search? Its output is an actual subset and deterministic bounds on the best possible distance. This changes the accuracy required of coverage rather than introducing a random-target probability.</p>
+<p>Its main contribution is a controlled negative timing finding: in the key comparison, pairing gives no consistent additional timing benefit over the same additive approximation rule used sequentially on jointly certified inputs, while completing one additional input within the per-summary state cap. The probability and approximation notes are sibling extensions of Note II and can be read independently after the exact-search test.</p>
+<p><strong>Series and reproducibility.</strong> Note I: <em>Certified Coverage of Exponential Search Spaces</em>. Note II: <em>Subset Sum as a Stress Test for Certified Coverage</em>. Note IV: <em>Does Pairing Add Value to Certified Approximation? A Subset-Sum Experiment</em>. Scripts, figures, and held-out predictions: <a href="https://github.com/jonland82/exponential-search-spaces">https://github.com/jonland82/exponential-search-spaces</a>.</p>
 
 <footer>
   <p>Part of the <a href="index.html">Certified Coverage research sequence</a>.</p>
   <div class="link-row">
     <a href="Certified_Coverage_of_Exponential_Search_Spaces.html">Note I: Framework</a>
-    <a href="Subset_Sum_as_a_Stress_Test.html">Read Note II</a>
+    <a href="Subset_Sum_as_a_Stress_Test.html">Note II: Exact-search stress test</a>
+    <a href="Certified_Approximation_of_Subset_Sum.html">Note IV: Pairing in approximation</a>
     <a href="subset-sum/PROBABILITY_EXTENSION.md">Methods and data</a>
   </div>
 </footer>

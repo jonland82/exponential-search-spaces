@@ -227,6 +227,8 @@ def write_document(data: dict) -> None:
     lines = [
         "# Probability-valued subset sum: a precise extension",
         "",
+        "Series navigation: [reading order](../index.html#arc) · [Note IV: pairing in certified approximation](../Certified_Approximation_of_Subset_Sum.html).",
+        "",
         "This technical record supplies the derivations, chart, and per-list measurements behind [companion Note III](../Probability_Valued_Subset_Sum.html).",
         "",
         "For a fixed list of $n$ positive weights $w=(w_1,\\ldots,w_n)$ and an integer target $t$, let $x_i\\in\\{0,1\\}$ indicate whether weight $w_i$ is chosen. The existence answer",

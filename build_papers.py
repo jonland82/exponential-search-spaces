@@ -14,8 +14,7 @@ PAPERS = (
         "title": "Subset Sum as a Stress Test for Certified Coverage",
         "description": "A short experimental note testing exact pairing and learned proposals on subset sum.",
         "number": "II",
-        "other": "Probability_Valued_Subset_Sum.html",
-        "other_label": "Continue to Note III",
+        "nav_label": "Note II: Exact-search stress test",
         "data": "subset-sum/README.md",
     },
     {
@@ -23,9 +22,16 @@ PAPERS = (
         "title": "Probability-Valued Subset Sum: Certified Bounds and Learned Guidance",
         "description": "A short note defining reachable-target probability and evaluating certified bounds.",
         "number": "III",
-        "other": "Subset_Sum_as_a_Stress_Test.html",
-        "other_label": "Read Note II",
+        "nav_label": "Note III: Random-target probability",
         "data": "subset-sum/PROBABILITY_EXTENSION.md",
+    },
+    {
+        "stem": "Certified_Approximation_of_Subset_Sum",
+        "title": "Does Pairing Add Value to Certified Approximation? A Subset-Sum Experiment",
+        "description": "A controlled negative timing result for paired approximate subset-sum summaries, with sequential and witness-search controls.",
+        "number": "IV",
+        "nav_label": "Note IV: Pairing in approximation",
+        "data": "subset-sum/APPROXIMATION_RESULTS.md",
     },
 )
 
@@ -53,6 +59,10 @@ def build_one(paper: dict[str, str]) -> None:
     body = body.replace("<table>", '<table class="paper-table">')
     title = html.escape(paper["title"])
     description = html.escape(paper["description"])
+    related_links = "\n    ".join(
+        f'<a href="{other["stem"]}.html">{html.escape(other["nav_label"])}</a>'
+        for other in PAPERS if other["stem"] != stem
+    )
     content = f"""<!doctype html>
 <html lang="en">
 <head>
@@ -79,7 +89,7 @@ window.MathJax = {{
   <a href="{stem}.tex">LaTeX source</a>
 </nav>
 <header>
-  <span class="series-label">Companion note {paper["number"]} of III</span>
+  <span class="series-label">Companion note {paper["number"]} of IV</span>
   <h1>{title}</h1>
   <div class="byline">Jonathan R. Landers<br>October 2026</div>
 </header>
@@ -88,7 +98,7 @@ window.MathJax = {{
   <p>Part of the <a href="index.html">Certified Coverage research sequence</a>.</p>
   <div class="link-row">
     <a href="Certified_Coverage_of_Exponential_Search_Spaces.html">Note I: Framework</a>
-    <a href="{paper["other"]}">{paper["other_label"]}</a>
+    {related_links}
     <a href="{paper["data"]}">Methods and data</a>
   </div>
 </footer>

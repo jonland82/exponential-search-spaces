@@ -1,5 +1,7 @@
 # First subset-sum experiments
 
+Series navigation: [reading order](../index.html#arc) · [Note IV: pairing in certified approximation](../Certified_Approximation_of_Subset_Sum.html).
+
 These measurements support [companion Note II](../Subset_Sum_as_a_Stress_Test.html), which interprets the exact-search results alongside the later hard-case and classifier experiments.
 
 All runs used Python 3.13.5 on Windows-11-10.0.26200-SP0.
