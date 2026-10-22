@@ -1,3 +1,46 @@
+@font-face{
+  font-family:"Latin Modern Roman";
+  src:url("fonts/lmroman10-regular.woff2") format("woff2");
+  font-style:normal;
+  font-weight:400;
+  font-display:swap;
+}
+@font-face{
+  font-family:"Latin Modern Roman";
+  src:url("fonts/lmroman10-bold.woff2") format("woff2");
+  font-style:normal;
+  font-weight:700;
+  font-display:swap;
+}
+@font-face{
+  font-family:"Latin Modern Roman";
+  src:url("fonts/lmroman10-italic.woff2") format("woff2");
+  font-style:italic;
+  font-weight:400;
+  font-display:swap;
+}
+@font-face{
+  font-family:"Latin Modern Roman";
+  src:url("fonts/lmroman10-bolditalic.woff2") format("woff2");
+  font-style:italic;
+  font-weight:700;
+  font-display:swap;
+}
+@font-face{
+  font-family:"Latin Modern Sans";
+  src:url("fonts/lmsans10-regular.woff2") format("woff2");
+  font-style:normal;
+  font-weight:400;
+  font-display:swap;
+}
+@font-face{
+  font-family:"Latin Modern Sans";
+  src:url("fonts/lmsans10-bold.woff2") format("woff2");
+  font-style:normal;
+  font-weight:700;
+  font-display:swap;
+}
+
 :root{
   --paper:#fbfaf7;
   --ink:#26231f;
@@ -23,7 +66,7 @@ body{
     radial-gradient(circle at top left, rgba(110,89,67,.045), transparent 34%),
     var(--paper);
   color:var(--ink);
-  font-family: Georgia, "Times New Roman", serif;
+  font-family:"Latin Modern Roman", Georgia, "Times New Roman", serif;
   line-height:1.64;
 }
 
@@ -49,7 +92,7 @@ main{
   padding:.12rem 0 .25rem;
   border-bottom:1px solid var(--accent-soft);
   color:var(--accent);
-  font-family:Georgia,"Times New Roman",serif;
+  font-family:"Latin Modern Roman",Georgia,"Times New Roman",serif;
   font-size:.88rem;
   text-decoration:none;
 }
@@ -76,6 +119,7 @@ header:after{
 }
 
 h1{
+  font-family:"Latin Modern Sans",Arial,sans-serif;
   margin:0 0 12px 0;
   font-weight:700;
   font-size:clamp(1.85rem, 6.6vw, 2.85rem);
@@ -97,6 +141,7 @@ section{
 }
 
 h2{
+  font-family:"Latin Modern Sans",Arial,sans-serif;
   position:relative;
   margin:0 0 .95rem 0;
   padding-left:.78rem;
@@ -391,6 +436,7 @@ figcaption{
 }
 .series-card .series-label{ margin:0 0 .35rem; }
 .series-card h3{
+  font-family:"Latin Modern Sans",Arial,sans-serif;
   margin:0 0 .35rem;
   font-size:1.2rem;
   line-height:1.2;
