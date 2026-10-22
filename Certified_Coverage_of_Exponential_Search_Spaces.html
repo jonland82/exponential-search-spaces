@@ -64,6 +64,27 @@ main{
     max(18px, env(safe-area-inset-left));
 }
 
+.top-links{
+  display:flex;
+  flex-wrap:wrap;
+  gap:.4rem 1.25rem;
+  margin:0 0 1.35rem;
+}
+.top-links a{
+  display:inline-block;
+  padding:.12rem 0 .25rem;
+  border-bottom:1px solid var(--accent-soft);
+  color:var(--accent);
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:.88rem;
+  text-decoration:none;
+}
+.top-links a:hover,
+.top-links a:focus-visible{
+  color:var(--ink);
+  border-bottom-color:var(--ink);
+}
+
 header{
   position:relative;
   margin:0 0 32px 0;
@@ -254,17 +275,6 @@ blockquote{
   font-style:italic;
 }
 
-.refs{
-  margin-top:2.6rem;
-  padding-top:1.35rem;
-  border-top:1px solid var(--rule);
-  font-size:.9rem;
-  line-height:1.52;
-  color:#4f4a44;
-}
-
-.refs a{ color:var(--accent); }
-
 em{ font-style:italic; }
 
 .opening:first-letter{
@@ -303,9 +313,6 @@ em{ font-style:italic; }
     border-radius:8px;
   }
 
-  .refs{
-    font-size:.86rem;
-  }
 }
 
 @media print{
@@ -318,9 +325,10 @@ em{ font-style:italic; }
 
 <body>
 <main>
+<nav class="top-links" aria-label="Paper links"><a href="Certified_Coverage_of_Exponential_Search_Spaces.pdf">Download PDF</a></nav>
 <header>
   <h1>Certified Coverage of Exponential Search Spaces</h1>
-  <div class="byline">J. R. Landers<br>September 2026</div>
+  <div class="byline">Jonathan R. Landers<br>September 2026</div>
 </header>
 
 <div class="abstract">
@@ -560,10 +568,6 @@ T(n) = \mathrm{poly}(n) \quad\Longleftrightarrow\quad r(n) = 2^n - C(n) = \mathr
   \]</div>
   <p>The differential form records the same statement dynamically: coverage must track exponential state creation closely enough that their accumulated gap is only polynomial.</p>
 </div>
-</section>
-
-<section class="refs">
-<p><a href="Certified_Coverage_of_Exponential_Search_Spaces.pdf">PDF version of this paper</a></p>
 </section>
 
 </main>

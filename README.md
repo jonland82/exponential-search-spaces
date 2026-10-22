@@ -1,5 +1,7 @@
 # Certified Coverage of Exponential Search Spaces
 
+Jonathan R. Landers · September 2026
+
 **[Read the paper](https://jonland82.github.io/exponential-search-spaces/)** · [PDF](Certified_Coverage_of_Exponential_Search_Spaces.pdf) · [LaTeX source](Certified_Coverage_of_Exponential_Search_Spaces.tex)
 
 An exact search over a problem of size $n$ may begin with $2^n$ candidate states. The paper asks what it would take to avoid examining them one by one: represent some states structurally, let a learned model propose regions for exact elimination, and combine others through summaries that preserve the search answer.
