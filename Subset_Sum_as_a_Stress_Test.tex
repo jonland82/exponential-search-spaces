@@ -20,10 +20,10 @@
 \definecolor{paperboxbg}{HTML}{F7F3EC}
 \color{paperink}
 \titleformat{\section}{\normalfont\sffamily\large\bfseries\color{paperink}}{}{0pt}{\color{paperaccent}\rule{2pt}{1.05em}\hspace{7pt}}
-\titlespacing*{\section}{0pt}{11pt}{5pt}
+\titlespacing*{\section}{0pt}{13pt}{7pt}
 \tcbset{paperbox/.style={enhanced,breakable,colback=paperboxbg,colframe=paperline,
-  boxrule=.45pt,arc=2mm,left=8pt,right=8pt,top=6pt,bottom=6pt,
-  before skip=6pt,after skip=8pt},
+  boxrule=.45pt,arc=2mm,left=8pt,right=8pt,top=7pt,bottom=7pt,
+  before skip=9pt,after skip=10pt},
   accentbox/.style={paperbox,borderline west={2pt}{0pt}{paperaccent}}}
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{5pt plus 1pt minus 1pt}
@@ -33,10 +33,10 @@
 \date{October 2026}
 \begin{document}
 \maketitle
-\vspace{-1.5em}
+\vspace{-1em}
 \noindent\textcolor{paperaccent}{\footnotesize\textsc{Companion note II of III}}
 \par\noindent\textcolor{paperaccent}{\rule{.11\linewidth}{1.5pt}}\textcolor{paperline}{\rule{.89\linewidth}{.45pt}}
-\vspace{.4em}
+\vspace{.65em}
 
 \begin{tcolorbox}[accentbox]
 \textbf{Abstract.} The first note gives a costed model of certified coverage in a \(2^n\)-state search space. Here subset sum supplies a concrete test: exact half-sum summaries, sound interval and residue exclusions, and learned proposals can all be implemented. On 18 constructed no-solution cases that pass cheap root checks, the tested paired solver is slower than meet-in-the-middle in every case. A probability classifier ranks held-out instances well, but its most confident NO proposals still contain YES cases. The experiments identify where this implementation's costs lie; they do not establish a new exact algorithm. The third note asks a different, probability-valued question about reachable targets.

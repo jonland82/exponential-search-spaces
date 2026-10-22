@@ -44,12 +44,12 @@
 \definecolor{paperboxbg}{HTML}{F7F3EC}
 \color{paperink}
 \titleformat{\subsection}{\normalfont\sffamily\large\bfseries\color{paperink}}{}{0pt}{\color{paperaccent}\rule{2pt}{1.05em}\hspace{7pt}}
-\titlespacing*{\subsection}{0pt}{10pt}{5pt}
+\titlespacing*{\subsection}{0pt}{12pt}{7pt}
 \tcbset{paperbox/.style={enhanced,breakable,colback=paperboxbg,colframe=paperline,
-  boxrule=.45pt,arc=2mm,left=8pt,right=8pt,top=6pt,bottom=6pt,
-  before skip=6pt,after skip=8pt},
+  boxrule=.45pt,arc=2mm,left=8pt,right=8pt,top=7pt,bottom=7pt,
+  before skip=9pt,after skip=10pt},
   accentbox/.style={paperbox,borderline west={2pt}{0pt}{paperaccent}},
-  compactbox/.style={paperbox,top=3pt,bottom=3pt,before skip=3pt,after skip=5pt},
+  compactbox/.style={paperbox,top=4pt,bottom=4pt,before skip=5pt,after skip=7pt},
   compactaccent/.style={compactbox,borderline west={2pt}{0pt}{paperaccent}}}
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
@@ -85,9 +85,9 @@
 
 \begin{document}
 \maketitle
-\vspace{-1.4em}
+\vspace{-.9em}
 \noindent\textcolor{paperaccent}{\rule{.11\linewidth}{1.5pt}}\textcolor{paperline}{\rule{.89\linewidth}{.45pt}}
-\vspace{.4em}
+\vspace{.65em}
 
 \begin{tcolorbox}[accentbox]
 \noindent\textbf{Idea.} Consider a search problem whose naive state space has size
