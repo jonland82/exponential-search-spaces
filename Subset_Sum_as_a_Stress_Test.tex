@@ -43,11 +43,15 @@
 \end{tcolorbox}
 
 \section{A concrete search space}
-For positive integers \(w_1,\ldots,w_n\) and target \(t\), define
+Let \(w=(w_1,\ldots,w_n)\) be a list of \(n\) positive integer weights
+and \(t\) an integer target. Each binary choice \(x_i\) includes
+\(w_i\) when it is \(1\) and omits it when it is \(0\). Define
 \[
 Y(w,t)=\mathbf{1}\!\left\{\exists x\in\{0,1\}^n:\sum_{i=1}^{n}x_iw_i=t\right\}.
 \]
-The \(2^n\) vectors \(x\) are the direct-search states. If the weights are split into groups \(A\) and \(B\), let
+Here \(\mathbf{1}\{\cdot\}\) is \(1\) when its condition holds and \(0\)
+otherwise. The \(2^n\) vectors \(x\) are the direct-search states. If
+disjoint index sets \(A\) and \(B\) partition \(\{1,\ldots,n\}\), let
 \[
 \Sigma(A)=\left\{\sum_{i\in A}x_iw_i:x_i\in\{0,1\}\right\},
 \qquad
@@ -60,7 +64,7 @@ The tested paired search stores distinct sums for a sorted half of the weights a
 \section{Experiments and controls}
 An initial set of five constructed families compared bitset dynamic programming, MITM, bounded DFS, and the paired search at several sizes. All applicable exact implementations agreed with exhaustive search on 120 small cases. Narrow weights favored bitset dynamic programming. A mixed planted-solution family made pairing look fast against MITM, but bounded DFS was faster still. A modular no-solution family was rejected at the root by a residue-10 check; that simple arithmetic certificate could also be given to a stronger baseline. The complete timings are in the repository's \texttt{subset-sum/RESULTS.md}.
 
-The follow-up deliberately removes that easy explanation. We generated no-solution targets near half the total of random 41-bit odd weights, with each distinct value occurring once, twice, or three times. Sizes were \(n\in\{24,30,36\}\), with two seeds for each family-size combination. Every target passed whole-instance bounds and attainable-residue tests modulo \(8,10,16,32\), and every list had gcd \(1\). The same cheap root checks were charged to all algorithms. Small validation cases agreed with exhaustive search.
+The follow-up deliberately removes that easy explanation. We generated no-solution targets near half the total of random 41-bit odd weights, with each distinct value occurring once, twice, or three times. Sizes were \(n\in\{24,30,36\}\), with two seeds for each family-size combination. Every target passed whole-instance bounds and attainable-residue tests modulo \(8,10,16,32\), and every list had greatest common divisor (gcd) \(1\). The same cheap root checks were charged to all algorithms. Small validation cases agreed with exhaustive search.
 
 \begin{table}[h]
 \centering
@@ -77,14 +81,23 @@ Triples & \(6.29\) & \(5.48\) & \(5.89\)\\
 \end{tabular}
 \end{table}
 
-The paired search won \(0\) of \(18\) individual comparisons. For example, at \(n=36\), median MITM and paired times were \(148\) and \(707\) ms for unique weights, \(14.6\) and \(77.1\) ms for pairs, and \(3.6\) and \(21.1\) ms for triples. Across all cases the paired search made \(0\) residue-based branch rejections; interval bounds rejected \(1{,}424\) of \(1{,}382{,}730\) visited branch states. MITM already compresses duplicate half sums, leaving little added work for these certificates to save.
+The paired search won \(0\) of \(18\) individual comparisons. For example, at \(n=36\), median MITM and paired times were \(148\) and \(707\) milliseconds (ms) for unique weights, \(14.6\) and \(77.1\) ms for pairs, and \(3.6\) and \(21.1\) ms for triples. Across all cases the paired search made \(0\) residue-based branch rejections; interval bounds rejected \(1{,}424\) of \(1{,}382{,}730\) visited branch states. MITM already compresses duplicate half sums, leaving little added work for these certificates to save.
 
 These are Python timings on small synthetic families, not a worst-case comparison with optimized subset-sum solvers. The raw measurements and generation rules are in \texttt{subset-sum/HARD\_RESULTS.md} and \texttt{hard\_experiment.py}.
 
 \section{Learned proposals}
 To test the learned-proposal part of the first note, a random forest was trained to predict \(Y(w,t)\) from summary features of a weight list and target. Labels were computed exactly by MITM. The data comprised independent-weight and repeated-pair families at \(n=16,18,20,22\); four targets were drawn per list from the middle \(40\%\) of its total sum, conditional on passing the cheap modular checks. Training, calibration, and test used disjoint lists: \(840\), \(180\), and \(180\), respectively. Another \(240\) lists at \(n=24\) tested an unseen size.
 
-On the \(720\) held-out targets, the forest had ROC AUC \(0.866\), Brier score \(0.133\), and accuracy \(80.8\%\). A simple density-based logistic model had AUC \(0.864\) and Brier score \(0.136\). The forest ranked cases, but it did not reveal a clear advantage over density. Of \(43\) targets assigned \(P(\mathrm{YES})\le 1\%\), \(2\) were actually YES.
+Let \(\widehat p(w,t)\) be the forest's predicted chance that \(Y(w,t)=1\),
+abbreviated \(\widehat p\) when the input is understood.
+On the \(720\) held-out targets, its receiver operating characteristic
+area under the curve (ROC AUC), a ranking measure, was \(0.866\); its
+Brier score, the mean squared difference between predicted chances and
+exact \(0/1\) labels, was \(0.133\); and accuracy was \(80.8\%\). A simple
+density-based logistic model had AUC \(0.864\) and Brier score \(0.136\).
+The forest ranked cases, but it did not reveal a clear advantage over
+density. Of \(43\) targets assigned \(\widehat p(w,t)\le 1\%\), \(2\) were
+actually YES.
 
 \begin{table}[h]
 \centering

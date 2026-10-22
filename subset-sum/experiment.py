@@ -284,10 +284,19 @@ def write_report(data: dict, path: Path) -> None:
         f"All applicable exact implementations agreed with exhaustive search on {data['validation_cases']} small cases.",
         "Each time is the median of three uninstrumented runs, then the table takes the median of two fixed seeds.",
         "Peak memory is measured separately using Python `tracemalloc`; it is not total process memory.",
-        "Targets above 100,000,000 skip bitset DP to avoid a large target-sized allocation.",
-        "Unpaired bounded DFS is omitted on wide inputs because it may explore exponentially many distinct states.",
+        "Targets above 100,000,000 skip bitset dynamic programming (DP) to avoid a large target-sized allocation.",
+        "Unpaired bounded depth-first search (DFS) is omitted on wide inputs because it may explore exponentially many distinct states.",
         "",
-        "| Input family | n | Answer | Bitset DP (ms) | MITM (ms) | Bounded DFS (ms) | Certified pair (ms) | Pair / MITM | Pair / DFS |",
+        "In the table, $n$ is the number of weights, MITM means meet-in-the-middle, and ms means milliseconds. Pair / MITM and Pair / DFS divide the paired solver's time by each baseline's time; a ratio below 1 favors pairing. `n/a` means the solver was not run or the ratio is unavailable.",
+        "",
+        "**Input families.** `narrow`: weights 1–25, planted target; `wide`: 45-bit weights, planted target; "
+        "`mixed`: one quarter million-scale weights and three quarters weights 1–25, planted target; "
+        "`mixed_no`: one quarter million-multiple weights and three quarters weights 1–25, "
+        "with a target 50,000 above a large-weight subset sum; "
+        "`modular_no`: all weights multiples of ten except one 1, with a target ending in 2. "
+        "The last two families have no solution; `modular_no` has global greatest common divisor (gcd) 1.",
+        "",
+        "| Input family | $n$ | Answer | Bitset DP (ms) | MITM (ms) | Bounded DFS (ms) | Certified pair (ms) | Pair / MITM | Pair / DFS |",
         "|---|---:|:---:|---:|---:|---:|---:|---:|---:|",
     ]
     for family in ("narrow", "wide", "mixed", "mixed_no", "modular_no"):
@@ -305,13 +314,6 @@ def write_report(data: dict, path: Path) -> None:
                 f"| {family} | {n} | {'yes' if group[0]['answer'] else 'no'} | {dp} | {1000 * mitm:.3f} | {dfs} | {1000 * paired:.3f} | {paired / mitm:.3f}× | {pair_dfs} |"
             )
     lines += [
-        "",
-        "**Input families.** `narrow`: weights 1–25, planted target; `wide`: 45-bit weights, planted target; "
-        "`mixed`: one quarter million-scale weights and three quarters weights 1–25, planted target; "
-        "`mixed_no`: one quarter million-multiple weights and three quarters weights 1–25, "
-        "with a target 50,000 above a large-weight subset sum; "
-        "`modular_no`: all weights multiples of ten except one 1, with a target ending in 2. "
-        "The last two families have no solution; `modular_no` has global gcd 1.",
         "",
         "The certified pair search first checks whole-instance bounds and residues. If they pass, "
         "it stores all distinct sums of one half, then explores the other half. "

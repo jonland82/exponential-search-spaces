@@ -161,15 +161,15 @@ def write_report(data: dict, path: Path) -> None:
         "This experiment tests whether paired summaries add a benefit after cheap root certificates have failed.",
         f"The solvers agreed with exhaustive search on {data['validation_cases']} small cases. "
         "Both meet-in-the-middle and the paired solver returned NO on every benchmark case.",
-        "Each weight is a random 41-bit odd integer, appearing once, twice, or three times. "
+        "Each weight is a random 41-bit odd integer, appearing once, twice, or three times; the table calls these families `unique`, `pairs`, and `triples`, respectively. "
         "Targets lie near half the total weight. Every target passes the whole-instance bounds "
-        "and the reachable-residue checks modulo 8, 10, 16, and 32; all inputs have gcd 1.",
+        "and the reachable-residue checks modulo 8, 10, 16, and 32; all inputs have greatest common divisor (gcd) 1.",
         "The sorted half split keeps repeated weights together. The same whole-instance bounds "
-        "and residue checks are charged to all algorithms. Bitset DP is infeasible because targets are trillions.",
-        f"Certified DFS is stopped after {data['dfs_limit_seconds']:.0f} seconds; a stopped run has no answer. "
-        "Times are one uninstrumented Python run per seed, with medians below. All data is in [hard_results.json](hard_results.json).",
+        "and residue checks are charged to all algorithms. Bitset dynamic programming (DP) is infeasible because targets are trillions.",
+        f"Certified depth-first search (DFS) is stopped after {data['dfs_limit_seconds']:.0f} seconds; a stopped run has no answer. "
+        "Times are one uninstrumented Python run per seed, with medians below. In the table, $n$ is the number of weights, MITM means meet-in-the-middle, ms means milliseconds, Pair / MITM is the paired time divided by MITM time, and Pair tail sums counts distinct stored half sums. All data is in [hard_results.json](hard_results.json).",
         "",
-        "| Family | n | MITM (ms) | Certified pair (ms) | Pair / MITM | Certified DFS (ms) | Pair tail sums |",
+        "| Family | $n$ | MITM (ms) | Certified pair (ms) | Pair / MITM | Certified DFS (ms) | Pair tail sums |",
         "|---|---:|---:|---:|---:|---:|---:|",
     ]
     for family in FAMILIES:

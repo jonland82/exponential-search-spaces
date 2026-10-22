@@ -150,7 +150,7 @@ def chart(data: dict) -> None:
     fig.text(0.055, 0.916, "Bars use exact YES/NO labels; whiskers are 95% list-level bootstrap intervals, not per-instance guarantees.", fontsize=10, color="#566B7F", va="top")
 
     ax = axes[0]
-    labels = ["Held-out n=16–22", "Unseen n=24"]
+    labels = ["Held-out: 16–22 weights", "Unseen: 24 weights"]
     records = [data["test"], data["unseen_n24"]]
     ys = np.arange(2)
     means = np.array([entry["observed_yes_rate"] for entry in records])
@@ -173,7 +173,7 @@ def chart(data: dict) -> None:
     lows = np.array([row["wrong_no_rate_bootstrap_95_interval"][0] for row in thresholds])
     highs = np.array([row["wrong_no_rate_bootstrap_95_interval"][1] for row in thresholds])
     ax.errorbar(xs, risks, yerr=[risks - lows, highs - risks], color="#C34E52", marker="o", markersize=7, capsize=5, lw=2)
-    ax.set(xlim=(0, 0.52), ylim=(0, max(0.27, float(highs.max()) * 1.16)), xlabel="Propose NO when P(YES) ≤ threshold", ylabel="Actually YES among proposed NO", title="Confidence cannot certify deletion")
+    ax.set(xlim=(0, 0.52), ylim=(0, max(0.27, float(highs.max()) * 1.16)), xlabel="Propose NO when predicted YES chance ≤ threshold", ylabel="Actually YES among proposed NO", title="Confidence cannot certify deletion")
     ax.set_xticks(xs, labels=[f"{x:.0%}" for x in xs])
     ax.yaxis.set_major_formatter(plt.FuncFormatter(lambda y, _: f"{y:.0%}"))
     ax.grid(alpha=0.25)
@@ -199,9 +199,9 @@ def instance_chart(records: list[dict]) -> None:
         exact = np.array([row["exact_q"] for row in subset])
         upper = np.array([row["certified_upper_multiplicity"] for row in subset])
         ax.vlines(xs, lower, upper, color="#C4CFD9", lw=2.0, zorder=1)
-        ax.scatter(xs, lower, s=24, color="#148A7B", label="512-witness lower bound", zorder=3)
+        ax.scatter(xs, lower, s=24, color="#148A7B", label="Lower bound from 512 sampled subsets", zorder=3)
         ax.scatter(xs, exact, s=33, color="#233E60", label="Exact target fraction", zorder=4)
-        ax.scatter(xs, upper, s=28, color="#D57B3C", label="Multiplicity upper bound", zorder=3)
+        ax.scatter(xs, upper, s=28, color="#D57B3C", label="Upper bound from repeated-value counts", zorder=3)
         ax.set(xlim=(0, len(subset) + 1), ylim=(-0.03, 1.05), xlabel="Lists sorted by exact target fraction", title=f"{title}  •  {len(subset)} lists")
         ax.set_yticks(np.arange(0, 1.01, 0.2), labels=[f"{x:.0%}" for x in np.arange(0, 1.01, 0.2)])
         ax.grid(axis="y", alpha=0.2)
@@ -229,9 +229,9 @@ def write_document(data: dict) -> None:
         "",
         "This technical record supplies the derivations, chart, and per-list measurements behind [companion Note III](../Probability_Valued_Subset_Sum.html).",
         "",
-        "For fixed positive weights $w=(w_1,\\ldots,w_n)$ and target $t$, the existence answer",
-        "$Y(w,t)=\\mathbf{1}\\{t=\\sum_i x_iw_i\\text{ for some }x_i\\in\\{0,1\\}\\}$ is still exactly 0 or 1.",
-        "To make the **outcome** a probability, specify a distribution $\\mu$ for a random target $T$ on a finite set $D$:",
+        "For a fixed list of $n$ positive weights $w=(w_1,\\ldots,w_n)$ and an integer target $t$, let $x_i\\in\\{0,1\\}$ indicate whether weight $w_i$ is chosen. The existence answer",
+        "$Y(w,t)=\\mathbf{1}\\{t=\\sum_i x_iw_i\\text{ for some }x_i\\in\\{0,1\\}\\}$ is still exactly 0 or 1; $\\mathbf{1}\\{\\cdot\\}$ is 1 when its condition holds and 0 otherwise.",
+        "To make the **outcome** a probability, specify a distribution $\\mu$ for a random target $T$ on a nonempty finite set $D$, with $\\mu(t)=\\Pr(T=t)$:",
         "",
         "$$",
         "A(w)=\\left\\{\\sum_i x_iw_i:x_i\\in\\{0,1\\}\\right\\},",
@@ -244,7 +244,7 @@ def write_document(data: dict) -> None:
         "",
         "## Certified bounds",
         "",
-        "Let $L\\subseteq A(w)\\cap D$ contain *distinct witnessed sums*. Let $R_m(w)$ be the set of residues modulo $m$ reachable by subsets, and set",
+        "Let $L\\subseteq A(w)\\cap D$ contain *distinct witnessed sums*. For each positive modulus $m$, let $R_m(w)$ be the set of residues modulo $m$ reachable by subsets. Choose a finite set $M$ of such moduli. For any target set $B\\subseteq D$, write $\\mu(B)=\\sum_{t\\in B}\\mu(t)$ for its probability mass. Set",
         "",
         "$$",
         "U=D\\cap\\bigcap_{m\\in M}\\{t:t\\bmod m\\in R_m(w)\\},",
@@ -255,11 +255,10 @@ def write_document(data: dict) -> None:
         "More exact summaries can enlarge $L$; more sound certificates can shrink $U$.",
         "When pairing partial-sum summaries, count the *distinct union* of pair sums; multiplying counts would double-count collisions.",
         "With uniform $D$, these bounds are $|L|/|D|$ and $|U|/|D|$.",
-        "A second upper bound is $q_\\mu(w)\\le\\min(1,\\prod_j(c_j+1)/|D|)$ for uniform $D$,",
-        "where $c_j$ are multiplicities of the distinct weight values: each value can be selected in only $c_j+1$ ways.",
+        "For each distinct weight value indexed by $j$, let $c_j$ be its multiplicity; that value can be selected in only $c_j+1$ ways. A second upper bound for uniform $D$ is $q_\\mu(w)\\le\\min(1,\\prod_j(c_j+1)/|D|)$.",
         "Use the minimum of this and the residue bound. Computing a tight bound has a cost; a loose bound alone does not speed up search.",
         "",
-        "For a requested tolerance $\\varepsilon$, the interval $[\\mu(L),\\mu(U)]$ certifies an additive-$\\varepsilon$ answer once $\\mu(U)-\\mu(L)\\le\\varepsilon$.",
+        "For a requested tolerance $\\varepsilon>0$, the interval $[\\mu(L),\\mu(U)]$ certifies an additive-$\\varepsilon$ answer once $\\mu(U)-\\mu(L)\\le\\varepsilon$.",
         "For **exact** $q_\\mu$, the gap must close to zero. As in the original coverage model, the work of finding witnesses and certificates must be counted.",
         "",
         "### A check on held-out 16-item lists",
@@ -274,18 +273,18 @@ def write_document(data: dict) -> None:
         "",
         "## What the classifier estimates",
         "",
-        "The trained model outputs $\\widehat p(w,t)$. With the full instance fixed, the true conditional existence probability is $Y(w,t)\\in\\{0,1\\}$.",
-        "The useful statistical interpretation is $\\Pr(Y=1\\mid\\phi(w,t))$ under the synthetic input distribution, where $\\phi$ is the model's lossy feature vector.",
+        "The trained model outputs $\\widehat p(w,t)$, its estimated YES chance from a feature vector $\\phi(w,t)$. With the full instance fixed, the existence answer is $Y(w,t)\\in\\{0,1\\}$.",
+        "For a random list-target pair $(W,T)$ from the synthetic input distribution, the statistical target is $\\Pr(Y(W,T)=1\\mid\\phi(W,T)=\\phi(w,t))$.",
         "Calibration can make this reliable *on average* for that distribution; it is not a deterministic bound for one target.",
         "It can prioritize which targets or regions deserve exact checking, or help stratify estimates of $q_\\mu$.",
         "",
-        "If $m$ targets are drawn independently from $\\mu$ for one fixed list and labeled exactly, the sample YES rate $\\widehat q$ obeys",
+        "If $m$ targets are drawn independently from $\\mu$ for one fixed list and labeled exactly, let $\\widehat q$ be the fraction labeled YES. For any $\\varepsilon>0$, it obeys",
         "",
         "$$",
         "\\Pr(|\\widehat q-q_\\mu(w)|>\\varepsilon)\\le 2e^{-2m\\varepsilon^2}.",
         "$$",
         "",
-        "This is a sampling guarantee, not a fast subset-sum algorithm: exact labels may still be expensive.",
+        "The probability is over the $m$ target draws. This is a sampling guarantee, not a fast subset-sum algorithm: exact labels may still be expensive.",
         "",
         "## Existing held-out evidence, now interpreted probabilistically",
         "",

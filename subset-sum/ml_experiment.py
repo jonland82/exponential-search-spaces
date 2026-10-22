@@ -295,7 +295,7 @@ def figure_heading(fig, title: str, subtitle: str) -> None:
 def draw_overview(y: np.ndarray, p: np.ndarray, baseline_p: np.ndarray, metrics: dict, baseline_metrics: dict, path: Path) -> None:
     style()
     fig, axes = plt.subplots(2, 2, figsize=(14, 9), dpi=170)
-    fig.subplots_adjust(top=0.87, bottom=0.09, left=0.07, right=0.97, hspace=0.34, wspace=0.23)
+    fig.subplots_adjust(top=0.87, bottom=0.14, left=0.07, right=0.97, hspace=0.34, wspace=0.23)
     figure_heading(
         fig,
         "Can a model predict subset-sum existence?",
@@ -342,7 +342,8 @@ def draw_overview(y: np.ndarray, p: np.ndarray, baseline_p: np.ndarray, metrics:
             ax.text(j, i, f"{cm[i, j]:,}", ha="center", va="center", fontsize=18, fontweight="bold", color="white" if cm[i, j] > cm.max() / 2 else "#20334A")
     ax.set(xticks=[0, 1], yticks=[0, 1], xticklabels=["Predict NO", "Predict YES"], yticklabels=["Actually NO", "Actually YES"], title="At the 50% decision threshold")
     ax.tick_params(length=0)
-    fig.text(0.055, 0.028, "Labels are exact meet-in-the-middle answers. Train, calibration, and test use disjoint input lists; targets pass cheap modular checks.", fontsize=9, color="#657789")
+    fig.text(0.055, 0.058, "AUC is the area under the ranking curve; Brier is mean squared probability error (lower is better).", fontsize=9, color="#657789")
+    fig.text(0.055, 0.025, "Labels are exact meet-in-the-middle answers. Train, calibration, and test use disjoint input lists; targets pass cheap modular checks.", fontsize=9, color="#657789")
     fig.savefig(path, dpi=170)
     plt.close(fig)
 
@@ -363,7 +364,7 @@ def draw_thresholds(y: np.ndarray, p: np.ndarray, stats: list[dict], path: Path)
     figure_heading(fig, "What happens if we trust a predicted NO?", "Lower thresholds propose fewer states for elimination, but any mistaken YES would make an uncertified solver wrong.")
     ax = axes[0]
     ax.plot(grid, coverage, color=BLUE, lw=2.6)
-    ax.set(title="How much of the test set is proposed NO?", xlabel="Propose NO when P(YES) ≤ threshold", ylabel="Fraction proposed NO", xlim=(0, 0.5), ylim=(0, 1))
+    ax.set(title="How much of the test set is proposed NO?", xlabel="Propose NO when predicted YES chance ≤ threshold", ylabel="Fraction proposed NO", xlim=(0, 0.5), ylim=(0, 1))
     ax.yaxis.set_major_formatter(PercentFormatter(1))
     for row in stats:
         ax.scatter(row["threshold"], row["coverage"], color=BLUE, s=30)
@@ -371,7 +372,7 @@ def draw_thresholds(y: np.ndarray, p: np.ndarray, stats: list[dict], path: Path)
 
     ax = axes[1]
     ax.plot(grid, wrong, color=RED, lw=2.6)
-    ax.set(title="How many real YES cases would be lost?", xlabel="Propose NO when P(YES) ≤ threshold", ylabel="Wrongly proposed NO (count)", xlim=(0, 0.5), ylim=(0, max(1, max(wrong) * 1.05)))
+    ax.set(title="How many real YES cases would be lost?", xlabel="Propose NO when predicted YES chance ≤ threshold", ylabel="Wrongly proposed NO (count)", xlim=(0, 0.5), ylim=(0, max(1, max(wrong) * 1.05)))
     for row in stats:
         ax.scatter(row["threshold"], row["wrong_yes"], color=RED, s=30)
     ax.grid(alpha=0.7)
@@ -390,13 +391,13 @@ def draw_thresholds(y: np.ndarray, p: np.ndarray, stats: list[dict], path: Path)
 def draw_generalization(test_rows: list[dict], test_y: np.ndarray, test_p: np.ndarray, ood_rows: list[dict], ood_y: np.ndarray, ood_p: np.ndarray, forest, path: Path) -> None:
     style()
     categories = []
-    for label, rows, y, p in (("In-range: independent", test_rows, test_y, test_p), ("In-range: paired", test_rows, test_y, test_p), ("Unseen n=24: independent", ood_rows, ood_y, ood_p), ("Unseen n=24: paired", ood_rows, ood_y, ood_p)):
+    for label, rows, y, p in (("In-range: independent", test_rows, test_y, test_p), ("In-range: paired", test_rows, test_y, test_p), ("Unseen 24 weights: independent", ood_rows, ood_y, ood_p), ("Unseen 24 weights: paired", ood_rows, ood_y, ood_p)):
         family = "paired" if label.endswith("paired") else "independent"
         sel = np.asarray([row["family"] == family for row in rows])
         categories.append((label, score(y[sel], p[sel])))
     fig, axes = plt.subplots(1, 2, figsize=(15, 7.3), dpi=170)
     fig.subplots_adjust(top=0.82, bottom=0.27, left=0.20, right=0.97, wspace=0.65)
-    figure_heading(fig, "Does the prediction survive new lists?", "Left: held-out lists and a larger unseen size. Right: features with the largest contribution to forest splits.")
+    figure_heading(fig, "Does the prediction survive new lists?", "Left: held-out lists and a larger unseen size. Right: influential features; the log density proxy compares selection patterns with weight spread.")
     names = [name for name, _ in categories]
     aucs = [entry["auc"] for _, entry in categories]
     briers = [entry["brier"] for _, entry in categories]
@@ -414,12 +415,14 @@ def draw_generalization(test_rows: list[dict], test_y: np.ndarray, test_p: np.nd
     ax = axes[1]
     importances = forest.feature_importances_
     order = np.argsort(importances)[-8:]
-    labels_short = [FEATURES[i].replace("_", " ") for i in order]
+    names_for_chart = {"coefficient_variation": "weight std / mean", "min_max_ratio": "min / max weight"}
+    labels_short = [names_for_chart.get(FEATURES[i], FEATURES[i].replace("_", " ")) for i in order]
     ax.barh(np.arange(len(order)), importances[order], color=TEAL, alpha=0.85)
     ax.set(yticks=np.arange(len(order)), yticklabels=labels_short, xlabel="Forest split importance", title="Which list properties mattered?")
     ax.spines[["top", "right"]].set_visible(False)
-    fig.text(0.20, 0.12, f"In-range test: {len(test_y):,} targets  •  Unseen n=24: {len(ood_y):,} targets  •  Probabilities calibrated on separate lists.", fontsize=10, color="#50657B")
-    fig.text(0.20, 0.085, "Good ranking across families does not prove individual NO predictions safe; inspect the threshold chart before using them for pruning.", fontsize=9, color=RED)
+    fig.text(0.20, 0.13, f"In-range test: {len(test_y):,} targets  •  Unseen 24-weight lists: {len(ood_y):,} targets  •  Probabilities calibrated on separate lists.", fontsize=10, color="#50657B")
+    fig.text(0.20, 0.095, "AUC = ranking area; Brier = mean squared probability error; log2 = base-2 log; std = standard deviation.", fontsize=9, color="#50657B")
+    fig.text(0.20, 0.06, "Good ranking across families does not prove individual NO predictions safe; inspect the threshold chart before using them for pruning.", fontsize=9, color=RED)
     fig.savefig(path, dpi=170)
     plt.close(fig)
 
@@ -439,13 +442,16 @@ def write_summary(data: dict, path: Path) -> None:
         "from the middle 40% of each list's total sum, then required to pass simple modular certificates. "
         "The model sees only summary features of the list and target, not the exact subset sums.",
         "",
+        "Here $n$ is the number of weights, and the predicted YES chance in the charts is the model's estimate, not a certificate. ROC AUC (area under the receiver operating characteristic curve) measures how well the score ranks YES above NO; 0.5 is chance ranking and 1 is perfect ranking. Brier score is the mean squared difference between predicted YES chances and exact 0/1 labels, so lower is better.",
+        "The chart's `log2` means base-2 logarithm, `std` means standard deviation, and coefficient of variation is standard deviation divided by mean weight. The log density proxy compares the number of possible count patterns with the spread of the weights; it is only a model feature, not a certificate. `independent` lists use separately sampled weights, while `paired` lists repeat each sampled value twice.",
+        "",
         f"- Training: {data['counts']['train']:,} targets; calibration: {data['counts']['calibration']:,}; "
         f"held-out test: {data['counts']['test']:,}. Splits use disjoint input lists.",
         f"- Held-out YES rate: {m['positive_rate']:.1%}. Forest AUC {m['auc']:.3f}, "
         f"Brier {m['brier']:.3f}, accuracy {m['accuracy']:.1%}.",
         f"- Simple density-model AUC {b['auc']:.3f}, Brier {b['brier']:.3f}. "
         f"On unseen n=24 lists, forest AUC {ood['auc']:.3f}, Brier {ood['brier']:.3f}.",
-        f"- Even at P(YES) ≤ {very_low['threshold']:.0%}, {very_low['wrong_yes']} of "
+        f"- Even at a predicted YES chance of at most {very_low['threshold']:.0%}, {very_low['wrong_yes']} of "
         f"{very_low['proposed_no']} proposed NO answers are actually YES.",
         "",
         "## Charts",

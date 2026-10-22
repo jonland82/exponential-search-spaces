@@ -4,10 +4,13 @@ This experiment is discussed in [companion Note II](../Subset_Sum_as_a_Stress_Te
 
 A random forest predicts the probability that a target can be formed from a list of positive integers. Every label is computed exactly by meet-in-the-middle. Targets are sampled independently of labels from the middle 40% of each list's total sum, then required to pass simple modular certificates. The model sees only summary features of the list and target, not the exact subset sums.
 
+Here $n$ is the number of weights, and the predicted YES chance in the charts is the model's estimate, not a certificate. ROC AUC (area under the receiver operating characteristic curve) measures how well the score ranks YES above NO; 0.5 is chance ranking and 1 is perfect ranking. Brier score is the mean squared difference between predicted YES chances and exact 0/1 labels, so lower is better.
+The chart's `log2` means base-2 logarithm, `std` means standard deviation, and coefficient of variation is standard deviation divided by mean weight. The log density proxy compares the number of possible count patterns with the spread of the weights; it is only a model feature, not a certificate. `independent` lists use separately sampled weights, while `paired` lists repeat each sampled value twice.
+
 - Training: 3,360 targets; calibration: 720; held-out test: 720. Splits use disjoint input lists.
 - Held-out YES rate: 31.8%. Forest AUC 0.866, Brier 0.133, accuracy 80.8%.
 - Simple density-model AUC 0.864, Brier 0.136. On unseen n=24 lists, forest AUC 0.879, Brier 0.115.
-- Even at P(YES) ≤ 1%, 2 of 43 proposed NO answers are actually YES.
+- Even at a predicted YES chance of at most 1%, 2 of 43 proposed NO answers are actually YES.
 
 ## Charts
 

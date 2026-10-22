@@ -4,7 +4,7 @@ Jonathan R. Landers · September–October 2026
 
 **[Read the series landing page](https://jonland82.github.io/exponential-search-spaces/)** · [Experiments and data](subset-sum/README.md)
 
-This repository tells a short research story: a general criterion for avoiding explicit search over $2^n$ states, a subset-sum stress test that finds the limits of one implementation, and a probability-valued question with certified bounds. Each part is meant to stand alone.
+This repository tells a short research story: a general criterion for avoiding explicit search over $2^n$ states, where $n$ is the number of binary choices; a subset-sum stress test that finds the limits of one implementation; and a probability-valued question with certified bounds. Each part is meant to stand alone.
 
 | Note | Question | Read |
 |---|---|---|
@@ -20,13 +20,13 @@ $$
 
 The cost of obtaining coverage matters. In the paper's model, polynomial coverage overhead yields polynomial runtime exactly when $r(n)$ is polynomially bounded. Note II tests that premise: the paired subset-sum solver was slower than meet-in-the-middle on all 18 constructed hard no-solution cases tested. A classifier ranked held-out cases, but even confident NO proposals included real YES cases.
 
-Note III changes the objective. For fixed weights $w$, reachable-sum set $A(w)$, and a target $T$ drawn from a stated distribution $\mu$,
+Note III changes the objective. For a fixed list of weights $w=(w_1,\ldots,w_n)$, let $A(w)$ be its set of attainable subset sums. Draw a target $T$ from a stated distribution $\mu$. Then
 
 $$
 q_\mu(w)=\Pr_{T\sim\mu}[T\in A(w)].
 $$
 
-Witnessed sums $L$ and soundly admissible targets $U$ give $\mu(L)\le q_\mu(w)\le\mu(U)$. These are certified bounds for a particular list; classifier probabilities are statistical estimates under the experiment's input distribution.
+If $L$ contains witnessed reachable targets and $U$ contains every target not soundly excluded, write $\mu(B)$ for the probability that $T$ falls in a target set $B$. Then $\mu(L)\le q_\mu(w)\le\mu(U)$. These are certified bounds for a particular list; classifier probabilities are statistical estimates under the experiment's input distribution.
 
 ## Reproduce the notes
 

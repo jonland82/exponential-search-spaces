@@ -74,26 +74,26 @@ window.MathJax = {
 
 <section aria-labelledby="formalism">
   <h2 id="formalism">The key formalism</h2>
-  <p>In Note I, \(C(n)\) counts states handled by exact representation or certified exclusion. The residual \(r(n)\) must still be searched explicitly:</p>
+  <p>In Note I, \(n\) is the number of binary choices and \(C(n)\) counts states handled by exact representation or certified exclusion. The residual \(r(n)\) must still be searched explicitly. Let \(T(n)\) be the modeled runtime; coverage overhead includes the work of discovering, representing, and certifying covered states:</p>
   <div class="keyeq"><span class="math display">\[
   r(n)=2^n-C(n),\qquad
   T(n)=\text{coverage overhead}+r(n).
   \]</span></div>
   <p>Within this model, polynomial overhead leads to polynomial runtime exactly when the residual is polynomially bounded. Covering a large fixed percentage of \(2^n\) states is not enough.</p>
-  <p>Note III changes the outcome being measured. With fixed weights \(w\), reachable-sum set \(A(w)\), and a random target \(T\) drawn by a specified distribution \(\mu\),</p>
+  <p>Note III changes the outcome being measured. Fix a list of weights \(w=(w_1,\ldots,w_n)\), and let \(A(w)\) be its set of attainable subset sums. Draw a target \(T\) from a specified distribution \(\mu\). Let \(L\) contain witnessed reachable targets and \(U\) every target not soundly excluded. For any target set \(B\), let \(\mu(B)\) mean the probability that \(T\in B\):</p>
   <div class="keyeq"><span class="math display">\[
   q_\mu(w)=\Pr_{T\sim\mu}\!\bigl[T\in A(w)\bigr],
   \qquad
   \mu(L)\le q_\mu(w)\le\mu(U).
   \]</span></div>
-  <p>Here \(L\) contains witnessed reachable targets and \(U\) contains every target that has not been soundly excluded. The interval is exact for a particular weight list; its width measures how much uncertainty remains about the random-target question.</p>
+  <p>The bounds hold for a particular weight list; their width measures how much remains unresolved about the random-target question.</p>
 </section>
 
 <section aria-labelledby="language">
   <h2 id="language">What the results say</h2>
   <div class="note">
     <p><strong>Representation must earn its cost.</strong> The paired subset-sum solver was slower than meet-in-the-middle on all 18 constructed hard no-solution cases tested.</p>
-    <p><strong>Prediction helps choose work.</strong> The classifier's held-out AUC was 0.866, close to a simple density model's 0.864. Two of its 43 most confident NO proposals were actually YES, so exact elimination still needs a verifier.</p>
+    <p><strong>Prediction helps choose work.</strong> The classifier's held-out area under the receiver operating characteristic curve (AUC), a ranking measure, was 0.866, close to a simple density model's 0.864. Two of its 43 most confident NO proposals were actually YES, so exact elimination still needs a verifier.</p>
     <p><strong>Probability has a precise meaning.</strong> For a fixed target, subset sum remains YES or NO. A probability arises after specifying how a target is drawn. On 50 held-out 16-item lists, simple certified bounds contained the exact reachable-target fraction but left a substantial gap.</p>
   </div>
 </section>

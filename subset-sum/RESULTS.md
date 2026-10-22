@@ -6,10 +6,14 @@ All runs used Python 3.13.5 on Windows-11-10.0.26200-SP0.
 All applicable exact implementations agreed with exhaustive search on 120 small cases.
 Each time is the median of three uninstrumented runs, then the table takes the median of two fixed seeds.
 Peak memory is measured separately using Python `tracemalloc`; it is not total process memory.
-Targets above 100,000,000 skip bitset DP to avoid a large target-sized allocation.
-Unpaired bounded DFS is omitted on wide inputs because it may explore exponentially many distinct states.
+Targets above 100,000,000 skip bitset dynamic programming (DP) to avoid a large target-sized allocation.
+Unpaired bounded depth-first search (DFS) is omitted on wide inputs because it may explore exponentially many distinct states.
 
-| Input family | n | Answer | Bitset DP (ms) | MITM (ms) | Bounded DFS (ms) | Certified pair (ms) | Pair / MITM | Pair / DFS |
+In the table, $n$ is the number of weights, MITM means meet-in-the-middle, and ms means milliseconds. Pair / MITM and Pair / DFS divide the paired solver's time by each baseline's time; a ratio below 1 favors pairing. `n/a` means the solver was not run or the ratio is unavailable.
+
+**Input families.** `narrow`: weights 1–25, planted target; `wide`: 45-bit weights, planted target; `mixed`: one quarter million-scale weights and three quarters weights 1–25, planted target; `mixed_no`: one quarter million-multiple weights and three quarters weights 1–25, with a target 50,000 above a large-weight subset sum; `modular_no`: all weights multiples of ten except one 1, with a target ending in 2. The last two families have no solution; `modular_no` has global greatest common divisor (gcd) 1.
+
+| Input family | $n$ | Answer | Bitset DP (ms) | MITM (ms) | Bounded DFS (ms) | Certified pair (ms) | Pair / MITM | Pair / DFS |
 |---|---:|:---:|---:|---:|---:|---:|---:|---:|
 | narrow | 24 | yes | 0.007 | 0.140 | 0.019 | 0.111 | 0.790× | 5.786× |
 | narrow | 36 | yes | 0.006 | 0.231 | 0.026 | 0.148 | 0.639× | 5.688× |
@@ -26,8 +30,6 @@ Unpaired bounded DFS is omitted on wide inputs because it may explore exponentia
 | modular_no | 24 | no | 0.086 | 1.156 | 17.004 | 0.031 | 0.027× | 0.002× |
 | modular_no | 36 | no | 0.324 | 12.204 | 117.682 | 0.081 | 0.007× | 0.001× |
 | modular_no | 48 | no | 0.401 | 38.144 | 248.429 | 0.069 | 0.002× | 0.000× |
-
-**Input families.** `narrow`: weights 1–25, planted target; `wide`: 45-bit weights, planted target; `mixed`: one quarter million-scale weights and three quarters weights 1–25, planted target; `mixed_no`: one quarter million-multiple weights and three quarters weights 1–25, with a target 50,000 above a large-weight subset sum; `modular_no`: all weights multiples of ten except one 1, with a target ending in 2. The last two families have no solution; `modular_no` has global gcd 1.
 
 The certified pair search first checks whole-instance bounds and residues. If they pass, it stores all distinct sums of one half, then explores the other half. It merges equal partial sums, rejects sums outside exact lower/upper bounds, and rejects unreachable target residues modulo 8, 10, 16, or 32. Each rejection is sound. The simple meet-in-middle baseline also merges duplicate sums and discards sums above the target.
 Bounded DFS uses the same item order and exact interval bounds as the pair search, but no paired tail or residue checks. This separates early discovery of a planted solution from gains due to the added mechanisms.

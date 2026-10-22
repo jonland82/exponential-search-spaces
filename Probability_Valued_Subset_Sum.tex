@@ -43,12 +43,18 @@
 \end{tcolorbox}
 
 \section{The probability requires a random experiment}
-For fixed positive weights \(w=(w_1,\ldots,w_n)\) and target \(t\), the decision answer
+For a fixed list of \(n\) positive weights \(w=(w_1,\ldots,w_n)\) and
+an integer target \(t\), let each \(x_i\in\{0,1\}\) indicate whether
+weight \(w_i\) is selected. The decision answer
 \[
 Y(w,t)=\mathbf{1}\!\left\{t=\sum_{i=1}^n x_iw_i
   \text{ for some }x\in\{0,1\}^n\right\}
 \]
-is exactly \(0\) or \(1\). To obtain a probability, let \(D\) be a finite target set, \(T\) a random target with distribution \(\mu\) supported on \(D\), and
+is exactly \(0\) or \(1\); \(\mathbf{1}\{\cdot\}\) is \(1\) when the
+condition holds and \(0\) otherwise. To obtain a probability, let \(D\)
+be a nonempty finite target set, \(T\) a random target with distribution
+\(\mu\) supported on \(D\), and \(\mu(t)=\Pr(T=t)\) its mass at target
+\(t\). Define the reachable-sum set
 \[
 A(w)=\left\{\sum_{i=1}^n x_iw_i:x\in\{0,1\}^n\right\}.
 \]
@@ -65,17 +71,20 @@ Let \(L\subseteq A(w)\cap D\) be distinct sums with explicit subset witnesses. F
 \[
 U=D\cap\bigcap_{m\in M}\{t:t\bmod m\in R_m(w)\}.
 \]
+For any \(B\subseteq D\), write \(\mu(B)=\sum_{t\in B}\mu(t)\) for its
+target probability mass.
 \begin{tcolorbox}[accentbox]
 \textbf{Proposition 1 (Certified probability interval).}
 For every \(w,D,\mu,L,M\) defined above,
 \[
-\mu(L)\le q_\mu(w)\le\mu(U),
-\qquad \mu(B):=\sum_{t\in B}\mu(t).
+\mu(L)\le q_\mu(w)\le\mu(U).
 \]
 \end{tcolorbox}
 \textit{Proof.} Every witnessed sum belongs to \(A(w)\), giving \(L\subseteq A(w)\cap D\). Every attainable sum has an attainable residue modulo every \(m\in M\), giving \(A(w)\cap D\subseteq U\). Monotonicity of probability mass proves both inequalities. \hfill\(\square\)
 
-Repeated values give another cheap bound. If distinct weight value \(v_j\) occurs \(c_j\) times, at most \(c_j+1\) copies of that value can be chosen. Hence
+Repeated values give another cheap bound. Index the distinct weight
+values by \(j\), writing \(v_j\) for each value and \(c_j\) for its
+multiplicity. One may choose \(0,\ldots,c_j\) copies of \(v_j\). Hence
 \[
 |A(w)|\le K(w):=\prod_j(c_j+1).
 \]
@@ -88,7 +97,11 @@ For a uniform target on \(D\), combine the two upper bounds:
 \end{tcolorbox}
 The count \(K(w)\) is only an upper bound: different count vectors may have the same sum. Exact paired summaries can enlarge \(L\), but their distinct union must be counted, and their construction cost must be charged. More sound exclusions can shrink \(U\).
 
-The interval certifies an additive-\(\varepsilon\) answer whenever its width is at most \(\varepsilon\). Exact \(q_\mu\) requires zero width. This is the probability analogue of the first note's costed coverage idea: bound quality matters together with the cost of producing it.
+For a chosen tolerance \(\varepsilon>0\), the interval certifies an
+additive-\(\varepsilon\) answer whenever its width is at most
+\(\varepsilon\). Exact \(q_\mu\) requires zero width. This is the
+probability analogue of the first note's costed coverage idea: bound
+quality matters together with the cost of producing it.
 
 \section{A direct check of bound quality}
 We reused the held-out \(n=16\) lists from the classifier experiment in note II. For each of \(50\) lists, the target set \(D\) was the integer middle \(40\%\) of the list's total sum, restricted to targets that passed the experiment's residue tests modulo \(8,10,16,32\). Conditional on that filter, targets were drawn uniformly from \(D\). The same residue tests therefore supply no further upper-bound reduction on this particular \(D\).
@@ -119,15 +132,25 @@ All lists & 50 & \(0.8\%\) & \(24.2\%\) & \(36.0\%\)\\
 These bounds do not claim a runtime improvement. They show that counting possible selections can sometimes limit the probability without deciding each target, while a small witness budget leaves much of the mass unresolved.
 
 \section{Statistical probabilities and learned guidance}
-The classifier in note II outputs \(\widehat p(w,t)\). Since \(Y(w,t)\) is fixed once the full instance is known, \(\widehat p\) is best understood as an estimate of \(\Pr(Y=1\mid\phi(w,t))\) under a specified input distribution, where \(\phi\) is the model's lossy feature vector. It is distinct from the exact \(q_\mu(w)\) for one fixed list.
+The classifier in note II outputs \(\widehat p(w,t)\), its estimated YES
+chance from a feature vector \(\phi(w,t)\). For a random list-target pair
+\((W,T)\) from the experiment's input distribution, the statistical
+quantity being estimated is
+\(\Pr(Y(W,T)=1\mid\phi(W,T)=\phi(w,t))\). This differs from the exact
+\(q_\mu(w)\) for one fixed list: \(Y(w,t)\) is fixed once its full instance
+is known.
 
 The held-out experiment drew four targets per independent list. Its \(229\) YES answers among \(720\) targets give an observed rate of \(31.8\%\) across the \(180\) held-out lists. A \(95\%\) bootstrap interval resampling whole lists is \(26.9\%\)--\(36.7\%\). Treating each list's four-target average as one bounded independent observation gives a wider Hoeffding \(95\%\) interval of \(21.7\%\)--\(41.9\%\) for the mean success rate across that test schedule. On \(240\) unseen \(n=24\) lists, the observed rate was \(25.0\%\) across \(960\) targets; the list-bootstrap interval was \(20.9\%\)--\(29.2\%\). These rates depend on the synthetic list and target generators.
 
-For a \emph{fixed} list, \(m\) independent random targets with exact labels also give the standard sampling bound
+For a \emph{fixed} list, draw \(m\) independent targets from \(\mu\),
+label them exactly, and let \(\widehat q\) be the fraction labeled YES.
+For any \(\varepsilon>0\), the standard sampling bound is
 \[
 \Pr\{|\widehat q-q_\mu(w)|>\varepsilon\}\le 2e^{-2m\varepsilon^2}.
 \]
-The exact-label cost remains. Sampling uncertainty intervals are different from Proposition 1's deterministic bounds.
+The probability here is over the \(m\) target draws. The exact-label
+cost remains. Sampling uncertainty intervals are different from
+Proposition 1's deterministic bounds.
 
 At the classifier threshold \(\widehat p\le1\%\), \(2\) of \(43\) held-out proposed NO answers were actually YES. The list-bootstrap interval for that conditional error fraction was \(0\%\)--\(10.7\%\); its zero lower endpoint does not certify zero future risk. A learned score can order which witnesses or certificates to seek, but cannot itself certify a NO decision.
 

@@ -34,6 +34,7 @@
 }{% if KOMA class
   \KOMAoptions{parskip=half}}
 \makeatother
+\setlength{\parskip}{5.5pt plus 1.5pt minus 1pt}
 \usepackage{xcolor}
 \usepackage[skins,breakable]{tcolorbox}
 \usepackage{titlesec}
@@ -102,7 +103,7 @@ the cost of obtaining coverage.
 \hypertarget{a-coverage-model}{%
 \subsection{A coverage model}\label{a-coverage-model}}
 
-Let \(n\in\mathbb{N}\) be the problem size and \(\mathcal{S}_n\) its set
+Let \(n\) be a positive integer measuring problem size and \(\mathcal{S}_n\) its set
 of candidate states, with
 
 \[
@@ -199,8 +200,9 @@ Define the total \emph{certified coverage}
 C(n) = k(n) + a(n)\delta(n) + p(n),
 \]
 
-so that \(r(n) = 2^n - C(n)\). Here and below,
-\(f(n)=\mathrm{poly}(n)\) means \(f(n)=O(n^d)\) for some fixed \(d\ge0\).
+so that \(r(n) = 2^n - C(n)\). Here \(f(n)=\mathrm{poly}(n)\) means
+\(|f(n)|\le c n^d\) for constants \(c>0,d\ge0\) and all sufficiently large
+\(n\), also written \(f(n)=O(n^d)\).
 
 \begin{tcolorbox}[accentbox]
 \textbf{Theorem 1 (Certified coverage criterion).} Assume
@@ -268,8 +270,9 @@ polynomial factors.
 
 For intuition, choose differentiable extensions of
 \(k,\delta,a,p,P\), and \(Q_{\mathrm{pair}}\) from integer to real
-\(n\), with \(k>0\), and define \(r,T\) there by (1)--(2). Primes
-denote derivatives with respect to \(n\); the equations below describe
+\(n\), with \(k>0\), and define \(r,T\) there by (1)--(2). Here \(\ln\)
+is the natural logarithm and primes denote derivatives with respect to
+\(n\); the equations below describe
 this chosen interpolation. Differentiating (1) gives
 
 \begin{tcolorbox}[compactbox]
@@ -312,7 +315,7 @@ Equivalently, since \(r(n) = 2^n - C(n)\),
 r'(n) = (\ln 2)2^n - C'(n).
 \]
 
-Integrating from a reference scale \(n_0\),
+Integrating from a reference value \(n_0\), using \(s\) as the integration variable,
 
 \begin{tcolorbox}[compactbox]
 \begin{equation}
@@ -331,7 +334,8 @@ state creation and certified coverage growth to remain polynomial in
 Suppose a naive learned-pruning model deletes \(\delta(n)\) states and
 \(e(n)\in[0,1]\) is the fraction deleted incorrectly. Exact recovery
 would require revisiting \(e(n)\delta(n)\) states. When
-\(\delta(n)=\Theta(2^n)\), any fixed positive error fraction leaves
+\(\delta(n)=\Theta(2^n)\), meaning positive constant multiples of \(2^n\)
+bound \(\delta(n)\) above and below eventually, any fixed positive error fraction leaves
 exponential recovery work. Keeping that work polynomial requires, for
 some fixed \(d\ge0\),
 
@@ -422,19 +426,17 @@ representation covers, and how costly that representation is to discover
 and manipulate.
 
 \begin{tcolorbox}[accentbox]
-\textbf{Summary.} Exponential search becomes a competition between state-space
-growth and certified coverage. Structural compression and exact pairing
-represent states collectively; learning proposes further regions;
-certification makes eliminations exact; and the residual determines
-explicit work. The governing condition is simple:
+\textbf{Summary.} Exponential search pits state-space growth against
+certified coverage. Compression and pairing represent states collectively;
+learning proposes regions; certification makes removals exact; and the
+residual determines explicit work. The governing condition is:
 
 \[
   \text{polynomial overhead} + \text{polynomial residual} \;\Longrightarrow\; \text{polynomial modeled runtime.}
   \]
 
-The differential form records the same statement dynamically: coverage
-must track exponential state creation closely enough that their
-accumulated gap is only polynomial.
+The differential form says coverage must track exponential state creation
+closely enough to leave only a polynomial cumulative gap.
 \end{tcolorbox}
 
 \end{document}
