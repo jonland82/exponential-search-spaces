@@ -1,29 +1,37 @@
 # Certified Coverage of Exponential Search Spaces
 
-Jonathan R. Landers · September 2026
+Jonathan R. Landers · September–October 2026
 
-**[Read the paper](https://jonland82.github.io/exponential-search-spaces/)** · [PDF](Certified_Coverage_of_Exponential_Search_Spaces.pdf) · [LaTeX source](Certified_Coverage_of_Exponential_Search_Spaces.tex)
+**[Read the series landing page](https://jonland82.github.io/exponential-search-spaces/)** · [Experiments and data](subset-sum/README.md)
 
-An exact search over a problem of size $n$ may begin with $2^n$ candidate states. The paper asks what it would take to avoid examining them one by one: represent some states structurally, let a learned model propose regions for exact elimination, and combine others through summaries that preserve the search answer.
+This repository tells a short research story: a general criterion for avoiding explicit search over $2^n$ states, a subset-sum stress test that finds the limits of one implementation, and a probability-valued question with certified bounds. Each part is meant to stand alone.
 
-The three mechanisms cover disjoint parts of the space. Let $k(n)\ge1$ count structurally represented states, $\delta(n)$ count distinct states proposed for deletion, $a(n)\in[0,1]$ be the fraction certified safe by an exact verifier, and $p(n)$ count additional states represented by paired summaries. Their sum $C(n)$ is the total covered count; the number still searched individually is
+| Note | Question | Read |
+|---|---|---|
+| **I. Certified Coverage of Exponential Search Spaces** | When can exact representation and certified exclusion leave only a polynomial residual? | [HTML](Certified_Coverage_of_Exponential_Search_Spaces.html) · [PDF](Certified_Coverage_of_Exponential_Search_Spaces.pdf) · [LaTeX](Certified_Coverage_of_Exponential_Search_Spaces.tex) |
+| **II. Subset Sum as a Stress Test** | Do exact pairing, pruning, and learned proposals help on a concrete $2^n$ problem? | [HTML](Subset_Sum_as_a_Stress_Test.html) · [PDF](Subset_Sum_as_a_Stress_Test.pdf) · [LaTeX](Subset_Sum_as_a_Stress_Test.tex) |
+| **III. Probability-Valued Subset Sum** | For a specified random target, how tightly can we bound the chance that it is reachable? | [HTML](Probability_Valued_Subset_Sum.html) · [PDF](Probability_Valued_Subset_Sum.pdf) · [LaTeX](Probability_Valued_Subset_Sum.tex) |
 
-$$
-r(n)=2^n-\underbrace{\bigl(k(n)+a(n)\delta(n)+p(n)\bigr)}_{C(n)}.
-$$
-
-Coverage has a cost. Let $P(n)$ account for structural discovery and learned proposals with verification, and $Q_{\mathrm{pair}}(n)$ for constructing, certifying, and using paired summaries. Charging $\log_2 k(n)$ for the structural description and one unit per residual state, the modeled runtime is
-
-$$
-T(n)=P(n)+Q_{\mathrm{pair}}(n)+r(n)+\log_2 k(n).
-$$
-
-**The criterion:** if $P(n)+Q_{\mathrm{pair}}(n)$ is polynomially bounded, modeled runtime is polynomial exactly when the uncovered residual is polynomial. Here $\mathrm{poly}(n)$ means $O(n^d)$ for some fixed $d\ge0$:
+The first note counts only states handled by exact representations or certified exclusions. If $C(n)$ is that coverage, the explicit residual is
 
 $$
-T(n)=\mathrm{poly}(n)\quad\Longleftrightarrow\quad C(n)=2^n-\mathrm{poly}(n).
+r(n)=2^n-C(n).
 $$
 
-This explains why removing even 99.999% of an exponential space is asymptotically insufficient when that fraction stays fixed. Exact verification lets learning propose removals without risking correctness. Pairing is useful only if summaries can be built or reused cheaply: an explicit tree over $2^n$ states still needs $2^n-1$ merges.
+The cost of obtaining coverage matters. In the paper's model, polynomial coverage overhead yields polynomial runtime exactly when $r(n)$ is polynomially bounded. Note II tests that premise: the paired subset-sum solver was slower than meet-in-the-middle on all 18 constructed hard no-solution cases tested. A classifier ranked held-out cases, but even confident NO proposals included real YES cases.
 
-The paper gives a criterion for this model. Finding such coverage at polynomial cost for a concrete problem remains the substantive challenge.
+Note III changes the objective. For fixed weights $w$, reachable-sum set $A(w)$, and a target $T$ drawn from a stated distribution $\mu$,
+
+$$
+q_\mu(w)=\Pr_{T\sim\mu}[T\in A(w)].
+$$
+
+Witnessed sums $L$ and soundly admissible targets $U$ give $\mu(L)\le q_\mu(w)\le\mu(U)$. These are certified bounds for a particular list; classifier probabilities are statistical estimates under the experiment's input distribution.
+
+## Reproduce the notes
+
+- [subset-sum/README.md](subset-sum/README.md) links the exact-search benchmarks, classifier experiment, probability-bound experiment, raw data, and figures.
+- Run `python build_papers.py` to regenerate the two companion PDFs and HTML pages from their LaTeX sources. It requires `pdflatex` and `pandoc`.
+- The original paper can be rebuilt with `pdflatex Certified_Coverage_of_Exponential_Search_Spaces.tex`. All HTML pages share [paper.css](paper.css).
+
+These notes give a model criterion and results on small synthetic families. They do not claim a new worst-case subset-sum bound.

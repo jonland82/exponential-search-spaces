@@ -23,310 +23,14 @@ window.MathJax = {
 </script>
 <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
 
-<style>
-:root{
-  --paper:#fbfaf7;
-  --ink:#26231f;
-  --muted:#6f685f;
-  --accent:#6e5943;
-  --accent-soft:#b6a58f;
-  --box-bg:#f7f3ec;
-  --box-line:#c8bcad;
-  --rule:#d8d1c6;
-  --shadow:rgba(48,39,30,.06);
-}
-
-*{ box-sizing:border-box; }
-
-html{
-  background:var(--paper);
-  -webkit-text-size-adjust:100%;
-}
-
-body{
-  margin:0;
-  background:
-    radial-gradient(circle at top left, rgba(110,89,67,.045), transparent 34%),
-    var(--paper);
-  color:var(--ink);
-  font-family: Georgia, "Times New Roman", serif;
-  line-height:1.64;
-}
-
-main{
-  width:100%;
-  max-width:760px;
-  margin:0 auto;
-  padding:
-    calc(28px + env(safe-area-inset-top))
-    max(18px, env(safe-area-inset-right))
-    calc(52px + env(safe-area-inset-bottom))
-    max(18px, env(safe-area-inset-left));
-}
-
-.top-links{
-  display:flex;
-  flex-wrap:wrap;
-  gap:.4rem 1.25rem;
-  margin:0 0 1.35rem;
-}
-.top-links a{
-  display:inline-block;
-  padding:.12rem 0 .25rem;
-  border-bottom:1px solid var(--accent-soft);
-  color:var(--accent);
-  font-family:Georgia,"Times New Roman",serif;
-  font-size:.88rem;
-  text-decoration:none;
-}
-.top-links a:hover,
-.top-links a:focus-visible{
-  color:var(--ink);
-  border-bottom-color:var(--ink);
-}
-
-header{
-  position:relative;
-  margin:0 0 32px 0;
-  padding:4px 0 24px 0;
-  border-bottom:1px solid var(--rule);
-}
-header:after{
-  content:"";
-  position:absolute;
-  left:0;
-  bottom:-1px;
-  width:72px;
-  height:2px;
-  background:var(--accent);
-}
-
-h1{
-  margin:0 0 12px 0;
-  font-weight:700;
-  font-size:clamp(1.85rem, 6.6vw, 2.85rem);
-  line-height:1.06;
-  letter-spacing:-0.035em;
-  color:var(--ink);
-  text-wrap:balance;
-}
-
-.byline{
-  color:var(--accent);
-  font-size:.92rem;
-  line-height:1.5;
-  letter-spacing:.025em;
-}
-
-section{
-  margin-top:2.5rem;
-}
-
-h2{
-  position:relative;
-  margin:0 0 .95rem 0;
-  padding-left:.78rem;
-  font-size:1.32rem;
-  line-height:1.2;
-  color:var(--ink);
-  letter-spacing:-0.01em;
-}
-h2:before{
-  content:"";
-  position:absolute;
-  left:0;
-  top:.15em;
-  bottom:.14em;
-  width:2px;
-  border-radius:2px;
-  background:var(--accent-soft);
-}
-
-p{
-  margin:.8rem 0;
-  font-size:1.04rem;
-  text-wrap:pretty;
-}
-
-.keyeq{
-  position:relative;
-  margin:1.2rem 0 1.35rem 0;
-  padding:1rem .9rem;
-  background:
-    linear-gradient(180deg, rgba(255,255,255,.42), rgba(255,255,255,.08)),
-    var(--box-bg);
-  border:1px solid var(--box-line);
-  border-radius:12px;
-  box-shadow:0 6px 18px var(--shadow);
-  overflow-x:auto;
-  -webkit-overflow-scrolling:touch;
-}
-.keyeq:before{
-  content:"";
-  position:absolute;
-  left:0;
-  top:16%;
-  bottom:16%;
-  width:3px;
-  border-radius:0 3px 3px 0;
-  background:var(--accent);
-}
-
-.keyeq mjx-container{
-  margin:0 !important;
-}
-
-.eqnum{
-  display:block;
-  margin-top:.35rem;
-  text-align:right;
-  font-size:.82rem;
-  color:var(--muted);
-  font-style:normal;
-}
-
-.math{
-  overflow-x:auto;
-  -webkit-overflow-scrolling:touch;
-  padding-bottom:.12rem;
-}
-
-.math mjx-container[display="true"]{
-  margin:.9rem 0 !important;
-}
-
-.abstract{
-  margin:0 0 .5rem 0;
-  padding:1.05rem 1rem;
-  background:
-    linear-gradient(180deg, rgba(255,255,255,.5), rgba(255,255,255,.1)),
-    var(--box-bg);
-  border:1px solid var(--box-line);
-  border-radius:12px;
-  box-shadow:0 6px 18px var(--shadow);
-}
-.abstract p{ margin:.55rem 0; }
-.abstract p:first-child{ margin-top:0; }
-.abstract p:last-child{ margin-bottom:0; }
-.abstract .lead{
-  font-variant:small-caps;
-  letter-spacing:.06em;
-  color:var(--accent);
-  font-weight:700;
-}
-
-.thm{
-  position:relative;
-  margin:1.4rem 0;
-  padding:1.05rem 1rem .9rem 1.05rem;
-  background:
-    linear-gradient(180deg, rgba(255,255,255,.5), rgba(255,255,255,.08)),
-    var(--box-bg);
-  border:1px solid var(--box-line);
-  border-left:3px solid var(--accent);
-  border-radius:12px;
-  box-shadow:0 6px 18px var(--shadow);
-  font-style:italic;
-}
-.thm .tag{
-  font-style:normal;
-  font-weight:700;
-  letter-spacing:.01em;
-  color:var(--ink);
-}
-.thm p{ margin:.6rem 0; }
-.thm p:first-child{ margin-top:0; }
-.thm p:last-child{ margin-bottom:0; }
-.thm .math mjx-container[display="true"]{ margin:.75rem 0 !important; }
-
-.proof{
-  margin:1.1rem 0;
-  color:#3f3a34;
-}
-.proof .tag{
-  font-style:italic;
-  color:var(--accent);
-}
-.qed{ float:right; }
-
-.flow{
-  margin:1.3rem 0;
-  padding:1rem .9rem;
-  text-align:center;
-  background:var(--box-bg);
-  border:1px solid var(--box-line);
-  border-radius:12px;
-  line-height:1.95;
-}
-
-.terms{
-  margin:1.1rem 0;
-  padding-left:1.15rem;
-  color:#3f3a34;
-  font-size:1rem;
-}
-.terms li{ margin:.4rem 0; }
-
-blockquote{
-  margin:1.35rem 0;
-  padding:.2rem 0 .2rem 1rem;
-  border-left:2px solid var(--accent);
-  color:var(--muted);
-  font-style:italic;
-}
-
-em{ font-style:italic; }
-
-.opening:first-letter{
-  float:left;
-  font-size:3.2rem;
-  line-height:.88;
-  padding-right:.08em;
-  padding-top:.08em;
-  color:var(--accent);
-  font-weight:600;
-}
-
-@media (max-width:520px){
-  main{
-    max-width:none;
-    padding-left:16px;
-    padding-right:16px;
-  }
-
-  h1{
-    font-size:1.8rem;
-  }
-
-  p{
-    font-size:1.01rem;
-  }
-
-  h2{
-    font-size:1.22rem;
-  }
-
-  .keyeq, .thm, .abstract, .flow{
-    margin-left:0;
-    margin-right:0;
-    padding:.8rem .65rem;
-    border-radius:8px;
-  }
-
-}
-
-@media print{
-  body{ background:white; }
-  main{ max-width:7.2in; padding:.4in 0; }
-  .keyeq, .thm, .abstract{ break-inside:avoid; }
-}
-</style>
+<link rel="stylesheet" href="paper.css">
 </head>
 
 <body>
 <main>
-<nav class="top-links" aria-label="Paper links"><a href="Certified_Coverage_of_Exponential_Search_Spaces.pdf">Download PDF</a></nav>
+<nav class="top-links" aria-label="Paper links"><a href="index.html">&#8592; Series home</a><a href="https://github.com/jonland82/exponential-search-spaces">GitHub repository</a><a href="Certified_Coverage_of_Exponential_Search_Spaces.pdf">Download PDF</a><a href="Certified_Coverage_of_Exponential_Search_Spaces.tex">LaTeX source</a></nav>
 <header>
+  <span class="series-label">Foundational paper · Note I of III</span>
   <h1>Certified Coverage of Exponential Search Spaces</h1>
   <div class="byline">Jonathan R. Landers<br>September 2026</div>
 </header>
@@ -540,6 +244,8 @@ P(n)+Q_{\mathrm{pair}}(n) = \mathrm{poly}(n) \qquad\text{and}\qquad 2^n - C(n) =
 \]</div>
 
 <p>Cardinality alone cannot answer this: exponentially many states can sometimes be described by a short rule. The substantive lower- or upper-bound problem is therefore about the <em>cost of discovering and certifying structure</em>, not merely the number of states represented by that structure.</p>
+
+<p>Two companion notes follow this question through subset sum: first as a stress test of exact pairing and learned proposals, then as a probability-valued reachable-target problem. The latter changes the objective and uses its own certified bounds.</p>
 </section>
 
 <section>
@@ -570,6 +276,13 @@ T(n) = \mathrm{poly}(n) \quad\Longleftrightarrow\quad r(n) = 2^n - C(n) = \mathr
 </div>
 </section>
 
+<footer>
+  <p>Part of the <a href="index.html">Certified Coverage research sequence</a>.</p>
+  <div class="link-row">
+    <a href="Subset_Sum_as_a_Stress_Test.html">Note II: Subset-sum stress test</a>
+    <a href="Probability_Valued_Subset_Sum.html">Note III: Probability-valued subset sum</a>
+  </div>
+</footer>
 </main>
 </body>
 </html>

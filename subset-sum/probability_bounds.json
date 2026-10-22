@@ -1,0 +1,596 @@
+{
+  "bootstrap_replicates": 5000,
+  "bootstrap_seed": 20261023,
+  "test": {
+    "groups": 180,
+    "targets": 720,
+    "observed_yes_rate": 0.31805555555555554,
+    "yes_rate_bootstrap_95_interval": [
+      0.26944444444444443,
+      0.36670138888888837
+    ],
+    "yes_rate_hoeffding_95_interval": [
+      0.21682864523750467,
+      0.4192824658736064
+    ],
+    "thresholds": [
+      {
+        "p_yes_at_most": 0.01,
+        "proposed_no": 43,
+        "wrong_no": 2,
+        "proposed_fraction": 0.059722222222222225,
+        "observed_wrong_no_rate": 0.046511627906976744,
+        "wrong_no_rate_bootstrap_95_interval": [
+          0.0,
+          0.10714285714285714
+        ]
+      },
+      {
+        "p_yes_at_most": 0.05,
+        "proposed_no": 193,
+        "wrong_no": 7,
+        "proposed_fraction": 0.26805555555555555,
+        "observed_wrong_no_rate": 0.03626943005181347,
+        "wrong_no_rate_bootstrap_95_interval": [
+          0.013214409923487132,
+          0.06294130626654892
+        ]
+      },
+      {
+        "p_yes_at_most": 0.1,
+        "proposed_no": 303,
+        "wrong_no": 19,
+        "proposed_fraction": 0.42083333333333334,
+        "observed_wrong_no_rate": 0.0627062706270627,
+        "wrong_no_rate_bootstrap_95_interval": [
+          0.03581505284963085,
+          0.09235668789808917
+        ]
+      },
+      {
+        "p_yes_at_most": 0.2,
+        "proposed_no": 406,
+        "wrong_no": 39,
+        "proposed_fraction": 0.5638888888888889,
+        "observed_wrong_no_rate": 0.0960591133004926,
+        "wrong_no_rate_bootstrap_95_interval": [
+          0.06855716960074883,
+          0.12533333333333332
+        ]
+      },
+      {
+        "p_yes_at_most": 0.5,
+        "proposed_no": 509,
+        "wrong_no": 78,
+        "proposed_fraction": 0.7069444444444445,
+        "observed_wrong_no_rate": 0.15324165029469547,
+        "wrong_no_rate_bootstrap_95_interval": [
+          0.12058140155966243,
+          0.18801861090401484
+        ]
+      }
+    ]
+  },
+  "unseen_n24": {
+    "groups": 240,
+    "targets": 960,
+    "observed_yes_rate": 0.25,
+    "yes_rate_bootstrap_95_interval": [
+      0.209375,
+      0.2916666666666667
+    ],
+    "yes_rate_hoeffding_95_interval": [
+      0.16233492411795886,
+      0.33766507588204114
+    ],
+    "thresholds": [
+      {
+        "p_yes_at_most": 0.01,
+        "proposed_no": 35,
+        "wrong_no": 0,
+        "proposed_fraction": 0.036458333333333336,
+        "observed_wrong_no_rate": 0.0,
+        "wrong_no_rate_bootstrap_95_interval": [
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "p_yes_at_most": 0.05,
+        "proposed_no": 339,
+        "wrong_no": 10,
+        "proposed_fraction": 0.353125,
+        "observed_wrong_no_rate": 0.029498525073746312,
+        "wrong_no_rate_bootstrap_95_interval": [
+          0.013201320132013201,
+          0.04807774914089346
+        ]
+      },
+      {
+        "p_yes_at_most": 0.1,
+        "proposed_no": 498,
+        "wrong_no": 21,
+        "proposed_fraction": 0.51875,
+        "observed_wrong_no_rate": 0.04216867469879518,
+        "wrong_no_rate_bootstrap_95_interval": [
+          0.02569043275565015,
+          0.06072874493927125
+        ]
+      },
+      {
+        "p_yes_at_most": 0.2,
+        "proposed_no": 608,
+        "wrong_no": 41,
+        "proposed_fraction": 0.6333333333333333,
+        "observed_wrong_no_rate": 0.06743421052631579,
+        "wrong_no_rate_bootstrap_95_interval": [
+          0.04799834710743802,
+          0.08823529411764706
+        ]
+      },
+      {
+        "p_yes_at_most": 0.5,
+        "proposed_no": 753,
+        "wrong_no": 97,
+        "proposed_fraction": 0.784375,
+        "observed_wrong_no_rate": 0.12881806108897742,
+        "wrong_no_rate_bootstrap_95_interval": [
+          0.10187385640648815,
+          0.15816379165146113
+        ]
+      }
+    ]
+  },
+  "instance_bounds_n16": [
+    {
+      "group_id": 19,
+      "family": "paired",
+      "target_support_size": 21493,
+      "distinct_reachable_targets": 4959,
+      "certified_lower_512_witnesses": 0.01768017494067836,
+      "exact_q": 0.2307262829758526,
+      "certified_upper_multiplicity": 0.3052621783836598
+    },
+    {
+      "group_id": 43,
+      "family": "paired",
+      "target_support_size": 20935,
+      "distinct_reachable_targets": 4837,
+      "certified_lower_512_witnesses": 0.01939336040124194,
+      "exact_q": 0.23104848340100312,
+      "certified_upper_multiplicity": 0.31339861475997133
+    },
+    {
+      "group_id": 55,
+      "family": "paired",
+      "target_support_size": 16121,
+      "distinct_reachable_targets": 4835,
+      "certified_lower_512_witnesses": 0.025618758141554496,
+      "exact_q": 0.29991935984120094,
+      "certified_upper_multiplicity": 0.40698467836982816
+    },
+    {
+      "group_id": 75,
+      "family": "paired",
+      "target_support_size": 43137,
+      "distinct_reachable_targets": 5005,
+      "certified_lower_512_witnesses": 0.009481419662934372,
+      "exact_q": 0.11602568560632404,
+      "certified_upper_multiplicity": 0.15209680784477364
+    },
+    {
+      "group_id": 81,
+      "family": "paired",
+      "target_support_size": 171581,
+      "distinct_reachable_targets": 5325,
+      "certified_lower_512_witnesses": 0.002360401209924176,
+      "exact_q": 0.0310349047971512,
+      "certified_upper_multiplicity": 0.03823849960077165
+    },
+    {
+      "group_id": 115,
+      "family": "independent",
+      "target_support_size": 69361,
+      "distinct_reachable_targets": 40670,
+      "certified_lower_512_witnesses": 0.006199449258228688,
+      "exact_q": 0.5863525612375831,
+      "certified_upper_multiplicity": 0.9448537362494773
+    },
+    {
+      "group_id": 160,
+      "family": "independent",
+      "target_support_size": 3416063,
+      "distinct_reachable_targets": 57198,
+      "certified_lower_512_witnesses": 0.00012997418373138903,
+      "exact_q": 0.016743836398801778,
+      "certified_upper_multiplicity": 0.01918465789418989
+    },
+    {
+      "group_id": 197,
+      "family": "paired",
+      "target_support_size": 11123,
+      "distinct_reachable_targets": 2819,
+      "certified_lower_512_witnesses": 0.03542209835476041,
+      "exact_q": 0.25343882046210553,
+      "certified_upper_multiplicity": 0.5898588510293985
+    },
+    {
+      "group_id": 278,
+      "family": "paired",
+      "target_support_size": 3751,
+      "distinct_reachable_targets": 3113,
+      "certified_lower_512_witnesses": 0.10103972274060251,
+      "exact_q": 0.8299120234604106,
+      "certified_upper_multiplicity": 1.0
+    },
+    {
+      "group_id": 331,
+      "family": "paired",
+      "target_support_size": 36321,
+      "distinct_reachable_targets": 5107,
+      "certified_lower_512_witnesses": 0.011012912640070482,
+      "exact_q": 0.1406073621320999,
+      "certified_upper_multiplicity": 0.1806392995787561
+    },
+    {
+      "group_id": 360,
+      "family": "independent",
+      "target_support_size": 2112544,
+      "distinct_reachable_targets": 56500,
+      "certified_lower_512_witnesses": 0.00020969977430055896,
+      "exact_q": 0.02674500507445052,
+      "certified_upper_multiplicity": 0.031022312434675917
+    },
+    {
+      "group_id": 368,
+      "family": "independent",
+      "target_support_size": 31058,
+      "distinct_reachable_targets": 26174,
+      "certified_lower_512_witnesses": 0.014392427071929937,
+      "exact_q": 0.8427458303818662,
+      "certified_upper_multiplicity": 1.0
+    },
+    {
+      "group_id": 370,
+      "family": "paired",
+      "target_support_size": 14035,
+      "distinct_reachable_targets": 4357,
+      "certified_lower_512_witnesses": 0.028143925899536872,
+      "exact_q": 0.310438190238689,
+      "certified_upper_multiplicity": 0.4674741717135732
+    },
+    {
+      "group_id": 398,
+      "family": "paired",
+      "target_support_size": 6119,
+      "distinct_reachable_targets": 3933,
+      "certified_lower_512_witnesses": 0.06569700931524759,
+      "exact_q": 0.6427520836738029,
+      "certified_upper_multiplicity": 1.0
+    },
+    {
+      "group_id": 413,
+      "family": "independent",
+      "target_support_size": 2271526,
+      "distinct_reachable_targets": 56580,
+      "certified_lower_512_witnesses": 0.00019634377946807564,
+      "exact_q": 0.02490836556570341,
+      "certified_upper_multiplicity": 0.02885108953188297
+    },
+    {
+      "group_id": 439,
+      "family": "independent",
+      "target_support_size": 522127,
+      "distinct_reachable_targets": 53502,
+      "certified_lower_512_witnesses": 0.0008637745222905538,
+      "exact_q": 0.10246932259775879,
+      "certified_upper_multiplicity": 0.1255173549730238
+    },
+    {
+      "group_id": 440,
+      "family": "independent",
+      "target_support_size": 91515,
+      "distinct_reachable_targets": 40770,
+      "certified_lower_512_witnesses": 0.004851663661694804,
+      "exact_q": 0.4455007375840026,
+      "certified_upper_multiplicity": 0.7161230399388079
+    },
+    {
+      "group_id": 451,
+      "family": "paired",
+      "target_support_size": 4481,
+      "distinct_reachable_targets": 2913,
+      "certified_lower_512_witnesses": 0.08346351260879269,
+      "exact_q": 0.6500781075652756,
+      "certified_upper_multiplicity": 1.0
+    },
+    {
+      "group_id": 455,
+      "family": "paired",
+      "target_support_size": 175735,
+      "distinct_reachable_targets": 5351,
+      "certified_lower_512_witnesses": 0.002321677525820127,
+      "exact_q": 0.03044925598201838,
+      "certified_upper_multiplicity": 0.03733462315418101
+    },
+    {
+      "group_id": 464,
+      "family": "independent",
+      "target_support_size": 434303,
+      "distinct_reachable_targets": 53538,
+      "certified_lower_512_witnesses": 0.0009969997904688663,
+      "exact_q": 0.1232733828686424,
+      "certified_upper_multiplicity": 0.15089925697036402
+    },
+    {
+      "group_id": 479,
+      "family": "independent",
+      "target_support_size": 727713,
+      "distinct_reachable_targets": 51836,
+      "certified_lower_512_witnesses": 0.0006128789783884581,
+      "exact_q": 0.071231378304359,
+      "certified_upper_multiplicity": 0.0900574814521659
+    },
+    {
+      "group_id": 481,
+      "family": "paired",
+      "target_support_size": 61991,
+      "distinct_reachable_targets": 4973,
+      "certified_lower_512_witnesses": 0.006275104450646061,
+      "exact_q": 0.08022132245003306,
+      "certified_upper_multiplicity": 0.10583794421770902
+    },
+    {
+      "group_id": 521,
+      "family": "independent",
+      "target_support_size": 78861,
+      "distinct_reachable_targets": 37141,
+      "certified_lower_512_witnesses": 0.005642839933553975,
+      "exact_q": 0.47096790555534424,
+      "certified_upper_multiplicity": 0.8310318154727939
+    },
+    {
+      "group_id": 533,
+      "family": "independent",
+      "target_support_size": 19661,
+      "distinct_reachable_targets": 17627,
+      "certified_lower_512_witnesses": 0.02166726005798281,
+      "exact_q": 0.8965464625400539,
+      "certified_upper_multiplicity": 1.0
+    },
+    {
+      "group_id": 538,
+      "family": "independent",
+      "target_support_size": 2051128,
+      "distinct_reachable_targets": 57176,
+      "certified_lower_512_witnesses": 0.00021500364677387273,
+      "exact_q": 0.027875393442047498,
+      "certified_upper_multiplicity": 0.03195119953508509
+    },
+    {
+      "group_id": 552,
+      "family": "paired",
+      "target_support_size": 1973,
+      "distinct_reachable_targets": 1711,
+      "certified_lower_512_witnesses": 0.18601115053218448,
+      "exact_q": 0.8672072985301571,
+      "certified_upper_multiplicity": 1.0
+    },
+    {
+      "group_id": 554,
+      "family": "paired",
+      "target_support_size": 71241,
+      "distinct_reachable_targets": 5289,
+      "certified_lower_512_witnesses": 0.00578318664813801,
+      "exact_q": 0.07424095675243189,
+      "certified_upper_multiplicity": 0.09209584368551817
+    },
+    {
+      "group_id": 564,
+      "family": "paired",
+      "target_support_size": 356041,
+      "distinct_reachable_targets": 5235,
+      "certified_lower_512_witnesses": 0.0011262747829603895,
+      "exact_q": 0.014703362814956704,
+      "certified_upper_multiplicity": 0.018427652995020236
+    },
+    {
+      "group_id": 571,
+      "family": "independent",
+      "target_support_size": 30991,
+      "distinct_reachable_targets": 26073,
+      "certified_lower_512_witnesses": 0.014326740021296505,
+      "exact_q": 0.8413087670614049,
+      "certified_upper_multiplicity": 1.0
+    },
+    {
+      "group_id": 583,
+      "family": "paired",
+      "target_support_size": 7683,
+      "distinct_reachable_targets": 4199,
+      "certified_lower_512_witnesses": 0.050891578810360535,
+      "exact_q": 0.5465313028764806,
+      "certified_upper_multiplicity": 0.853963295587661
+    },
+    {
+      "group_id": 607,
+      "family": "paired",
+      "target_support_size": 31909,
+      "distinct_reachable_targets": 5145,
+      "certified_lower_512_witnesses": 0.011971544078473157,
+      "exact_q": 0.16123977561189634,
+      "certified_upper_multiplicity": 0.20561597041587013
+    },
+    {
+      "group_id": 618,
+      "family": "independent",
+      "target_support_size": 3750116,
+      "distinct_reachable_targets": 55594,
+      "certified_lower_512_witnesses": 0.00011599641184432694,
+      "exact_q": 0.014824608092123017,
+      "certified_upper_multiplicity": 0.01747572608420646
+    },
+    {
+      "group_id": 638,
+      "family": "paired",
+      "target_support_size": 1333,
+      "distinct_reachable_targets": 1225,
+      "certified_lower_512_witnesses": 0.24381095273818454,
+      "exact_q": 0.918979744936234,
+      "certified_upper_multiplicity": 1.0
+    },
+    {
+      "group_id": 673,
+      "family": "independent",
+      "target_support_size": 42672,
+      "distinct_reachable_targets": 32480,
+      "certified_lower_512_witnesses": 0.010053430821147357,
+      "exact_q": 0.7611548556430446,
+      "certified_upper_multiplicity": 1.0
+    },
+    {
+      "group_id": 709,
+      "family": "independent",
+      "target_support_size": 574548,
+      "distinct_reachable_targets": 54408,
+      "certified_lower_512_witnesses": 0.000769300389175491,
+      "exact_q": 0.09469704881054325,
+      "certified_upper_multiplicity": 0.11406531743213796
+    },
+    {
+      "group_id": 715,
+      "family": "independent",
+      "target_support_size": 44363,
+      "distinct_reachable_targets": 30181,
+      "certified_lower_512_witnesses": 0.009805468521064852,
+      "exact_q": 0.6803191849063409,
+      "certified_upper_multiplicity": 1.0
+    },
+    {
+      "group_id": 747,
+      "family": "independent",
+      "target_support_size": 21628,
+      "distinct_reachable_targets": 19944,
+      "certified_lower_512_witnesses": 0.01974292583687812,
+      "exact_q": 0.9221379692990568,
+      "certified_upper_multiplicity": 1.0
+    },
+    {
+      "group_id": 755,
+      "family": "independent",
+      "target_support_size": 1856781,
+      "distinct_reachable_targets": 55370,
+      "certified_lower_512_witnesses": 0.00023804638242205193,
+      "exact_q": 0.02982042577988465,
+      "certified_upper_multiplicity": 0.03529549257559184
+    },
+    {
+      "group_id": 758,
+      "family": "independent",
+      "target_support_size": 659291,
+      "distinct_reachable_targets": 55950,
+      "certified_lower_512_witnesses": 0.0006886185311190355,
+      "exact_q": 0.0848638916654406,
+      "certified_upper_multiplicity": 0.09940375342602888
+    },
+    {
+      "group_id": 807,
+      "family": "independent",
+      "target_support_size": 22994,
+      "distinct_reachable_targets": 20880,
+      "certified_lower_512_witnesses": 0.019135426633034705,
+      "exact_q": 0.908062972949465,
+      "certified_upper_multiplicity": 1.0
+    },
+    {
+      "group_id": 813,
+      "family": "independent",
+      "target_support_size": 1178937,
+      "distinct_reachable_targets": 51434,
+      "certified_lower_512_witnesses": 0.00037661045501159095,
+      "exact_q": 0.04362743725915804,
+      "certified_upper_multiplicity": 0.05558906031450366
+    },
+    {
+      "group_id": 832,
+      "family": "independent",
+      "target_support_size": 111443,
+      "distinct_reachable_targets": 43822,
+      "certified_lower_512_witnesses": 0.0039033407212655797,
+      "exact_q": 0.39322344158000055,
+      "certified_upper_multiplicity": 0.5880674425491058
+    },
+    {
+      "group_id": 917,
+      "family": "paired",
+      "target_support_size": 15275,
+      "distinct_reachable_targets": 4199,
+      "certified_lower_512_witnesses": 0.02507364975450082,
+      "exact_q": 0.27489361702127657,
+      "certified_upper_multiplicity": 0.4295253682487725
+    },
+    {
+      "group_id": 960,
+      "family": "paired",
+      "target_support_size": 14889,
+      "distinct_reachable_targets": 4485,
+      "certified_lower_512_witnesses": 0.027066962186849352,
+      "exact_q": 0.30122909530525893,
+      "certified_upper_multiplicity": 0.4406608905903687
+    },
+    {
+      "group_id": 1047,
+      "family": "independent",
+      "target_support_size": 4398345,
+      "distinct_reachable_targets": 57080,
+      "certified_lower_512_witnesses": 0.00010253856848428215,
+      "exact_q": 0.012977608623243516,
+      "certified_upper_multiplicity": 0.014900149942762562
+    },
+    {
+      "group_id": 1057,
+      "family": "paired",
+      "target_support_size": 5473,
+      "distinct_reachable_targets": 3105,
+      "certified_lower_512_witnesses": 0.07326877398136306,
+      "exact_q": 0.5673305317010781,
+      "certified_upper_multiplicity": 1.0
+    },
+    {
+      "group_id": 1088,
+      "family": "paired",
+      "target_support_size": 127305,
+      "distinct_reachable_targets": 5201,
+      "certified_lower_512_witnesses": 0.0032677428223557596,
+      "exact_q": 0.040854640430462275,
+      "certified_upper_multiplicity": 0.05153764581124072
+    },
+    {
+      "group_id": 1113,
+      "family": "independent",
+      "target_support_size": 62443,
+      "distinct_reachable_targets": 35028,
+      "certified_lower_512_witnesses": 0.007254616209983505,
+      "exact_q": 0.5609595951507775,
+      "certified_upper_multiplicity": 1.0
+    },
+    {
+      "group_id": 1173,
+      "family": "paired",
+      "target_support_size": 176845,
+      "distinct_reachable_targets": 5193,
+      "certified_lower_512_witnesses": 0.0023127597613729536,
+      "exact_q": 0.02936469789929034,
+      "certified_upper_multiplicity": 0.03710028556080183
+    },
+    {
+      "group_id": 1195,
+      "family": "independent",
+      "target_support_size": 20811,
+      "distinct_reachable_targets": 18602,
+      "certified_lower_512_witnesses": 0.02099851040315218,
+      "exact_q": 0.8938542117149585,
+      "certified_upper_multiplicity": 1.0
+    }
+  ]
+}

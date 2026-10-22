@@ -3,574 +3,104 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Certified Coverage of Exponential Search Spaces</title>
-<meta name="description" content="A short paper on exact coverage of exponential search spaces through structural compression, certified learned proposals, and paired summaries.">
-
+<meta name="description" content="A three-note research sequence by Jonathan R. Landers: certified coverage, a subset-sum stress test, and probability-valued subset sum.">
+<title>Certified Coverage — A Research Sequence</title>
 <script>
 window.MathJax = {
-  tex: {
-    inlineMath: [['\\(','\\)']],
-    displayMath: [['\\[','\\]']],
-    tags: 'none'
-  },
-  svg: {
-    fontCache: 'global',
-    scale: 0.98
-  },
-  options: {
-    enableMenu: false
-  }
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']], tags: 'none' },
+  svg: { fontCache: 'global', scale: 0.98 },
+  options: { enableMenu: false }
 };
 </script>
 <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
-
-<style>
-:root{
-  --paper:#fbfaf7;
-  --ink:#26231f;
-  --muted:#6f685f;
-  --accent:#6e5943;
-  --accent-soft:#b6a58f;
-  --box-bg:#f7f3ec;
-  --box-line:#c8bcad;
-  --rule:#d8d1c6;
-  --shadow:rgba(48,39,30,.06);
-}
-
-*{ box-sizing:border-box; }
-
-html{
-  background:var(--paper);
-  -webkit-text-size-adjust:100%;
-}
-
-body{
-  margin:0;
-  background:
-    radial-gradient(circle at top left, rgba(110,89,67,.045), transparent 34%),
-    var(--paper);
-  color:var(--ink);
-  font-family: Georgia, "Times New Roman", serif;
-  line-height:1.64;
-}
-
-main{
-  width:100%;
-  max-width:760px;
-  margin:0 auto;
-  padding:
-    calc(28px + env(safe-area-inset-top))
-    max(18px, env(safe-area-inset-right))
-    calc(52px + env(safe-area-inset-bottom))
-    max(18px, env(safe-area-inset-left));
-}
-
-.top-links{
-  display:flex;
-  flex-wrap:wrap;
-  gap:.4rem 1.25rem;
-  margin:0 0 1.35rem;
-}
-.top-links a{
-  display:inline-block;
-  padding:.12rem 0 .25rem;
-  border-bottom:1px solid var(--accent-soft);
-  color:var(--accent);
-  font-family:Georgia,"Times New Roman",serif;
-  font-size:.88rem;
-  text-decoration:none;
-}
-.top-links a:hover,
-.top-links a:focus-visible{
-  color:var(--ink);
-  border-bottom-color:var(--ink);
-}
-
-header{
-  position:relative;
-  margin:0 0 32px 0;
-  padding:4px 0 24px 0;
-  border-bottom:1px solid var(--rule);
-}
-header:after{
-  content:"";
-  position:absolute;
-  left:0;
-  bottom:-1px;
-  width:72px;
-  height:2px;
-  background:var(--accent);
-}
-
-h1{
-  margin:0 0 12px 0;
-  font-weight:700;
-  font-size:clamp(1.85rem, 6.6vw, 2.85rem);
-  line-height:1.06;
-  letter-spacing:-0.035em;
-  color:var(--ink);
-  text-wrap:balance;
-}
-
-.byline{
-  color:var(--accent);
-  font-size:.92rem;
-  line-height:1.5;
-  letter-spacing:.025em;
-}
-
-section{
-  margin-top:2.5rem;
-}
-
-h2{
-  position:relative;
-  margin:0 0 .95rem 0;
-  padding-left:.78rem;
-  font-size:1.32rem;
-  line-height:1.2;
-  color:var(--ink);
-  letter-spacing:-0.01em;
-}
-h2:before{
-  content:"";
-  position:absolute;
-  left:0;
-  top:.15em;
-  bottom:.14em;
-  width:2px;
-  border-radius:2px;
-  background:var(--accent-soft);
-}
-
-p{
-  margin:.8rem 0;
-  font-size:1.04rem;
-  text-wrap:pretty;
-}
-
-.keyeq{
-  position:relative;
-  margin:1.2rem 0 1.35rem 0;
-  padding:1rem .9rem;
-  background:
-    linear-gradient(180deg, rgba(255,255,255,.42), rgba(255,255,255,.08)),
-    var(--box-bg);
-  border:1px solid var(--box-line);
-  border-radius:12px;
-  box-shadow:0 6px 18px var(--shadow);
-  overflow-x:auto;
-  -webkit-overflow-scrolling:touch;
-}
-.keyeq:before{
-  content:"";
-  position:absolute;
-  left:0;
-  top:16%;
-  bottom:16%;
-  width:3px;
-  border-radius:0 3px 3px 0;
-  background:var(--accent);
-}
-
-.keyeq mjx-container{
-  margin:0 !important;
-}
-
-.eqnum{
-  display:block;
-  margin-top:.35rem;
-  text-align:right;
-  font-size:.82rem;
-  color:var(--muted);
-  font-style:normal;
-}
-
-.math{
-  overflow-x:auto;
-  -webkit-overflow-scrolling:touch;
-  padding-bottom:.12rem;
-}
-
-.math mjx-container[display="true"]{
-  margin:.9rem 0 !important;
-}
-
-.abstract{
-  margin:0 0 .5rem 0;
-  padding:1.05rem 1rem;
-  background:
-    linear-gradient(180deg, rgba(255,255,255,.5), rgba(255,255,255,.1)),
-    var(--box-bg);
-  border:1px solid var(--box-line);
-  border-radius:12px;
-  box-shadow:0 6px 18px var(--shadow);
-}
-.abstract p{ margin:.55rem 0; }
-.abstract p:first-child{ margin-top:0; }
-.abstract p:last-child{ margin-bottom:0; }
-.abstract .lead{
-  font-variant:small-caps;
-  letter-spacing:.06em;
-  color:var(--accent);
-  font-weight:700;
-}
-
-.thm{
-  position:relative;
-  margin:1.4rem 0;
-  padding:1.05rem 1rem .9rem 1.05rem;
-  background:
-    linear-gradient(180deg, rgba(255,255,255,.5), rgba(255,255,255,.08)),
-    var(--box-bg);
-  border:1px solid var(--box-line);
-  border-left:3px solid var(--accent);
-  border-radius:12px;
-  box-shadow:0 6px 18px var(--shadow);
-  font-style:italic;
-}
-.thm .tag{
-  font-style:normal;
-  font-weight:700;
-  letter-spacing:.01em;
-  color:var(--ink);
-}
-.thm p{ margin:.6rem 0; }
-.thm p:first-child{ margin-top:0; }
-.thm p:last-child{ margin-bottom:0; }
-.thm .math mjx-container[display="true"]{ margin:.75rem 0 !important; }
-
-.proof{
-  margin:1.1rem 0;
-  color:#3f3a34;
-}
-.proof .tag{
-  font-style:italic;
-  color:var(--accent);
-}
-.qed{ float:right; }
-
-.flow{
-  margin:1.3rem 0;
-  padding:1rem .9rem;
-  text-align:center;
-  background:var(--box-bg);
-  border:1px solid var(--box-line);
-  border-radius:12px;
-  line-height:1.95;
-}
-
-.terms{
-  margin:1.1rem 0;
-  padding-left:1.15rem;
-  color:#3f3a34;
-  font-size:1rem;
-}
-.terms li{ margin:.4rem 0; }
-
-blockquote{
-  margin:1.35rem 0;
-  padding:.2rem 0 .2rem 1rem;
-  border-left:2px solid var(--accent);
-  color:var(--muted);
-  font-style:italic;
-}
-
-em{ font-style:italic; }
-
-.opening:first-letter{
-  float:left;
-  font-size:3.2rem;
-  line-height:.88;
-  padding-right:.08em;
-  padding-top:.08em;
-  color:var(--accent);
-  font-weight:600;
-}
-
-@media (max-width:520px){
-  main{
-    max-width:none;
-    padding-left:16px;
-    padding-right:16px;
-  }
-
-  h1{
-    font-size:1.8rem;
-  }
-
-  p{
-    font-size:1.01rem;
-  }
-
-  h2{
-    font-size:1.22rem;
-  }
-
-  .keyeq, .thm, .abstract, .flow{
-    margin-left:0;
-    margin-right:0;
-    padding:.8rem .65rem;
-    border-radius:8px;
-  }
-
-}
-
-@media print{
-  body{ background:white; }
-  main{ max-width:7.2in; padding:.4in 0; }
-  .keyeq, .thm, .abstract{ break-inside:avoid; }
-}
-</style>
+<link rel="stylesheet" href="paper.css">
 </head>
-
 <body>
 <main>
-<nav class="top-links" aria-label="Paper links"><a href="https://github.com/jonland82/exponential-search-spaces">&#8592; View the GitHub repository</a><a href="Certified_Coverage_of_Exponential_Search_Spaces.pdf">Download PDF</a></nav>
+<nav class="top-links" aria-label="Site links">
+  <a href="https://github.com/jonland82/exponential-search-spaces">View the GitHub repository</a>
+  <a href="subset-sum/README.md">Experiments and data</a>
+</nav>
+
 <header>
+  <span class="series-label">A three-note research sequence</span>
   <h1>Certified Coverage of Exponential Search Spaces</h1>
-  <div class="byline">Jonathan R. Landers<br>September 2026</div>
+  <div class="byline">Jonathan R. Landers · September–October 2026</div>
+  <p class="deck">From a general coverage criterion, through a concrete stress test, to a probability question with certified bounds.</p>
 </header>
 
 <div class="abstract">
-  <p><span class="lead">Idea.</span> Consider a search problem whose naive state space has size \(2^n\). Some states may admit a compact structural representation; others may be proposed for elimination by a learned model and certified exactly; still others may be represented by exact summaries of paired groups. Only the residual must be searched explicitly. The central quantity is the <em>growth of what remains uncovered</em>, together with the cost of obtaining coverage.</p>
+  <p><span class="lead">The question.</span> A search over \(n\) binary choices has \(2^n\) candidate states. Can exact summaries or certified exclusions account for enough of them that the remaining search is small—and can we obtain those summaries cheaply enough to help?</p>
 </div>
 
-<section>
-<h2>A coverage model</h2>
+<section aria-labelledby="arc">
+  <h2 id="arc">The narrative arc</h2>
 
-<p class="opening">Let \(n\in\mathbb{N}\) be the problem size and \(\mathcal{S}_n\) its set of candidate states, with</p>
+  <article class="series-card">
+    <span class="series-label">Note I · The framework</span>
+    <h3><a href="Certified_Coverage_of_Exponential_Search_Spaces.html">Certified Coverage of Exponential Search Spaces</a></h3>
+    <p>Formalizes structural representation, learned proposals with exact verification, and paired summaries. The decisive quantity is the uncovered residual, with all discovery and certification costs included.</p>
+    <div class="link-row">
+      <a href="Certified_Coverage_of_Exponential_Search_Spaces.html">Read HTML</a>
+      <a href="Certified_Coverage_of_Exponential_Search_Spaces.pdf">PDF</a>
+      <a href="Certified_Coverage_of_Exponential_Search_Spaces.tex">LaTeX</a>
+    </div>
+  </article>
 
-<div class="math">\[
-|\mathcal{S}_n| = 2^n .
-\]</div>
+  <article class="series-card">
+    <span class="series-label">Note II · The stress test</span>
+    <h3><a href="Subset_Sum_as_a_Stress_Test.html">Subset Sum as a Stress Test for Certified Coverage</a></h3>
+    <p>Implements exact pairing and sound pruning on subset sum. In the tested hard no-solution cases, pairing adds cost over meet-in-the-middle; a learned classifier ranks cases but cannot certify a NO.</p>
+    <div class="link-row">
+      <a href="Subset_Sum_as_a_Stress_Test.html">Read HTML</a>
+      <a href="Subset_Sum_as_a_Stress_Test.pdf">PDF</a>
+      <a href="Subset_Sum_as_a_Stress_Test.tex">LaTeX</a>
+      <a href="subset-sum/README.md">Methods and data</a>
+    </div>
+  </article>
 
-<p>A state is <em>covered</em> when an exact representation or a sound exclusion removes the need to search it individually. We use three mechanisms on disjoint parts of the space; all state counts below count distinct states.</p>
-
-<p>First, a structural procedure identifies a set \(K_n \subseteq \mathcal{S}_n\) of size</p>
-
-<div class="math">\[
-k(n) = |K_n|
-\]</div>
-
-<p>that admits a compact representation. Assume \(1\le k(n)\le 2^n\), so the logarithm below is defined. In the simplest logarithmic model, those \(k(n)\) states are replaced by a description of cost</p>
-
-<div class="math">\[
-C_{\mathrm{comp}}(n) = \log_2 k(n).
-\]</div>
-
-<p>This is deliberately an abstract assumption: it describes the cost once such a representation is available, not a universal property of arbitrary subsets.</p>
-
-<p>Second, a learned classifier proposes regions outside \(K_n\) for removal. Let \(\delta(n)\) count the distinct proposed states, counting overlaps only once. The classifier cannot delete states directly: a sound verifier certifies only regions whose omission leaves the search answer unchanged. Let \(a(n)\in[0,1]\) be the fraction of those \(\delta(n)\) states certified by the verifier, with \(a(n)=0\) if \(\delta(n)=0\). The safely eliminated count is</p>
-
-<div class="math">\[
-\delta_c(n) = a(n)\,\delta(n).
-\]</div>
-
-<p>Prediction error therefore affects efficiency, not correctness: uncertified proposals simply remain in the residual problem.</p>
-
-<p>Third, pair groups of remaining states and replace each pair by an exact summary for the search question. Let \(p(n)\) count the distinct states represented by these paired summaries, excluding states already counted in \(k(n)\) or \(a(n)\delta(n)\). Let \(Q_{\mathrm{pair}}(n)\) be the cost of finding pairs, constructing and certifying their summaries, and using the resulting representation.</p>
-
-<p>The explicit residual is</p>
-
-<div class="keyeq">
-<div class="math">\[
-r(n) = 2^n - k(n) - a(n)\delta(n) - p(n).
-\]</div>
-<span class="eqnum">(1)</span>
-</div>
-
-<p>Let \(P(n)\) collect structural discovery and learned proposal and verification work, excluding the pairing cost \(Q_{\mathrm{pair}}(n)\) and the structural description charge \(\log_2 k(n)\). All costs use the same units. Normalizing explicit search to one unit per residual state gives the modeled runtime</p>
-
-<div class="keyeq">
-<div class="math">\[
-T(n) = P(n) + Q_{\mathrm{pair}}(n) + r(n) + \log_2 k(n).
-\]</div>
-<span class="eqnum">(2)</span>
-</div>
-
-<p>Thus</p>
-
-<div class="math">\[
-T(n) = P(n) + Q_{\mathrm{pair}}(n) + 2^n - k(n) - a(n)\delta(n) - p(n) + \log_2 k(n). \qquad (3)
-\]</div>
-
-<p>The separation is important. Large covered regions help only if discovering, representing, and certifying them is cheap.</p>
+  <article class="series-card">
+    <span class="series-label">Note III · The new objective</span>
+    <h3><a href="Probability_Valued_Subset_Sum.html">Probability-Valued Subset Sum: Certified Bounds and Learned Guidance</a></h3>
+    <p>Draw a target by a specified rule and ask how likely it is to be reachable. Witnesses give lower bounds; sound exclusions and counting give upper bounds. The experiments show which bounds are useful and where they remain loose.</p>
+    <div class="link-row">
+      <a href="Probability_Valued_Subset_Sum.html">Read HTML</a>
+      <a href="Probability_Valued_Subset_Sum.pdf">PDF</a>
+      <a href="Probability_Valued_Subset_Sum.tex">LaTeX</a>
+      <a href="subset-sum/PROBABILITY_EXTENSION.md">Methods and data</a>
+    </div>
+  </article>
 </section>
 
-<section>
-<h2>The certified coverage theorem</h2>
-
-<p>Define the total <em>certified coverage</em></p>
-
-<div class="math">\[
-C(n) = k(n) + a(n)\delta(n) + p(n),
-\]</div>
-
-<p>so that \(r(n) = 2^n - C(n)\). Here and below, \(f(n)=\mathrm{poly}(n)\) means \(f(n)=O(n^d)\) for some fixed \(d\ge0\).</p>
-
-<div class="thm">
-  <p><span class="tag">Theorem 1 (Certified coverage criterion).</span> Assume \(P(n)+Q_{\mathrm{pair}}(n) = \mathrm{poly}(n)\), \(1 \le k(n) \le 2^n\), and the residual is searched in time proportional to \(r(n)\). Then</p>
-  <div class="math">\[
-  T(n) = \mathrm{poly}(n) \quad\Longleftrightarrow\quad 2^n - C(n) = \mathrm{poly}(n).
-  \]</div>
-  <p>Equivalently, polynomial modeled runtime occurs exactly when</p>
-  <div class="math">\[
-  C(n) = 2^n - \mathrm{poly}(n).
-  \]</div>
-</div>
-
-<div class="proof">
-  <p><span class="tag">Proof.</span> From (2),</p>
-  <div class="math">\[
-  T(n) = P(n) + Q_{\mathrm{pair}}(n) + \bigl(2^n - C(n)\bigr) + \log_2 k(n).
-  \]</div>
-  <p>Because \(k(n) \le 2^n\),</p>
-  <div class="math">\[
-  0 \le \log_2 k(n) \le n.
-  \]</div>
-  <p>The overhead and logarithmic terms are polynomially bounded. Hence \(T(n)\) is polynomial exactly when the residual \(2^n - C(n)\) is polynomially bounded. <span class="qed">&#9633;</span></p>
-</div>
-
-<p>The theorem gives a sharp asymptotic warning: eliminating a very large <em>percentage</em> of an exponential space need not change its asymptotic order.</p>
-
-<div class="thm">
-  <p><span class="tag">Corollary 1 (Fixed uncovered fraction).</span> If there exists a constant \(\varepsilon &gt; 0\) such that, for infinitely many \(n\),</p>
-  <div class="math">\[
-  C(n) \le (1-\varepsilon)2^n,
-  \]</div>
-  <p>then, for those \(n\),</p>
-  <div class="math">\[
-  T(n) \ge r(n) \ge \varepsilon 2^n.
-  \]</div>
-</div>
-
-<p>Thus 90%, 99%, or even 99.999% coverage is asymptotically insufficient if the uncovered fraction stays bounded away from zero. Polynomial behavior requires</p>
-
-<div class="math">\[
-\frac{C(n)}{2^n} = 1 - \frac{\mathrm{poly}(n)}{2^n},
-\]</div>
-
-<p>so the uncovered fraction must vanish exponentially fast, up to polynomial factors.</p>
+<section aria-labelledby="formalism">
+  <h2 id="formalism">The key formalism</h2>
+  <p>In Note I, \(C(n)\) counts states handled by exact representation or certified exclusion. The residual \(r(n)\) must still be searched explicitly:</p>
+  <div class="keyeq"><span class="math display">\[
+  r(n)=2^n-C(n),\qquad
+  T(n)=\text{coverage overhead}+r(n).
+  \]</span></div>
+  <p>Within this model, polynomial overhead leads to polynomial runtime exactly when the residual is polynomially bounded. Covering a large fixed percentage of \(2^n\) states is not enough.</p>
+  <p>Note III changes the outcome being measured. With fixed weights \(w\), reachable-sum set \(A(w)\), and a random target \(T\) drawn by a specified distribution \(\mu\),</p>
+  <div class="keyeq"><span class="math display">\[
+  q_\mu(w)=\Pr_{T\sim\mu}\!\bigl[T\in A(w)\bigr],
+  \qquad
+  \mu(L)\le q_\mu(w)\le\mu(U).
+  \]</span></div>
+  <p>Here \(L\) contains witnessed reachable targets and \(U\) contains every target that has not been soundly excluded. The interval is exact for a particular weight list; its width measures how much uncertainty remains about the random-target question.</p>
 </section>
 
-<section>
-<h2>Differential form</h2>
-
-<p>For intuition, choose differentiable extensions of \(k,\delta,a,p,P\), and \(Q_{\mathrm{pair}}\) from integer to real \(n\), with \(k>0\), and define \(r,T\) there by (1)–(2). Primes denote derivatives with respect to \(n\); the equations below describe this chosen interpolation. Differentiating (1) gives</p>
-
-<div class="keyeq">
-<div class="math">\[
-\frac{dr}{dn} = (\ln 2)2^n - k'(n) - a(n)\delta'(n) - a'(n)\delta(n) - p'(n).
-\]</div>
-<span class="eqnum">(4)</span>
-</div>
-
-<p>The terms are raw state creation, structural coverage, new certified proposals, improving certification rate, and paired coverage, respectively.</p>
-
-<p>In the next two displays, unprimed \(k,a,\delta\) abbreviate their values at \(n\). Differentiating the full cost gives</p>
-
-<div class="keyeq">
-<div class="math">\[
-\frac{dT}{dn} = (\ln 2)2^n - \left(1 - \frac{1}{k \ln 2}\right)k' - a\delta' - a'\delta - p' + P'(n) + Q_{\mathrm{pair}}'(n).
-\]</div>
-<span class="eqnum">(5)</span>
-</div>
-
-<p>When the correction \(k'/(k\ln 2)\) is small relative to the terms of interest, this gives the approximate balance law</p>
-
-<div class="keyeq">
-<div class="math">\[
-T'(n) \approx (\ln 2)2^n - k' - a\delta' - a'\delta - p' + P'(n) + Q_{\mathrm{pair}}'(n).
-\]</div>
-<span class="eqnum">(6)</span>
-</div>
-
-<p>Equivalently, since \(r(n) = 2^n - C(n)\),</p>
-
-<div class="math">\[
-r'(n) = (\ln 2)2^n - C'(n).
-\]</div>
-
-<p>Integrating from a reference scale \(n_0\),</p>
-
-<div class="keyeq">
-<div class="math">\[
-r(n) = r(n_0) + \int_{n_0}^{n} \bigl[(\ln 2)2^s - C'(s)\bigr]\,ds.
-\]</div>
-<span class="eqnum">(7)</span>
-</div>
-
-<p>This form makes the central picture transparent: at integer \(n\), polynomial behavior requires the cumulative gap between exponential state creation and certified coverage growth to remain polynomial in \(n\).</p>
+<section aria-labelledby="language">
+  <h2 id="language">What the results say</h2>
+  <div class="note">
+    <p><strong>Representation must earn its cost.</strong> The paired subset-sum solver was slower than meet-in-the-middle on all 18 constructed hard no-solution cases tested.</p>
+    <p><strong>Prediction helps choose work.</strong> The classifier's held-out AUC was 0.866, close to a simple density model's 0.864. Two of its 43 most confident NO proposals were actually YES, so exact elimination still needs a verifier.</p>
+    <p><strong>Probability has a precise meaning.</strong> For a fixed target, subset sum remains YES or NO. A probability arises after specifying how a target is drawn. On 50 held-out 16-item lists, simple certified bounds contained the exact reachable-target fraction but left a substantial gap.</p>
+  </div>
 </section>
 
-<section>
-<h2>Why certification matters</h2>
-
-<p>Suppose a naive learned-pruning model deletes \(\delta(n)\) states and \(e(n)\in[0,1]\) is the fraction deleted incorrectly. Exact recovery would require revisiting \(e(n)\delta(n)\) states. When \(\delta(n)=\Theta(2^n)\), any fixed positive error fraction leaves exponential recovery work. Keeping that work polynomial requires, for some fixed \(d\ge0\),</p>
-
-<div class="math">\[
-e(n)\delta(n)=O(n^d), \qquad\text{hence}\qquad e(n)=O\!\left(\frac{n^d}{2^n}\right).
-\]</div>
-
-<p>Thus ordinary constant-error prediction is not enough for exact bulk deletion of an exponential region.</p>
-
-<p>Certification avoids that failure mode. The learned model becomes a <em>proposal mechanism</em>: it suggests large regions that may be irrelevant, while an exact verifier alone has authority to delete them. A poor classifier can waste computation, but it cannot make the final algorithm incorrect. In this formulation, learning changes \(\delta\) and the acceptance function \(a\); correctness is carried by verification.</p>
-
-</section>
-
-<section>
-<h2>The cost of pairing</h2>
-
-<p>For disjoint paired groups \(B_0,B_1\subseteq\mathcal{S}_n\), let \(s(B)\) be a summary of group \(B\), and let \(\operatorname{Merge}\) combine two summaries. Exact pairing requires</p>
-
-<div class="keyeq"><div class="math">\[
-s(B_0\cup B_1)=\operatorname{Merge}\bigl(s(B_0),s(B_1)\bigr),
-\]</div></div>
-
-<p>Here <em>exact</em> means that replacing a paired group by its summary leaves the final answer unchanged when combined with all other covered groups and the residual. A complete explicit pairing tree over \(2^n\) states has \(2^n-1\) merges, even though only one group remains. Thus pairing helps asymptotically only when a compact rule or reuse of summaries keeps \(Q_{\mathrm{pair}}(n)\) polynomial. Counting covered states without this cost would hide the original exponential work.</p>
-</section>
-
-<section>
-<h2>Scope and the remaining difficulty</h2>
-
-<p>The coverage criterion is a theorem about the model; it does not assert that every concrete search problem admits such coverage. The hard question is whether, for a given problem, one can simultaneously achieve</p>
-
-<div class="math">\[
-P(n)+Q_{\mathrm{pair}}(n) = \mathrm{poly}(n) \qquad\text{and}\qquad 2^n - C(n) = \mathrm{poly}(n).
-\]</div>
-
-<p>Cardinality alone cannot answer this: exponentially many states can sometimes be described by a short rule. The substantive lower- or upper-bound problem is therefore about the <em>cost of discovering and certifying structure</em>, not merely the number of states represented by that structure.</p>
-</section>
-
-<section>
-<h2>General representation cost</h2>
-
-<p>The logarithmic term is the motivating special case, not an essential part of the coverage theorem. Let \(\rho(n,k)\) be the cost to store and use a structural representation covering \(k\) states at problem size \(n\). Then write</p>
-
-<div class="math">\[
-T(n) = P(n) + Q_{\mathrm{pair}}(n) + r(n) + \rho(n,k(n)).
-\]</div>
-
-<p>Whenever \(P(n)+Q_{\mathrm{pair}}(n)\) and \(\rho(n,k(n))\) are polynomially bounded, the same proof gives</p>
-
-<div class="keyeq">
-<div class="math">\[
-T(n) = \mathrm{poly}(n) \quad\Longleftrightarrow\quad r(n) = 2^n - C(n) = \mathrm{poly}(n).
-\]</div>
-</div>
-
-<p>Thus the essential object is the uncovered residual; \(\log_2 k\) is simply the strongest compression regime considered here. This also separates two questions that should not be conflated: how many states a representation covers, and how costly that representation is to discover and manipulate.</p>
-
-<div class="abstract" style="margin-top:2rem;">
-  <p><span class="lead">Summary.</span> Exponential search becomes a competition between state-space growth and certified coverage. Structural compression and exact pairing represent states collectively; learning proposes further regions; certification makes eliminations exact; and the residual determines explicit work. The governing condition is simple:</p>
-  <div class="math">\[
-  \text{polynomial overhead} + \text{polynomial residual} \;\Longrightarrow\; \text{polynomial modeled runtime.}
-  \]</div>
-  <p>The differential form records the same statement dynamically: coverage must track exponential state creation closely enough that their accumulated gap is only polynomial.</p>
-</div>
-</section>
-
+<footer>
+  <p>Jonathan R. Landers · <a href="https://github.com/jonland82/exponential-search-spaces">Source and reproducible experiments on GitHub</a></p>
+</footer>
 </main>
 </body>
 </html>

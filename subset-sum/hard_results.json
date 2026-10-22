@@ -1,0 +1,698 @@
+{
+  "validation_cases": 9,
+  "machine": "Windows-11-10.0.26200-SP0",
+  "python": "3.13.5",
+  "dfs_limit_seconds": 2.0,
+  "moduli": [
+    8,
+    10,
+    16,
+    32
+  ],
+  "rows": [
+    {
+      "family": "unique",
+      "n": 24,
+      "seed": 0,
+      "target": 20162240134612,
+      "generation_attempts": 1,
+      "meet_in_middle": {
+        "status": "completed",
+        "answer": false,
+        "seconds": 0.00190539999948669,
+        "left_sums": 4083,
+        "right_sums": 4096,
+        "sum_generation_attempts": 8189
+      },
+      "certified_pair_search": {
+        "status": "completed",
+        "answer": false,
+        "seconds": 0.01027189999967959,
+        "tail_sums": 4096,
+        "tail_generation_attempts": 4095,
+        "visited_states": 8187,
+        "bound_prunes": 24,
+        "residue_prunes": 0,
+        "duplicate_states": 0,
+        "paired_lookups": 4070,
+        "memoized_states": 4093
+      },
+      "certified_dfs": {
+        "status": "completed",
+        "answer": false,
+        "seconds": 1.786456900000303,
+        "visited_states": 1842171,
+        "bound_prunes": 387521,
+        "residue_prunes": 533565,
+        "duplicate_states": 0,
+        "memoized_states": 921085
+      }
+    },
+    {
+      "family": "unique",
+      "n": 24,
+      "seed": 1,
+      "target": 19828629286365,
+      "generation_attempts": 1,
+      "meet_in_middle": {
+        "status": "completed",
+        "answer": false,
+        "seconds": 0.002000600000428676,
+        "left_sums": 4080,
+        "right_sums": 4096,
+        "sum_generation_attempts": 8186
+      },
+      "certified_pair_search": {
+        "status": "completed",
+        "answer": false,
+        "seconds": 0.009881800000584917,
+        "tail_sums": 4096,
+        "tail_generation_attempts": 4095,
+        "visited_states": 8175,
+        "bound_prunes": 24,
+        "residue_prunes": 0,
+        "duplicate_states": 0,
+        "paired_lookups": 4064,
+        "memoized_states": 4087
+      },
+      "certified_dfs": {
+        "status": "completed",
+        "answer": false,
+        "seconds": 1.6725234999994427,
+        "visited_states": 1755207,
+        "bound_prunes": 379658,
+        "residue_prunes": 497946,
+        "duplicate_states": 0,
+        "memoized_states": 877603
+      }
+    },
+    {
+      "family": "unique",
+      "n": 30,
+      "seed": 0,
+      "target": 25485545570431,
+      "generation_attempts": 1,
+      "meet_in_middle": {
+        "status": "completed",
+        "answer": false,
+        "seconds": 0.016976899999463058,
+        "left_sums": 32734,
+        "right_sums": 32768,
+        "sum_generation_attempts": 65526
+      },
+      "certified_pair_search": {
+        "status": "completed",
+        "answer": false,
+        "seconds": 0.08394550000048184,
+        "tail_sums": 32768,
+        "tail_generation_attempts": 32767,
+        "visited_states": 65503,
+        "bound_prunes": 52,
+        "residue_prunes": 0,
+        "duplicate_states": 0,
+        "paired_lookups": 32700,
+        "memoized_states": 32751
+      },
+      "certified_dfs": {
+        "status": "time_limit",
+        "answer": null,
+        "seconds": 2.000361599999451,
+        "visited_states": 2127872,
+        "bound_prunes": 530137,
+        "residue_prunes": 533791,
+        "duplicate_states": 0,
+        "memoized_states": 1063943
+      }
+    },
+    {
+      "family": "unique",
+      "n": 30,
+      "seed": 1,
+      "target": 24634848839004,
+      "generation_attempts": 1,
+      "meet_in_middle": {
+        "status": "completed",
+        "answer": false,
+        "seconds": 0.016754999999648135,
+        "left_sums": 32662,
+        "right_sums": 32768,
+        "sum_generation_attempts": 65518
+      },
+      "certified_pair_search": {
+        "status": "completed",
+        "answer": false,
+        "seconds": 0.08350579999932961,
+        "tail_sums": 32768,
+        "tail_generation_attempts": 32767,
+        "visited_states": 65471,
+        "bound_prunes": 180,
+        "residue_prunes": 0,
+        "duplicate_states": 0,
+        "paired_lookups": 32556,
+        "memoized_states": 32735
+      },
+      "certified_dfs": {
+        "status": "time_limit",
+        "answer": null,
+        "seconds": 2.000170799999978,
+        "visited_states": 2044928,
+        "bound_prunes": 496218,
+        "residue_prunes": 526238,
+        "duplicate_states": 0,
+        "memoized_states": 1022471
+      }
+    },
+    {
+      "family": "unique",
+      "n": 36,
+      "seed": 0,
+      "target": 30417747128367,
+      "generation_attempts": 1,
+      "meet_in_middle": {
+        "status": "completed",
+        "answer": false,
+        "seconds": 0.14209539999956178,
+        "left_sums": 261972,
+        "right_sums": 262144,
+        "sum_generation_attempts": 524267
+      },
+      "certified_pair_search": {
+        "status": "completed",
+        "answer": false,
+        "seconds": 0.7254289000002245,
+        "tail_sums": 262144,
+        "tail_generation_attempts": 262143,
+        "visited_states": 524211,
+        "bound_prunes": 306,
+        "residue_prunes": 0,
+        "duplicate_states": 0,
+        "paired_lookups": 261800,
+        "memoized_states": 262105
+      },
+      "certified_dfs": {
+        "status": "time_limit",
+        "answer": null,
+        "seconds": 2.0009401999996044,
+        "visited_states": 2135040,
+        "bound_prunes": 618275,
+        "residue_prunes": 449237,
+        "duplicate_states": 0,
+        "memoized_states": 1067527
+      }
+    },
+    {
+      "family": "unique",
+      "n": 36,
+      "seed": 1,
+      "target": 29338025481188,
+      "generation_attempts": 1,
+      "meet_in_middle": {
+        "status": "completed",
+        "answer": false,
+        "seconds": 0.15390279999974155,
+        "left_sums": 261972,
+        "right_sums": 262144,
+        "sum_generation_attempts": 524267
+      },
+      "certified_pair_search": {
+        "status": "completed",
+        "answer": false,
+        "seconds": 0.6886782999999923,
+        "tail_sums": 262144,
+        "tail_generation_attempts": 262143,
+        "visited_states": 524211,
+        "bound_prunes": 306,
+        "residue_prunes": 0,
+        "duplicate_states": 0,
+        "paired_lookups": 261800,
+        "memoized_states": 262105
+      },
+      "certified_dfs": {
+        "status": "time_limit",
+        "answer": null,
+        "seconds": 2.0007580000001326,
+        "visited_states": 2097152,
+        "bound_prunes": 583736,
+        "residue_prunes": 464831,
+        "duplicate_states": 0,
+        "memoized_states": 1048584
+      }
+    },
+    {
+      "family": "pairs",
+      "n": 24,
+      "seed": 0,
+      "target": 19025086078868,
+      "generation_attempts": 1,
+      "meet_in_middle": {
+        "status": "completed",
+        "answer": false,
+        "seconds": 0.0009288000001106411,
+        "left_sums": 722,
+        "right_sums": 729,
+        "sum_generation_attempts": 2183
+      },
+      "certified_pair_search": {
+        "status": "completed",
+        "answer": false,
+        "seconds": 0.004220099999656668,
+        "tail_sums": 729,
+        "tail_generation_attempts": 1092,
+        "visited_states": 2181,
+        "bound_prunes": 14,
+        "residue_prunes": 0,
+        "duplicate_states": 121,
+        "paired_lookups": 956,
+        "memoized_states": 1090
+      },
+      "certified_dfs": {
+        "status": "completed",
+        "answer": false,
+        "seconds": 0.06869840000035765,
+        "visited_states": 67253,
+        "bound_prunes": 12029,
+        "residue_prunes": 16682,
+        "duplicate_states": 4916,
+        "memoized_states": 33626
+      }
+    },
+    {
+      "family": "pairs",
+      "n": 24,
+      "seed": 1,
+      "target": 21068885542163,
+      "generation_attempts": 1,
+      "meet_in_middle": {
+        "status": "completed",
+        "answer": false,
+        "seconds": 0.0006551999995281221,
+        "left_sums": 722,
+        "right_sums": 729,
+        "sum_generation_attempts": 2183
+      },
+      "certified_pair_search": {
+        "status": "completed",
+        "answer": false,
+        "seconds": 0.002639899999849149,
+        "tail_sums": 729,
+        "tail_generation_attempts": 1092,
+        "visited_states": 2181,
+        "bound_prunes": 14,
+        "residue_prunes": 0,
+        "duplicate_states": 121,
+        "paired_lookups": 956,
+        "memoized_states": 1090
+      },
+      "certified_dfs": {
+        "status": "completed",
+        "answer": false,
+        "seconds": 0.07760330000019167,
+        "visited_states": 76387,
+        "bound_prunes": 13549,
+        "residue_prunes": 18733,
+        "duplicate_states": 5912,
+        "memoized_states": 38193
+      }
+    },
+    {
+      "family": "pairs",
+      "n": 30,
+      "seed": 0,
+      "target": 25276531749192,
+      "generation_attempts": 1,
+      "meet_in_middle": {
+        "status": "completed",
+        "answer": false,
+        "seconds": 0.0026903000007223454,
+        "left_sums": 4365,
+        "right_sums": 4374,
+        "sum_generation_attempts": 12024
+      },
+      "certified_pair_search": {
+        "status": "completed",
+        "answer": false,
+        "seconds": 0.012932399999954214,
+        "tail_sums": 4374,
+        "tail_generation_attempts": 6559,
+        "visited_states": 10929,
+        "bound_prunes": 16,
+        "residue_prunes": 0,
+        "duplicate_states": 1093,
+        "paired_lookups": 4356,
+        "memoized_states": 5464
+      },
+      "certified_dfs": {
+        "status": "time_limit",
+        "answer": null,
+        "seconds": 2.0008193999992727,
+        "visited_states": 1999872,
+        "bound_prunes": 345922,
+        "residue_prunes": 508043,
+        "duplicate_states": 145966,
+        "memoized_states": 999940
+      }
+    },
+    {
+      "family": "pairs",
+      "n": 30,
+      "seed": 1,
+      "target": 23622011786391,
+      "generation_attempts": 1,
+      "meet_in_middle": {
+        "status": "completed",
+        "answer": false,
+        "seconds": 0.0036669000000983942,
+        "left_sums": 4341,
+        "right_sums": 4374,
+        "sum_generation_attempts": 12016
+      },
+      "certified_pair_search": {
+        "status": "completed",
+        "answer": false,
+        "seconds": 0.014163199999529752,
+        "tail_sums": 4374,
+        "tail_generation_attempts": 6559,
+        "visited_states": 10897,
+        "bound_prunes": 50,
+        "residue_prunes": 0,
+        "duplicate_states": 1091,
+        "paired_lookups": 4308,
+        "memoized_states": 5448
+      },
+      "certified_dfs": {
+        "status": "completed",
+        "answer": false,
+        "seconds": 1.718525899999804,
+        "visited_states": 1685365,
+        "bound_prunes": 303403,
+        "residue_prunes": 416287,
+        "duplicate_states": 122993,
+        "memoized_states": 842682
+      }
+    },
+    {
+      "family": "pairs",
+      "n": 36,
+      "seed": 0,
+      "target": 30246237285869,
+      "generation_attempts": 1,
+      "meet_in_middle": {
+        "status": "completed",
+        "answer": false,
+        "seconds": 0.013839799999914248,
+        "left_sums": 19628,
+        "right_sums": 19683,
+        "sum_generation_attempts": 59035
+      },
+      "certified_pair_search": {
+        "status": "completed",
+        "answer": false,
+        "seconds": 0.078989200000251,
+        "tail_sums": 19683,
+        "tail_generation_attempts": 29523,
+        "visited_states": 59003,
+        "bound_prunes": 106,
+        "residue_prunes": 0,
+        "duplicate_states": 3280,
+        "paired_lookups": 26116,
+        "memoized_states": 29501
+      },
+      "certified_dfs": {
+        "status": "time_limit",
+        "answer": null,
+        "seconds": 2.0003317999999126,
+        "visited_states": 1991680,
+        "bound_prunes": 384957,
+        "residue_prunes": 467667,
+        "duplicate_states": 143208,
+        "memoized_states": 995847
+      }
+    },
+    {
+      "family": "pairs",
+      "n": 36,
+      "seed": 1,
+      "target": 27768451206811,
+      "generation_attempts": 1,
+      "meet_in_middle": {
+        "status": "completed",
+        "answer": false,
+        "seconds": 0.015418900000440772,
+        "left_sums": 19591,
+        "right_sums": 19683,
+        "sum_generation_attempts": 59008
+      },
+      "certified_pair_search": {
+        "status": "completed",
+        "answer": false,
+        "seconds": 0.07521180000003369,
+        "tail_sums": 19683,
+        "tail_generation_attempts": 29523,
+        "visited_states": 58895,
+        "bound_prunes": 156,
+        "residue_prunes": 0,
+        "duplicate_states": 3278,
+        "paired_lookups": 26014,
+        "memoized_states": 29447
+      },
+      "certified_dfs": {
+        "status": "time_limit",
+        "answer": null,
+        "seconds": 2.000649599999633,
+        "visited_states": 1930240,
+        "bound_prunes": 365510,
+        "residue_prunes": 464553,
+        "duplicate_states": 135049,
+        "memoized_states": 965127
+      }
+    },
+    {
+      "family": "triples",
+      "n": 24,
+      "seed": 0,
+      "target": 18493909732503,
+      "generation_attempts": 1,
+      "meet_in_middle": {
+        "status": "completed",
+        "answer": false,
+        "seconds": 0.0002463999999235966,
+        "left_sums": 251,
+        "right_sums": 256,
+        "sum_generation_attempts": 1019
+      },
+      "certified_pair_search": {
+        "status": "completed",
+        "answer": false,
+        "seconds": 0.0015911999998934334,
+        "tail_sums": 256,
+        "tail_generation_attempts": 510,
+        "visited_states": 1017,
+        "bound_prunes": 10,
+        "residue_prunes": 0,
+        "duplicate_states": 127,
+        "paired_lookups": 372,
+        "memoized_states": 508
+      },
+      "certified_dfs": {
+        "status": "completed",
+        "answer": false,
+        "seconds": 0.019098800000392657,
+        "visited_states": 17949,
+        "bound_prunes": 2576,
+        "residue_prunes": 4190,
+        "duplicate_states": 2209,
+        "memoized_states": 8974
+      }
+    },
+    {
+      "family": "triples",
+      "n": 24,
+      "seed": 1,
+      "target": 21657523737221,
+      "generation_attempts": 1,
+      "meet_in_middle": {
+        "status": "completed",
+        "answer": false,
+        "seconds": 0.00022200000057637226,
+        "left_sums": 251,
+        "right_sums": 256,
+        "sum_generation_attempts": 1019
+      },
+      "certified_pair_search": {
+        "status": "completed",
+        "answer": false,
+        "seconds": 0.0013564999999289284,
+        "tail_sums": 256,
+        "tail_generation_attempts": 510,
+        "visited_states": 1017,
+        "bound_prunes": 10,
+        "residue_prunes": 0,
+        "duplicate_states": 127,
+        "paired_lookups": 372,
+        "memoized_states": 508
+      },
+      "certified_dfs": {
+        "status": "completed",
+        "answer": false,
+        "seconds": 0.020561799999995856,
+        "visited_states": 18967,
+        "bound_prunes": 2924,
+        "residue_prunes": 4176,
+        "duplicate_states": 2384,
+        "memoized_states": 9483
+      }
+    },
+    {
+      "family": "triples",
+      "n": 30,
+      "seed": 0,
+      "target": 26020878861660,
+      "generation_attempts": 1,
+      "meet_in_middle": {
+        "status": "completed",
+        "answer": false,
+        "seconds": 0.0009737000000313856,
+        "left_sums": 1008,
+        "right_sums": 1024,
+        "sum_generation_attempts": 4085
+      },
+      "certified_pair_search": {
+        "status": "completed",
+        "answer": false,
+        "seconds": 0.005570700000134821,
+        "tail_sums": 1024,
+        "tail_generation_attempts": 2046,
+        "visited_states": 4065,
+        "bound_prunes": 32,
+        "residue_prunes": 0,
+        "duplicate_states": 509,
+        "paired_lookups": 1492,
+        "memoized_states": 2032
+      },
+      "certified_dfs": {
+        "status": "completed",
+        "answer": false,
+        "seconds": 0.17522639999970124,
+        "visited_states": 168819,
+        "bound_prunes": 26668,
+        "residue_prunes": 36487,
+        "duplicate_states": 21255,
+        "memoized_states": 84409
+      }
+    },
+    {
+      "family": "triples",
+      "n": 30,
+      "seed": 1,
+      "target": 24659450087722,
+      "generation_attempts": 1,
+      "meet_in_middle": {
+        "status": "completed",
+        "answer": false,
+        "seconds": 0.001090900000235706,
+        "left_sums": 1018,
+        "right_sums": 1024,
+        "sum_generation_attempts": 4091
+      },
+      "certified_pair_search": {
+        "status": "completed",
+        "answer": false,
+        "seconds": 0.005748099999436818,
+        "tail_sums": 1024,
+        "tail_generation_attempts": 2046,
+        "visited_states": 4089,
+        "bound_prunes": 12,
+        "residue_prunes": 0,
+        "duplicate_states": 511,
+        "paired_lookups": 1522,
+        "memoized_states": 2044
+      },
+      "certified_dfs": {
+        "status": "completed",
+        "answer": false,
+        "seconds": 0.2807192000000214,
+        "visited_states": 268583,
+        "bound_prunes": 41104,
+        "residue_prunes": 60342,
+        "duplicate_states": 32846,
+        "memoized_states": 134291
+      }
+    },
+    {
+      "family": "triples",
+      "n": 36,
+      "seed": 0,
+      "target": 29206252556693,
+      "generation_attempts": 1,
+      "meet_in_middle": {
+        "status": "completed",
+        "answer": false,
+        "seconds": 0.0034266000002389774,
+        "left_sums": 4068,
+        "right_sums": 4096,
+        "sum_generation_attempts": 16372
+      },
+      "certified_pair_search": {
+        "status": "completed",
+        "answer": false,
+        "seconds": 0.021518100000321283,
+        "tail_sums": 4096,
+        "tail_generation_attempts": 8190,
+        "visited_states": 16349,
+        "bound_prunes": 56,
+        "residue_prunes": 0,
+        "duplicate_states": 2045,
+        "paired_lookups": 6074,
+        "memoized_states": 8174
+      },
+      "certified_dfs": {
+        "status": "time_limit",
+        "answer": null,
+        "seconds": 2.0003086999995503,
+        "visited_states": 1871872,
+        "bound_prunes": 263108,
+        "residue_prunes": 429038,
+        "duplicate_states": 243785,
+        "memoized_states": 935940
+      }
+    },
+    {
+      "family": "triples",
+      "n": 36,
+      "seed": 1,
+      "target": 29079107154136,
+      "generation_attempts": 1,
+      "meet_in_middle": {
+        "status": "completed",
+        "answer": false,
+        "seconds": 0.003729400000338501,
+        "left_sums": 4068,
+        "right_sums": 4096,
+        "sum_generation_attempts": 16372
+      },
+      "certified_pair_search": {
+        "status": "completed",
+        "answer": false,
+        "seconds": 0.02063689999977214,
+        "tail_sums": 4096,
+        "tail_generation_attempts": 8190,
+        "visited_states": 16349,
+        "bound_prunes": 56,
+        "residue_prunes": 0,
+        "duplicate_states": 2045,
+        "paired_lookups": 6074,
+        "memoized_states": 8174
+      },
+      "certified_dfs": {
+        "status": "time_limit",
+        "answer": null,
+        "seconds": 2.000702999999703,
+        "visited_states": 1874944,
+        "bound_prunes": 279511,
+        "residue_prunes": 414408,
+        "duplicate_states": 243547,
+        "memoized_states": 937477
+      }
+    }
+  ]
+}
