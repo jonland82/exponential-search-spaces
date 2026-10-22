@@ -330,13 +330,13 @@ em{ font-style:italic; }
 <section>
 <h2>A coverage model</h2>
 
-<p class="opening">Let \(\mathcal{S}_n\) be a nominal search space with</p>
+<p class="opening">Let \(n\in\mathbb{N}\) be the problem size and \(\mathcal{S}_n\) its set of candidate states, with</p>
 
 <div class="math">\[
 |\mathcal{S}_n| = 2^n .
 \]</div>
 
-<p>We use three mechanisms to cover disjoint parts of this space.</p>
+<p>A state is <em>covered</em> when an exact representation or a sound exclusion removes the need to search it individually. We use three mechanisms on disjoint parts of the space; all state counts below count distinct states.</p>
 
 <p>First, a structural procedure identifies a set \(K_n \subseteq \mathcal{S}_n\) of size</p>
 
@@ -344,7 +344,7 @@ em{ font-style:italic; }
 k(n) = |K_n|
 \]</div>
 
-<p>that admits a compact representation. In the simplest logarithmic model, the \(k(n)\) explicit states are replaced by a description of cost</p>
+<p>that admits a compact representation. Assume \(1\le k(n)\le 2^n\), so the logarithm below is defined. In the simplest logarithmic model, those \(k(n)\) states are replaced by a description of cost</p>
 
 <div class="math">\[
 C_{\mathrm{comp}}(n) = \log_2 k(n).
@@ -352,7 +352,7 @@ C_{\mathrm{comp}}(n) = \log_2 k(n).
 
 <p>This is deliberately an abstract assumption: it describes the cost once such a representation is available, not a universal property of arbitrary subsets.</p>
 
-<p>Second, a learned classifier proposes regions of the remaining space for removal. Let \(\delta(n)\) denote the total number of states covered by these proposals. The classifier is not trusted to delete states directly. Instead, an exact verifier certifies proposed regions. If \(a(n) \in [0,1]\) is the fraction of proposed mass that is successfully certified, then the safely eliminated mass is</p>
+<p>Second, a learned classifier proposes regions outside \(K_n\) for removal. Let \(\delta(n)\) count the distinct proposed states, counting overlaps only once. The classifier cannot delete states directly: a sound verifier certifies only regions whose omission leaves the search answer unchanged. Let \(a(n)\in[0,1]\) be the fraction of those \(\delta(n)\) states certified by the verifier, with \(a(n)=0\) if \(\delta(n)=0\). The safely eliminated count is</p>
 
 <div class="math">\[
 \delta_c(n) = a(n)\,\delta(n).
@@ -360,7 +360,7 @@ C_{\mathrm{comp}}(n) = \log_2 k(n).
 
 <p>Prediction error therefore affects efficiency, not correctness: uncertified proposals simply remain in the residual problem.</p>
 
-<p>Third, pair groups of states and replace each pair by an exact summary for the search question. Let \(p(n)\) count the additional states covered by such summaries, excluding states already counted in \(k(n)\) or \(a(n)\delta(n)\). Let \(Q_{\mathrm{pair}}(n)\) include the cost of finding pairs, constructing and certifying their summaries, and using the resulting representation.</p>
+<p>Third, pair groups of remaining states and replace each pair by an exact summary for the search question. Let \(p(n)\) count the distinct states represented by these paired summaries, excluding states already counted in \(k(n)\) or \(a(n)\delta(n)\). Let \(Q_{\mathrm{pair}}(n)\) be the cost of finding pairs, constructing and certifying their summaries, and using the resulting representation.</p>
 
 <p>The explicit residual is</p>
 
@@ -371,7 +371,7 @@ r(n) = 2^n - k(n) - a(n)\delta(n) - p(n).
 <span class="eqnum">(1)</span>
 </div>
 
-<p>Let \(P(n)\) collect the cost of discovering the structural representation, running the learned proposal mechanism, certifying its proposed regions, and managing the resulting representation. Under the simple assumption that explicit residual search costs \(r(n)\) units, the total modeled cost is</p>
+<p>Let \(P(n)\) collect structural discovery and learned proposal and verification work, excluding the pairing cost \(Q_{\mathrm{pair}}(n)\) and the structural description charge \(\log_2 k(n)\). All costs use the same units. Normalizing explicit search to one unit per residual state gives the modeled runtime</p>
 
 <div class="keyeq">
 <div class="math">\[
@@ -398,7 +398,7 @@ T(n) = P(n) + Q_{\mathrm{pair}}(n) + 2^n - k(n) - a(n)\delta(n) - p(n) + \log_2 
 C(n) = k(n) + a(n)\delta(n) + p(n),
 \]</div>
 
-<p>so that \(r(n) = 2^n - C(n)\).</p>
+<p>so that \(r(n) = 2^n - C(n)\). Here and below, \(f(n)=\mathrm{poly}(n)\) means \(f(n)=O(n^d)\) for some fixed \(d\ge0\).</p>
 
 <div class="thm">
   <p><span class="tag">Theorem 1 (Certified coverage criterion).</span> Assume \(P(n)+Q_{\mathrm{pair}}(n) = \mathrm{poly}(n)\), \(1 \le k(n) \le 2^n\), and the residual is searched in time proportional to \(r(n)\). Then</p>
@@ -430,13 +430,9 @@ C(n) = k(n) + a(n)\delta(n) + p(n),
   <div class="math">\[
   C(n) \le (1-\varepsilon)2^n,
   \]</div>
-  <p>then</p>
+  <p>then, for those \(n\),</p>
   <div class="math">\[
-  r(n) \ge \varepsilon 2^n
-  \]</div>
-  <p>and therefore, along that infinite subsequence, the modeled runtime satisfies</p>
-  <div class="math">\[
-  T(n) = \Omega(2^n)
+  T(n) \ge r(n) \ge \varepsilon 2^n.
   \]</div>
 </div>
 
@@ -452,7 +448,7 @@ C(n) = k(n) + a(n)\delta(n) + p(n),
 <section>
 <h2>Differential form</h2>
 
-<p>The discrete complexity statement has a useful continuous interpolation. Treat \(n\) as a continuous scale parameter and differentiate (1):</p>
+<p>For intuition, choose differentiable extensions of \(k,\delta,a,p,P\), and \(Q_{\mathrm{pair}}\) from integer to real \(n\), with \(k>0\), and define \(r,T\) there by (1)–(2). Primes denote derivatives with respect to \(n\); the equations below describe this chosen interpolation. Differentiating (1) gives</p>
 
 <div class="keyeq">
 <div class="math">\[
@@ -463,7 +459,7 @@ C(n) = k(n) + a(n)\delta(n) + p(n),
 
 <p>The terms are raw state creation, structural coverage, new certified proposals, improving certification rate, and paired coverage, respectively.</p>
 
-<p>Differentiating the full cost gives</p>
+<p>In the next two displays, unprimed \(k,a,\delta\) abbreviate their values at \(n\). Differentiating the full cost gives</p>
 
 <div class="keyeq">
 <div class="math">\[
@@ -472,7 +468,7 @@ C(n) = k(n) + a(n)\delta(n) + p(n),
 <span class="eqnum">(5)</span>
 </div>
 
-<p>For large \(k\), the \(1/(k\ln 2)\) correction is negligible, giving the approximate balance law</p>
+<p>When the correction \(k'/(k\ln 2)\) is small relative to the terms of interest, this gives the approximate balance law</p>
 
 <div class="keyeq">
 <div class="math">\[
@@ -496,16 +492,16 @@ r(n) = r(n_0) + \int_{n_0}^{n} \bigl[(\ln 2)2^s - C'(s)\bigr]\,ds.
 <span class="eqnum">(7)</span>
 </div>
 
-<p>This form makes the central picture especially transparent: polynomial behavior requires the cumulative gap between exponential state creation and certified coverage growth to remain only polynomial in \(n\).</p>
+<p>This form makes the central picture transparent: at integer \(n\), polynomial behavior requires the cumulative gap between exponential state creation and certified coverage growth to remain polynomial in \(n\).</p>
 </section>
 
 <section>
 <h2>Why certification matters</h2>
 
-<p>A naive learned-pruning model might discard \(\delta(n)\) states with error rate \(e(n)\). If every erroneous deletion has to be recovered to preserve exactness, an error residue of order \(e(n)\delta(n)\) appears. When \(\delta(n) = \Theta(2^n)\), any fixed \(e &gt; 0\) leaves an exponential residue. To keep that residue polynomial would require</p>
+<p>Suppose a naive learned-pruning model deletes \(\delta(n)\) states and \(e(n)\in[0,1]\) is the fraction deleted incorrectly. Exact recovery would require revisiting \(e(n)\delta(n)\) states. When \(\delta(n)=\Theta(2^n)\), any fixed positive error fraction leaves exponential recovery work. Keeping that work polynomial requires, for some fixed \(d\ge0\),</p>
 
 <div class="math">\[
-e(n)\,2^n = \mathrm{poly}(n), \qquad\text{hence}\qquad e(n) \le \frac{\mathrm{poly}(n)}{2^n}.
+e(n)\delta(n)=O(n^d), \qquad\text{hence}\qquad e(n)=O\!\left(\frac{n^d}{2^n}\right).
 \]</div>
 
 <p>Thus ordinary constant-error prediction is not enough for exact bulk deletion of an exponential region.</p>
@@ -517,13 +513,13 @@ e(n)\,2^n = \mathrm{poly}(n), \qquad\text{hence}\qquad e(n) \le \frac{\mathrm{po
 <section>
 <h2>The cost of pairing</h2>
 
-<p>For disjoint groups \(B_0,B_1\), a summary \(s\) must support an exact merge rule</p>
+<p>For disjoint paired groups \(B_0,B_1\subseteq\mathcal{S}_n\), let \(s(B)\) be a summary of group \(B\), and let \(\operatorname{Merge}\) combine two summaries. Exact pairing requires</p>
 
 <div class="keyeq"><div class="math">\[
 s(B_0\cup B_1)=\operatorname{Merge}\bigl(s(B_0),s(B_1)\bigr),
 \]</div></div>
 
-<p>and the final summary must answer the original search question exactly. A complete explicit pairing tree over \(2^n\) states has \(2^n-1\) merges, even though only one group remains. Thus pairing helps asymptotically only when a compact rule or reuse of summaries keeps \(Q_{\mathrm{pair}}(n)\) polynomial. Counting covered states without this cost would hide the original exponential work.</p>
+<p>Here <em>exact</em> means that replacing a paired group by its summary leaves the final answer unchanged when combined with all other covered groups and the residual. A complete explicit pairing tree over \(2^n\) states has \(2^n-1\) merges, even though only one group remains. Thus pairing helps asymptotically only when a compact rule or reuse of summaries keeps \(Q_{\mathrm{pair}}(n)\) polynomial. Counting covered states without this cost would hide the original exponential work.</p>
 </section>
 
 <section>
@@ -541,7 +537,7 @@ P(n)+Q_{\mathrm{pair}}(n) = \mathrm{poly}(n) \qquad\text{and}\qquad 2^n - C(n) =
 <section>
 <h2>General representation cost</h2>
 
-<p>The logarithmic term is the motivating special case, not an essential part of the coverage theorem. If a compressed region of size \(k(n)\) has representation cost \(\rho(n,k)\), write</p>
+<p>The logarithmic term is the motivating special case, not an essential part of the coverage theorem. Let \(\rho(n,k)\) be the cost to store and use a structural representation covering \(k\) states at problem size \(n\). Then write</p>
 
 <div class="math">\[
 T(n) = P(n) + Q_{\mathrm{pair}}(n) + r(n) + \rho(n,k(n)).
