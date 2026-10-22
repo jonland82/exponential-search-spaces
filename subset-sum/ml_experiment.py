@@ -378,7 +378,7 @@ def draw_thresholds(y: np.ndarray, p: np.ndarray, stats: list[dict], path: Path)
 
     table_lines = ["Threshold    Proposed NO    Wrong YES    NO precision"]
     for row in stats:
-        value = "—" if row["no_precision"] is None else f"{row['no_precision']:.1%}"
+        value = "n/a" if row["no_precision"] is None else f"{row['no_precision']:.1%}"
         table_lines.append(f"{row['threshold']:>7.0%}          {row['proposed_no']:>4} / {len(y)}           {row['wrong_yes']:>3}              {value}")
     fig.text(0.075, 0.20, "\n".join(table_lines), family="DejaVu Sans Mono", fontsize=10, va="top", linespacing=1.5,
              bbox={"boxstyle": "round,pad=0.65", "facecolor": "#EAF0F7", "edgecolor": "none"})

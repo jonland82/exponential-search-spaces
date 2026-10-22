@@ -297,10 +297,10 @@ def write_report(data: dict, path: Path) -> None:
             median = lambda name: statistics.median(row["results"][name]["seconds"] for row in group)
             mitm = median("meet_in_middle")
             paired = median("certified_pair_search")
-            dp = f"{1000 * median('bitset_dp'):.3f}" if "bitset_dp" in group[0]["results"] else "—"
+            dp = f"{1000 * median('bitset_dp'):.3f}" if "bitset_dp" in group[0]["results"] else "n/a"
             dfs_time = median("bounded_dfs") if "bounded_dfs" in group[0]["results"] else None
-            dfs = f"{1000 * dfs_time:.3f}" if dfs_time is not None else "—"
-            pair_dfs = f"{paired / dfs_time:.3f}×" if dfs_time is not None else "—"
+            dfs = f"{1000 * dfs_time:.3f}" if dfs_time is not None else "n/a"
+            pair_dfs = f"{paired / dfs_time:.3f}×" if dfs_time is not None else "n/a"
             lines.append(
                 f"| {family} | {n} | {'yes' if group[0]['answer'] else 'no'} | {dp} | {1000 * mitm:.3f} | {dfs} | {1000 * paired:.3f} | {paired / mitm:.3f}× | {pair_dfs} |"
             )

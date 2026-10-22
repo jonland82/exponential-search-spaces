@@ -59,7 +59,7 @@ def build_one(paper: dict[str, str]) -> None:
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="description" content="{description}">
-<title>{title} — Jonathan R. Landers</title>
+<title>{title} | Jonathan R. Landers</title>
 <script>
 window.MathJax = {{
   tex: {{ inlineMath: [['\\\\(','\\\\)']], displayMath: [['\\\\[','\\\\]']], tags: 'none' }},
