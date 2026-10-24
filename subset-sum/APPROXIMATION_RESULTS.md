@@ -1,10 +1,10 @@
 # Does pairing add value to certified approximation?
 
-Series navigation: [reading order](../index.html#arc) · [Note IV: pairing in certified approximation](../Certified_Approximation_of_Subset_Sum.html).
+Series navigation: [reading order](../index.html#arc) · [Note IV: pairing in certified approximation](../notes/04-certified-approximation/Certified_Approximation_of_Subset_Sum.html).
 
 **Central question:** "If we only need to get close to the target, and know how close, can our framework avoid much of the exponential search?"
 
-This experiment supports [Note IV](../Certified_Approximation_of_Subset_Sum.html). Its added-value question is whether pairing error-bounded summaries improves on applying the same approximation rule sequentially. The [mathematical specification](APPROXIMATION_SPEC.md) supplies a common correctness contract using established approximation ideas.
+This experiment supports [Note IV](../notes/04-certified-approximation/Certified_Approximation_of_Subset_Sum.html). Its added-value question is whether pairing error-bounded summaries improves on applying the same approximation rule sequentially. The [mathematical specification](APPROXIMATION_SPEC.md) supplies a common correctness contract using established approximation ideas.
 
 ## The controlled comparison
 

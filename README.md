@@ -1,43 +1,62 @@
 # Certified Coverage of Exponential Search Spaces
 
-Jonathan R. Landers · September–October 2026
+Jonathan R. Landers | September-October 2026
 
-**[Read the series landing page](https://jonland82.github.io/exponential-search-spaces/)** · [Experiments and data](subset-sum/README.md)
+[Published four-note sequence](https://jonland82.github.io/exponential-search-spaces/) | [All five note folders](notes/README.md)
 
-This repository tells a short research story: a general criterion for avoiding explicit search over $2^n$ states, where $n$ is the number of binary choices; a subset-sum stress test that finds the limits of one implementation; a probability-valued question with certified bounds; and a fixed-target approximation question with a controlled distance gap. Each part is meant to stand alone.
+The sequence follows one question: when can useful structure account for enough of an exponential search that only manageable work remains? Notes I-IV are published. Note V is a four-page PDF/LaTeX working draft kept out of the website and its navigation.
 
-| Note | Question | Read |
+## Notes
+
+| Note | Question | Files |
 |---|---|---|
-| **I. Certified Coverage of Exponential Search Spaces** | When can exact representation and certified exclusion leave only a polynomial residual? | [HTML](Certified_Coverage_of_Exponential_Search_Spaces.html) · [PDF](Certified_Coverage_of_Exponential_Search_Spaces.pdf) · [LaTeX](Certified_Coverage_of_Exponential_Search_Spaces.tex) |
-| **II. Subset Sum as a Stress Test** | Do exact pairing, pruning, and learned proposals help on a concrete $2^n$ problem? | [HTML](Subset_Sum_as_a_Stress_Test.html) · [PDF](Subset_Sum_as_a_Stress_Test.pdf) · [LaTeX](Subset_Sum_as_a_Stress_Test.tex) |
-| **III. Probability-Valued Subset Sum** | For a specified random target, how tightly can we bound the chance that it is reachable? | [HTML](Probability_Valued_Subset_Sum.html) · [PDF](Probability_Valued_Subset_Sum.pdf) · [LaTeX](Probability_Valued_Subset_Sum.tex) |
-| **IV. Does Pairing Add Value to Certified Approximation?** | Does pairing add a computational benefit beyond the same approximation rule used sequentially? | [HTML](Certified_Approximation_of_Subset_Sum.html) · [PDF](Certified_Approximation_of_Subset_Sum.pdf) · [LaTeX](Certified_Approximation_of_Subset_Sum.tex) |
+| **I. Certified Coverage of Exponential Search Spaces** (published) | When does certified coverage leave a polynomial residual? | [HTML](notes/01-certified-coverage/Certified_Coverage_of_Exponential_Search_Spaces.html) / [PDF](notes/01-certified-coverage/Certified_Coverage_of_Exponential_Search_Spaces.pdf) / [LaTeX](notes/01-certified-coverage/Certified_Coverage_of_Exponential_Search_Spaces.tex) |
+| **II. Subset Sum as a Stress Test for Certified Coverage** (published) | Do exact pairing, pruning, and learned proposals save work? | [HTML](notes/02-subset-sum-stress-test/Subset_Sum_as_a_Stress_Test.html) / [PDF](notes/02-subset-sum-stress-test/Subset_Sum_as_a_Stress_Test.pdf) / [LaTeX](notes/02-subset-sum-stress-test/Subset_Sum_as_a_Stress_Test.tex) |
+| **III. Probability-Valued Subset Sum: Certified Bounds and Learned Guidance** (published) | How tightly can we bound random-target reachability? | [HTML](notes/03-probability-valued-subset-sum/Probability_Valued_Subset_Sum.html) / [PDF](notes/03-probability-valued-subset-sum/Probability_Valued_Subset_Sum.pdf) / [LaTeX](notes/03-probability-valued-subset-sum/Probability_Valued_Subset_Sum.tex) |
+| **IV. Does Pairing Add Value to Certified Approximation? A Subset-Sum Experiment** (published) | Does pairing add value beyond the same approximation rule? | [HTML](notes/04-certified-approximation/Certified_Approximation_of_Subset_Sum.html) / [PDF](notes/04-certified-approximation/Certified_Approximation_of_Subset_Sum.pdf) / [LaTeX](notes/04-certified-approximation/Certified_Approximation_of_Subset_Sum.tex) |
+| **V. How Far from Easy? Structural Distance in Subset Sum** (draft; PDF/LaTeX only) | How far can a list depart from an easy structure before residual search grows? | [PDF](notes/05-structural-distance/Structural_Distance_in_Subset_Sum.pdf) / [LaTeX](notes/05-structural-distance/Structural_Distance_in_Subset_Sum.tex) |
 
-Read **I → II → III → IV** for the full narrative. Notes III and IV are sibling extensions of Note II: random-target probability and fixed-target approximation. Either branch can be read independently after I and II.
+Read I, then II. Notes III and IV branch into random-target probability and fixed-target approximation. Note V returns to exact search: it proves a concrete tractable regime and measures the cost of trying to improve the discovered structure.
 
-The first note counts only states handled by exact representations or certified exclusions. If $C(n)$ is that coverage, the explicit residual is
+## Repository layout
 
-$$
-r(n)=2^n-C(n).
-$$
+- `notes/01-...` through `notes/05-...` contain each note's source, PDF, and local guide. Published notes also have HTML. The Note V planning document lives with that draft.
+- `subset-sum/` contains the original experiments and publication artifacts for Notes II-IV.
+- `Subset_Sum_Refinement_Experiment/` preserves Note III's statistical and deterministic follow-ups, including frozen evidence and reruns.
+- `Structural_Distance_Subset_Sum/` contains Note V's proofs, exact solvers, tests, literature audit, frozen study, and raw measurements.
+- `tools/` contains the note catalog, evidence-to-paper helpers, link checking, and website staging.
+- `index.html`, `paper.css`, and `fonts/` are the four-note website. Four small legacy HTML redirects preserve its earlier entrypoints.
+- `.build/` holds ignored LaTeX byproducts and optional staged website files.
 
-The cost of obtaining coverage matters. In the paper's model, polynomial coverage overhead yields polynomial runtime exactly when $r(n)$ is polynomially bounded. Note II tests that premise: the paired subset-sum solver was slower than meet-in-the-middle on all 18 constructed hard no-solution cases tested. A classifier ranked held-out cases, but even confident NO proposals included real YES cases.
+The experiment packages retain their existing locations and frozen source bytes. Their protocols and measured data were not regenerated for the reorganization.
 
-Note III changes the objective. For a fixed list of weights $w=(w_1,\ldots,w_n)$, let $A(w)$ be its set of attainable subset sums. Draw a target $T$ from a stated distribution $\mu$. Then
+## Build and check
 
-$$
-q_\mu(w)=\Pr_{T\sim\mu}[T\in A(w)].
-$$
+Requires `pdflatex` and `pandoc`. Numerical tests use Python's standard library; plots use Matplotlib.
 
-If $L$ contains witnessed reachable targets and $U$ contains every target not soundly excluded, write $\mu(B)$ for the probability that $T$ falls in a target set $B$. Then $\mu(L)\le q_\mu(w)\le\mu(U)$. These are certified bounds for a particular list; classifier probabilities are statistical estimates under the experiment's input distribution.
+```powershell
+python build_papers.py
+python build_papers.py --paper 5
+python build_papers.py --paper Probability_Valued_Subset_Sum
+python tools/check_links.py
+python -m unittest discover -s Structural_Distance_Subset_Sum -p "test_*.py" -v
+```
 
-Note IV retains the motivation: "If we only need to get close to the target, and know how close, can our framework avoid much of the exponential search?" Its main contribution is a controlled negative timing result. With the same additive approximation rule and common greedy search disabled, pairing shows no consistent additional timing gain on the key jointly certified inputs. It finishes one additional input within the state cap. The [specification](subset-sum/APPROXIMATION_SPEC.md) supplies a common deterministic accuracy guarantee; the [experiment](subset-sum/APPROXIMATION_RESULTS.md) separates the effects of approximation, pairing, and early witness discovery. This limits the tested framework's demonstrated benefit from pairing while retaining the established usefulness of approximation.
+The builder accepts a note number or the existing filename stem. It builds all five PDFs by default, maintains the four published HTML pages, and never generates Note V HTML. Generated Note III and V tables are read from preserved measurements, with source and data integrity checks. No experiments are rerun by a paper build.
 
-## Reproduce the notes
+See [Note V's findings](Structural_Distance_Subset_Sum/FINDINGS.md), [its full study report](Structural_Distance_Subset_Sum/results/prospective_20261024/REPORT.md), and [Note III's methods ledger](subset-sum/PROBABILITY_REFINEMENT.md) for the guarantees, results, and their limits.
 
-- [subset-sum/README.md](subset-sum/README.md) links the exact-search benchmarks, classifier experiment, probability bounds, fixed-target approximation comparison, raw data, and figures.
-- Run `python subset-sum/approximation_experiment.py` for the fixed-target tolerance sweep. Run `python -m unittest discover -s subset-sum -p test_certified_approximation.py -v` for independent checks of witnesses and bounds. Numerical experiments use the standard library; plots also require `matplotlib`.
-- Run `python build_papers.py` to regenerate the three companion PDFs and HTML pages from their LaTeX sources. It requires `pdflatex` and `pandoc`.
-- The original paper can be rebuilt with `pdflatex Certified_Coverage_of_Exponential_Search_Spaces.tex`. All HTML pages share [paper.css](paper.css).
+## Website compatibility
 
-These notes give a model criterion and results on small synthetic families. They do not claim a new worst-case subset-sum bound.
+The currently published website uses `main`; development is pushed to `master`. This organization does not change the Pages setting or deploy the draft.
+
+To prepare a deployable copy of the four-note website:
+
+```powershell
+python tools/prepare_site.py --output .build/site
+python tools/check_links.py --site .build/site
+```
+
+The staged payload contains canonical note folders plus the old root HTML, PDF, and LaTeX URLs. Compatibility downloads are generated there instead of cluttering the repository root. Note V and its experiment package are excluded from that payload. Use a new output directory for another staged copy.
+
+These notes establish model criteria and results on specified synthetic families. They do not claim a new general worst-case subset-sum bound.

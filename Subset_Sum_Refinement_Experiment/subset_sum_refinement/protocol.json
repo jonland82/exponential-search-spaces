@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "seed": 731029,
+  "alpha": 0.05,
+  "cohorts": {
+    "train": [
+      16,
+      1200
+    ],
+    "calibration": [
+      16,
+      500
+    ],
+    "test": [
+      16,
+      1000
+    ],
+    "unseen_n20": [
+      20,
+      240
+    ]
+  },
+  "generator": "Upstream make_weights; family independently equiprobable independent/paired; fresh lists",
+  "target_rule": "Uniform on integer [round(.30 sum(w)),round(.70 sum(w))] conditional on reachable residues mod 8,10,16,32",
+  "outer_interval": "512 random witnessed subsets lower; min(1, product_j(c_j+1)/eligible_target_count) upper",
+  "primary": {
+    "model": "HistGradientBoostingRegressor",
+    "max_iter": 200,
+    "max_leaf_nodes": 15,
+    "learning_rate": 0.05,
+    "min_samples_leaf": 20,
+    "l2_regularization": 1.0
+  },
+  "baselines": [
+    "same-calibration midpoint",
+    "degree-2 ridge on density proxy, unique fraction, and analytic upper"
+  ],
+  "calibration": "Two one-sided gap-normalized scores; rank ceil((m+1)*(1-alpha/2)); no model tuning on calibration/test",
+  "primary_evaluation": "All fresh n16 test lists; empirical coverage, exact binomial CI, mean per-list fractional shrinkage, width, timing",
+  "diagnostics": [
+    "family-specific results",
+    "unseen n20 without recalibration",
+    "top 20% predicted fractional shrinkage; diagnostic, no conditional guarantee"
+  ],
+  "independent_label_checks": "30 small brute-force cases; first 12 n16 test labels independently checked with integer bitset DP",
+  "limits": "Synthetic distribution; marginal statistical coverage only; no per-instance deterministic refinement; training/calibration labels are exact and costed"
+}

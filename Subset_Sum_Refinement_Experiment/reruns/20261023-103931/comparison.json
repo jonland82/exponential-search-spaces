@@ -1,0 +1,132 @@
+{
+  "absolute_tolerance": 1e-10,
+  "relative_tolerance": 1e-10,
+  "timings_excluded": true,
+  "files": {
+    "train.jsonl": {
+      "matches": true,
+      "differences": 0,
+      "examples": [],
+      "rows": 1200
+    },
+    "calibration.jsonl": {
+      "matches": true,
+      "differences": 0,
+      "examples": [],
+      "rows": 500
+    },
+    "test.jsonl": {
+      "matches": true,
+      "differences": 0,
+      "examples": [],
+      "rows": 1000
+    },
+    "unseen_n20.jsonl": {
+      "matches": true,
+      "differences": 0,
+      "examples": [],
+      "rows": 240
+    },
+    "summary.json": {
+      "matches": false,
+      "differences": 19,
+      "examples": [
+        {
+          "path": "/models/density/cohorts/unseen_n20/top_20_percent_fractional_shrinkage_diagnostic/mean_new_width",
+          "original": 0.09678659785817402,
+          "rerun": 0.10349899567358106
+        },
+        {
+          "path": "/models/density/cohorts/unseen_n20/top_20_percent_fractional_shrinkage_diagnostic/ratio_of_mean_widths_removed",
+          "original": 0.7428995613096201,
+          "rerun": 0.7425794905031882
+        },
+        {
+          "path": "/models/density/cohorts/unseen_n20/top_20_percent_fractional_shrinkage_diagnostic/covered",
+          "original": 47,
+          "rerun": 46
+        },
+        {
+          "path": "/models/density/cohorts/unseen_n20/top_20_percent_fractional_shrinkage_diagnostic/lower_misses",
+          "original": 1,
+          "rerun": 2
+        },
+        {
+          "path": "/models/density/cohorts/unseen_n20/top_20_percent_fractional_shrinkage_diagnostic/coverage_binomial_95_ci/0",
+          "original": 0.8893038394068478,
+          "rerun": 0.8574590267986226
+        },
+        {
+          "path": "/models/density/cohorts/unseen_n20/top_20_percent_fractional_shrinkage_diagnostic/coverage_binomial_95_ci/1",
+          "original": 0.9994726847465769,
+          "rerun": 0.994913532069967
+        },
+        {
+          "path": "/models/density/cohorts/unseen_n20/top_20_percent_fractional_shrinkage_diagnostic/prediction_mae",
+          "original": 0.01954289235189358,
+          "rerun": 0.023893826543750964
+        },
+        {
+          "path": "/models/density/cohorts/unseen_n20/top_20_percent_fractional_shrinkage_diagnostic/coverage",
+          "original": 0.9791666666666666,
+          "rerun": 0.9583333333333334
+        },
+        {
+          "path": "/models/density/cohorts/unseen_n20/top_20_percent_fractional_shrinkage_diagnostic/mean_original_width",
+          "original": 0.37645442517012534,
+          "rerun": 0.40206196419972073
+        },
+        {
+          "path": "/models/density/cohorts/test/top_20_percent_fractional_shrinkage_diagnostic/mean_new_width",
+          "original": 0.12645769382482985,
+          "rerun": 0.12561485430098238
+        }
+      ]
+    },
+    "independent_checks.json": {
+      "matches": true,
+      "differences": 0,
+      "examples": [],
+      "rows": 12
+    },
+    "predictions.csv": {
+      "matches": true,
+      "differences": 0,
+      "examples": [],
+      "rows": 3720
+    }
+  },
+  "all_match": false,
+  "main_summary_matches": true,
+  "diagnostic_note": "Density-model top-20% selection changes because nearly tied fractional shrinkages differ across environments by at most 4.22e-15. The primary coverage and width results reproduce within the stated tolerance. No experiment code or protocol was changed.",
+  "original_environment": {
+    "source_repository": "https://github.com/jonland82/exponential-search-spaces",
+    "upstream_sha256": {
+      "upstream/subset-sum/README.md": "b0b83fe159b652e1514c08763f62ccfee7d7ddc89fba3402977582f56b35b15c",
+      "upstream/subset-sum/experiment.py": "6442ca74527f8683c49fb0b0c9d5c5420362605560223a34855f1046c6958f10",
+      "upstream/subset-sum/ml_experiment.py": "f4db7935db760312fc1abccad67e2fba52ee89a445496ef6ce12e108c2b4e299",
+      "upstream/subset-sum/probability_extension.py": "cdced28b68c8fb24beb9ba7eb7a32c7bcd0ccba5745533e1b820373bcf700ee8"
+    },
+    "protocol_sha256": "3c4c9af12d3329e8ae35b58c705a364a5676313deede2dbf62dfb24e86ce4d81",
+    "script_sha256": "76705431296ae2354534dddf72f1fbe7da8115d16ea8b8bc1731dee0c621fd0d",
+    "python": "3.12.14",
+    "numpy": "2.3.5",
+    "scipy": "1.17.0",
+    "sklearn": "1.8.0"
+  },
+  "rerun_environment": {
+    "source_repository": "https://github.com/jonland82/exponential-search-spaces",
+    "upstream_sha256": {
+      "upstream\\subset-sum\\experiment.py": "6442ca74527f8683c49fb0b0c9d5c5420362605560223a34855f1046c6958f10",
+      "upstream\\subset-sum\\ml_experiment.py": "f4db7935db760312fc1abccad67e2fba52ee89a445496ef6ce12e108c2b4e299",
+      "upstream\\subset-sum\\probability_extension.py": "cdced28b68c8fb24beb9ba7eb7a32c7bcd0ccba5745533e1b820373bcf700ee8",
+      "upstream\\subset-sum\\README.md": "b0b83fe159b652e1514c08763f62ccfee7d7ddc89fba3402977582f56b35b15c"
+    },
+    "protocol_sha256": "3c4c9af12d3329e8ae35b58c705a364a5676313deede2dbf62dfb24e86ce4d81",
+    "script_sha256": "76705431296ae2354534dddf72f1fbe7da8115d16ea8b8bc1731dee0c621fd0d",
+    "python": "3.13.5",
+    "numpy": "2.3.5",
+    "scipy": "1.17.0",
+    "sklearn": "1.8.0"
+  }
+}

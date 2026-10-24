@@ -1,0 +1,16 @@
+{
+  "started_at_utc": "2026-10-23T14:52:29.209816+00:00",
+  "protocol_sha256": "73bd4f0fef135768e66e3dfa038f6dfdf5035cca11a4f1913a20f96614416564",
+  "weights_sha256": "51ee2356438ca53cd992b1450a374cb446d454e732ccae225658ded4c0f4805a",
+  "python": "3.13.5",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "original_lists_checked_for_overlap": 2940,
+  "original_data_sha256": {
+    "calibration.jsonl": "e7bc6df9594ffb8402459f21e2c45bd08f2d5516074b1cd7660863f15d3b9b47",
+    "test.jsonl": "c7816efc05d0fae6bbd09dd7ff009a43fe35bffd92f3e3cedb0e97580a25eec4",
+    "train.jsonl": "a5cfbb90dd4206501d98279c59a1d381da4ab65578779cf7b1a032c6c01d6d5b",
+    "unseen_n20.jsonl": "3c8759647321ba4ad8c9bc11398967817bb03976da9e72753235efe4184804d4"
+  },
+  "completed_at_utc": "2026-10-23T14:53:34.585719+00:00",
+  "results_sha256": "09862394bc51850db2e372ca68dc9fb7eb5a9e3a39bc4cec24cbc208f7cefbbc"
+}

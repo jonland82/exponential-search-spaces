@@ -35,58 +35,59 @@ window.MathJax = {
 
 <section aria-labelledby="arc">
   <h2 id="arc">The narrative arc</h2>
-  <p><strong>Reading order:</strong> <a href="Certified_Coverage_of_Exponential_Search_Spaces.html">I: Framework</a> → <a href="Subset_Sum_as_a_Stress_Test.html">II: Exact-search test</a> → <a href="Probability_Valued_Subset_Sum.html">III: Random-target probability</a> → <a href="Certified_Approximation_of_Subset_Sum.html">IV: Pairing in approximation</a>. Notes III and IV branch from II; either can be read independently after the framework and exact-search test.</p>
+  <p><strong>Reading order:</strong> <a href="notes/01-certified-coverage/Certified_Coverage_of_Exponential_Search_Spaces.html">I: Framework</a> → <a href="notes/02-subset-sum-stress-test/Subset_Sum_as_a_Stress_Test.html">II: Exact-search test</a> → <a href="notes/03-probability-valued-subset-sum/Probability_Valued_Subset_Sum.html">III: Random-target probability</a> → <a href="notes/04-certified-approximation/Certified_Approximation_of_Subset_Sum.html">IV: Pairing in approximation</a>. Notes III and IV branch from II; either can be read independently after the framework and exact-search test.</p>
 
   <article class="series-card">
     <span class="series-label">Note I · The framework</span>
-    <h3><a href="Certified_Coverage_of_Exponential_Search_Spaces.html">Certified Coverage of Exponential Search Spaces</a></h3>
+    <h3><a href="notes/01-certified-coverage/Certified_Coverage_of_Exponential_Search_Spaces.html">Certified Coverage of Exponential Search Spaces</a></h3>
     <p>Formalizes structural representation, learned proposals with exact verification, and paired summaries. The decisive quantity is the uncovered residual, with all discovery and certification costs included.</p>
     <div class="math">\[
       r(n)=2^n-C(n).
     \]</div>
     <p class="meta">\(C(n)\) is certified coverage; \(r(n)\) counts states left for explicit search.</p>
     <div class="link-row">
-      <a href="Certified_Coverage_of_Exponential_Search_Spaces.html">Read HTML</a>
-      <a href="Certified_Coverage_of_Exponential_Search_Spaces.pdf">PDF</a>
-      <a href="Certified_Coverage_of_Exponential_Search_Spaces.tex">LaTeX</a>
+      <a href="notes/01-certified-coverage/Certified_Coverage_of_Exponential_Search_Spaces.html">Read HTML</a>
+      <a href="notes/01-certified-coverage/Certified_Coverage_of_Exponential_Search_Spaces.pdf">PDF</a>
+      <a href="notes/01-certified-coverage/Certified_Coverage_of_Exponential_Search_Spaces.tex">LaTeX</a>
     </div>
   </article>
 
   <article class="series-card">
     <span class="series-label">Note II · The stress test</span>
-    <h3><a href="Subset_Sum_as_a_Stress_Test.html">Subset Sum as a Stress Test for Certified Coverage</a></h3>
+    <h3><a href="notes/02-subset-sum-stress-test/Subset_Sum_as_a_Stress_Test.html">Subset Sum as a Stress Test for Certified Coverage</a></h3>
     <p>Implements exact pairing and sound pruning on subset sum. In the tested hard no-solution cases, pairing adds cost over meet-in-the-middle; a learned classifier ranks cases but cannot certify a NO.</p>
     <div class="math">\[
       \Sigma(A\cup B)=\Sigma(A)+\Sigma(B).
     \]</div>
     <p class="meta">For disjoint item groups \(A,B\), \(\Sigma(A)\) lists attainable sums; \(+\) combines sums from each group.</p>
     <div class="link-row">
-      <a href="Subset_Sum_as_a_Stress_Test.html">Read HTML</a>
-      <a href="Subset_Sum_as_a_Stress_Test.pdf">PDF</a>
-      <a href="Subset_Sum_as_a_Stress_Test.tex">LaTeX</a>
+      <a href="notes/02-subset-sum-stress-test/Subset_Sum_as_a_Stress_Test.html">Read HTML</a>
+      <a href="notes/02-subset-sum-stress-test/Subset_Sum_as_a_Stress_Test.pdf">PDF</a>
+      <a href="notes/02-subset-sum-stress-test/Subset_Sum_as_a_Stress_Test.tex">LaTeX</a>
       <a href="subset-sum/README.md">Methods and data</a>
     </div>
   </article>
 
   <article class="series-card">
     <span class="series-label">Note III · Random-target probability</span>
-    <h3><a href="Probability_Valued_Subset_Sum.html">Probability-Valued Subset Sum: Certified Bounds and Learned Guidance</a></h3>
-    <p>Draw a target by a specified rule and ask how likely it is to be reachable. Witnesses give lower bounds; sound exclusions and counting give upper bounds. The experiments show which bounds are useful and where they remain loose.</p>
+    <h3><a href="notes/03-probability-valued-subset-sum/Probability_Valued_Subset_Sum.html">Probability-Valued Subset Sum: Certified Bounds and Learned Guidance</a></h3>
+    <p>Draw a target by a specified rule and ask how likely it is to be reachable. Range and collision certificates provably tighten the probability bounds. A fresh multi-size benchmark finds modest range tightening and little extra benefit from the tested collision refinements. Calibrated learning narrows much more on matched data, but fails size transfer.</p>
     <div class="math">\[
       \mu(L)\le q_\mu(w)\le\mu(U).
     \]</div>
     <p class="meta">\(q_\mu(w)\) is reachability probability for weights \(w\) under target distribution \(\mu\). Witnessed targets \(L\) and a sound superset \(U\) bound it.</p>
     <div class="link-row">
-      <a href="Probability_Valued_Subset_Sum.html">Read HTML</a>
-      <a href="Probability_Valued_Subset_Sum.pdf">PDF</a>
-      <a href="Probability_Valued_Subset_Sum.tex">LaTeX</a>
+      <a href="notes/03-probability-valued-subset-sum/Probability_Valued_Subset_Sum.html">Read HTML</a>
+      <a href="notes/03-probability-valued-subset-sum/Probability_Valued_Subset_Sum.pdf">PDF</a>
+      <a href="notes/03-probability-valued-subset-sum/Probability_Valued_Subset_Sum.tex">LaTeX</a>
       <a href="subset-sum/PROBABILITY_EXTENSION.md">Methods and data</a>
+      <a href="subset-sum/PROBABILITY_REFINEMENT.md">Refinement theory and benchmarks</a>
     </div>
   </article>
 
   <article class="series-card">
     <span class="series-label">Note IV · A controlled negative result</span>
-    <h3><a href="Certified_Approximation_of_Subset_Sum.html">Does Pairing Add Value to Certified Approximation? A Subset-Sum Experiment</a></h3>
+    <h3><a href="notes/04-certified-approximation/Certified_Approximation_of_Subset_Sum.html">Does Pairing Add Value to Certified Approximation? A Subset-Sum Experiment</a></h3>
     <p>If we only need to get close to the target, and know how close, can our framework avoid much of the exponential search? Approximation supplies a precise accuracy guarantee. The controlled experiment asks what pairing adds: it finds no consistent additional timing benefit over the same additive rule used sequentially in the key comparison, with one additional input completed within the state cap.</p>
     <div class="math">\[
       \begin{gathered}
@@ -96,9 +97,9 @@ window.MathJax = {
     \]</div>
     <p class="meta">\(\ell,u\) bound the best possible distance \(d^*(w,t)\) from a subset sum of weights \(w\) to target \(t\); \(\eta\) is the allowed gap.</p>
     <div class="link-row">
-      <a href="Certified_Approximation_of_Subset_Sum.html">Read HTML</a>
-      <a href="Certified_Approximation_of_Subset_Sum.pdf">PDF</a>
-      <a href="Certified_Approximation_of_Subset_Sum.tex">LaTeX</a>
+      <a href="notes/04-certified-approximation/Certified_Approximation_of_Subset_Sum.html">Read HTML</a>
+      <a href="notes/04-certified-approximation/Certified_Approximation_of_Subset_Sum.pdf">PDF</a>
+      <a href="notes/04-certified-approximation/Certified_Approximation_of_Subset_Sum.tex">LaTeX</a>
       <a href="subset-sum/APPROXIMATION_SPEC.md">Specification</a>
       <a href="subset-sum/APPROXIMATION_RESULTS.md">Experiments and data</a>
     </div>
@@ -133,7 +134,7 @@ window.MathJax = {
   <div class="note">
     <p><strong>Representation must earn its cost.</strong> The paired subset-sum solver was slower than meet-in-the-middle on all 18 constructed hard no-solution cases tested.</p>
     <p><strong>Prediction helps choose work.</strong> The classifier's held-out area under the receiver operating characteristic curve (AUC), a ranking measure, was 0.866, close to a simple density model's 0.864. Two of its 43 most confident NO proposals were actually YES, so exact elimination still needs a verifier.</p>
-    <p><strong>Probability has a precise meaning.</strong> For a fixed target, subset sum remains YES or NO. A probability arises after specifying how a target is drawn. On 50 held-out 16-item lists, simple certified bounds contained the exact reachable-target fraction but left a substantial gap.</p>
+    <p><strong>Probability bounds can be tightened with certificates.</strong> On 160 fresh lists of 12–22 weights, range counting removes 14.15% of interval width on average, and tested collision/residue refinements raise this to 14.19%; every deterministic interval contains the truth. Separately, calibrated learning removes 76.96% on matched data with 97.5% coverage, but coverage falls to 88.75% on larger lists. Exact bitset computation often finishes faster.</p>
     <p><strong>The negative finding identifies what earns credit.</strong> With the common greedy search disabled, 32 items, and tolerance 0.01% of total weight, pairing is faster on 7 of 15 inputs that both it and sequential additive trimming certify. The median sequential/paired time ratio is 0.993. Pairing certifies all 16 inputs within the per-summary state cap; the sequential method certifies 15. This is a scoped negative timing result, with a resource-limit advantage retained.</p>
   </div>
 </section>

@@ -1,0 +1,70 @@
+{
+  "protocol": {
+    "version": 1,
+    "seed": 2026102302,
+    "sizes": [
+      12,
+      16,
+      20,
+      22
+    ],
+    "families": [
+      "independent",
+      "paired"
+    ],
+    "lists_per_size_family": 20,
+    "generator": "Unchanged formula from the preserved upstream make_weights; new seed strings",
+    "targets": "Uniform middle 40% integer interval, conditional on attainable residues mod 8,10,16,32",
+    "witness_budget": 512,
+    "methods": [
+      "original",
+      "range",
+      "moment_cap",
+      "partial_8",
+      "partial_32",
+      "residue_cap",
+      "combined"
+    ],
+    "differences": "Common adjacent half-sum gaps, descending product of gap frequencies; integer gap tie break",
+    "partial_budgets": [
+      8,
+      32
+    ],
+    "representation_moduli": [
+      16,
+      64
+    ],
+    "representation_cap": "Minimum basic cap and residue-wise sum-of-minima matching caps",
+    "sampling": {
+      "checkpoints": [
+        128,
+        512,
+        2048
+      ],
+      "familywise_alpha": 0.05,
+      "band": "Hoeffding, alpha/3 at each checkpoint, intersect original certified interval",
+      "decisions": "Exact half-sum membership; all preprocessing charged"
+    },
+    "bitset_max_bits": 100000000,
+    "exact_set": "Positive-weight DP truncated at upper target, from scratch",
+    "tolerances": [
+      0.05,
+      0.1,
+      0.2
+    ],
+    "memory": "Separate tracemalloc runs for first list of each stratum and every method; includes preprocessing; excludes interpreter baseline",
+    "timing": "One untraced standalone run per method and list; reproducibly shuffled order within certificate and oracle groups; no preprocessing reused",
+    "truth": "Full truncated set DP on every fresh list; compare bitset where feasible; truth evaluated after certificates",
+    "disjointness": "No repeated sorted weights within study or across any original cohort",
+    "scope": "Fixed deterministic algorithms plus exact-decision sampling; no learned extension or new calibration fit",
+    "acceptance": "All deterministic intervals contain integer truth; regression aggregates match transcript; independently checked proof implementation"
+  },
+  "source_sha256": {
+    "bounds.py": "859924f47514fed7c30ced9718a458e72ea5e1469aa3454b73d3db558d7e3358",
+    "run_study.py": "d62b45fefb51addf1223535960e4760effc4798f25700ba90c03003fa0ffbe72",
+    "test_bounds.py": "2f66c7803d64052e0dee3fad1f39926f2219b3999e807d3cdd0b3ce2e685495f",
+    "THEOREM.md": "af597c82a2d92a1dfe9bfc5e3e08a3bb71a59e0d48f5b02caae56db473a11737"
+  },
+  "upstream_generator_sha256": "f4db7935db760312fc1abccad67e2fba52ee89a445496ef6ce12e108c2b4e299",
+  "frozen_at_utc": "2026-10-23T14:52:29.006571+00:00"
+}

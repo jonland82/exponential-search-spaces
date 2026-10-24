@@ -1,0 +1,1692 @@
+{
+  "accuracy_attainment": {
+    "0.05": {
+      "original": {
+        "attained": 44,
+        "lists": 160,
+        "median_ms_when_attained": 1.684000002569519,
+        "median_cost_ratio_to_fastest_exact_on_same_lists": 0.17692528896779938,
+        "observed_faster_than_best_exact": 32
+      },
+      "range": {
+        "attained": 48,
+        "lists": 160,
+        "median_ms_when_attained": 1.9353499956196174,
+        "median_cost_ratio_to_fastest_exact_on_same_lists": 0.31664786747791274,
+        "observed_faster_than_best_exact": 32
+      },
+      "moment_cap": {
+        "attained": 48,
+        "lists": 160,
+        "median_ms_when_attained": 1.967849995708093,
+        "median_cost_ratio_to_fastest_exact_on_same_lists": 0.31711249202401576,
+        "observed_faster_than_best_exact": 32
+      },
+      "partial_8": {
+        "attained": 48,
+        "lists": 160,
+        "median_ms_when_attained": 2.012549994105939,
+        "median_cost_ratio_to_fastest_exact_on_same_lists": 0.34196298003884906,
+        "observed_faster_than_best_exact": 32
+      },
+      "partial_32": {
+        "attained": 48,
+        "lists": 160,
+        "median_ms_when_attained": 2.04644999030279,
+        "median_cost_ratio_to_fastest_exact_on_same_lists": 0.3412871602783464,
+        "observed_faster_than_best_exact": 32
+      },
+      "residue_cap": {
+        "attained": 48,
+        "lists": 160,
+        "median_ms_when_attained": 2.6028499923995696,
+        "median_cost_ratio_to_fastest_exact_on_same_lists": 0.4357283909228864,
+        "observed_faster_than_best_exact": 32
+      },
+      "combined": {
+        "attained": 48,
+        "lists": 160,
+        "median_ms_when_attained": 2.72765000408981,
+        "median_cost_ratio_to_fastest_exact_on_same_lists": 0.45742602521134235,
+        "observed_faster_than_best_exact": 32
+      },
+      "sampling": {
+        "attained": 55,
+        "lists": 160,
+        "median_ms_when_attained": 4.979199991794303,
+        "median_cost_ratio_to_fastest_exact_on_same_lists": 0.9472274287502549,
+        "observed_faster_than_best_exact": 29
+      }
+    },
+    "0.1": {
+      "original": {
+        "attained": 64,
+        "lists": 160,
+        "median_ms_when_attained": 1.6776500051491894,
+        "median_cost_ratio_to_fastest_exact_on_same_lists": 0.3397535726434824,
+        "observed_faster_than_best_exact": 41
+      },
+      "range": {
+        "attained": 67,
+        "lists": 160,
+        "median_ms_when_attained": 1.9175999914295971,
+        "median_cost_ratio_to_fastest_exact_on_same_lists": 0.4369204101053242,
+        "observed_faster_than_best_exact": 40
+      },
+      "moment_cap": {
+        "attained": 67,
+        "lists": 160,
+        "median_ms_when_attained": 1.9253999926149845,
+        "median_cost_ratio_to_fastest_exact_on_same_lists": 0.43564446751760805,
+        "observed_faster_than_best_exact": 40
+      },
+      "partial_8": {
+        "attained": 67,
+        "lists": 160,
+        "median_ms_when_attained": 2.001200002268888,
+        "median_cost_ratio_to_fastest_exact_on_same_lists": 0.44734157492298393,
+        "observed_faster_than_best_exact": 39
+      },
+      "partial_32": {
+        "attained": 67,
+        "lists": 160,
+        "median_ms_when_attained": 2.0090000034542754,
+        "median_cost_ratio_to_fastest_exact_on_same_lists": 0.4510103991178382,
+        "observed_faster_than_best_exact": 39
+      },
+      "residue_cap": {
+        "attained": 67,
+        "lists": 160,
+        "median_ms_when_attained": 2.573999998276122,
+        "median_cost_ratio_to_fastest_exact_on_same_lists": 0.5344124017697185,
+        "observed_faster_than_best_exact": 39
+      },
+      "combined": {
+        "attained": 67,
+        "lists": 160,
+        "median_ms_when_attained": 2.696399998967536,
+        "median_cost_ratio_to_fastest_exact_on_same_lists": 0.5897586829368404,
+        "observed_faster_than_best_exact": 39
+      },
+      "sampling": {
+        "attained": 160,
+        "lists": 160,
+        "median_ms_when_attained": 13.238000006822404,
+        "median_cost_ratio_to_fastest_exact_on_same_lists": 13.183953254444962,
+        "observed_faster_than_best_exact": 36
+      }
+    },
+    "0.2": {
+      "original": {
+        "attained": 80,
+        "lists": 160,
+        "median_ms_when_attained": 1.6621499962639064,
+        "median_cost_ratio_to_fastest_exact_on_same_lists": 0.44807035761245306,
+        "observed_faster_than_best_exact": 47
+      },
+      "range": {
+        "attained": 87,
+        "lists": 160,
+        "median_ms_when_attained": 1.9029000104637817,
+        "median_cost_ratio_to_fastest_exact_on_same_lists": 0.679918617366159,
+        "observed_faster_than_best_exact": 47
+      },
+      "moment_cap": {
+        "attained": 87,
+        "lists": 160,
+        "median_ms_when_attained": 1.923600008012727,
+        "median_cost_ratio_to_fastest_exact_on_same_lists": 0.6795956592168919,
+        "observed_faster_than_best_exact": 47
+      },
+      "partial_8": {
+        "attained": 87,
+        "lists": 160,
+        "median_ms_when_attained": 1.9943999941460788,
+        "median_cost_ratio_to_fastest_exact_on_same_lists": 0.7248476553959525,
+        "observed_faster_than_best_exact": 46
+      },
+      "partial_32": {
+        "attained": 87,
+        "lists": 160,
+        "median_ms_when_attained": 2.0084999996470287,
+        "median_cost_ratio_to_fastest_exact_on_same_lists": 0.7246611145376298,
+        "observed_faster_than_best_exact": 46
+      },
+      "residue_cap": {
+        "attained": 87,
+        "lists": 160,
+        "median_ms_when_attained": 2.565400005551055,
+        "median_cost_ratio_to_fastest_exact_on_same_lists": 0.9014069803714809,
+        "observed_faster_than_best_exact": 45
+      },
+      "combined": {
+        "attained": 87,
+        "lists": 160,
+        "median_ms_when_attained": 2.696399998967536,
+        "median_cost_ratio_to_fastest_exact_on_same_lists": 1.0167936921724212,
+        "observed_faster_than_best_exact": 43
+      },
+      "sampling": {
+        "attained": 160,
+        "lists": 160,
+        "median_ms_when_attained": 4.680500001995824,
+        "median_cost_ratio_to_fastest_exact_on_same_lists": 4.6726795228713165,
+        "observed_faster_than_best_exact": 41
+      }
+    }
+  },
+  "accuracy_by_stratum": {
+    "n12_independent": {
+      "0.05": {
+        "original": {
+          "attained": 4,
+          "lists": 20,
+          "median_ms_when_attained": 1.2730999951600097,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 2.69579493917922,
+          "observed_faster_than_best_exact": 0
+        },
+        "range": {
+          "attained": 4,
+          "lists": 20,
+          "median_ms_when_attained": 1.2177499957033433,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 2.596217650743868,
+          "observed_faster_than_best_exact": 0
+        },
+        "moment_cap": {
+          "attained": 4,
+          "lists": 20,
+          "median_ms_when_attained": 1.2806499944417737,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 2.693309930201596,
+          "observed_faster_than_best_exact": 0
+        },
+        "partial_8": {
+          "attained": 4,
+          "lists": 20,
+          "median_ms_when_attained": 1.2581500050146133,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 2.6577554975870497,
+          "observed_faster_than_best_exact": 0
+        },
+        "partial_32": {
+          "attained": 4,
+          "lists": 20,
+          "median_ms_when_attained": 1.2584500000230037,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 2.6623060020875755,
+          "observed_faster_than_best_exact": 0
+        },
+        "residue_cap": {
+          "attained": 4,
+          "lists": 20,
+          "median_ms_when_attained": 1.8236500036437064,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 3.84346776956332,
+          "observed_faster_than_best_exact": 0
+        },
+        "combined": {
+          "attained": 4,
+          "lists": 20,
+          "median_ms_when_attained": 1.9048499962082133,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 4.009872115875105,
+          "observed_faster_than_best_exact": 0
+        },
+        "sampling": {
+          "attained": 6,
+          "lists": 20,
+          "median_ms_when_attained": 2.109199995175004,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 4.7827887750480595,
+          "observed_faster_than_best_exact": 0
+        }
+      },
+      "0.1": {
+        "original": {
+          "attained": 6,
+          "lists": 20,
+          "median_ms_when_attained": 1.2730999951600097,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 2.7676088419817755,
+          "observed_faster_than_best_exact": 0
+        },
+        "range": {
+          "attained": 6,
+          "lists": 20,
+          "median_ms_when_attained": 1.2177499957033433,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 2.6629381889256534,
+          "observed_faster_than_best_exact": 0
+        },
+        "moment_cap": {
+          "attained": 6,
+          "lists": 20,
+          "median_ms_when_attained": 1.258749995031394,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 2.693309930201596,
+          "observed_faster_than_best_exact": 0
+        },
+        "partial_8": {
+          "attained": 6,
+          "lists": 20,
+          "median_ms_when_attained": 1.2581500050146133,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 2.6577554975870497,
+          "observed_faster_than_best_exact": 0
+        },
+        "partial_32": {
+          "attained": 6,
+          "lists": 20,
+          "median_ms_when_attained": 1.2584500000230037,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 2.853272323376798,
+          "observed_faster_than_best_exact": 0
+        },
+        "residue_cap": {
+          "attained": 6,
+          "lists": 20,
+          "median_ms_when_attained": 1.8236500036437064,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 3.84346776956332,
+          "observed_faster_than_best_exact": 0
+        },
+        "combined": {
+          "attained": 6,
+          "lists": 20,
+          "median_ms_when_attained": 1.9048499962082133,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 4.2643909816618795,
+          "observed_faster_than_best_exact": 0
+        },
+        "sampling": {
+          "attained": 20,
+          "lists": 20,
+          "median_ms_when_attained": 9.079799994651694,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 25.71994983498178,
+          "observed_faster_than_best_exact": 0
+        }
+      },
+      "0.2": {
+        "original": {
+          "attained": 10,
+          "lists": 20,
+          "median_ms_when_attained": 1.2730999951600097,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 3.047885311148182,
+          "observed_faster_than_best_exact": 0
+        },
+        "range": {
+          "attained": 11,
+          "lists": 20,
+          "median_ms_when_attained": 1.2159000034444034,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 2.7323267220940055,
+          "observed_faster_than_best_exact": 0
+        },
+        "moment_cap": {
+          "attained": 11,
+          "lists": 20,
+          "median_ms_when_attained": 1.240400000824593,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 3.0662030046143665,
+          "observed_faster_than_best_exact": 0
+        },
+        "partial_8": {
+          "attained": 11,
+          "lists": 20,
+          "median_ms_when_attained": 1.2614000006578863,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 2.819366372162851,
+          "observed_faster_than_best_exact": 0
+        },
+        "partial_32": {
+          "attained": 11,
+          "lists": 20,
+          "median_ms_when_attained": 1.2611999991349876,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 2.9855843637859945,
+          "observed_faster_than_best_exact": 0
+        },
+        "residue_cap": {
+          "attained": 11,
+          "lists": 20,
+          "median_ms_when_attained": 1.8349000019952655,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 4.5592477926877635,
+          "observed_faster_than_best_exact": 0
+        },
+        "combined": {
+          "attained": 11,
+          "lists": 20,
+          "median_ms_when_attained": 1.8345999997109175,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 4.437429643404527,
+          "observed_faster_than_best_exact": 0
+        },
+        "sampling": {
+          "attained": 20,
+          "lists": 20,
+          "median_ms_when_attained": 2.7526999983820133,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 6.911131899780686,
+          "observed_faster_than_best_exact": 0
+        }
+      }
+    },
+    "n12_paired": {
+      "0.05": {
+        "original": {
+          "attained": 4,
+          "lists": 20,
+          "median_ms_when_attained": 1.3498499974957667,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 3.225523405635294,
+          "observed_faster_than_best_exact": 0
+        },
+        "range": {
+          "attained": 7,
+          "lists": 20,
+          "median_ms_when_attained": 1.2454000097932294,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 3.2651304363845384,
+          "observed_faster_than_best_exact": 0
+        },
+        "moment_cap": {
+          "attained": 7,
+          "lists": 20,
+          "median_ms_when_attained": 1.2414999946486205,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 3.295726013280911,
+          "observed_faster_than_best_exact": 0
+        },
+        "partial_8": {
+          "attained": 7,
+          "lists": 20,
+          "median_ms_when_attained": 1.2608999968506396,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 3.3006662369232744,
+          "observed_faster_than_best_exact": 0
+        },
+        "partial_32": {
+          "attained": 7,
+          "lists": 20,
+          "median_ms_when_attained": 1.2590999976964667,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 3.3417817336104076,
+          "observed_faster_than_best_exact": 0
+        },
+        "residue_cap": {
+          "attained": 7,
+          "lists": 20,
+          "median_ms_when_attained": 1.8482000014046207,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 4.9062914608380614,
+          "observed_faster_than_best_exact": 0
+        },
+        "combined": {
+          "attained": 7,
+          "lists": 20,
+          "median_ms_when_attained": 1.8689999997150153,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 4.91844427352182,
+          "observed_faster_than_best_exact": 0
+        },
+        "sampling": {
+          "attained": 4,
+          "lists": 20,
+          "median_ms_when_attained": 1.7316000084974803,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 4.439991045358494,
+          "observed_faster_than_best_exact": 0
+        }
+      },
+      "0.1": {
+        "original": {
+          "attained": 8,
+          "lists": 20,
+          "median_ms_when_attained": 1.235750001796987,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 3.1957285674176146,
+          "observed_faster_than_best_exact": 0
+        },
+        "range": {
+          "attained": 10,
+          "lists": 20,
+          "median_ms_when_attained": 1.2470500078052282,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 3.2693281002252403,
+          "observed_faster_than_best_exact": 0
+        },
+        "moment_cap": {
+          "attained": 10,
+          "lists": 20,
+          "median_ms_when_attained": 1.2472999951569363,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 3.297640873799975,
+          "observed_faster_than_best_exact": 0
+        },
+        "partial_8": {
+          "attained": 10,
+          "lists": 20,
+          "median_ms_when_attained": 1.2644500020542182,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 3.3239460615461107,
+          "observed_faster_than_best_exact": 0
+        },
+        "partial_32": {
+          "attained": 10,
+          "lists": 20,
+          "median_ms_when_attained": 1.2372999990475364,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 3.342114641922758,
+          "observed_faster_than_best_exact": 0
+        },
+        "residue_cap": {
+          "attained": 10,
+          "lists": 20,
+          "median_ms_when_attained": 1.8501000013202429,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 4.909379128160349,
+          "observed_faster_than_best_exact": 0
+        },
+        "combined": {
+          "attained": 10,
+          "lists": 20,
+          "median_ms_when_attained": 1.8381499976385385,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 4.939976041083787,
+          "observed_faster_than_best_exact": 0
+        },
+        "sampling": {
+          "attained": 20,
+          "lists": 20,
+          "median_ms_when_attained": 5.9694499941542745,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 16.06417103062345,
+          "observed_faster_than_best_exact": 0
+        }
+      },
+      "0.2": {
+        "original": {
+          "attained": 10,
+          "lists": 20,
+          "median_ms_when_attained": 1.2154000069131143,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 3.226775937768661,
+          "observed_faster_than_best_exact": 0
+        },
+        "range": {
+          "attained": 12,
+          "lists": 20,
+          "median_ms_when_attained": 1.2538000009953976,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 3.289802441802577,
+          "observed_faster_than_best_exact": 0
+        },
+        "moment_cap": {
+          "attained": 12,
+          "lists": 20,
+          "median_ms_when_attained": 1.265799997781869,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 3.3117141835788315,
+          "observed_faster_than_best_exact": 0
+        },
+        "partial_8": {
+          "attained": 12,
+          "lists": 20,
+          "median_ms_when_attained": 1.2814000074286014,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 3.3553105478817113,
+          "observed_faster_than_best_exact": 0
+        },
+        "partial_32": {
+          "attained": 12,
+          "lists": 20,
+          "median_ms_when_attained": 1.2626999960048124,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 3.350666720860565,
+          "observed_faster_than_best_exact": 0
+        },
+        "residue_cap": {
+          "attained": 12,
+          "lists": 20,
+          "median_ms_when_attained": 1.8678000051295385,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 4.926376311660481,
+          "observed_faster_than_best_exact": 0
+        },
+        "combined": {
+          "attained": 12,
+          "lists": 20,
+          "median_ms_when_attained": 1.8795500000123866,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 4.988323225410572,
+          "observed_faster_than_best_exact": 0
+        },
+        "sampling": {
+          "attained": 20,
+          "lists": 20,
+          "median_ms_when_attained": 1.9791000013356097,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 5.0611372601092235,
+          "observed_faster_than_best_exact": 0
+        }
+      }
+    },
+    "n16_independent": {
+      "0.05": {
+        "original": {
+          "attained": 4,
+          "lists": 20,
+          "median_ms_when_attained": 1.3783499889541417,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.33807809088168694,
+          "observed_faster_than_best_exact": 4
+        },
+        "range": {
+          "attained": 4,
+          "lists": 20,
+          "median_ms_when_attained": 1.5620499980286695,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.3250890153351075,
+          "observed_faster_than_best_exact": 4
+        },
+        "moment_cap": {
+          "attained": 4,
+          "lists": 20,
+          "median_ms_when_attained": 1.6517999974894337,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.38645472947517606,
+          "observed_faster_than_best_exact": 4
+        },
+        "partial_8": {
+          "attained": 4,
+          "lists": 20,
+          "median_ms_when_attained": 1.6554000103496946,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.3560362688680811,
+          "observed_faster_than_best_exact": 4
+        },
+        "partial_32": {
+          "attained": 4,
+          "lists": 20,
+          "median_ms_when_attained": 1.6412499971920624,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.3452087155358182,
+          "observed_faster_than_best_exact": 4
+        },
+        "residue_cap": {
+          "attained": 4,
+          "lists": 20,
+          "median_ms_when_attained": 2.1378000019467436,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.45615960435016323,
+          "observed_faster_than_best_exact": 4
+        },
+        "combined": {
+          "attained": 4,
+          "lists": 20,
+          "median_ms_when_attained": 2.255300001706928,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.48042746883330634,
+          "observed_faster_than_best_exact": 4
+        },
+        "sampling": {
+          "attained": 5,
+          "lists": 20,
+          "median_ms_when_attained": 4.243199990014546,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.9630049771604432,
+          "observed_faster_than_best_exact": 3
+        }
+      },
+      "0.1": {
+        "original": {
+          "attained": 7,
+          "lists": 20,
+          "median_ms_when_attained": 1.3802999892504886,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.41306489442819333,
+          "observed_faster_than_best_exact": 5
+        },
+        "range": {
+          "attained": 8,
+          "lists": 20,
+          "median_ms_when_attained": 1.5534999984083697,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.7754910422057054,
+          "observed_faster_than_best_exact": 5
+        },
+        "moment_cap": {
+          "attained": 8,
+          "lists": 20,
+          "median_ms_when_attained": 1.575400005094707,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.7184515060392904,
+          "observed_faster_than_best_exact": 5
+        },
+        "partial_8": {
+          "attained": 8,
+          "lists": 20,
+          "median_ms_when_attained": 1.6554000103496946,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.7734740697139019,
+          "observed_faster_than_best_exact": 4
+        },
+        "partial_32": {
+          "attained": 8,
+          "lists": 20,
+          "median_ms_when_attained": 1.6534500027773902,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.7639640507797487,
+          "observed_faster_than_best_exact": 4
+        },
+        "residue_cap": {
+          "attained": 8,
+          "lists": 20,
+          "median_ms_when_attained": 2.1615500008920208,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 1.0069144256584959,
+          "observed_faster_than_best_exact": 4
+        },
+        "combined": {
+          "attained": 8,
+          "lists": 20,
+          "median_ms_when_attained": 2.2758499981136993,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 1.05299689743614,
+          "observed_faster_than_best_exact": 4
+        },
+        "sampling": {
+          "attained": 20,
+          "lists": 20,
+          "median_ms_when_attained": 31.096999999135733,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 55.594326896154215,
+          "observed_faster_than_best_exact": 3
+        }
+      },
+      "0.2": {
+        "original": {
+          "attained": 9,
+          "lists": 20,
+          "median_ms_when_attained": 1.4052000042283908,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.855304868186818,
+          "observed_faster_than_best_exact": 5
+        },
+        "range": {
+          "attained": 10,
+          "lists": 20,
+          "median_ms_when_attained": 1.5534999984083697,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 1.0036731685923193,
+          "observed_faster_than_best_exact": 5
+        },
+        "moment_cap": {
+          "attained": 10,
+          "lists": 20,
+          "median_ms_when_attained": 1.575400005094707,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 1.0782309141533624,
+          "observed_faster_than_best_exact": 5
+        },
+        "partial_8": {
+          "attained": 10,
+          "lists": 20,
+          "median_ms_when_attained": 1.672949998464901,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 1.0793401442058692,
+          "observed_faster_than_best_exact": 4
+        },
+        "partial_32": {
+          "attained": 10,
+          "lists": 20,
+          "median_ms_when_attained": 1.65940000442788,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 1.0660659022165448,
+          "observed_faster_than_best_exact": 4
+        },
+        "residue_cap": {
+          "attained": 10,
+          "lists": 20,
+          "median_ms_when_attained": 2.1627000023727305,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 1.4593367575011138,
+          "observed_faster_than_best_exact": 4
+        },
+        "combined": {
+          "attained": 10,
+          "lists": 20,
+          "median_ms_when_attained": 2.2838000004412606,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 1.555800397552225,
+          "observed_faster_than_best_exact": 4
+        },
+        "sampling": {
+          "attained": 20,
+          "lists": 20,
+          "median_ms_when_attained": 8.72190000518458,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 15.271296208377919,
+          "observed_faster_than_best_exact": 3
+        }
+      }
+    },
+    "n16_paired": {
+      "0.05": {
+        "original": {
+          "attained": 4,
+          "lists": 20,
+          "median_ms_when_attained": 1.3739999994868413,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 1.9164625632272454,
+          "observed_faster_than_best_exact": 0
+        },
+        "range": {
+          "attained": 5,
+          "lists": 20,
+          "median_ms_when_attained": 1.4590999926440418,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 2.14587676715414,
+          "observed_faster_than_best_exact": 0
+        },
+        "moment_cap": {
+          "attained": 5,
+          "lists": 20,
+          "median_ms_when_attained": 1.4542999997502193,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 2.0215547030591763,
+          "observed_faster_than_best_exact": 0
+        },
+        "partial_8": {
+          "attained": 5,
+          "lists": 20,
+          "median_ms_when_attained": 1.6670999902999029,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 2.225173504202186,
+          "observed_faster_than_best_exact": 0
+        },
+        "partial_32": {
+          "attained": 5,
+          "lists": 20,
+          "median_ms_when_attained": 1.4792000001762062,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 2.040793364113769,
+          "observed_faster_than_best_exact": 0
+        },
+        "residue_cap": {
+          "attained": 5,
+          "lists": 20,
+          "median_ms_when_attained": 2.0330999977886677,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 2.8598959041670513,
+          "observed_faster_than_best_exact": 0
+        },
+        "combined": {
+          "attained": 5,
+          "lists": 20,
+          "median_ms_when_attained": 2.118699994753115,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 2.958559278241198,
+          "observed_faster_than_best_exact": 0
+        },
+        "sampling": {
+          "attained": 5,
+          "lists": 20,
+          "median_ms_when_attained": 2.3861999943619594,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 3.356590230594533,
+          "observed_faster_than_best_exact": 0
+        }
+      },
+      "0.1": {
+        "original": {
+          "attained": 7,
+          "lists": 20,
+          "median_ms_when_attained": 1.3801000022795051,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 1.9600907703875596,
+          "observed_faster_than_best_exact": 0
+        },
+        "range": {
+          "attained": 7,
+          "lists": 20,
+          "median_ms_when_attained": 1.4581000141333789,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 2.4034970668528817,
+          "observed_faster_than_best_exact": 0
+        },
+        "moment_cap": {
+          "attained": 7,
+          "lists": 20,
+          "median_ms_when_attained": 1.4542999997502193,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 2.827823884202372,
+          "observed_faster_than_best_exact": 0
+        },
+        "partial_8": {
+          "attained": 7,
+          "lists": 20,
+          "median_ms_when_attained": 1.6015000001061708,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 2.42776762116368,
+          "observed_faster_than_best_exact": 0
+        },
+        "partial_32": {
+          "attained": 7,
+          "lists": 20,
+          "median_ms_when_attained": 1.487100002123043,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 2.0734250865546535,
+          "observed_faster_than_best_exact": 0
+        },
+        "residue_cap": {
+          "attained": 7,
+          "lists": 20,
+          "median_ms_when_attained": 2.0555999944917858,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 2.8651091496841032,
+          "observed_faster_than_best_exact": 0
+        },
+        "combined": {
+          "attained": 7,
+          "lists": 20,
+          "median_ms_when_attained": 2.1068999922135845,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 3.0115346598413564,
+          "observed_faster_than_best_exact": 0
+        },
+        "sampling": {
+          "attained": 20,
+          "lists": 20,
+          "median_ms_when_attained": 9.569450005074032,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 25.88320037171954,
+          "observed_faster_than_best_exact": 0
+        }
+      },
+      "0.2": {
+        "original": {
+          "attained": 7,
+          "lists": 20,
+          "median_ms_when_attained": 1.3801000022795051,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 1.9600907703875596,
+          "observed_faster_than_best_exact": 0
+        },
+        "range": {
+          "attained": 9,
+          "lists": 20,
+          "median_ms_when_attained": 1.456699988921173,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 2.8918379176270417,
+          "observed_faster_than_best_exact": 0
+        },
+        "moment_cap": {
+          "attained": 9,
+          "lists": 20,
+          "median_ms_when_attained": 1.4542999997502193,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 2.9022151087269963,
+          "observed_faster_than_best_exact": 0
+        },
+        "partial_8": {
+          "attained": 9,
+          "lists": 20,
+          "median_ms_when_attained": 1.6015000001061708,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 3.147589797664098,
+          "observed_faster_than_best_exact": 0
+        },
+        "partial_32": {
+          "attained": 9,
+          "lists": 20,
+          "median_ms_when_attained": 1.487100002123043,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 2.899022138019296,
+          "observed_faster_than_best_exact": 0
+        },
+        "residue_cap": {
+          "attained": 9,
+          "lists": 20,
+          "median_ms_when_attained": 2.0555999944917858,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 4.294352399120322,
+          "observed_faster_than_best_exact": 0
+        },
+        "combined": {
+          "attained": 9,
+          "lists": 20,
+          "median_ms_when_attained": 2.0902999967802316,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 4.125922969229568,
+          "observed_faster_than_best_exact": 0
+        },
+        "sampling": {
+          "attained": 20,
+          "lists": 20,
+          "median_ms_when_attained": 2.5338999985251576,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 5.908963869218558,
+          "observed_faster_than_best_exact": 0
+        }
+      }
+    },
+    "n20_independent": {
+      "0.05": {
+        "original": {
+          "attained": 6,
+          "lists": 20,
+          "median_ms_when_attained": 1.6515499955858104,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.015344047030873527,
+          "observed_faster_than_best_exact": 6
+        },
+        "range": {
+          "attained": 6,
+          "lists": 20,
+          "median_ms_when_attained": 2.4174000063794665,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.023738766548631156,
+          "observed_faster_than_best_exact": 6
+        },
+        "moment_cap": {
+          "attained": 6,
+          "lists": 20,
+          "median_ms_when_attained": 2.3670000009587966,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.021631931954059894,
+          "observed_faster_than_best_exact": 6
+        },
+        "partial_8": {
+          "attained": 6,
+          "lists": 20,
+          "median_ms_when_attained": 2.7043000009143725,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.025532254374701916,
+          "observed_faster_than_best_exact": 6
+        },
+        "partial_32": {
+          "attained": 6,
+          "lists": 20,
+          "median_ms_when_attained": 2.8012500042677857,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.026235857588218493,
+          "observed_faster_than_best_exact": 6
+        },
+        "residue_cap": {
+          "attained": 6,
+          "lists": 20,
+          "median_ms_when_attained": 3.326099998957943,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.03345539665581237,
+          "observed_faster_than_best_exact": 6
+        },
+        "combined": {
+          "attained": 6,
+          "lists": 20,
+          "median_ms_when_attained": 3.635900000517722,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.034785150179325534,
+          "observed_faster_than_best_exact": 6
+        },
+        "sampling": {
+          "attained": 9,
+          "lists": 20,
+          "median_ms_when_attained": 13.362899990170263,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.17365587815439174,
+          "observed_faster_than_best_exact": 6
+        }
+      },
+      "0.1": {
+        "original": {
+          "attained": 9,
+          "lists": 20,
+          "median_ms_when_attained": 1.672900005360134,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.020977039303338052,
+          "observed_faster_than_best_exact": 9
+        },
+        "range": {
+          "attained": 9,
+          "lists": 20,
+          "median_ms_when_attained": 2.469400002155453,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.030932010657005817,
+          "observed_faster_than_best_exact": 9
+        },
+        "moment_cap": {
+          "attained": 9,
+          "lists": 20,
+          "median_ms_when_attained": 2.477799993357621,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.031069943021061943,
+          "observed_faster_than_best_exact": 9
+        },
+        "partial_8": {
+          "attained": 9,
+          "lists": 20,
+          "median_ms_when_attained": 2.74840000201948,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.03371448703665482,
+          "observed_faster_than_best_exact": 9
+        },
+        "partial_32": {
+          "attained": 9,
+          "lists": 20,
+          "median_ms_when_attained": 2.8559000056702644,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.035811062510249514,
+          "observed_faster_than_best_exact": 9
+        },
+        "residue_cap": {
+          "attained": 9,
+          "lists": 20,
+          "median_ms_when_attained": 3.306500002508983,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.04195282448201075,
+          "observed_faster_than_best_exact": 9
+        },
+        "combined": {
+          "attained": 9,
+          "lists": 20,
+          "median_ms_when_attained": 3.7093999999342486,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.04643187187733667,
+          "observed_faster_than_best_exact": 9
+        },
+        "sampling": {
+          "attained": 20,
+          "lists": 20,
+          "median_ms_when_attained": 39.88559999561403,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 2.048895646356118,
+          "observed_faster_than_best_exact": 9
+        }
+      },
+      "0.2": {
+        "original": {
+          "attained": 11,
+          "lists": 20,
+          "median_ms_when_attained": 1.6552999877603725,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.02622707643243469,
+          "observed_faster_than_best_exact": 11
+        },
+        "range": {
+          "attained": 11,
+          "lists": 20,
+          "median_ms_when_attained": 2.469400002155453,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.03752136768979276,
+          "observed_faster_than_best_exact": 11
+        },
+        "moment_cap": {
+          "attained": 11,
+          "lists": 20,
+          "median_ms_when_attained": 2.477799993357621,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.045797906186827726,
+          "observed_faster_than_best_exact": 11
+        },
+        "partial_8": {
+          "attained": 11,
+          "lists": 20,
+          "median_ms_when_attained": 2.8005000058328733,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.04162780397233076,
+          "observed_faster_than_best_exact": 11
+        },
+        "partial_32": {
+          "attained": 11,
+          "lists": 20,
+          "median_ms_when_attained": 2.8737999964505434,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.04574060687122611,
+          "observed_faster_than_best_exact": 11
+        },
+        "residue_cap": {
+          "attained": 11,
+          "lists": 20,
+          "median_ms_when_attained": 3.306500002508983,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.0498183936117705,
+          "observed_faster_than_best_exact": 11
+        },
+        "combined": {
+          "attained": 11,
+          "lists": 20,
+          "median_ms_when_attained": 3.7134000012883916,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.054083994145169914,
+          "observed_faster_than_best_exact": 11
+        },
+        "sampling": {
+          "attained": 20,
+          "lists": 20,
+          "median_ms_when_attained": 13.256850004836451,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.5939234253703805,
+          "observed_faster_than_best_exact": 13
+        }
+      }
+    },
+    "n20_paired": {
+      "0.05": {
+        "original": {
+          "attained": 6,
+          "lists": 20,
+          "median_ms_when_attained": 1.7212000020663254,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.3663446956509378,
+          "observed_faster_than_best_exact": 6
+        },
+        "range": {
+          "attained": 6,
+          "lists": 20,
+          "median_ms_when_attained": 1.9245999937993474,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.41207807070143093,
+          "observed_faster_than_best_exact": 6
+        },
+        "moment_cap": {
+          "attained": 6,
+          "lists": 20,
+          "median_ms_when_attained": 1.911949999339413,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.40825399692656994,
+          "observed_faster_than_best_exact": 6
+        },
+        "partial_8": {
+          "attained": 6,
+          "lists": 20,
+          "median_ms_when_attained": 2.0073999985470437,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.4264408322850876,
+          "observed_faster_than_best_exact": 6
+        },
+        "partial_32": {
+          "attained": 6,
+          "lists": 20,
+          "median_ms_when_attained": 2.0258999938960187,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.4315678471580894,
+          "observed_faster_than_best_exact": 6
+        },
+        "residue_cap": {
+          "attained": 6,
+          "lists": 20,
+          "median_ms_when_attained": 2.5897999948938377,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.5491118052762333,
+          "observed_faster_than_best_exact": 6
+        },
+        "combined": {
+          "attained": 6,
+          "lists": 20,
+          "median_ms_when_attained": 2.70615000044927,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.5816509928100595,
+          "observed_faster_than_best_exact": 6
+        },
+        "sampling": {
+          "attained": 7,
+          "lists": 20,
+          "median_ms_when_attained": 4.715699993539602,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 1.1105288333555612,
+          "observed_faster_than_best_exact": 3
+        }
+      },
+      "0.1": {
+        "original": {
+          "attained": 7,
+          "lists": 20,
+          "median_ms_when_attained": 1.7112000059569255,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.38902686058946273,
+          "observed_faster_than_best_exact": 7
+        },
+        "range": {
+          "attained": 7,
+          "lists": 20,
+          "median_ms_when_attained": 1.9178999937139452,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.4369204101053242,
+          "observed_faster_than_best_exact": 6
+        },
+        "moment_cap": {
+          "attained": 7,
+          "lists": 20,
+          "median_ms_when_attained": 1.9120000069960952,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.43564446751760805,
+          "observed_faster_than_best_exact": 6
+        },
+        "partial_8": {
+          "attained": 7,
+          "lists": 20,
+          "median_ms_when_attained": 2.0056000066688284,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.4569709956911822,
+          "observed_faster_than_best_exact": 6
+        },
+        "partial_32": {
+          "attained": 7,
+          "lists": 20,
+          "median_ms_when_attained": 2.0090000034542754,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.4575178305970733,
+          "observed_faster_than_best_exact": 6
+        },
+        "residue_cap": {
+          "attained": 7,
+          "lists": 20,
+          "median_ms_when_attained": 2.5848999939626083,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.588963063460077,
+          "observed_faster_than_best_exact": 6
+        },
+        "combined": {
+          "attained": 7,
+          "lists": 20,
+          "median_ms_when_attained": 2.7159000019310042,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.6241655087202872,
+          "observed_faster_than_best_exact": 6
+        },
+        "sampling": {
+          "attained": 20,
+          "lists": 20,
+          "median_ms_when_attained": 31.046750002133194,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 51.31422708726264,
+          "observed_faster_than_best_exact": 3
+        }
+      },
+      "0.2": {
+        "original": {
+          "attained": 9,
+          "lists": 20,
+          "median_ms_when_attained": 1.7112000059569255,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.4830758207967128,
+          "observed_faster_than_best_exact": 7
+        },
+        "range": {
+          "attained": 9,
+          "lists": 20,
+          "median_ms_when_attained": 1.9178999937139452,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.5240849406702357,
+          "observed_faster_than_best_exact": 6
+        },
+        "moment_cap": {
+          "attained": 9,
+          "lists": 20,
+          "median_ms_when_attained": 1.9120000069960952,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.5222121245296067,
+          "observed_faster_than_best_exact": 6
+        },
+        "partial_8": {
+          "attained": 9,
+          "lists": 20,
+          "median_ms_when_attained": 2.009199990425259,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.5477705242682854,
+          "observed_faster_than_best_exact": 6
+        },
+        "partial_32": {
+          "attained": 9,
+          "lists": 20,
+          "median_ms_when_attained": 2.015099991695024,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.5531686359571946,
+          "observed_faster_than_best_exact": 6
+        },
+        "residue_cap": {
+          "attained": 9,
+          "lists": 20,
+          "median_ms_when_attained": 2.5902000052155927,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.720950727693552,
+          "observed_faster_than_best_exact": 6
+        },
+        "combined": {
+          "attained": 9,
+          "lists": 20,
+          "median_ms_when_attained": 2.7159000019310042,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.7602247393796829,
+          "observed_faster_than_best_exact": 6
+        },
+        "sampling": {
+          "attained": 20,
+          "lists": 20,
+          "median_ms_when_attained": 6.476350004959386,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 10.742997816614988,
+          "observed_faster_than_best_exact": 3
+        }
+      }
+    },
+    "n22_independent": {
+      "0.05": {
+        "original": {
+          "attained": 10,
+          "lists": 20,
+          "median_ms_when_attained": 1.8315999986953102,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.0010787260173441447,
+          "observed_faster_than_best_exact": 10
+        },
+        "range": {
+          "attained": 10,
+          "lists": 20,
+          "median_ms_when_attained": 3.507900000840891,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.0020559360165551648,
+          "observed_faster_than_best_exact": 10
+        },
+        "moment_cap": {
+          "attained": 10,
+          "lists": 20,
+          "median_ms_when_attained": 3.520450001815334,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.0020673794621065746,
+          "observed_faster_than_best_exact": 10
+        },
+        "partial_8": {
+          "attained": 10,
+          "lists": 20,
+          "median_ms_when_attained": 4.3086500008939765,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.002512701748779043,
+          "observed_faster_than_best_exact": 10
+        },
+        "partial_32": {
+          "attained": 10,
+          "lists": 20,
+          "median_ms_when_attained": 4.289049997169059,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.0025119861937343904,
+          "observed_faster_than_best_exact": 10
+        },
+        "residue_cap": {
+          "attained": 10,
+          "lists": 20,
+          "median_ms_when_attained": 4.614199999195989,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.002699463632039035,
+          "observed_faster_than_best_exact": 10
+        },
+        "combined": {
+          "attained": 10,
+          "lists": 20,
+          "median_ms_when_attained": 5.392500002926681,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.003177696213421441,
+          "observed_faster_than_best_exact": 10
+        },
+        "sampling": {
+          "attained": 11,
+          "lists": 20,
+          "median_ms_when_attained": 23.440999997546896,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.013762802392363938,
+          "observed_faster_than_best_exact": 11
+        }
+      },
+      "0.1": {
+        "original": {
+          "attained": 11,
+          "lists": 20,
+          "median_ms_when_attained": 1.827999993111007,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.0010742208511499963,
+          "observed_faster_than_best_exact": 11
+        },
+        "range": {
+          "attained": 11,
+          "lists": 20,
+          "median_ms_when_attained": 3.497300000162795,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.0020573815852637737,
+          "observed_faster_than_best_exact": 11
+        },
+        "moment_cap": {
+          "attained": 11,
+          "lists": 20,
+          "median_ms_when_attained": 3.5149000032106414,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.0020591018719605435,
+          "observed_faster_than_best_exact": 11
+        },
+        "partial_8": {
+          "attained": 11,
+          "lists": 20,
+          "median_ms_when_attained": 4.316799997468479,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.0025142947364314443,
+          "observed_faster_than_best_exact": 11
+        },
+        "partial_32": {
+          "attained": 11,
+          "lists": 20,
+          "median_ms_when_attained": 4.290299999411218,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.002515546483651434,
+          "observed_faster_than_best_exact": 11
+        },
+        "residue_cap": {
+          "attained": 11,
+          "lists": 20,
+          "median_ms_when_attained": 4.612799995811656,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.00270301071130887,
+          "observed_faster_than_best_exact": 11
+        },
+        "combined": {
+          "attained": 11,
+          "lists": 20,
+          "median_ms_when_attained": 5.3992000030120835,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.0031807308250486233,
+          "observed_faster_than_best_exact": 11
+        },
+        "sampling": {
+          "attained": 20,
+          "lists": 20,
+          "median_ms_when_attained": 24.072449989034794,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.014025176011599111,
+          "observed_faster_than_best_exact": 12
+        }
+      },
+      "0.2": {
+        "original": {
+          "attained": 12,
+          "lists": 20,
+          "median_ms_when_attained": 1.8315999986953102,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.0010787260173441447,
+          "observed_faster_than_best_exact": 12
+        },
+        "range": {
+          "attained": 13,
+          "lists": 20,
+          "median_ms_when_attained": 3.497300000162795,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.0020687408884683045,
+          "observed_faster_than_best_exact": 13
+        },
+        "moment_cap": {
+          "attained": 13,
+          "lists": 20,
+          "median_ms_when_attained": 3.5149000032106414,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.0020756570522526057,
+          "observed_faster_than_best_exact": 13
+        },
+        "partial_8": {
+          "attained": 13,
+          "lists": 20,
+          "median_ms_when_attained": 4.339499995694496,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.0025497876924147488,
+          "observed_faster_than_best_exact": 13
+        },
+        "partial_32": {
+          "attained": 13,
+          "lists": 20,
+          "median_ms_when_attained": 4.308100003981963,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.002524976267221387,
+          "observed_faster_than_best_exact": 13
+        },
+        "residue_cap": {
+          "attained": 13,
+          "lists": 20,
+          "median_ms_when_attained": 4.612799995811656,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.0027040650119386214,
+          "observed_faster_than_best_exact": 13
+        },
+        "combined": {
+          "attained": 13,
+          "lists": 20,
+          "median_ms_when_attained": 5.445899994811043,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.0031985444748031046,
+          "observed_faster_than_best_exact": 13
+        },
+        "sampling": {
+          "attained": 20,
+          "lists": 20,
+          "median_ms_when_attained": 23.651900002732873,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.014025176011599111,
+          "observed_faster_than_best_exact": 13
+        }
+      }
+    },
+    "n22_paired": {
+      "0.05": {
+        "original": {
+          "attained": 6,
+          "lists": 20,
+          "median_ms_when_attained": 1.708349991531577,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.08413533705424164,
+          "observed_faster_than_best_exact": 6
+        },
+        "range": {
+          "attained": 6,
+          "lists": 20,
+          "median_ms_when_attained": 2.239700006612111,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.11579434723888395,
+          "observed_faster_than_best_exact": 6
+        },
+        "moment_cap": {
+          "attained": 6,
+          "lists": 20,
+          "median_ms_when_attained": 2.1911999938311055,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.10790275361077256,
+          "observed_faster_than_best_exact": 6
+        },
+        "partial_8": {
+          "attained": 6,
+          "lists": 20,
+          "median_ms_when_attained": 2.365450003708247,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.1210521608787627,
+          "observed_faster_than_best_exact": 6
+        },
+        "partial_32": {
+          "attained": 6,
+          "lists": 20,
+          "median_ms_when_attained": 2.3272000034921803,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.114798874701346,
+          "observed_faster_than_best_exact": 6
+        },
+        "residue_cap": {
+          "attained": 6,
+          "lists": 20,
+          "median_ms_when_attained": 2.8157999986433424,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.13711416675444937,
+          "observed_faster_than_best_exact": 6
+        },
+        "combined": {
+          "attained": 6,
+          "lists": 20,
+          "median_ms_when_attained": 3.016049995494541,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.1509061422070729,
+          "observed_faster_than_best_exact": 6
+        },
+        "sampling": {
+          "attained": 8,
+          "lists": 20,
+          "median_ms_when_attained": 4.9589999980526045,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.3649942896727518,
+          "observed_faster_than_best_exact": 6
+        }
+      },
+      "0.1": {
+        "original": {
+          "attained": 9,
+          "lists": 20,
+          "median_ms_when_attained": 1.7117999959737062,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.17292866044800656,
+          "observed_faster_than_best_exact": 9
+        },
+        "range": {
+          "attained": 9,
+          "lists": 20,
+          "median_ms_when_attained": 2.2427999938372523,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.21849911493411805,
+          "observed_faster_than_best_exact": 9
+        },
+        "moment_cap": {
+          "attained": 9,
+          "lists": 20,
+          "median_ms_when_attained": 2.183899996452965,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.2133294830491031,
+          "observed_faster_than_best_exact": 9
+        },
+        "partial_8": {
+          "attained": 9,
+          "lists": 20,
+          "median_ms_when_attained": 2.3566000018035993,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.23649819791733587,
+          "observed_faster_than_best_exact": 9
+        },
+        "partial_32": {
+          "attained": 9,
+          "lists": 20,
+          "median_ms_when_attained": 2.351899995119311,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.23777317407287316,
+          "observed_faster_than_best_exact": 9
+        },
+        "residue_cap": {
+          "attained": 9,
+          "lists": 20,
+          "median_ms_when_attained": 2.7904000016860664,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.27779548511559277,
+          "observed_faster_than_best_exact": 9
+        },
+        "combined": {
+          "attained": 9,
+          "lists": 20,
+          "median_ms_when_attained": 3.005999999004416,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.305668080225512,
+          "observed_faster_than_best_exact": 9
+        },
+        "sampling": {
+          "attained": 20,
+          "lists": 20,
+          "median_ms_when_attained": 11.743749993911479,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 3.7207091577187827,
+          "observed_faster_than_best_exact": 9
+        }
+      },
+      "0.2": {
+        "original": {
+          "attained": 12,
+          "lists": 20,
+          "median_ms_when_attained": 1.7109999971580692,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.2574223102322364,
+          "observed_faster_than_best_exact": 12
+        },
+        "range": {
+          "attained": 12,
+          "lists": 20,
+          "median_ms_when_attained": 2.1944000109215267,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.3041468036616978,
+          "observed_faster_than_best_exact": 12
+        },
+        "moment_cap": {
+          "attained": 12,
+          "lists": 20,
+          "median_ms_when_attained": 2.1859999978914857,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.29034034743205756,
+          "observed_faster_than_best_exact": 12
+        },
+        "partial_8": {
+          "attained": 12,
+          "lists": 20,
+          "median_ms_when_attained": 2.3561499983770773,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.30582213788652474,
+          "observed_faster_than_best_exact": 12
+        },
+        "partial_32": {
+          "attained": 12,
+          "lists": 20,
+          "median_ms_when_attained": 2.3586999959661625,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.3274395264153245,
+          "observed_faster_than_best_exact": 12
+        },
+        "residue_cap": {
+          "attained": 12,
+          "lists": 20,
+          "median_ms_when_attained": 2.839199994923547,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.3668247850870846,
+          "observed_faster_than_best_exact": 11
+        },
+        "combined": {
+          "attained": 12,
+          "lists": 20,
+          "median_ms_when_attained": 3.016049995494541,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 0.38942422104205704,
+          "observed_faster_than_best_exact": 9
+        },
+        "sampling": {
+          "attained": 20,
+          "lists": 20,
+          "median_ms_when_attained": 4.9303999985568225,
+          "median_cost_ratio_to_fastest_exact_on_same_lists": 1.4927533293765327,
+          "observed_faster_than_best_exact": 9
+        }
+      }
+    }
+  },
+  "sampling_simultaneous_covered": 160,
+  "sampling_simultaneous_by_stratum": {
+    "n12_independent": {
+      "covered": 20,
+      "lists": 20
+    },
+    "n12_paired": {
+      "covered": 20,
+      "lists": 20
+    },
+    "n16_independent": {
+      "covered": 20,
+      "lists": 20
+    },
+    "n16_paired": {
+      "covered": 20,
+      "lists": 20
+    },
+    "n20_independent": {
+      "covered": 20,
+      "lists": 20
+    },
+    "n20_paired": {
+      "covered": 20,
+      "lists": 20
+    },
+    "n22_independent": {
+      "covered": 20,
+      "lists": 20
+    },
+    "n22_paired": {
+      "covered": 20,
+      "lists": 20
+    }
+  },
+  "residue_cap_strict_improvements": 144,
+  "combined_strictly_better_than_range": 75,
+  "combined_mean_extra_width_removed": 0.00012838507774381064,
+  "oracles": {
+    "exact_set": {
+      "completed": 160,
+      "skipped": 0,
+      "median_ms_completed": 22.70680000219727,
+      "mean_ms_completed": 252.79631437488203
+    },
+    "bitset": {
+      "completed": 149,
+      "skipped": 11,
+      "median_ms_completed": 0.6698999932268634,
+      "mean_ms_completed": 9.456600671287957
+    }
+  },
+  "memory": {
+    "original": {
+      "profiled": 8,
+      "median_peak_bytes": 63076.0,
+      "max_peak_bytes": 63188
+    },
+    "range": {
+      "profiled": 8,
+      "median_peak_bytes": 64158.0,
+      "max_peak_bytes": 357008
+    },
+    "moment_cap": {
+      "profiled": 8,
+      "median_peak_bytes": 64154.0,
+      "max_peak_bytes": 357008
+    },
+    "partial_8": {
+      "profiled": 8,
+      "median_peak_bytes": 64150.0,
+      "max_peak_bytes": 472624
+    },
+    "partial_32": {
+      "profiled": 8,
+      "median_peak_bytes": 64142.0,
+      "max_peak_bytes": 472624
+    },
+    "residue_cap": {
+      "profiled": 8,
+      "median_peak_bytes": 64138.0,
+      "max_peak_bytes": 357008
+    },
+    "combined": {
+      "profiled": 8,
+      "median_peak_bytes": 64134.0,
+      "max_peak_bytes": 472624
+    },
+    "sampling": {
+      "profiled": 8,
+      "median_peak_bytes": 64106.0,
+      "max_peak_bytes": 356960
+    },
+    "exact_set": {
+      "profiled": 8,
+      "median_peak_bytes": 6876084.0,
+      "max_peak_bytes": 184663572
+    },
+    "bitset": {
+      "profiled": 8,
+      "median_peak_bytes": 621934.0,
+      "max_peak_bytes": 1906432
+    }
+  }
+}
