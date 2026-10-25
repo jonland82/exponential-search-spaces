@@ -1,8 +1,8 @@
 {
   "source_branch": "master",
-  "source_commit": "1e4b9c659529bf19a21e7189be08758571856d14",
-  "built_utc": "2026-10-25T18:54:55.284937+00:00",
+  "source_commit": "b24676615488a1c2cdff908a44516b4cac8c6f12",
+  "built_utc": "2026-10-25T22:16:26.503080+00:00",
   "note_entries": 6,
-  "html_papers": 5,
-  "paper_v": "PDF/source working draft"
+  "html_papers": 6,
+  "paper_v": "HTML/PDF working draft"
 }

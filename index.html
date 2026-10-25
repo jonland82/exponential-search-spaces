@@ -37,7 +37,7 @@ window.MathJax = {
   <h2 id="arc">The narrative arc</h2>
   <p><strong>Reading order:</strong> <a href="notes/01-certified-coverage/Certified_Coverage_of_Exponential_Search_Spaces.html">I: Framework</a> → <a href="notes/02-subset-sum-stress-test/Subset_Sum_as_a_Stress_Test.html">II: Exact-search test</a> → <a href="notes/03-probability-valued-subset-sum/Probability_Valued_Subset_Sum.html">III: Random-target probability</a> → <a href="notes/04-certified-approximation/Certified_Approximation_of_Subset_Sum.html">IV: Pairing in approximation</a>. Notes III and IV branch from II; either can be read independently after the framework and exact-search test.</p>
 
-  <p>Continue with <a href="notes/05-structural-distance/Structural_Distance_in_Subset_Sum.pdf">V: Structural distance (working draft)</a> and <a href="notes/06-learned-solvability/Predicting_Subset_Sum_Completion.html">VI: Learned completion and certified pruning</a>. These return to exact solving: discover easy cores, predict budgeted completion, then test whether structural checks improve search within Note I's framework.</p>
+  <p>Continue with <a href="notes/05-structural-distance/Structural_Distance_in_Subset_Sum.html">V: Structural distance (working draft)</a> and <a href="notes/06-learned-solvability/Predicting_Subset_Sum_Completion.html">VI: Learned completion and certified pruning</a>. These return to exact solving: discover easy cores, predict budgeted completion, then test whether structural checks improve search within Note I's framework.</p>
 
   <article class="series-card">
     <span class="series-label">Note I · The framework</span>
@@ -108,14 +108,15 @@ window.MathJax = {
   </article>
   <article class="series-card">
     <span class="series-label">Note V &middot; Structural distance &middot; Working draft</span>
-    <h3><a href="notes/05-structural-distance/Structural_Distance_in_Subset_Sum.pdf">How Far from Easy? Structural Distance in Subset Sum</a></h3>
+    <h3><a href="notes/05-structural-distance/Structural_Distance_in_Subset_Sum.html">How Far from Easy? Structural Distance in Subset Sum</a></h3>
     <p>Finds a largest superincreasing core and searches only its exceptions. Logarithmically many exceptions give a sufficient polynomial regime. More elaborate core selectors reduce residual support on some constructed lists, but their discovery costs outweigh the query savings in the experiment.</p>
     <div class="math">\[
       T(x)\le F(L)+2^k\bigl(Q(L)+\operatorname{poly}(L)\bigr).
     \]</div>
-    <p class="meta">\(k\) is the number of exceptions; \(F\) discovers the core and \(Q\) answers an exact core query. Available as a PDF/source working draft.</p>
+    <p class="meta">\(k\) is the number of exceptions; \(F\) discovers the core and \(Q\) answers an exact core query. Working draft, available in HTML/PDF with source.</p>
     <div class="link-row">
-      <a href="notes/05-structural-distance/Structural_Distance_in_Subset_Sum.pdf">Read PDF draft</a>
+      <a href="notes/05-structural-distance/Structural_Distance_in_Subset_Sum.html">Read HTML draft</a>
+      <a href="notes/05-structural-distance/Structural_Distance_in_Subset_Sum.pdf">PDF</a>
       <a href="notes/05-structural-distance/Structural_Distance_in_Subset_Sum.tex">LaTeX</a>
       <a href="Structural_Distance_Subset_Sum/FINDINGS.md">Experiments and data</a>
     </div>

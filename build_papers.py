@@ -89,7 +89,7 @@ def build_html(paper):
     title, description = html.escape(paper["title"]), html.escape(paper["description"])
     related = "\n    ".join(
         f'<a href="{relative(artifact(other, ".html" if other["published"] else ".pdf"), folder)}">'
-        f'{html.escape(other["nav_label"])}{" (PDF draft)" if not other["published"] else ""}</a>'
+        f'{html.escape(other["nav_label"])}{" (working draft)" if other.get("working_draft") else ""}</a>'
         for other in PAPERS if other is not paper
     )
     home = relative(ROOT / "index.html", folder)
@@ -121,7 +121,7 @@ window.MathJax = {{
   <a href="{stem}.tex">LaTeX source</a>
 </nav>
 <header>
-  <span class="series-label">Companion note {paper["number"]} of {PAPERS[-1]["number"]}</span>
+  <span class="series-label">Companion note {paper["number"]} of {PAPERS[-1]["number"]}{" &middot; Working draft" if paper.get("working_draft") else ""}</span>
   <h1>{title}</h1>
   <div class="byline">Jonathan R. Landers<br>October 2026</div>
 </header>
