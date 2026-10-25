@@ -1,0 +1,120 @@
+{
+  "created_utc": "2026-10-25T22:22:11.109867+00:00",
+  "source_sha256": "942c060854a9ad07804ce1cb92d1e1d2d17b6a8fd2abd8ea07eecb6accb68db8",
+  "inputs": {
+    "data_hashes.json": "db0ea298d1af433984cb45ef0078854e7124a5b20f7c9b7970c6b51094b13eed",
+    "cases.jsonl": "34c3a42d2e90b096e3d487bf87c7df783f38a5f6685498863f2a21970f9b5c9f",
+    "references.jsonl": "df762185f00c276922fe155bdeabf5249fb47201aab1e440c55ae80c7ae930d9"
+  },
+  "structural_sources": {
+    "features.py": "93de025d5c976ccf96a74b4bd177526a37902a53daa7012aa6eba91268e75e36",
+    "advanced_features.py": "0c6c6d40fe2c71f886080d5536bd0aa5ff981368f882648f6f5e9ed72d9469fe"
+  },
+  "outputs": {
+    "README.md": "607c205876064933dde64a32acab1469120948bdb91e9682c96344e7f17480ee",
+    "input_space.html": "c16af8c52e6072fe63ae9a7b08d0dcdc10202bdb6ca691a086dce70a65d94c1b",
+    "input_space.pdf": "a8ca696d0a5ec9432137b839839376af0a58e132318c32787b86afff50c954be",
+    "input_space.png": "e229c9f8aa4024ba4700387a06def13c5729e5f5d4f1338a3d6803986f6de62f",
+    "input_space_template.html": "a99785bd172c5421171bdee506d3e080f7d8a5001108f0685468bf4364cfc308",
+    "plot_input_space.py": "942c060854a9ad07804ce1cb92d1e1d2d17b6a8fd2abd8ea07eecb6accb68db8",
+    "points.csv": "c0cdbcef50de5ab8c12bc3dba4d4c86802fc47bb14d5d3da3ee33769d1905ea1",
+    "points.json": "1c2c674b63b4d2ec750dcdd666823c4dfffaf2d06e589f81e15c74abdce8ca60",
+    "prediction_overlay.json": "2f843e1e40cf177d6dad5f80a4497a3fb39959b930c7e42d8899becd11e31177",
+    "projection.json": "5a862b9082ee0f87237677e899b99f8a0b5a112cc75dadc63a81505f757ab49b",
+    "views.json": "7ee18104970756f2dc6312f760f220845f17ed8d70d867bf7f3f2cad82012f1f"
+  },
+  "summary": {
+    "unscaled": {
+      "cases": 576,
+      "base_lists": 144,
+      "completed": 430,
+      "unresolved": 146,
+      "primary_types": {
+        "Superincreasing": 24,
+        "Complete coverage": 24,
+        "Few distinct values": 24,
+        "Small reachable support": 24,
+        "Interval / arithmetic progression": 48,
+        "Other solved input": 295,
+        "Hard within budget; no certified full type": 137
+      },
+      "exact_membership_counts": {
+        "Superincreasing": 24,
+        "Complete coverage": 48,
+        "Few distinct values": 48,
+        "Small reachable support": 32,
+        "Interval / arithmetic progression": 96
+      },
+      "unresolved_but_certified": [
+        "n24-progression-r0-s0-scale1-uniform_middle",
+        "n24-progression-r0-s1-scale1-uniform_middle",
+        "n32-progression-r0-s0-scale1-planted",
+        "n32-progression-r0-s0-scale1-uniform_middle",
+        "n32-progression-r0-s1-scale1-planted",
+        "n32-progression-r0-s1-scale1-uniform_middle",
+        "n38-progression-r0-s0-scale1-planted",
+        "n38-progression-r0-s1-scale1-planted",
+        "n38-progression-r0-s1-scale1-uniform_middle"
+      ],
+      "other_completion_methods": {
+        "core_enumerate": 15,
+        "exact target reduction": 78,
+        "dfs": 173,
+        "mitm": 29
+      }
+    },
+    "all_encodings": {
+      "cases": 1152,
+      "base_lists": 144,
+      "completed": 888,
+      "unresolved": 264,
+      "primary_types": {
+        "Superincreasing": 48,
+        "Complete coverage": 48,
+        "Few distinct values": 48,
+        "Small reachable support": 48,
+        "Interval / arithmetic progression": 96,
+        "Other solved input": 615,
+        "Hard within budget; no certified full type": 249
+      },
+      "exact_membership_counts": {
+        "Superincreasing": 48,
+        "Complete coverage": 96,
+        "Few distinct values": 96,
+        "Small reachable support": 64,
+        "Interval / arithmetic progression": 192
+      },
+      "unresolved_but_certified": [
+        "n24-progression-r0-s0-scale1-uniform_middle",
+        "n24-progression-r0-s1-scale1-uniform_middle",
+        "n32-progression-r0-s0-scale1-planted",
+        "n32-progression-r0-s0-scale1-uniform_middle",
+        "n32-progression-r0-s0-scale16777217-uniform_middle",
+        "n32-progression-r0-s1-scale1-planted",
+        "n32-progression-r0-s1-scale1-uniform_middle",
+        "n32-progression-r0-s1-scale16777217-planted",
+        "n32-progression-r0-s1-scale16777217-uniform_middle",
+        "n38-progression-r0-s0-scale1-planted",
+        "n38-progression-r0-s0-scale16777217-planted",
+        "n38-progression-r0-s1-scale1-planted",
+        "n38-progression-r0-s1-scale1-uniform_middle",
+        "n38-progression-r0-s1-scale16777217-planted",
+        "n38-progression-r0-s1-scale16777217-uniform_middle"
+      ],
+      "other_completion_methods": {
+        "core_enumerate": 32,
+        "exact target reduction": 156,
+        "dfs": 360,
+        "mitm": 67
+      }
+    }
+  },
+  "scope": "presentation only; unsupervised PCA; no predictor fitting or solver reruns",
+  "template_sha256": "a99785bd172c5421171bdee506d3e080f7d8a5001108f0685468bf4364cfc308",
+  "presentation_updated_utc": "2026-10-25T23:03:06.787569+00:00",
+  "prediction_sources": {
+    "Learned_Solvability_Subset_Sum\\results\\neighbors_20261025\\old_predictions_exploratory.jsonl": "93a557230656e0a370ee0314c8c1055ff26d4ba8c6a49b7394f5c405120472f1",
+    "Learned_Solvability_Subset_Sum\\results\\neighbors_20261025\\protocol.json": "06a1ad5d49a0c01aba01751ab5d2cff25fd1157f82cce2107fc20569d8f46f40",
+    "Learned_Solvability_Subset_Sum\\results\\neighbors_20261025\\INDEPENDENT_VALIDATION.json": "0ab7f193993bb34c9e0b4318bf819b5a5254a426b5213880e9336639dac4f855"
+  }
+}

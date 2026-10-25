@@ -5,6 +5,17 @@ Stage 10 certified branch-pruning results.** The six-note website links the pape
 and its supporting evidence.
 The original feasibility pilot and model-development results remain preserved.
 
+**Stage 11 complete: proximity to observed easy/hard inputs.** A separate model freeze
+tests empirical neighbor distances in the original 15-feature space on another
+144 base lists / 1,152 paired-encoding cases. Related targets never serve as
+their own training neighbors. See the [protocol](NEIGHBOR_PROTOCOL.md),
+[prediction report](results/neighbors_20261025/PREDICTION_REPORT.md),
+[paid solver report](results/neighbors_20261025/PRIORITY_REPORT.md) and
+[findings](NEIGHBOR_FINDINGS.md). These follow-up results are separate from the
+current manuscript and preserve all earlier frozen evidence. Adding both
+distances catches more hard inputs but does not improve overall prediction or
+paid solver completions; the original model remains the default.
+
 **Stage 10 follow-up complete:** certified structural checks resolve search
 subtrees, but the transferred combined model does not beat a simple distance
 rule. At 50 ms, median completions were 152/216 for DFS, 159 for the combined
@@ -29,6 +40,7 @@ a separate exploratory section in the paper.
 - [Fresh prediction report](results/prospective_20261025/PREDICTION_REPORT.md).
 - [Paid practical prioritization report](results/prospective_20261025/PRIORITY_REPORT.md).
 - [Standalone study overview](results/prospective_20261025/figures/overview.pdf).
+- [Interactive 3D input space with prediction and mistake overlays](visualizations/input_space_20261025/input_space.html), [static plot](visualizations/input_space_20261025/input_space.png) and [label/projection notes](visualizations/input_space_20261025/README.md).
 - [Paper VI PDF](../notes/06-learned-solvability/Predicting_Subset_Sum_Completion.pdf).
 - [LaTeX manuscript](../notes/06-learned-solvability/Predicting_Subset_Sum_Completion.tex).
 - [Scoped primary-source audit](LITERATURE.md).
@@ -78,6 +90,11 @@ python Learned_Solvability_Subset_Sum/prospective_study.py generate --output Lea
 python Learned_Solvability_Subset_Sum/prospective_study.py analyze --output Learned_Solvability_Subset_Sum/results/new_frozen_study
 python Learned_Solvability_Subset_Sum/priority_experiment.py --output Learned_Solvability_Subset_Sum/results/new_frozen_study
 python Learned_Solvability_Subset_Sum/validate_prospective.py Learned_Solvability_Subset_Sum/results/prospective_20261025
+python Learned_Solvability_Subset_Sum/neighbor_experiment.py freeze --output Learned_Solvability_Subset_Sum/results/new_neighbor_study
+python Learned_Solvability_Subset_Sum/neighbor_experiment.py generate --output Learned_Solvability_Subset_Sum/results/new_neighbor_study
+python Learned_Solvability_Subset_Sum/neighbor_experiment.py analyze --output Learned_Solvability_Subset_Sum/results/new_neighbor_study
+python Learned_Solvability_Subset_Sum/neighbor_experiment.py priorities --output Learned_Solvability_Subset_Sum/results/new_neighbor_study
+python Learned_Solvability_Subset_Sum/validate_neighbors.py Learned_Solvability_Subset_Sum/results/new_neighbor_study
 ```
 
 A pilot requires a new output directory. The manifest and source snapshots are

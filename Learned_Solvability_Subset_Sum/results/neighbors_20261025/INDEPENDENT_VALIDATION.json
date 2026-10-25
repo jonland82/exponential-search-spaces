@@ -1,0 +1,15 @@
+{
+  "status": "passed",
+  "cases": 1152,
+  "base_lists": 144,
+  "pool_runs": 672,
+  "counter_replays_checked": 336,
+  "oracle_replayed": true,
+  "predictions_reproduced": true,
+  "hashes_verified": true,
+  "utc": "2026-10-25T22:48:10.044615+00:00",
+  "independent_geometry_audit": true,
+  "training_refits_reproduced": true,
+  "calibration_reproduced": true,
+  "scale_pairs_checked": 576
+}

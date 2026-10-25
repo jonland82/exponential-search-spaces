@@ -1,0 +1,232 @@
+{
+  "projections": {
+    "combined": {
+      "standardization_mean": [
+        19.491319444444443,
+        18.289930555555557,
+        16.95659722222222,
+        13.734375,
+        13.659722222222221,
+        31.333333333333332,
+        1578.986111111111,
+        33.977256072567215,
+        30.929225504256717,
+        17.620320622908235,
+        0.7517856055068227,
+        1.3296683954759134,
+        0.30688279148278125,
+        0.24354102109207457,
+        1.618493958635354
+      ],
+      "standardization_scale": [
+        12.504162959375629,
+        14.782601776174422,
+        13.001196187658756,
+        10.953845672915136,
+        12.683603366838783,
+        5.734883511361791,
+        745.4317073767745,
+        10.052178828016404,
+        10.803762415105268,
+        11.888300797262504,
+        0.3364468565530287,
+        1.1186246851477324,
+        0.241647586581754,
+        0.17296417104063316,
+        2.4131874821284733
+      ],
+      "components": [
+        [
+          0.25365018435925135,
+          0.40558195883552156,
+          0.3322902257224262,
+          0.39267669748161715,
+          0.390275207679539,
+          0.15487292962335458,
+          0.31000890723061175,
+          0.17860455812468287,
+          0.1558874691093132,
+          0.25903379357230966,
+          0.20919597974041804,
+          -0.06634394981612762,
+          0.10590890134849737,
+          0.11429136444064308,
+          -0.19597067320441752
+        ],
+        [
+          -0.35713799469016433,
+          -0.13311327044268334,
+          -0.23412591268245334,
+          -0.18930420077466772,
+          -0.09176403553397713,
+          -0.04369854251835542,
+          0.268850994265558,
+          0.4408845225056814,
+          0.45299606245024077,
+          0.1458026454111344,
+          0.17380456598019758,
+          0.35718294379747145,
+          -0.008978458063165946,
+          -0.0446538205725436,
+          -0.31743655038676033
+        ],
+        [
+          0.06173969898076946,
+          -0.06253929706768344,
+          0.04405234726034906,
+          -0.009850954690361697,
+          -0.06000555963259489,
+          -0.049031950219461426,
+          -0.1442888641034187,
+          0.032698180700505224,
+          0.061323305918451025,
+          -0.23154237267515498,
+          -0.01310594305051685,
+          0.2482169895842744,
+          0.6595599248037739,
+          0.6384946308920151,
+          0.022262135805924486
+        ]
+      ],
+      "explained_variance_ratio": [
+        0.3373334238662148,
+        0.26528651341345844,
+        0.12181663829832845
+      ],
+      "fitting_rows": 576,
+      "labels_used": false
+    },
+    "distances": {
+      "standardization_mean": [
+        19.491319444444443,
+        18.289930555555557,
+        16.95659722222222,
+        13.734375,
+        13.659722222222221
+      ],
+      "standardization_scale": [
+        12.504162959375629,
+        14.782601776174422,
+        13.001196187658756,
+        10.953845672915136,
+        12.683603366838783
+      ],
+      "components": [
+        [
+          0.4087027027109482,
+          0.46477681275065313,
+          0.44331353475483043,
+          0.47933860329703043,
+          0.43663741069512135
+        ],
+        [
+          -0.592408326292721,
+          0.360246034575317,
+          -0.3718595819054648,
+          -0.05988857562790208,
+          0.6143362103654396
+        ],
+        [
+          0.6880360583995337,
+          0.1352750459266267,
+          -0.6069415603337899,
+          -0.3250766730989861,
+          0.18507874874782868
+        ]
+      ],
+      "explained_variance_ratio": [
+        0.8216600894301803,
+        0.09184761534640275,
+        0.06416882730442865
+      ],
+      "fitting_rows": 576,
+      "labels_used": false
+    }
+  },
+  "summary": {
+    "unscaled": {
+      "cases": 576,
+      "base_lists": 144,
+      "completed": 430,
+      "unresolved": 146,
+      "primary_types": {
+        "Superincreasing": 24,
+        "Complete coverage": 24,
+        "Few distinct values": 24,
+        "Small reachable support": 24,
+        "Interval / arithmetic progression": 48,
+        "Other solved input": 295,
+        "Hard within budget; no certified full type": 137
+      },
+      "exact_membership_counts": {
+        "Superincreasing": 24,
+        "Complete coverage": 48,
+        "Few distinct values": 48,
+        "Small reachable support": 32,
+        "Interval / arithmetic progression": 96
+      },
+      "unresolved_but_certified": [
+        "n24-progression-r0-s0-scale1-uniform_middle",
+        "n24-progression-r0-s1-scale1-uniform_middle",
+        "n32-progression-r0-s0-scale1-planted",
+        "n32-progression-r0-s0-scale1-uniform_middle",
+        "n32-progression-r0-s1-scale1-planted",
+        "n32-progression-r0-s1-scale1-uniform_middle",
+        "n38-progression-r0-s0-scale1-planted",
+        "n38-progression-r0-s1-scale1-planted",
+        "n38-progression-r0-s1-scale1-uniform_middle"
+      ],
+      "other_completion_methods": {
+        "core_enumerate": 15,
+        "exact target reduction": 78,
+        "dfs": 173,
+        "mitm": 29
+      }
+    },
+    "all_encodings": {
+      "cases": 1152,
+      "base_lists": 144,
+      "completed": 888,
+      "unresolved": 264,
+      "primary_types": {
+        "Superincreasing": 48,
+        "Complete coverage": 48,
+        "Few distinct values": 48,
+        "Small reachable support": 48,
+        "Interval / arithmetic progression": 96,
+        "Other solved input": 615,
+        "Hard within budget; no certified full type": 249
+      },
+      "exact_membership_counts": {
+        "Superincreasing": 48,
+        "Complete coverage": 96,
+        "Few distinct values": 96,
+        "Small reachable support": 64,
+        "Interval / arithmetic progression": 192
+      },
+      "unresolved_but_certified": [
+        "n24-progression-r0-s0-scale1-uniform_middle",
+        "n24-progression-r0-s1-scale1-uniform_middle",
+        "n32-progression-r0-s0-scale1-planted",
+        "n32-progression-r0-s0-scale1-uniform_middle",
+        "n32-progression-r0-s0-scale16777217-uniform_middle",
+        "n32-progression-r0-s1-scale1-planted",
+        "n32-progression-r0-s1-scale1-uniform_middle",
+        "n32-progression-r0-s1-scale16777217-planted",
+        "n32-progression-r0-s1-scale16777217-uniform_middle",
+        "n38-progression-r0-s0-scale1-planted",
+        "n38-progression-r0-s0-scale16777217-planted",
+        "n38-progression-r0-s1-scale1-planted",
+        "n38-progression-r0-s1-scale1-uniform_middle",
+        "n38-progression-r0-s1-scale16777217-planted",
+        "n38-progression-r0-s1-scale16777217-uniform_middle"
+      ],
+      "other_completion_methods": {
+        "core_enumerate": 32,
+        "exact target reduction": 156,
+        "dfs": 360,
+        "mitm": 67
+      }
+    }
+  }
+}
