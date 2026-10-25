@@ -1,0 +1,477 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Five structural distances, calibrated completion prediction, paid prioritization, and certified branch-pruning experiments.">
+<title>Predicting Subset-Sum Completion: The Value and Cost of Structural Features | Jonathan R. Landers</title>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']], tags: 'none' },
+  svg: { fontCache: 'global', scale: 0.98 },
+  options: { enableMenu: false }
+};
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<link rel="stylesheet" href="../../paper.css">
+</head>
+<body>
+<main>
+<nav class="top-links" aria-label="Paper links">
+  <a href="../../index.html">&larr; Series home</a>
+  <a href="https://github.com/jonland82/exponential-search-spaces">GitHub repository</a>
+  <a href="Predicting_Subset_Sum_Completion.pdf">Download PDF</a>
+  <a href="Predicting_Subset_Sum_Completion.tex">LaTeX source</a>
+</nav>
+<header>
+  <span class="series-label">Companion note VI of VI</span>
+  <h1>Predicting Subset-Sum Completion: The Value and Cost of Structural Features</h1>
+  <div class="byline">Jonathan R. Landers<br>October 2026</div>
+</header>
+<div class="abstract">
+<p><strong>Abstract.</strong> Can distance from easily solved subset-sum structures predict exact completion within a computational budget, and does obtaining that information repay its cost? We construct five certified distances, compare them with ten ordinary numerical features and their combination, and distinguish prediction quality from paid solving performance. A local freeze precedes <span class="math inline">\(1{,}152\)</span> fresh paired encoded cases. Combined logistic Brier score is <span class="math inline">\(0.0266\)</span>, versus <span class="math inline">\(0.0211\)</span> for ordinary features; the primary comparison does not improve. Tighter live-time pool budgets give <span class="math inline">\(836\)</span> versus <span class="math inline">\(823\)</span> completions, but work-counter budgets give <span class="math inline">\(374\)</span> versus <span class="math inline">\(769\)</span>. A separate exploratory transfer test applies the same frozen model to certified branch checks on <span class="math inline">\(216\)</span> fresh problems. At 50 ms each, combined guidance completes <span class="math inline">\(159\)</span>, ordinary search <span class="math inline">\(152\)</span>, and a simple distance rule <span class="math inline">\(162\)</span>. Exact structural checks help on this sample; the learned gate adds no demonstrated advantage. These results connect prediction to Note I’s verified coverage framework while retaining its discovery and certification costs. They establish neither a general speedup nor a learned certificate of polynomial-time solvability.</p>
+</div>
+<h2 id="the-question-is-completion-not-reachability">The question is completion, not reachability</h2>
+<p>Given positive integer weights <span class="math inline">\(w=(w_1,\ldots,w_n)\)</span> and an integer target <span class="math inline">\(t\)</span>, subset sum asks whether an indexed selection totals <span class="math inline">\(t\)</span>. Equal weights remain separate items. Note V studied one sufficient source of efficient exact solution: discover a superincreasing core and search its exceptions. This note asks whether several such structural distances help predict a fixed solver’s completion.</p>
+<p>The proposed five numbers describe proximity to superincreasing weights, complete interval coverage, few distinct values, small reachable support, and compact interval or progression representations. We also ask whether their information complements ordinary summaries of input size, weight magnitudes and target position. Neither useful prediction nor a small feature vector implies that the underlying decision problem becomes polynomial-time solvable.</p>
+<p>Let <span class="math inline">\(A\)</span> be a fixed exact pipeline, <span class="math inline">\(L_x\)</span> the full encoded length of instance <span class="math inline">\(x=(w,t)\)</span>, and <span class="math inline">\(B(L_x)\)</span> its declared work allowance. The supervised label is <span class="math display">\[Y_B(x)=\mathbf 1\{A(x)\text{ finishes exactly within its resource limits and }B(L_x)\}.\]</span> A model fitted under distribution <span class="math inline">\(\mathcal D\)</span> estimates <span class="math display">\[\Pr_{X\sim\mathcal D}\!\left(Y_B(X)=1\mid\phi(X)=\phi(x)\right).\]</span> This is different from predicting whether a subset exists. Completion can be a correct YES or a correct NO. A run reaching a limit is unresolved, even when an independent experimental oracle knows the answer. Polynomial time is an asymptotic statement about an algorithm on a family; finite-budget completion is an observable event.</p>
+<p>To compare feature information, all predictors first use the same reference label, excluding feature acquisition. A separate practical experiment pays for acquisition, inference, ordering, exact core queries and returned-witness checks. A model that predicts this reference event accurately can still be a poor use of a shared budget. A later exploratory experiment transfers the frozen model into a search tree, using exact structural checks to resolve residual subproblems. Its independent evidence is reported separately from the original frozen comparison.</p>
+<h2 id="established-setting-and-narrow-contribution">Established setting and narrow contribution</h2>
+<p>Instance-feature runtime and success prediction belong to empirical performance modeling <a href="#ref-hutter">[1]</a>. Learned solver portfolios such as SATzilla already account for presolving and feature cost <a href="#ref-satzilla">[2]</a>. ASlib explicitly records feature costs and instances solved while computing features <a href="#ref-aslib">[3]</a>. Our practical task orders instances for a fixed fallback portfolio; it does not learn which constituent solver to select.</p>
+<p>A close domain precedent is Jooken, Leyman and De Causmaecker’s use of structural knapsack features to predict empirical difficulty <a href="#ref-jooken">[4]</a>. Thus neither theory-derived hardness features nor their combination with learning is a new general idea. Sigmoid probability calibration is also established <a href="#ref-calibration">[5]</a>. The tractable-core framing has relatives in backdoors <a href="#ref-backdoors">[6]</a>; superincreasing membership and support-sensitive subset sum have established treatments <a href="#ref-sage">[7]</a>, <a href="#ref-support">[8]</a>.</p>
+<p>The contribution here is a reproducible, bounded-cost five-coordinate construction, a frozen subset-sum comparison, and an exploratory certified-pruning test that keep prediction, exact solving, feature cost and resource definitions separate. The primary unfavorable result is retained. We claim no new learning method, optimal allocation rule, state-of-the-art subset-sum solver, or novelty of the elementary core lemmas. A claim-by-claim audit accompanies the paper.</p>
+<h2 id="five-distances-with-exact-core-procedures">Five distances with exact core procedures</h2>
+<p>First apply exact target-dependent reductions. Reject an out-of-range target. If <span class="math inline">\(t&gt;\sum_iw_i/2\)</span>, use the complementary target. Discard weights exceeding the current remainder; reject a deficient total or a gcd obstruction. Force an item when all other remaining items together cannot reach the remainder, subtract it, and repeat. A zero remainder supplies a witness; incompatible forced choices prove NO.</p>
+<p>These operations take polynomial bit time: every forced iteration removes an item, and each iteration uses polynomial scans and gcd computations. Save forced indices, retained indices and complementation for witness recovery. Items removed by an exact exclusion are resolved choices, not exceptions that must later be searched. A completed reduction has an empty residual kernel. Practical policies finish there without computing ML features.</p>
+<p>For an unresolved kernel <span class="math inline">\(v\)</span>, fix the gcd <span class="math inline">\(g\)</span> of the whole kernel and normalize <span class="math inline">\(a=v/g\)</span>. The five integer coordinates are deletion counts relative to this kernel and grid: <span class="math display">\[\phi_5(x)=(d_{\rm SI},d_{\rm cov},d_{\rm val},\widehat d_{\rm supp},\widehat d_{\rm repr}).\]</span> The first three are minimum deletions under the definitions below. The last two are certified constructive upper bounds, not optimized distances.</p>
+<div class="table-wrap"><table class="paper-table">
+<caption>The five structural inputs. All thresholds are fixed before evaluation. Distances may be correlated; they are not assumed to encode independent information.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Coordinate</th>
+<th style="text-align: left;">Certified remaining core</th>
+<th style="text-align: left;">Discovery/query method</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(d_{\rm SI}\)</span></td>
+<td style="text-align: left;">Sorted <span class="math inline">\(a_j&gt;\sum_{h&lt;j}a_h\)</span></td>
+<td style="text-align: left;">Maximum greedy core; descending query</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(d_{\rm cov}\)</span></td>
+<td style="text-align: left;">Sorted <span class="math inline">\(a_j\le1+\sum_{h&lt;j}a_h\)</span></td>
+<td style="text-align: left;">Maximum coverage prefix; greedy witness</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(d_{\rm val}\)</span></td>
+<td style="text-align: left;">At most two distinct values</td>
+<td style="text-align: left;">Keep two largest multiplicities; count choices</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(\widehat d_{\rm supp}\)</span></td>
+<td style="text-align: left;">At most 128 distinct reachable sums, including zero</td>
+<td style="text-align: left;">Capped exact unions with witness masks</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(\widehat d_{\rm repr}\)</span></td>
+<td style="text-align: left;">Bounded-prefix interval core or distinct-weight progression core</td>
+<td style="text-align: left;">Larger certified core; exact represented query</td>
+</tr>
+</tbody>
+</table></div>
+<p>For coverage, the empty prefix reaches <span class="math inline">\([0,0]\)</span>. Adding <span class="math inline">\(a\le S+1\)</span> to a prefix covering <span class="math inline">\([0,S]\)</span> extends coverage to <span class="math inline">\([0,S+a]\)</span>. At the first failure, all later weights exceed <span class="math inline">\(S+1\)</span>; deleting earlier weights cannot fill that gap. Thus the retained prefix is maximum. Its definition uses the fixed whole-kernel gcd, not a freely chosen gcd for each candidate core.</p>
+<p>For small support, trial addition replaces <span class="math inline">\(R\)</span> by <span class="math inline">\(R\cup(R+a)\)</span>; reject the item if the result exceeds 128 sums. A trial constructs at most 256 entries. For intervals, merge the sorted intervals for <span class="math inline">\(R\)</span> and <span class="math inline">\(R+a\)</span>, coalescing adjacent intervals; accept only if at most eight intervals remain. Every accepted prefix is saved. This prefix condition bounds construction and witness recovery; a small final union alone would not bound all intermediate representations.</p>
+<p>The fifth coordinate also searches distinct-weight arithmetic progressions. Candidate steps are <span class="math inline">\(1\)</span> and the most frequent adjacent distinct-value gaps, with deterministic ties, up to 16 steps. For each, scan maximal chains and retain one index per value. Choose a progression only if it contains more items than the interval core. Duplicates outside a chain remain exceptions. This search is polynomial and cannot worsen the old fifth deletion count, but it can miss a better core or a progression with another step.</p>
+<h3 id="two-elementary-guarantees">Two elementary guarantees</h3>
+<p><strong>Progression query.</strong> Suppose the selected weights are <span class="math inline">\(a,a+h,\ldots,a+(m-1)h\)</span>. A selection of <span class="math inline">\(k\)</span> items totals <span class="math inline">\(ka+hJ\)</span>, where exactly the integer interval <span class="math display">\[\frac{k(k-1)}2\le J\le\frac{k(2m-k-1)}2\]</span> is attainable. Begin with indices <span class="math inline">\(0,\ldots,k-1\)</span>; distribute the desired surplus by moving the last index right, then the preceding one, preserving strict order. Every surplus up to <span class="math inline">\(k(m-k)\)</span> is possible. The reachable set is therefore represented by <span class="math inline">\(m+1\)</span> progressions, one per cardinality. Testing all <span class="math inline">\(k\)</span> and recovering a witness take <span class="math inline">\(O(m)\)</span> arithmetic steps. Overlapping progressions are queried, not counted as disjoint.</p>
+<p><strong>Residual sufficient condition.</strong> If a certified extractor costs <span class="math inline">\(F(L)\)</span>, leaves <span class="math inline">\(k\)</span> exceptional items and supplies an exact core query with witness cost <span class="math inline">\(Q(L)\)</span>, exceptional-selection enumeration gives <span class="math display">\[T(x)\le F(L)+2^k\bigl(Q(L)+\operatorname{poly}(L)\bigr).\]</span> Every original selection decomposes into a core and exceptional selection. Therefore polynomial <span class="math inline">\(F,Q\)</span> and <span class="math inline">\(k=O(\log L)\)</span> suffice for polynomial solution of a family. The argument applies to constructed deletion upper bounds as well as minima. A large distance proves no hardness. All represented sums have polynomial bit length; the capped data and progression procedures have polynomial bit cost. These elementary guarantees are independent of model training.</p>
+<h2 id="development-models-and-the-frozen-comparison">Development, models and the frozen comparison</h2>
+<p>Development followed a 162-list feasibility pilot. A second dataset had 324 lists and 1,296 targets, with exactly the same family/size grouping for every feature arm. The fitted models use only 84 training lists (336 targets) and 42 calibration lists (168 targets). Other development cases informed design choices but were not fitted in the final models.</p>
+<p>The three final arms are the five target-aware progression distances; ten ordinary features; and their 15-input concatenation. Ordinary features are <span class="math inline">\(n\)</span>, encoded length <span class="math inline">\(L\)</span>, base-two logarithms of total, maximum and minimum weight after adding one, distinct-value fraction, coefficient of variation, <span class="math inline">\(t/\sum w\)</span>, <span class="math inline">\(\min(t,\sum w-t)/\sum w\)</span>, and <span class="math inline">\(n/\max(1,\log_2(\max w+1))\)</span>. Constant and individual-coordinate comparisons were retained in development; the fresh study fixes these three arms.</p>
+<p>Primary logistic regression standardizes inputs and uses <span class="math inline">\(C=1\)</span>, L2 regularization and at most 2,000 iterations. Secondary forests use 200 trees, maximum depth eight and minimum leaf size four. An independent logistic sigmoid calibrates each model’s clipped raw logit, with clipping at <span class="math inline">\(10^{-6}\)</span> and <span class="math inline">\(1-10^{-6}\)</span>. This is the implemented regularized calibration, not a claim to reproduce every detail of original Platt scaling.</p>
+<p>The local freeze saved six fitted/calibrated models, protected sources, seed rules, resource limits, comparisons and hashes before fresh generation. It is not external preregistration. The freeze timestamp is October 25, 2026, 16:34 UTC. No fresh labels fit, calibrate or select a model.</p>
+<h3 id="fresh-cases-and-exact-labels">Fresh cases and exact labels</h3>
+<p>The study draws <span class="math inline">\(144\)</span> base lists: <span class="math inline">\(n=24,32,38\)</span>, twelve families, replacement fractions zero and one quarter, and two seed replicates. Seven families occur in training: superincreasing, coverage, few values, small support, interval union, progression and wide random inputs. Near-equal and filtered-modular families are prior development holdouts. Genuinely new families are separated block pairs, mixed small/large weights, and two progression blocks.</p>
+<p>Each base list receives a fair-bit planted target, a uniform middle-range target, an odd target below the largest weight, and a uniform low-range target. There is no selection by answer or solver success. Jointly multiply weights and targets by <span class="math inline">\(2^{24}+1\)</span> to create a paired encoding alongside scale one. The resulting <span class="math inline">\(288\)</span> encodings give <span class="math inline">\(1{,}152\)</span> cases. Scaling preserves the mathematical answer but changes <span class="math inline">\(L\)</span>, the work allowance and bitset feasibility; it is a controlled representation change, not arbitrary independent bit-length variation.</p>
+<p>Fresh sorted lists are checked against earlier lists and each other. Duplicate proposals and bounded retries are recorded. Independent indexed-half enumeration labels each base target; scaling preserves its witness or exhausted NO result. Oracle tables are destroyed before measured solving.</p>
+<p>The reference pipeline performs exact target reduction, then filtered range/gcd checks, bitset dynamic programming, superincreasing exception enumeration, memoized depth-first search, and meet-in-the-middle. The remaining work is shared among remaining methods, carrying unused work forward. Limits are <span class="math inline">\(B(L)=8L\)</span> instrumented units, 32,768 live states, and a 1,000,000-bit bitset width. The encoding proxy is <span class="math display">\[L=2\operatorname{bits}(n)+1+\sum_i(2\operatorname{bits}(w_i)+1)+2\operatorname{bits}(|t|)+2,\]</span> where <span class="math inline">\(\operatorname{bits}(z)\)</span> is Python’s nonnegative integer bit length. It is polynomially equivalent to standard binary encodings. The work units are heterogeneous counters, not bit operations.</p>
+<p>There is one work-limited reference run and three additional reference timing runs per case, the latter with 20 ms cooperative per-case deadlines. All <span class="math inline">\(3{,}466\)</span> completed decisions among <span class="math inline">\(4{,}608\)</span> reference runs match independent labels; <span class="math inline">\(1{,}142\)</span> remain unresolved. Repetitions are not additional independent inputs.</p>
+<h2 id="the-primary-probability-result-does-not-improve">The primary probability result does not improve</h2>
+<p>The prespecified primary endpoint is combined-minus-ordinary logistic Brier score on fresh unscaled same-family inputs: <span class="math display">\[\operatorname{Brier}=\frac1N\sum_{j=1}^N(\widehat p_j-Y_j)^2.\]</span> Lower is better. The primary scores are <span class="math inline">\(0.0715\)</span> for five distances, <span class="math inline">\(0.0211\)</span> for ordinary features and <span class="math inline">\(0.0266\)</span> combined. The difference is <span class="math inline">\(+0.0055\)</span>, with conditional 95% base-list bootstrap interval <span class="math inline">\([-0.0018,+0.0138]\)</span>. This does not establish predictive improvement.</p>
+<div class="table-wrap"><table class="paper-table">
+<caption>Frozen primary-model Brier scores. Difference is combined minus ordinary. New-family membership takes cohort precedence, then prior holdout, then larger size; remaining cases are same-family. Scaling produces dependent encodings.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Cohort</th>
+<th style="text-align: right;">Cases</th>
+<th style="text-align: right;">Five</th>
+<th style="text-align: right;">Ordinary</th>
+<th style="text-align: right;">Combined</th>
+<th style="text-align: right;">Difference</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Same families</td>
+<td style="text-align: right;">224</td>
+<td style="text-align: right;">0.0715</td>
+<td style="text-align: right;">0.0211</td>
+<td style="text-align: right;">0.0266</td>
+<td style="text-align: right;">+0.0055</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Same, scaled</td>
+<td style="text-align: right;">224</td>
+<td style="text-align: right;">0.0579</td>
+<td style="text-align: right;">0.0905</td>
+<td style="text-align: right;">0.0759</td>
+<td style="text-align: right;">-0.0146</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Larger inputs</td>
+<td style="text-align: right;">112</td>
+<td style="text-align: right;">0.0958</td>
+<td style="text-align: right;">0.0512</td>
+<td style="text-align: right;">0.0387</td>
+<td style="text-align: right;">-0.0125</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Larger, scaled</td>
+<td style="text-align: right;">112</td>
+<td style="text-align: right;">0.0907</td>
+<td style="text-align: right;">0.1926</td>
+<td style="text-align: right;">0.1190</td>
+<td style="text-align: right;">-0.0735</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Prior holdouts</td>
+<td style="text-align: right;">96</td>
+<td style="text-align: right;">0.1925</td>
+<td style="text-align: right;">0.1786</td>
+<td style="text-align: right;">0.0816</td>
+<td style="text-align: right;">-0.0970</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Holdouts, scaled</td>
+<td style="text-align: right;">96</td>
+<td style="text-align: right;">0.1619</td>
+<td style="text-align: right;">0.2387</td>
+<td style="text-align: right;">0.1829</td>
+<td style="text-align: right;">-0.0558</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">New families</td>
+<td style="text-align: right;">144</td>
+<td style="text-align: right;">0.2071</td>
+<td style="text-align: right;">0.1571</td>
+<td style="text-align: right;">0.1231</td>
+<td style="text-align: right;">-0.0340</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">New, scaled</td>
+<td style="text-align: right;">144</td>
+<td style="text-align: right;">0.2101</td>
+<td style="text-align: right;">0.1496</td>
+<td style="text-align: right;">0.1857</td>
+<td style="text-align: right;">+0.0362</td>
+</tr>
+</tbody>
+</table></div>
+<p>Secondary shifts show both advantages and failures. Combined beats ordinary descriptively on larger inputs and unscaled new families, but loses on scaled new families. Conditional bootstrap intervals exclude zero for scaled larger inputs and unscaled prior holdouts, not for every favorable point estimate. Resampling uses 1,000 base-list draws with fitted models fixed; it includes neither retraining uncertainty nor a multiplicity correction. Secondary comparisons are descriptive.</p>
+<p>Full metrics retain log loss, AUC, calibration bins and unresolved-kernel-only subgroups. Empty-kernel shortcuts appear in the overall prediction evaluation, so those known exact completions are not an ML discovery. Secondary forest results, which vary by shift, are reported in Appendix B rather than substituted for the primary model after observing outcomes.</p>
+<p>At the fixed probability threshold 0.5, combined classification accuracy on the primary cohort is <span class="math inline">\(95.5\%\)</span>, versus <span class="math inline">\(97.8\%\)</span> for ordinary features. These descriptive accuracies concern whole-instance completion of the reference pipeline. They measure neither infeasibility nor the quality of a pruning decision inside a search tree.</p>
+<figure>
+<img src="prediction_plot.png" width="1188" height="684" alt="Brier scores for five distances, ordinary features and their combination"><figcaption>The three fixed logistic feature arms on all fresh cohorts. Ordinary features are strongest on the primary cohort; adding structural information helps some shifts and hurts others. The plotted errors concern common reference labels, not feature-cost-free practical solving.</figcaption>
+</figure>
+<h2 id="paying-for-prediction-in-a-shared-budget">Paying for prediction in a shared budget</h2>
+<p>The practical test compares seven policies on each of eight cohort pools: seeded arrival, independent random order, shortest encoded input first, a simple distance rule, and the three logistic arms. All policies first pay for a pool-wide exact-precheck sweep. Structural policies extract only unresolved kernels and can finish cases through exact zero-deletion core queries. Learned policies then infer and order the residual cases; the same fallback portfolio attempts each at most once.</p>
+<p>For work budgets, order by <span class="math inline">\(\widehat p_i/(8L_i)\)</span>; the distance rule uses <span class="math inline">\(2^{-\min_jd_j}/(8L_i)\)</span>. For time budgets, equal per-case caps give ordering by <span class="math inline">\(\widehat p_i\)</span>, or by the analogous distance score. These are heuristics, not optimal allocation rules. In particular, the time policy explicitly transfers a work-completion predictor to a wall-clock objective.</p>
+<p>Budget shares are fixed at 20% and 50% of summed case allowances: <span class="math inline">\(\sum_i8L_i\)</span> for work and <span class="math inline">\(|P|\times20\)</span> ms for time pool <span class="math inline">\(P\)</span>. Three matched arrival repetitions and shuffled policy execution order yield <span class="math inline">\(672\)</span> pool runs. Budget fractions are not selected from observed runtime. Returned indexed witnesses are checked within the paid interval; independent oracle comparisons are experimental validation outside it.</p>
+<div class="keyeq">
+<p><strong>Planning cost constrains the benefit.</strong> For this full-batch policy, <span class="math display">\[C_{\rm plan}=C_{\rm prechecks}+C_{\rm features}+C_{\rm queries}
+              +C_{\rm inference}+C_{\rm order}.\]</span> At most <span class="math inline">\(\max(0,B-C_{\rm plan})\)</span> remains for fallback solving and witness checks. Exact completions can already occur during planning. If planning exhausts the budget, its learned ordering cannot act on the remaining cases. This is accounting for this policy, not a lower bound on every possible algorithm.</p>
+</div>
+<h3 id="live-deadlines">Live deadlines</h3>
+<p>Live runs recompute all applicable prechecks, features, queries, batch inference and ordering. Input/model loading and experimental logging are outside the interval; online overhead and witness checks are inside. Every solve has the smaller of its residual 20 ms allowance and remaining pool time. Deadlines are cooperative: a final operation can finish late, but late answers are excluded. The largest observed pool overshoot is <span class="math inline">\(0.44\)</span> ms. This is not a hard process deadline.</p>
+<div class="table-wrap"><table class="paper-table">
+<caption>Median total exact completions among <span class="math inline">\(1{,}152\)</span> encoded cases. Sum completions across the eight separately budgeted cohorts within a repetition, then take the median of three totals. Short is shortest input, Rule is the nonlearned structural score. Work and live time are separate endpoints.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Budget</th>
+<th style="text-align: left;">Share</th>
+<th style="text-align: right;">Arrival</th>
+<th style="text-align: right;">Random</th>
+<th style="text-align: right;">Short</th>
+<th style="text-align: right;">Rule</th>
+<th style="text-align: right;">Five</th>
+<th style="text-align: right;">Ordinary</th>
+<th style="text-align: right;">Combined</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Live time</td>
+<td style="text-align: left;">20%</td>
+<td style="text-align: right;">664</td>
+<td style="text-align: right;">680</td>
+<td style="text-align: right;">763</td>
+<td style="text-align: right;">794</td>
+<td style="text-align: right;">796</td>
+<td style="text-align: right;">823</td>
+<td style="text-align: right;">836</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Live time</td>
+<td style="text-align: left;">50%</td>
+<td style="text-align: right;">854</td>
+<td style="text-align: right;">850</td>
+<td style="text-align: right;">856</td>
+<td style="text-align: right;">874</td>
+<td style="text-align: right;">871</td>
+<td style="text-align: right;">865</td>
+<td style="text-align: right;">878</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Work counter</td>
+<td style="text-align: left;">20%</td>
+<td style="text-align: right;">541</td>
+<td style="text-align: right;">560</td>
+<td style="text-align: right;">705</td>
+<td style="text-align: right;">379</td>
+<td style="text-align: right;">379</td>
+<td style="text-align: right;">769</td>
+<td style="text-align: right;">374</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Work counter</td>
+<td style="text-align: left;">50%</td>
+<td style="text-align: right;">855</td>
+<td style="text-align: right;">857</td>
+<td style="text-align: right;">873</td>
+<td style="text-align: right;">722</td>
+<td style="text-align: right;">711</td>
+<td style="text-align: right;">887</td>
+<td style="text-align: right;">677</td>
+</tr>
+</tbody>
+</table></div>
+<p>At the tighter live-time share, combined completes <span class="math inline">\(836\)</span> cases versus <span class="math inline">\(823\)</span> for ordinary features and <span class="math inline">\(664\)</span> for arrival. Its gain over ordinary is <span class="math inline">\(13\)</span> cases, or <span class="math inline">\(1.6\%\)</span>. Repetition totals range <span class="math inline">\(835\)</span>–<span class="math inline">\(836\)</span> for combined and <span class="math inline">\(822\)</span>–<span class="math inline">\(825\)</span> for ordinary. This is a modest measured benefit on these pools, not a confidence interval over unseen inputs or a universal speedup.</p>
+<p>The effect is uneven. Under tighter live budgets, ordinary features complete more than combined on both new-family cohorts. On unscaled same-family and larger-input cohorts, the simple distance rule matches five-only ML and combined. Some improvements therefore arise from obtaining exact core answers rather than learning a better score.</p>
+<h3 id="counter-replay">Counter replay</h3>
+<p>The work endpoint charges prechecks, feature acquisition, inference, queries, ordering, solving and witness checks before their outputs can be used. A full-cap saved exact trace is reused only when the remaining global work permits that cap; otherwise the actual smaller-cap portfolio is executed. This replay is not a wall-clock measurement.</p>
+<p>Under the tighter work share, combined completes <span class="math inline">\(374\)</span> versus <span class="math inline">\(769\)</span> for ordinary features; at the larger share it completes <span class="math inline">\(677\)</span> versus <span class="math inline">\(887\)</span>. Combined exhausts planning in <span class="math inline">\(30\)</span> of its 48 work-pool runs. Acquisition consumes the budget before useful ordering on many cases.</p>
+<p>These counter units are explicit but unequal: a bitset update, dictionary entry and scan can have different CPU costs. The opposite live and counter outcomes must remain distinct. The unfavorable work result is not evidence that the mathematical instances are hard, and a live-time advantage cannot validate a uniform-operation complexity claim.</p>
+<h2 id="from-completion-prediction-to-certified-branch-checks">From completion prediction to certified branch checks</h2>
+<p>The follow-up implements Note I’s proposal–verification framework within exact search. At a node, selected prefix items contribute <span class="math inline">\(s\)</span>, the remaining items are <span class="math inline">\(W\)</span>, and the residual target is <span class="math inline">\(t-s\)</span>. Apply the same exact reduction and witness map used above. For the unresolved kernel, select the core with the smallest of the five deletion counts, breaking ties by coordinate order. If its exceptional set <span class="math inline">\(E\)</span> has at most six items, enumerate its at most 64 subsets and query the easy core <span class="math inline">\(C\)</span>: <span class="math display">\[t-s\text{ is reachable in }W
+\quad\Longleftrightarrow\quad
+\exists A\subseteq E:\ u-\textstyle\sum_{i\in A}v_i
+\text{ is reachable in }C,\]</span> where <span class="math inline">\((v,u)\)</span> is the reduced kernel instance. A successful query supplies a witness, lifted to the original instance. Failure of every exceptional selection certifies NO for the entire subtree. An interrupted check returns unresolved. Prediction alone removes no branch.</p>
+<h3 id="a-new-exploratory-protocol">A new exploratory protocol</h3>
+<p>This is a separate transfer experiment, not an additional prespecified endpoint of the original study. The source and protocol were saved before generating <span class="math inline">\(72\)</span> fresh lists: <span class="math inline">\(n=24,32,36\)</span>, the same twelve family constructions, replacement fractions zero and one eighth, and one list per cell. Previously saved lists are excluded. Each list has a planted, uniform middle-range, and odd-below-largest target, giving <span class="math inline">\(216\)</span> cases. Independent half enumeration supplies 87 YES and 129 NO labels; oracle data are destroyed before measured solving. No model, calibration or threshold is refitted.</p>
+<p>All policies use descending-weight, include-first depth-first search (DFS), suffix range/gcd tests, and no memoization. Checkpoints occur every four levels while at least eight items remain, up to 128 checkpoints. All policies, including DFS, receive the same exact target reductions at those checkpoints. Structural policies then acquire the five kernel distances. Numerical features, when acquired, describe the residual instance before reduction, as in model training.</p>
+<p>Always-check policies attempt any core with at most six exceptions. The distance rule attempts only cores with at most two. Learned gates attempt a feasible check when the frozen ordinary or combined logistic score is at least 0.5. Native controls acquire only the distances; matched controls also acquire the ten ordinary features, isolating acquisition cost from the learned decision. Both learned gates use that same matched acquisition. Scalar inference is algebraically equivalent to the saved scaler/logistic/calibration pipeline and agrees with saved probabilities to eleven decimal places.</p>
+<p>There are two separate resource experiments: one deterministic pass with at most 10,000 visited DFS nodes, and three live repeats with 50 ms per input and a one-million-node safety cap. Policy/case execution is seed-shuffled within each pass. Sorting, reductions, acquisition, inference, queries and witness checks occur inside the clock; model loading, oracle construction and serialization are outside. Deadlines are cooperative; late answers are excluded. The largest overshoot is <span class="math inline">\(1.565\)</span> ms. The <span class="math inline">\(6{,}048\)</span> runs have no incorrect completed decision.</p>
+<div class="table-wrap"><table class="paper-table">
+<caption>Fresh branch-check comparison. Live is the median aggregate number completed at 50 ms per case over three repeats. Node cap is completions in the separate 10,000-node pass; Nodes and Seconds describe that pass, including acquisition and checking. The node allowance is not a uniform computational-work budget.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Policy</th>
+<th style="text-align: right;">Live</th>
+<th style="text-align: right;">Node cap</th>
+<th style="text-align: right;">Nodes</th>
+<th style="text-align: right;">Seconds</th>
+<th style="text-align: right;"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">DFS</td>
+<td style="text-align: right;">152</td>
+<td style="text-align: right;">146</td>
+<td style="text-align: right;">777 203</td>
+<td style="text-align: right;">0.792</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Always, native</td>
+<td style="text-align: right;">160</td>
+<td style="text-align: right;">163</td>
+<td style="text-align: right;">550 988</td>
+<td style="text-align: right;">3.337</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Distance rule, native</td>
+<td style="text-align: right;">162</td>
+<td style="text-align: right;">161</td>
+<td style="text-align: right;">580 067</td>
+<td style="text-align: right;">2.511</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Always, matched</td>
+<td style="text-align: right;">160</td>
+<td style="text-align: right;">163</td>
+<td style="text-align: right;">550 988</td>
+<td style="text-align: right;">3.415</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Distance rule, matched</td>
+<td style="text-align: right;">162</td>
+<td style="text-align: right;">161</td>
+<td style="text-align: right;">580 067</td>
+<td style="text-align: right;">2.619</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Ordinary ML</td>
+<td style="text-align: right;">156</td>
+<td style="text-align: right;">159</td>
+<td style="text-align: right;">591 329</td>
+<td style="text-align: right;">3.650</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Combined ML</td>
+<td style="text-align: right;">159</td>
+<td style="text-align: right;">162</td>
+<td style="text-align: right;">561 063</td>
+<td style="text-align: right;">3.474</td>
+<td style="text-align: right;"></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="certificates-help-the-learned-gate-does-not-win">Certificates help; the learned gate does not win</h3>
+<p>At 50 ms, combined completes <span class="math inline">\(159\)</span> cases against DFS’s <span class="math inline">\(152\)</span>, but the distance rule completes <span class="math inline">\(162\)</span>. Matched acquisition retains the simple rule’s advantage. The descriptive 95% list-bootstrap interval for combined-minus-DFS repeat-average completions is <span class="math inline">\([-6.0,17.0]\)</span>; against the native rule it is <span class="math inline">\([-11.7,1.7]\)</span>. Both span zero. These are 1,000 conditional whole-list resamples with fixed models and no multiple-comparison adjustment, not independent-node uncertainty or general hardware guarantees.</p>
+<p>Pruning occurs inside the tree as well as at its root. In the node-capped pass, combined certifies <span class="math inline">\(3{,}545\)</span> internal NO subtrees. Of its <span class="math inline">\(16\)</span> extra completions versus DFS, <span class="math inline">\(8\)</span> finish with a root structural query and <span class="math inline">\(8\)</span> require further search. However, the <span class="math inline">\(146\)</span> cases completed by both use <span class="math inline">\(0.478\)</span> seconds with combined gating versus <span class="math inline">\(0.106\)</span> for DFS. Feature acquisition can make already manageable cases slower. Fewer visited nodes therefore do not imply less paid work.</p>
+<p>For a diagnostic only, take the first eight unresolved checkpoints per unguided node-capped DFS case. On these <span class="math inline">\(1{,}062\)</span> selected, dependent residual problems, the combined score has <span class="math inline">\(69.9\%\)</span> accuracy for completion of the bounded checker without a diagnostic deadline. That event means the six-exception limit permits exhaustive checking, not the old portfolio’s budgeted completion. Treating the same high score as a NO prediction would have only <span class="math inline">\(46.5\%\)</span> precision; the solver never does so. The earlier whole-instance accuracy does not transfer unchanged to this task.</p>
+<p>A certified NO node with <span class="math inline">\(m\)</span> undecided original items resolves <span class="math inline">\(2^m\)</span> assignment leaves. Such pruned subtrees are disjoint within this traversal, but these counts are neither visited nodes actually saved nor proof of a polynomial residual. In Note I’s notation they can increase <span class="math inline">\(a(n)\delta(n)\)</span>, while discovery and checking increase <span class="math inline">\(P(n)\)</span>. The observed benefit belongs to exact structure and its use; this experiment establishes no additional benefit from the transferred learned gate.</p>
+<h2 id="limits-and-interpretation">Limits and interpretation</h2>
+<p>The most direct predictive conclusion is unfavorable on the prespecified primary endpoint. Favorable secondary shifts and forest outcomes do not replace it. The training sample is small, families are synthetic, and larger means 38 items. No comparison against every strong theoretical or optimized practical subset-sum algorithm is attempted.</p>
+<p>The original combined pool policy includes certified core queries that the ordinary pool policy does not construct. Therefore its live gain cannot be assigned solely to the five learned inputs. A matched-acquisition/core-reuse control was not retrofitted onto the original frozen inputs. The independent branch experiment supplies matched acquisition and common-verifier controls for a different task; it does not repair attribution in the earlier pool experiment. Its learned gate fails to beat the distance rule.</p>
+<p>The paired scaling changes budgets and disables some bitset runs while preserving answers. It tests representation sensitivity, not an independent population of larger mathematical problems. Bootstrap units are base lists; live repetitions describe machine variation on fixed pools. Short cooperative deadlines and small absolute time differences limit transfer to other hardware. The saved environment is Python 3.13.5 on Windows 11, NumPy 2.1.3 and scikit-learn 1.6.1; a full CPU/load characterization was not recorded.</p>
+<p>Prediction quality and solving utility are different objectives. A good Brier score gives no allocation guarantee, and sigmoid calibration fitted on one distribution gives no guarantee under a shift. For this implementation, structural features sometimes complement ordinary summaries and help a live policy after their costs are paid. They also fail the primary predictive comparison and impose substantial cost under the declared counter model.</p>
+<p>The next controlled alternatives include a root-only structural control to isolate repeated internal checks, selective acquisition, reuse across related targets, and prediction of branch-specific net time saved. Any fitting or threshold selection needs its own training trees and fresh held-out lists. The present record supports a scoped empirical study of the value and cost of structural features. It does not support an intrinsic solvability classifier, learned mathematical exclusions, or a new general complexity bound.</p>
+<h2 id="reproducibility">Reproducibility</h2>
+<p>The repository’s <code>Learned_Solvability_Subset_Sum</code> package contains baseline and advanced extractors, exact membership/witness routines, the scoped literature audit, development evidence, fitted model hashes, all fresh inputs and oracle witnesses, every reference/priority trace, deadline exclusions, counters and figures. The original local freeze is in <code>results/prospective_20261025</code>; the independent branch follow-up is in <code>results/branch_pruning_20261025</code>, with its own protocol, source snapshots, raw runs, diagnostics and audit. Both validators preserve the distinction between the experiments and confirm answers against independent labels.</p>
+<p>Run <code>python build_papers.py –paper 6</code> to verify both preserved experiments and regenerate the PDF, HTML, values, tables and figure without rerunning training or timing. The evidence manifest beside the source records input/output hashes. The series website links the paper and supporting methods at <a href="https://jonland82.github.io/exponential-search-spaces/">https://jonland82.github.io/exponential-search-spaces/</a>; the repository preserves executable sources and full raw evidence at <a href="https://github.com/jonland82/exponential-search-spaces">https://github.com/jonland82/exponential-search-spaces</a>.</p>
+<h2 id="appendix-a-implementation-details-for-the-five-coordinates">Appendix A: Implementation details for the five coordinates</h2>
+<p>Superincreasing discovery uses Note V’s sorted maximum-cardinality scan. The few-values coordinate keeps all copies of the two most frequent values, breaking ties by value; no other two values retain more items. Membership enumerates their counts, at most <span class="math inline">\((n+1)^2\)</span> choices. Coverage, superincreasing and support witnesses use original indexed items; interval queries backtrack through saved prefix sets.</p>
+<p>For the support and interval coordinates, greedily reject an item when a trial exceeds its representation cap, then continue scanning. These are certified upper bounds, not minimum-deletion algorithms. A support trial has at most twice the saved support; an interval trial merges at most twice the saved interval count. The progression search uses polynomially many dictionary operations and a fixed 16-step candidate list. All arithmetic has polynomial input bit length. Bounded representations and membership do not imply that globally optimal core discovery is cheap.</p>
+<p>The whole-kernel gcd fixes the interval grid. Target reduction can change the kernel and this gcd, giving different vectors to different targets, but two distinct targets may still have identical vectors. Forced and overweight items are not counted as unresolved exceptions. If complementation was used, complement the union of the forced set and lifted kernel witness to recover the original witness.</p>
+<p>Counter scales additionally charge ordinary features <span class="math inline">\(12n+80\)</span>, logistic inference <span class="math inline">\(6d+20\)</span> for <span class="math inline">\(d\)</span> model inputs, a linear random shuffle and <span class="math inline">\(m\max(1,\operatorname{bits}(m))\)</span> sorting scale. Structural extraction records its own charge. Whole-core queries use conservative complete-query charges and are skipped when that charge cannot fit. These are accounting conventions, not unit-cost instruction counts. All live phases are timed directly.</p>
+<h2 id="appendix-b-prespecified-secondary-forests">Appendix B: Prespecified secondary forests</h2>
+<div class="table-wrap"><table class="paper-table">
+<caption>Secondary forest Brier scores on the same fresh reference labels. No secondary model is substituted for the primary logistic model. Full calibration, log-loss, AUC and unresolved-kernel results remain in the saved metrics.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Cohort</th>
+<th style="text-align: right;">Five</th>
+<th style="text-align: right;">Ordinary</th>
+<th style="text-align: right;">Combined</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Same families</td>
+<td style="text-align: right;">0.0392</td>
+<td style="text-align: right;">0.0275</td>
+<td style="text-align: right;">0.0280</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Same, scaled</td>
+<td style="text-align: right;">0.0249</td>
+<td style="text-align: right;">0.0596</td>
+<td style="text-align: right;">0.0195</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Larger inputs</td>
+<td style="text-align: right;">0.1083</td>
+<td style="text-align: right;">0.0513</td>
+<td style="text-align: right;">0.0490</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Larger, scaled</td>
+<td style="text-align: right;">0.0931</td>
+<td style="text-align: right;">0.0980</td>
+<td style="text-align: right;">0.0540</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Prior holdouts</td>
+<td style="text-align: right;">0.2749</td>
+<td style="text-align: right;">0.2019</td>
+<td style="text-align: right;">0.1828</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Holdouts, scaled</td>
+<td style="text-align: right;">0.1864</td>
+<td style="text-align: right;">0.2630</td>
+<td style="text-align: right;">0.1164</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">New families</td>
+<td style="text-align: right;">0.2010</td>
+<td style="text-align: right;">0.1564</td>
+<td style="text-align: right;">0.1497</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">New, scaled</td>
+<td style="text-align: right;">0.2075</td>
+<td style="text-align: right;">0.2562</td>
+<td style="text-align: right;">0.1399</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="references">References</h2>
+<ol>
+<li><div id="ref-hutter">
+
+</div>
+<p>F. Hutter, L. Xu, H. H. Hoos and K. Leyton-Brown. Algorithm runtime prediction: Methods &amp; evaluation. <em>Artificial Intelligence</em> 206 (2014), 79–111. <a href="https://arxiv.org/abs/1211.0906">https://arxiv.org/abs/1211.0906</a>.</p></li>
+<li><div id="ref-satzilla">
+
+</div>
+<p>L. Xu, F. Hutter, H. H. Hoos and K. Leyton-Brown. SATzilla: Portfolio-based algorithm selection for SAT. <em>JAIR</em> 32 (2008), 565–606. <a href="https://doi.org/10.1613/jair.2490">https://doi.org/10.1613/jair.2490</a>.</p></li>
+<li><div id="ref-aslib">
+
+</div>
+<p>B. Bischl et al. ASlib: A benchmark library for algorithm selection. <em>Artificial Intelligence</em> 237 (2016), 41–58. <a href="https://arxiv.org/abs/1506.02465">https://arxiv.org/abs/1506.02465</a>.</p></li>
+<li><div id="ref-jooken">
+
+</div>
+<p>J. Jooken, P. Leyman and P. De Causmaecker. Features for the 0-1 knapsack problem based on inclusionwise maximal solutions. <em>European Journal of Operational Research</em> 311(1) (2023), 36–55. <a href="https://doi.org/10.1016/j.ejor.2023.04.023">https://doi.org/10.1016/j.ejor.2023.04.023</a>.</p></li>
+<li><div id="ref-calibration">
+
+</div>
+<p>A. Niculescu-Mizil and R. Caruana. Predicting good probabilities with supervised learning. <em>ICML</em> (2005), 625–632. <a href="https://www.cs.cornell.edu/~alexn/papers/calibration.icml05.crc.rev3.pdf">https://www.cs.cornell.edu/~alexn/papers/calibration.icml05.crc.rev3.pdf</a>.</p></li>
+<li><div id="ref-backdoors">
+
+</div>
+<p>R. Williams, C. P. Gomes and B. Selman. Backdoors to typical case complexity. <em>IJCAI</em> (2003), 1173–1178. <a href="https://www.cs.cornell.edu/selman/papers/pdf/03.ijcai.backdoors.pdf">https://www.cs.cornell.edu/selman/papers/pdf/03.ijcai.backdoors.pdf</a>.</p></li>
+<li><div id="ref-sage">
+
+</div>
+<p>SageMath. Knapsack problems: Superincreasing sequences. <a href="https://doc.sagemath.org/html/en/reference/numerical/sage/numerical/knapsack.html">https://doc.sagemath.org/html/en/reference/numerical/sage/numerical/knapsack.html</a>.</p></li>
+<li><div id="ref-support">
+
+</div>
+<p>K. Bringmann and V. Nakos. Top-<span class="math inline">\(k\)</span>-convolution and the quest for near-linear output-sensitive subset sum. <em>STOC</em> (2020), full version. <a href="https://arxiv.org/abs/2107.13206">https://arxiv.org/abs/2107.13206</a>.</p></li>
+</ol>
+
+<footer>
+  <p>Part of the <a href="../../index.html">Certified Coverage research sequence</a>.</p>
+  <div class="link-row">
+    <a href="../01-certified-coverage/Certified_Coverage_of_Exponential_Search_Spaces.html">Note I: Framework</a>
+    <a href="../02-subset-sum-stress-test/Subset_Sum_as_a_Stress_Test.html">Note II: Exact-search stress test</a>
+    <a href="../03-probability-valued-subset-sum/Probability_Valued_Subset_Sum.html">Note III: Random-target probability</a>
+    <a href="../04-certified-approximation/Certified_Approximation_of_Subset_Sum.html">Note IV: Pairing in approximation</a>
+    <a href="../05-structural-distance/Structural_Distance_in_Subset_Sum.pdf">Note V: Structural distance (PDF draft)</a>
+    <a href="../../Learned_Solvability_Subset_Sum/README.md">Methods and data</a>
+  </div>
+</footer>
+</main>
+</body>
+</html>

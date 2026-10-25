@@ -1,0 +1,11 @@
+# Frozen protocols hash raw source and evidence bytes. Keep them identical
+# across Windows and Unix checkouts instead of normalizing their line endings.
+Structural_Distance_Subset_Sum/** -text whitespace=cr-at-eol
+Subset_Sum_Refinement_Experiment/** -text whitespace=cr-at-eol
+Learned_Solvability_Subset_Sum/** -text whitespace=cr-at-eol
+notes/06-learned-solvability/** -text whitespace=cr-at-eol
+
+*.pdf binary
+*.png binary
+*.zip binary
+*.woff2 binary

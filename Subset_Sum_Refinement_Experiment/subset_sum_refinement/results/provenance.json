@@ -1,0 +1,15 @@
+{
+  "source_repository": "https://github.com/jonland82/exponential-search-spaces",
+  "upstream_sha256": {
+    "upstream/subset-sum/README.md": "b0b83fe159b652e1514c08763f62ccfee7d7ddc89fba3402977582f56b35b15c",
+    "upstream/subset-sum/experiment.py": "6442ca74527f8683c49fb0b0c9d5c5420362605560223a34855f1046c6958f10",
+    "upstream/subset-sum/ml_experiment.py": "f4db7935db760312fc1abccad67e2fba52ee89a445496ef6ce12e108c2b4e299",
+    "upstream/subset-sum/probability_extension.py": "cdced28b68c8fb24beb9ba7eb7a32c7bcd0ccba5745533e1b820373bcf700ee8"
+  },
+  "protocol_sha256": "3c4c9af12d3329e8ae35b58c705a364a5676313deede2dbf62dfb24e86ce4d81",
+  "script_sha256": "76705431296ae2354534dddf72f1fbe7da8115d16ea8b8bc1731dee0c621fd0d",
+  "python": "3.12.14",
+  "numpy": "2.3.5",
+  "scipy": "1.17.0",
+  "sklearn": "1.8.0"
+}

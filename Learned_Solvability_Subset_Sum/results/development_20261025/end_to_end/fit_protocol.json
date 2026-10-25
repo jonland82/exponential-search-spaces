@@ -1,0 +1,66 @@
+{
+  "config": {
+    "status": "exploratory end-to-end development prediction; not final evaluation",
+    "tasks": [
+      "original",
+      "progression",
+      "target_original",
+      "target_progression"
+    ],
+    "target": "exact completion under 8L including shared prechecks, feature extraction and certificate reuse",
+    "predictors": [
+      "constant",
+      "five",
+      "conventional",
+      "hybrid"
+    ],
+    "model_config": {
+      "status": "exploratory development-model comparison; no prospective performance claim",
+      "seed": 630251026,
+      "models": [
+        "logistic",
+        "forest"
+      ],
+      "forest": {
+        "n_estimators": 200,
+        "max_depth": 8,
+        "min_samples_leaf": 4,
+        "n_jobs": 1
+      },
+      "logistic": {
+        "C": 1.0,
+        "max_iter": 2000
+      },
+      "calibration": "logistic sigmoid on clipped logit scores; fitted only on calibration lists",
+      "feature_sets": [
+        "original",
+        "progression",
+        "target_original",
+        "target_progression",
+        "conventional",
+        "hybrid"
+      ],
+      "hybrid": "target_progression's five distances plus ten conventional features",
+      "ablations": "forest: drop each coordinate of target_progression; diagnostic four-input models",
+      "primary_label": "shared portfolio finishes under 8L work budget, excluding ML features",
+      "cost_labels": "not used for this predictive-information comparison; reported separately",
+      "bootstrap": "500 resamples of weight lists within each evaluation split; fixed model predictions",
+      "reliability_bins": 10
+    },
+    "comparison": "feature sets compared within each fixed cost/reuse policy's label",
+    "inference_cost": "not charged; downstream learned prioritization and inference cost remain untested"
+  },
+  "input_hashes": {
+    "protocol.json": "05d800d453364afcb072f8468fcb1f809d5399d260e2efcebc926a046178a586",
+    "lists.jsonl": "da175200451ff96bbc3706851e53f63324c1073c73afc6e790350dc1274beff2",
+    "cases.jsonl": "0b8498e3f70f514f72106a173440f32495d336a79ea104bb1fb91aa64bc13ac8",
+    "runs.jsonl": "5678787c9febdbd0c719ce4913957e2fe9def1659fdcd78c279892d661cdd30d",
+    "summary.json": "f236d490c316321702a999e23a92235b9bd92f1a0c85814e67b98d2f2e8aaa27"
+  },
+  "source_hashes": {
+    "fit_end_to_end.py": "7b4aa90404e0d23ed97b087489539f13f812e46ee1165418dff2d8ff8de48201",
+    "fit_development.py": "a224b5452fb1730546e6a28324ae78b90d1cf4409410d31e3e0d6863466d5054"
+  },
+  "numpy": "2.1.3",
+  "sklearn": "1.6.1"
+}

@@ -1,0 +1,17 @@
+{
+  "completed_at_utc": "2026-10-24T13:55:17.444757+00:00",
+  "counts": {
+    "lists": 60,
+    "cases": 180,
+    "missing_no": 0,
+    "gcd_failures": 0,
+    "overlap_with_pilots": 0,
+    "within_study_overlap": 0
+  },
+  "elapsed_seconds": 4.284075300005497,
+  "file_hashes": {
+    "lists.jsonl": "5239242d2820aba5fe2974d0a669f0519f4040d3b3235dc39b45126e5205f8a1",
+    "cases.jsonl": "32b01ab60093c19e95a53d3ca76ed074f07526aba68bb86e498d5a4bed469d8e",
+    "proposals.jsonl": "f7bb3b38b3cd0fa4a3d49497814ee1576ffa908428e627dab91007cfab577d08"
+  }
+}

@@ -1,6 +1,6 @@
 # Certified approximation to a fixed target
 
-Series navigation: [reading order](../index.html#arc) · [Note IV: pairing in certified approximation](../Certified_Approximation_of_Subset_Sum.html).
+Series navigation: [reading order](../index.html#arc) · [Note IV: pairing in certified approximation](../notes/04-certified-approximation/Certified_Approximation_of_Subset_Sum.html).
 
 **Central question:** "If we only need to get close to the target, and know how close, can our framework avoid much of the exponential search?"
 

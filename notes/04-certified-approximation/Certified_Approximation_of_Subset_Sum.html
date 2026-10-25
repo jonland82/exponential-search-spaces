@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="A controlled negative timing result for paired approximate subset-sum summaries.">
+<title>Does Pairing Add Value to Certified Approximation? A Subset-Sum Experiment | Jonathan R. Landers</title>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']], tags: 'none' },
+  svg: { fontCache: 'global', scale: 0.98 },
+  options: { enableMenu: false }
+};
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<link rel="stylesheet" href="../../paper.css">
+</head>
+<body>
+<main>
+<nav class="top-links" aria-label="Paper links">
+  <a href="../../index.html">&larr; Series home</a>
+  <a href="https://github.com/jonland82/exponential-search-spaces">GitHub repository</a>
+  <a href="Certified_Approximation_of_Subset_Sum.pdf">Download PDF</a>
+  <a href="Certified_Approximation_of_Subset_Sum.tex">LaTeX source</a>
+</nav>
+<header>
+  <span class="series-label">Companion note IV of VI</span>
+  <h1>Does Pairing Add Value to Certified Approximation? A Subset-Sum Experiment</h1>
+  <div class="byline">Jonathan R. Landers<br>October 2026</div>
+</header>
+<div class="abstract">
+<p><strong>Abstract.</strong> We report a negative empirical result about the added value of pairing in certified approximate subset sum. Established approximation ideas permit unequal partial sums to share error-bounded representatives. We test whether organizing those representatives into paired summaries yields a further computational benefit over the same additive rule used sequentially. Across <span class="math inline">\(48\)</span> synthetic instances, the key controlled comparison uses <span class="math inline">\(n=32\)</span>, tolerance <span class="math inline">\(0.01\%\)</span> of total weight, and no common greedy search. Pairing is faster on <span class="math inline">\(7\)</span> of <span class="math inline">\(15\)</span> jointly certified inputs; the median sequential/paired time ratio is <span class="math inline">\(0.993\)</span>. It certifies all <span class="math inline">\(16\)</span> inputs within the per-summary state cap, while the sequential method certifies <span class="math inline">\(15\)</span>. At <span class="math inline">\(1\%\)</span> tolerance, a shared greedy search already answers all <span class="math inline">\(16\)</span> largest inputs. The experiments identify no consistent additional timing benefit from pairing in the key approximation comparison. The negative finding concerns the tested implementations and families; the resource exception and other tolerance regimes remain part of the result.</p>
+</div>
+<h2 id="motivation-and-the-comparison">Motivation and the comparison</h2>
+<p><strong>If we only need to get close to the target, and know how close, can our framework avoid much of the exponential search?</strong></p>
+<p>This remains the motivating question. Approximation is already an established way to reduce subset-sum computation. The added-value question for the coverage framework is more specific: <em>does pairing error-bounded summaries improve on applying the same approximation rule sequentially?</em></p>
+<p>The contribution of this note is a controlled comparison and its negative timing finding. A sequential additive control holds the approximation rule fixed while changing how the summaries are organized. A common greedy search, together with an ablation that disables it, separates early discovery from work saved by the summaries. These controls limit which savings can be credited to pairing. The proofs provide a common correctness contract for the comparison; the polynomial approximation bound is established algorithmic territory.</p>
+<p>The main comparison finds no consistent additional timing gain from pairing on jointly certified inputs, alongside one additional input completed within the state cap. This is evidence about an implementation on specified synthetic families. It supplies a useful limit on the framework’s demonstrated benefit without asserting that pairing can never help.</p>
+<h2 id="a-fixed-target-and-a-useful-stopping-rule">A fixed target and a useful stopping rule</h2>
+<p>Let <span class="math inline">\(w_1,\ldots,w_n\)</span> be positive integers, <span class="math inline">\(S=\sum_iw_i\)</span>, and <span class="math inline">\(t\)</span> an integer target. Subset sums may lie on either side of <span class="math inline">\(t\)</span>. Define <span class="math display">\[d^*(w,t)=\min_{x\in\{0,1\}^n}\left|\sum_i x_iw_i-t\right|.\]</span> Exact subset sum asks whether <span class="math inline">\(d^*=0\)</span>. Here the requested output is an actual subset with sum <span class="math inline">\(z\)</span>, together with bounds</p>
+<div class="keyeq">
+<p><span class="math display">\[0\le\ell\le d^*(w,t)\le u=|z-t|,
+\qquad u-\ell\le\eta,\]</span></p>
+</div>
+<p>where <span class="math inline">\(\eta\ge0\)</span> is an absolute integer tolerance. For example, a witnessed distance of <span class="math inline">\(3\)</span> and lower bound <span class="math inline">\(2\)</span> certify that the returned subset is within <span class="math inline">\(1\)</span> of the best possible distance. No further search is needed at tolerance <span class="math inline">\(1\)</span>.</p>
+<p>The experiment uses <span class="math inline">\(\eta=\lfloor\varepsilon S\rfloor\)</span>, explicitly scaling the tolerance to the total weight. The guarantee is additive in distance, not multiplicative in <span class="math inline">\(d^*\)</span>. A multiplicative guarantee would require an exact hit whenever <span class="math inline">\(d^*=0\)</span>. On integer inputs, an interval narrower than <span class="math inline">\(1\)</span> identifies the exact integer optimum.</p>
+<p>This objective differs from note III’s probability over random targets. The target here is fixed and the bounds are deterministic. An actual witness with <span class="math inline">\(u\le\eta\)</span> already supplies the sufficient interval <span class="math inline">\([0,u]\)</span>, even when no full summary has been constructed.</p>
+<h2 id="experimental-design">Experimental design</h2>
+<p>The benchmark uses <span class="math inline">\(48\)</span> list-target instances: eight synthetic families, <span class="math inline">\(n\in\{16,24,32\}\)</span>, and two fixed seeds. Six families reuse the prior experiments: narrow weights, wide planted solutions, mixed and modular no-solution cases, and the <span class="math inline">\(41\)</span>-bit unique and repeated-pair hard cases. Two controls add superincreasing weights with one nearest subset and tightly clustered billion-scale weights with many sums near the target. The superincreasing control is deliberately easy for descending greedy; uniqueness is not a hardness claim.</p>
+<p>For each input, <span class="math inline">\(\varepsilon\in\{10^{-2},10^{-4},10^{-6},0\}\)</span> sets <span class="math inline">\(\eta=\lfloor\varepsilon S\rfloor\)</span>. Four implementations solve the same two-sided distance problem:</p>
+<ul>
+<li><p><strong>Paired additive:</strong> two half summaries using Proposition 1, followed by the linear pair query.</p></li>
+<li><p><strong>Sequential additive:</strong> the identical additive rule on one full list, isolating the effect of pairing.</p></li>
+<li><p><strong>Multiplicative trimming:</strong> a sequential list using the conventional ratio rule, adapted to retain the full sum range. Its parameter is <span class="math inline">\(\delta=\eta/(nS)\)</span>. Dropping <span class="math inline">\(y\)</span> above retained <span class="math inline">\(r\)</span> requires <span class="math inline">\(y-r\le\delta r\le\eta/n\)</span>, so the same observed-gap accounting certifies an additive interval. Comparisons use integer cross multiplication.</p></li>
+<li><p><strong>Exact-half MITM:</strong> exact half summaries with a nearest-pair query, also allowed to stop when a witness already meets the tolerance.</p></li>
+</ul>
+<p>All methods share descending item order, endpoint witnesses, and a cheap greedy witness search. The <span class="math inline">\(n=32\)</span> inputs also run without that greedy search; witness-based stopping during summary construction remains allowed. Thus a gain from early discovery can be distinguished from a gain due to approximate merging. No learned model or additional branch-exclusion mechanism is used in this first implementation.</p>
+<p>Exact optima are computed separately and never passed to a solver. Independent Gray-code enumeration additionally checks all <span class="math inline">\(n\le16\)</span> inputs. Unit checks cover exhaustive small lists, large integers, both summary invariants, paired queries against explicit Cartesian products, witness reconstruction, and honest resource-limit results.</p>
+<p>Successful timings are medians of three uninstrumented runs. Memory is Python-traced peak allocation from a separate run. Generation, oracle labeling, verification, and plotting are excluded from solver timing. A cap of <span class="math inline">\(65{,}536\)</span> retained representatives per individual summary makes unsuccessful runs explicit. It is not a shared total-memory cap: paired methods retain both halves. A capped run returns valid partial bounds and is not counted as a successful approximation.</p>
+<h2 id="the-negative-finding-and-its-controls">The negative finding and its controls</h2>
+<p>The central result is the comparison with sequential additive trimming, which uses the same approximation rule. With greedy disabled, <span class="math inline">\(n=32\)</span>, and <span class="math inline">\(\varepsilon=10^{-4}\)</span>, pairing is faster on <span class="math inline">\(7\)</span> of <span class="math inline">\(15\)</span> jointly certified inputs. The median of the per-input sequential/paired time ratios is <span class="math inline">\(0.993\)</span>, near parity. Pairing certifies all <span class="math inline">\(16\)</span> inputs within the per-summary state cap; the sequential method certifies <span class="math inline">\(15\)</span>. This combination is the empirical result: no consistent additional timing benefit in the key approximation comparison, with a resource-limit exception in pairing’s favor.</p>
+<p>Table 1 reports the largest inputs. Each entry gives median milliseconds over certified outcomes, followed by the number certified out of <span class="math inline">\(16\)</span>. Different success counts imply different sets of inputs in those medians; the technical report also supplies matched per-input comparisons and memory measurements. Very small greedy-only times should not be interpreted as stable differences among compression algorithms.</p>
+<div class="table-wrap"><table class="paper-table">
+<caption>Largest-size results, <span class="math inline">\(n=32\)</span>. Milliseconds (certified/total).</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Greedy</th>
+<th style="text-align: left;"><span class="math inline">\(\varepsilon\)</span></th>
+<th style="text-align: right;">Paired</th>
+<th style="text-align: right;">Sequential</th>
+<th style="text-align: right;">Mult. trim</th>
+<th style="text-align: right;">MITM</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">On</td>
+<td style="text-align: left;"><span class="math inline">\(10^{-2}\)</span></td>
+<td style="text-align: right;">0.07 (16/16)</td>
+<td style="text-align: right;">0.07 (16/16)</td>
+<td style="text-align: right;">0.07 (16/16)</td>
+<td style="text-align: right;">0.07 (16/16)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">On</td>
+<td style="text-align: left;"><span class="math inline">\(10^{-4}\)</span></td>
+<td style="text-align: right;">0.08 (16/16)</td>
+<td style="text-align: right;">0.08 (15/16)</td>
+<td style="text-align: right;">0.07 (15/16)</td>
+<td style="text-align: right;">0.08 (16/16)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">On</td>
+<td style="text-align: left;"><span class="math inline">\(0\)</span></td>
+<td style="text-align: right;">50.82 (16/16)</td>
+<td style="text-align: right;">83.57 (8/16)</td>
+<td style="text-align: right;">83.92 (8/16)</td>
+<td style="text-align: right;">51.53 (16/16)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Off</td>
+<td style="text-align: left;"><span class="math inline">\(10^{-2}\)</span></td>
+<td style="text-align: right;">0.39 (16/16)</td>
+<td style="text-align: right;">0.36 (16/16)</td>
+<td style="text-align: right;">0.62 (16/16)</td>
+<td style="text-align: right;">1.92 (16/16)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Off</td>
+<td style="text-align: left;"><span class="math inline">\(10^{-4}\)</span></td>
+<td style="text-align: right;">4.88 (16/16)</td>
+<td style="text-align: right;">1.57 (15/16)</td>
+<td style="text-align: right;">10.10 (15/16)</td>
+<td style="text-align: right;">9.44 (16/16)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Off</td>
+<td style="text-align: left;"><span class="math inline">\(0\)</span></td>
+<td style="text-align: right;">54.79 (16/16)</td>
+<td style="text-align: right;">83.77 (8/16)</td>
+<td style="text-align: right;">84.52 (8/16)</td>
+<td style="text-align: right;">50.94 (16/16)</td>
+</tr>
+</tbody>
+</table></div>
+<figure>
+<img src="../../subset-sum/approximation_tradeoff.png" alt="Runtime among successful outcomes and the corresponding certification counts. Tolerance increases from left to right. Both must be read together." /><figcaption>Runtime among successful outcomes and the corresponding certification counts. Tolerance increases from left to right. Both must be read together.</figcaption>
+</figure>
+<p>The sequential additive control makes the negative finding informative. A paired win over multiplicative trimming alone could reflect the error-allocation rule. A shared greedy witness that already meets the tolerance removes the need for every method’s summaries. Controlling these mechanisms reveals whether pairing itself earns an additional timing advantage.</p>
+<p>At <span class="math inline">\(\varepsilon=10^{-2}\)</span>, the common greedy search alone certifies every <span class="math inline">\(n=32\)</span> input. These runs establish that a loose accuracy requirement can make a cheap witness sufficient; they cannot establish an advantage from compression. With greedy disabled and <span class="math inline">\(\varepsilon=10^{-4}\)</span>, paired summaries beat exact-half MITM on <span class="math inline">\(14\)</span> of <span class="math inline">\(16\)</span> jointly certified inputs, with a median per-input MITM/paired ratio of <span class="math inline">\(1.140\)</span>. That gain over an exact-summary baseline coexists with near parity against sequential additive trimming. The latter comparison limits attribution of the gain to pairing.</p>
+<p>The family detail illustrates where compression can help. Without greedy at <span class="math inline">\(\varepsilon=10^{-4}\)</span>, the two <span class="math inline">\(n=32\)</span> unique-weight inputs have median paired and MITM times of <span class="math inline">\(91.6\)</span> and <span class="math inline">\(173.6\)</span> ms, with traced peaks of <span class="math inline">\(6.09\)</span> and <span class="math inline">\(14.45\)</span> MiB. For the mixed no-solution family, the corresponding times are <span class="math inline">\(0.70\)</span> and <span class="math inline">\(9.44\)</span> ms. In one such case, a requested tolerance of <span class="math inline">\(4{,}100\)</span> yields the stronger exact distance certificate <span class="math inline">\([49{,}623,49{,}623]\)</span>: a complementary witness attains the closest boundary of the covering intervals. Approximation need not leave a nonzero gap on every input.</p>
+<p>Across all <span class="math inline">\(1{,}024\)</span> method outcomes, <span class="math inline">\(80\)</span> hit the per-summary state cap and are recorded as unfinished. Every returned interval, including partial intervals from capped runs, contains the separately computed optimum; every returned subset achieves its claimed distance. Other tolerance regimes matter to the scope of the finding. On the largest exact-answer runs without greedy, pairing beats sequential additive construction on <span class="math inline">\(6\)</span> of <span class="math inline">\(8\)</span> jointly certified inputs, with median sequential/paired ratio <span class="math inline">\(3.256\)</span>. The median MITM/paired ratio on all <span class="math inline">\(16\)</span> exact-answer inputs is <span class="math inline">\(0.996\)</span>: the paired solver then does the same exact half-summary work as MITM. Thus the approximate comparison supports a negative timing finding, while exact half organization and resource limits can still favor pairing.</p>
+<h2 id="a-summary-with-a-controlled-error">A summary with a controlled error</h2>
+<p>For a group of items <span class="math inline">\(B\)</span>, let <span class="math inline">\(A(B)\)</span> be its attainable sums. Store a set <span class="math inline">\(R_B\subseteq A(B)\)</span> of witnessed representatives and an error <span class="math inline">\(E_B\)</span> satisfying</p>
+<div class="keyeq">
+<p><span class="math display">\[\forall s\in A(B),\quad\exists r\in R_B:
+\qquad r\le s\le r+E_B.\]</span></p>
+</div>
+<p>Every representative retains a bit mask selecting items in the original input order. The empty group starts with <span class="math inline">\(R=\{0\}\)</span> and <span class="math inline">\(E=0\)</span>. Adding an item of weight <span class="math inline">\(w\)</span> forms the sorted merge of <span class="math inline">\(R\)</span> and <span class="math inline">\(R+w\)</span>. Then scan in increasing order, retaining the smallest value and discarding any later value within <span class="math inline">\(h\)</span> above the most recently retained value. Equal sums merge without error.</p>
+<div class="keyeq">
+<p><strong>Proposition 1 (Error composition).</strong> If the largest actual gap discarded in one trim is <span class="math inline">\(g\le h\)</span>, the updated summary has error at most <span class="math inline">\(E+g\)</span>. For disjoint item groups <span class="math inline">\(B,C\)</span>, the pair sums of their representatives cover all sums in <span class="math inline">\(A(B\cup C)\)</span> with error <span class="math inline">\(E_B+E_C\)</span>.</p>
+</div>
+<p><em>Proof.</em> Before trimming, a true sum <span class="math inline">\(s\)</span> has a candidate <span class="math inline">\(y\)</span> with <span class="math inline">\(y\le s\le y+E\)</span>. Its retained representative <span class="math inline">\(r\)</span> satisfies <span class="math inline">\(r\le y\le r+g\)</span>, giving <span class="math inline">\(r\le s\le r+g+E\)</span>. For disjoint groups, add the two representative inequalities. Their witness masks combine by bitwise OR. <span class="math inline">\(\square\)</span></p>
+<p>Thus approximation changes what coverage must preserve. A summary may forget distinctions among unequal sums, provided the resulting uncertainty remains within a stated budget. This is an extension of note I’s coverage contract; it does not count approximate representatives as exact coverage under the original definition.</p>
+<h2 id="from-summaries-to-certified-bounds">From summaries to certified bounds</h2>
+<p>For one complete summary, use intervals <span class="math inline">\([r,r+E]\)</span>. For two summaries covering disjoint halves of all items, use <span class="math display">\[\mathcal I=\{[a+b,a+b+E]:a\in R_B,\ b\in R_C\},
+\qquad E=E_B+E_C.\]</span> Let <span class="math inline">\(\operatorname{dist}(t,I)\)</span> be the distance from <span class="math inline">\(t\)</span> to an interval <span class="math inline">\(I\)</span>. Choose <span class="math display">\[\ell=\min_{I\in\mathcal I}\operatorname{dist}(t,I),
+\qquad u=\min_{a\in R_B,b\in R_C}|a+b-t|.\]</span> An additional valid witness may lower <span class="math inline">\(u\)</span> further.</p>
+<div class="keyeq">
+<p><strong>Proposition 2 (Certified gap).</strong> These quantities satisfy <span class="math inline">\(\ell\le d^*\le u\)</span> and <span class="math inline">\(u-\ell\le E\)</span>.</p>
+</div>
+<p><em>Proof.</em> All attainable sums lie in the interval union, making distance to that union a lower bound. Every representative pair is attainable, making its distance an upper bound. An interval attaining <span class="math inline">\(\ell\)</span> has a witnessed left endpoint at distance at most <span class="math inline">\(\ell+E\)</span> from <span class="math inline">\(t\)</span>. The best witness is no worse. <span class="math inline">\(\square\)</span></p>
+<p>The pair sums need not be enumerated. On sorted half summaries, the conventional two-pointer search finds their nearest predecessor and successor around <span class="math inline">\(t\)</span> in <span class="math inline">\(O(|R_B|+|R_C|)\)</span> steps. Those values also determine the closest covering interval: either the predecessor’s interval reaches <span class="math inline">\(t\)</span>, or its right boundary and the successor’s left boundary give the possible minimum distances. This charges for querying the compressed representation without hiding a Cartesian-product construction.</p>
+<h2 id="what-accuracy-buys-in-the-cost-model">What accuracy buys in the cost model</h2>
+<p>Choose <span class="math inline">\(h=\lfloor\eta/n\rfloor\)</span> at each item update. Across the <span class="math inline">\(n\)</span> updates, arranged sequentially or in two halves, the total error is at most <span class="math inline">\(nh\le\eta\)</span>. A completed summary therefore meets the requested accuracy.</p>
+<p>Retained integer sums are separated by at least <span class="math inline">\(h+1\)</span>. A group with total weight <span class="math inline">\(S_B\)</span> has at most <span class="math display">\[1+\left\lfloor\frac{S_B}{h+1}\right\rfloor\]</span> representatives. For <span class="math inline">\(\eta&gt;0\)</span>, this is <span class="math inline">\(O(1+nS/\eta)\)</span>. Linear sorted merging and trimming give the coarse overall bound <span class="math display">\[O\!\left(n+\frac{n^2S}{\eta}\right)\]</span> arithmetic operations, including a linear final pair query. Sums have <span class="math inline">\(O(\log(S+1))\)</span> bits and witness masks have <span class="math inline">\(O(n)\)</span> bits, so accounting for arithmetic and mask costs preserves polynomial dependence on encoded input length and inverse actual normalized tolerance <span class="math inline">\(\eta/S\)</span>. The bound does not apply at <span class="math inline">\(\eta=0\)</span>.</p>
+<p>This is established approximation territory. Conventional multiplicative list trimming already gives a fully polynomial approximation scheme for maximizing a subset sum below a target <a href="https://courses.grainger.illinois.edu/cs473/fa2015/w/lec/slides/10_notes.pdf">[1]</a>. More advanced approximation algorithms are studied by Bringmann and Nakos <a href="https://arxiv.org/abs/1912.12529">[2]</a>. The present bound explains a concrete coverage mechanism; it is not a new general complexity result or a claim to match the strongest published algorithms.</p>
+<h2 id="what-the-negative-finding-establishes">What the negative finding establishes</h2>
+<p>In the key controlled approximation comparison, grouping error-bounded sums into paired summaries does not yield a consistent additional timing benefit over the same additive rule used sequentially. Approximation can make coverage cheaper without pairing being the source of the savings. The common witness search and sequential control make that attribution testable. This negative empirical result is the main contribution of the note.</p>
+<p>The established approximation guarantee remains useful: it supplies valid bounds and permits cheaper representations at fixed normalized accuracy. Correct certification establishes that the compared methods meet the same accuracy contract. A separate runtime comparison is needed to establish any added computational benefit from their organization.</p>
+<p>The scope is <span class="math inline">\(48\)</span> small synthetic instances, two seeds per family and size, specified tolerances, and a per-summary state cap. These are descriptive timing results, not an impossibility theorem or a statistical test establishing equal performance. Pairing completes one additional input in the key comparison, and exact half organization can outperform a full sequential list. The evidence limits the framework’s demonstrated additional timing benefit from pairing in approximation; it does not support a blanket claim that approximation, certification, or pairing adds nothing.</p>
+<h2 id="references">References</h2>
+<ol>
+<li><p>University of Illinois, CS 473: Theory II. <em>Approximation Algorithms III</em>, September 24, 2015. <a href="https://courses.grainger.illinois.edu/cs473/fa2015/w/lec/slides/10_notes.pdf">https://courses.grainger.illinois.edu/cs473/fa2015/w/lec/slides/10_notes.pdf</a>.</p></li>
+<li><p>Karl Bringmann and Vasileios Nakos. <em>A Fine-Grained Perspective on Approximating Subset Sum and Partition</em>. SODA 2021. <a href="https://arxiv.org/abs/1912.12529">https://arxiv.org/abs/1912.12529</a>.</p></li>
+</ol>
+<p><strong>Series and reproducibility.</strong> Notes I–III introduce certified coverage, test exact subset-sum pairing, and bound random-target reachability. Specification, scripts, full inputs, witnesses, raw measurements, and figures for this note are in <code>subset-sum/APPROXIMATION_SPEC.md</code> and <code>subset-sum/APPROXIMATION_RESULTS.md</code> at <a href="https://github.com/jonland82/exponential-search-spaces">https://github.com/jonland82/exponential-search-spaces</a>.</p>
+
+<footer>
+  <p>Part of the <a href="../../index.html">Certified Coverage research sequence</a>.</p>
+  <div class="link-row">
+    <a href="../01-certified-coverage/Certified_Coverage_of_Exponential_Search_Spaces.html">Note I: Framework</a>
+    <a href="../02-subset-sum-stress-test/Subset_Sum_as_a_Stress_Test.html">Note II: Exact-search stress test</a>
+    <a href="../03-probability-valued-subset-sum/Probability_Valued_Subset_Sum.html">Note III: Random-target probability</a>
+    <a href="../05-structural-distance/Structural_Distance_in_Subset_Sum.pdf">Note V: Structural distance (PDF draft)</a>
+    <a href="../06-learned-solvability/Predicting_Subset_Sum_Completion.html">Note VI: Learned completion</a>
+    <a href="../../subset-sum/APPROXIMATION_RESULTS.md">Methods and data</a>
+  </div>
+</footer>
+</main>
+</body>
+</html>

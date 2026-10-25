@@ -278,9 +278,9 @@ def write_report(data: dict, path: Path) -> None:
     lines = [
         "# First subset-sum experiments",
         "",
-        "Series navigation: [reading order](../index.html#arc) · [Note IV: pairing in certified approximation](../Certified_Approximation_of_Subset_Sum.html).",
+        "Series navigation: [reading order](../index.html#arc) · [Note IV: pairing in certified approximation](../notes/04-certified-approximation/Certified_Approximation_of_Subset_Sum.html).",
         "",
-        "These measurements support [companion Note II](../Subset_Sum_as_a_Stress_Test.html), which interprets the exact-search results alongside the later hard-case and classifier experiments.",
+        "These measurements support [companion Note II](../notes/02-subset-sum-stress-test/Subset_Sum_as_a_Stress_Test.html), which interprets the exact-search results alongside the later hard-case and classifier experiments.",
         "",
         "All runs used Python " + data["python"] + " on " + data["machine"] + ".",
         f"All applicable exact implementations agreed with exhaustive search on {data['validation_cases']} small cases.",

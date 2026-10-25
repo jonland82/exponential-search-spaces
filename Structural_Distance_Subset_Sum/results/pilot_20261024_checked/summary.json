@@ -1,0 +1,125 @@
+{
+  "lists": 48,
+  "cases": 96,
+  "truth_counts": {
+    "yes": 79,
+    "no": 17
+  },
+  "answers_checked": 444,
+  "mismatches": 0,
+  "methods": {
+    "bitset": {
+      "completed": 60,
+      "unresolved_reasons": {
+        "bitset_limit": 36
+      },
+      "median_all_attempts_ms": 0.028049995307810605,
+      "matched_mitm_cases": 60,
+      "faster_than_mitm": 55,
+      "truth_strata": {
+        "yes": {
+          "completed": 52,
+          "median_completed_ms": 0.10254999506287277
+        },
+        "no": {
+          "completed": 8,
+          "median_completed_ms": 0.14245000784285367
+        }
+      }
+    },
+    "core_distinct": {
+      "completed": 96,
+      "unresolved_reasons": {},
+      "median_all_attempts_ms": 0.13819999003317207,
+      "matched_mitm_cases": 96,
+      "faster_than_mitm": 82,
+      "truth_strata": {
+        "yes": {
+          "completed": 79,
+          "median_completed_ms": 0.16039999900385737
+        },
+        "no": {
+          "completed": 17,
+          "median_completed_ms": 0.0737000082153827
+        }
+      }
+    },
+    "core_enumerate": {
+      "completed": 96,
+      "unresolved_reasons": {},
+      "median_all_attempts_ms": 0.08839998918119818,
+      "matched_mitm_cases": 96,
+      "faster_than_mitm": 90,
+      "truth_strata": {
+        "yes": {
+          "completed": 79,
+          "median_completed_ms": 0.09089999366551638
+        },
+        "no": {
+          "completed": 17,
+          "median_completed_ms": 0.08399999933317304
+        }
+      }
+    },
+    "dfs": {
+      "completed": 96,
+      "unresolved_reasons": {},
+      "median_all_attempts_ms": 0.10925001697614789,
+      "matched_mitm_cases": 96,
+      "faster_than_mitm": 94,
+      "truth_strata": {
+        "yes": {
+          "completed": 79,
+          "median_completed_ms": 0.1100999943446368
+        },
+        "no": {
+          "completed": 17,
+          "median_completed_ms": 0.0872999953571707
+        }
+      }
+    },
+    "mitm": {
+      "completed": 96,
+      "unresolved_reasons": {},
+      "median_all_attempts_ms": 7.124700001440942,
+      "matched_mitm_cases": 96,
+      "faster_than_mitm": 0,
+      "truth_strata": {
+        "yes": {
+          "completed": 79,
+          "median_completed_ms": 6.176399998366833
+        },
+        "no": {
+          "completed": 17,
+          "median_completed_ms": 8.416600001510233
+        }
+      }
+    }
+  },
+  "families": {
+    "unrelated": {
+      "lists_with_full_support": 24,
+      "k_range": [
+        0,
+        12
+      ],
+      "M_range": [
+        1,
+        4096
+      ],
+      "median_selection_to_sum_ratio": 1.0
+    },
+    "repeated": {
+      "lists_with_full_support": 24,
+      "k_range": [
+        0,
+        12
+      ],
+      "M_range": [
+        1,
+        13
+      ],
+      "median_selection_to_sum_ratio": 15.822222222222221
+    }
+  }
+}

@@ -1,0 +1,100 @@
+{
+  "lists": 324,
+  "cases": 1296,
+  "policy_runs": 6480,
+  "checked_completed": 4142,
+  "mismatches": 0,
+  "splits": {
+    "train": {
+      "cases": 336,
+      "lists": 84,
+      "common_completed": 296,
+      "preprocess_solved": 96
+    },
+    "calibration": {
+      "cases": 168,
+      "lists": 42,
+      "common_completed": 150,
+      "preprocess_solved": 48
+    },
+    "test": {
+      "cases": 168,
+      "lists": 42,
+      "common_completed": 154,
+      "preprocess_solved": 50
+    },
+    "larger_size": {
+      "cases": 336,
+      "lists": 84,
+      "common_completed": 283,
+      "preprocess_solved": 98
+    },
+    "unseen_family": {
+      "cases": 288,
+      "lists": 72,
+      "common_completed": 152,
+      "preprocess_solved": 41
+    }
+  },
+  "policies": {
+    "original": {
+      "completed": 778,
+      "extraction_exhausted": 180,
+      "reused_completions": 34,
+      "lost_vs_common": 257,
+      "gained_vs_common": 0
+    },
+    "progression": {
+      "completed": 752,
+      "extraction_exhausted": 215,
+      "reused_completions": 68,
+      "lost_vs_common": 298,
+      "gained_vs_common": 15
+    },
+    "target_original": {
+      "completed": 802,
+      "extraction_exhausted": 158,
+      "reused_completions": 58,
+      "lost_vs_common": 233,
+      "gained_vs_common": 0
+    },
+    "target_progression": {
+      "completed": 775,
+      "extraction_exhausted": 194,
+      "reused_completions": 88,
+      "lost_vs_common": 275,
+      "gained_vs_common": 15
+    }
+  },
+  "features": {
+    "original": {
+      "coverage_fifth_correlation": 0.988133807297676,
+      "unique_vectors": 179,
+      "median_feature_ms": 1.0302999871782959,
+      "fifth_improved_vs_original": 0,
+      "different_vector_vs_original": 0
+    },
+    "progression": {
+      "coverage_fifth_correlation": 0.8862274591141839,
+      "unique_vectors": 192,
+      "median_feature_ms": 1.1567999608814716,
+      "fifth_improved_vs_original": 268,
+      "different_vector_vs_original": 268
+    },
+    "target_original": {
+      "coverage_fifth_correlation": 0.989393419774837,
+      "unique_vectors": 392,
+      "median_feature_ms": 0.4922000225633383,
+      "fifth_improved_vs_original": 683,
+      "different_vector_vs_original": 771
+    },
+    "target_progression": {
+      "coverage_fifth_correlation": 0.9200838435574019,
+      "unique_vectors": 415,
+      "median_feature_ms": 0.5478999810293317,
+      "fifth_improved_vs_original": 820,
+      "different_vector_vs_original": 908
+    }
+  },
+  "duplicate_sorted_lists": 0
+}

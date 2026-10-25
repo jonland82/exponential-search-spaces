@@ -1,0 +1,72 @@
+{
+  "config": {
+    "seed": 720251026,
+    "sizes": [
+      24,
+      32,
+      36
+    ],
+    "fractions": [
+      0,
+      0.125
+    ],
+    "families": [
+      "superincreasing",
+      "coverage",
+      "few_values",
+      "small_support",
+      "interval_union",
+      "progression",
+      "random_wide",
+      "near_equal",
+      "filtered_modular",
+      "block_pairs",
+      "two_scale",
+      "two_progressions"
+    ],
+    "targets": [
+      "planted",
+      "middle",
+      "odd"
+    ],
+    "checkpoint_stride": 4,
+    "minimum_remaining": 8,
+    "checkpoint_cap": 128,
+    "exceptions_cap": 6,
+    "distance_threshold": 2,
+    "probability_threshold": 0.5,
+    "deterministic_node_cap": 10000,
+    "live_node_cap": 1000000,
+    "live_seconds": 0.05,
+    "live_repeats": 3,
+    "policies": [
+      "dfs",
+      "always_native",
+      "distance_native",
+      "always_matched",
+      "distance_matched",
+      "conventional",
+      "hybrid"
+    ],
+    "diagnostic_checkpoints": 8,
+    "status": "exploratory frozen-model transfer"
+  },
+  "started_utc": "2026-10-25T18:31:46.092935+00:00",
+  "sources": {
+    "Learned_Solvability_Subset_Sum/branch_pruning.py": "ab9f24e2b5122ba4e2f7fc5e03a88e7bb3be6fc5ac8e4e9e4dfd674ecf835b44",
+    "Learned_Solvability_Subset_Sum/BRANCH_PROTOCOL.md": "d35ae673a0631ce4a21c5f6a442ddfa267859bafd5a7a93c43dd78128508fd0d",
+    "Learned_Solvability_Subset_Sum/features.py": "93de025d5c976ccf96a74b4bd177526a37902a53daa7012aa6eba91268e75e36",
+    "Learned_Solvability_Subset_Sum/advanced_features.py": "0c6c6d40fe2c71f886080d5536bd0aa5ff981368f882648f6f5e9ed72d9469fe",
+    "Learned_Solvability_Subset_Sum/run_pilot.py": "fcbbfd295095eb6b3d8f4f601d5f35539557453dbe71943305220dce575753ad",
+    "Learned_Solvability_Subset_Sum/run_development.py": "0d436ac3f6ed8e7bc5848e0aaff3eddfa6ae6da539c31700467d84fe05f1195a",
+    "Learned_Solvability_Subset_Sum/prospective_study.py": "5f32b76874aa5ad5bf88abc26ba6c8f35b19b466c1b196870ce08756efed152d",
+    "Learned_Solvability_Subset_Sum/test_branch_pruning.py": "a47b6ab305d636ff05341796634a937183c34ee436b2c48f014f1ab76ea3d99c",
+    "Learned_Solvability_Subset_Sum/validate_branch_pruning.py": "5f4bdd2f12c631c17f172bb9a07d2c52fa9cb2ba85877d1c645f4e64bac74689",
+    "Structural_Distance_Subset_Sum/structural_subset_sum.py": "2198fd70b6f33c764207a89d8f124b9982876fa96fe5e8900eb48f9a627478c2"
+  },
+  "model_sha256": "a56b8c998189854b04dee668bf013ace0ab4826fbb378439e2182aabea91361a",
+  "old_protocol_sha256": "f2fa2a0fd8b8819d51a8feaf7a167853b0e0c505143f3b658aaf6359b9e7a050",
+  "python": "3.13.5",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "processor": "Intel64 Family 6 Model 158 Stepping 13, GenuineIntel"
+}

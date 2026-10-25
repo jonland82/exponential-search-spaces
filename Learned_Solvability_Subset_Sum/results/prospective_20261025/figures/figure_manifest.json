@@ -1,0 +1,12 @@
+{
+  "source_sha256": "6a47cdc701233e2124198b8042ca0c48cd6bf33f5aeae786e3d332688d47eb81",
+  "input_sha256": {
+    "prediction_metrics.json": "15e32258714e1072cb024135602e2bbca01b9705ebf6bbc351964eb928374628",
+    "priority_summary.json": "9831a890d650a035767a812ecfae1ce4edcc10809639f06446d56ab462241c0b"
+  },
+  "output_sha256": {
+    "overview.png": "1ac1a2cc28e1052d98b451025e56458bde17ac9d305a9df36d25b534ecac105c",
+    "overview.pdf": "2aee01046f36ba3f3dd1cace5e34d325331ee8b85db0bd62f7004b876778d12b"
+  },
+  "scope": "presentation only; logistic primary; no fresh model fitting or new statistical claims"
+}

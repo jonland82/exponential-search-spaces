@@ -1,0 +1,9 @@
+{
+  "protected_source_hashes_match_frozen_protocol": true,
+  "original_cohort_files_unchanged": true,
+  "fresh_manifest_and_measurement_hashes_match": true,
+  "fresh_lists": 160,
+  "regression_lists": 1000,
+  "every_saved_deterministic_interval_contains_exact_integer_truth": true,
+  "independent_unit_test_groups_passed": 7
+}

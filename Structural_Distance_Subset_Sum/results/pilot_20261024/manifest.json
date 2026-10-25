@@ -1,0 +1,54 @@
+{
+  "config": {
+    "status": "exploratory pilot; not a prospective novelty or speedup claim",
+    "seed": 240102026,
+    "sizes": [
+      16,
+      24,
+      32
+    ],
+    "injected_counts": [
+      0,
+      4,
+      8,
+      12
+    ],
+    "families": [
+      "unrelated",
+      "repeated"
+    ],
+    "replicates": 2,
+    "target_rules": [
+      "independent fair-bit subset of the final indexed input",
+      "uniform integer in inclusive [round(.30 total), round(.70 total)]"
+    ],
+    "label_oracle": "independent full indexed-half enumeration; no core information",
+    "method_order": "reproducibly shuffled for every case",
+    "timing": "one instrumented Python run per case and method, including preprocessing",
+    "memory": "live residual record cap; no exact byte-memory measurement",
+    "bitset": "decision-only baseline; separate declared width cap"
+  },
+  "limits": {
+    "max_work": 1000000,
+    "max_states": 262144,
+    "max_seconds": 1.0,
+    "max_bitset_bits": 8000000
+  },
+  "methods": [
+    "core_distinct",
+    "core_enumerate",
+    "mitm",
+    "dfs",
+    "bitset"
+  ],
+  "python": "3.13.5 | packaged by Anaconda, Inc. | (main, Jun 12 2025, 16:37:03) [MSC v.1929 64 bit (AMD64)]",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "source_hashes": {
+    "structural_subset_sum.py": "0b01f6034a3910097102b07f7f70a5eec1a6a8d5749c009319ac2c6426c62c23",
+    "test_structural_subset_sum.py": "35a5c58c4e02928f9d086ee0961394ec9c9745bbf25e468bb944cd4084ef53d8",
+    "run_pilot.py": "ec1b087ca754eede39c99bfb0878624abbad4e1d96527dc5f9940561f3f6e22d",
+    "THEORY.md": "4214aab6c32737ad4b6326c14c7bf3a5ecaab2b8b0508a6edf4afcc459091b6c",
+    "README.md": "9849c6851ab16297257ce564260a4df20c5697e552311a3f0f0b0bb3742cfb7e"
+  },
+  "source_snapshot_directory": "sources"
+}
