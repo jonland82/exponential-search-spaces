@@ -1,13 +1,15 @@
-"""Stage the four published notes, preserving legacy URLs and excluding drafts."""
+"""Stage the six-note index, available papers and supporting evidence."""
 
 import argparse
+import os
 from pathlib import Path
+import re
 import shutil
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
-from tools.paper_catalog import PAPERS, artifact
+from tools.paper_catalog import PAPERS, artifact, directory
 
 
 def prepare(output):
@@ -15,31 +17,38 @@ def prepare(output):
     if output.exists():
         raise FileExistsError("Choose a new output folder; existing staged sites are preserved.")
     output.mkdir(parents=True)
-    for name in ("index.html", "paper.css", ".nojekyll"):
+    for name in ("index.html", "paper.css", ".nojekyll", "README.md", ".gitattributes", ".gitignore", "build_papers.py"):
         shutil.copy2(ROOT / name, output / name)
-    for name in ("fonts", "subset-sum", "Subset_Sum_Refinement_Experiment"):
+    for name in ("fonts", "tools", "subset-sum", "Subset_Sum_Refinement_Experiment",
+                 "Structural_Distance_Subset_Sum", "Learned_Solvability_Subset_Sum"):
         shutil.copytree(
             ROOT / name, output / name,
             ignore=shutil.ignore_patterns("__pycache__", "*.pyc", "*.aux", "*.log", "*.out"),
         )
+    (output / "notes").mkdir(exist_ok=True)
+    shutil.copy2(ROOT / "notes/README.md", output / "notes/README.md")
     for paper in PAPERS:
-        if not paper["published"]:
-            continue
         destination = output / "notes" / paper["folder"]
-        destination.mkdir(parents=True)
-        for extension in (".html", ".pdf", ".tex"):
-            shutil.copy2(artifact(paper, extension), destination / (paper["stem"] + extension))
+        shutil.copytree(directory(paper), destination,
+                        ignore=shutil.ignore_patterns("*.aux", "*.log", "*.out", "*.synctex.gz"))
+        if not paper["published"]:
+            assert not (destination / (paper["stem"] + ".html")).exists()
+            continue
         # Compatibility downloads exist only in the deployment artifact.
         shutil.copy2(ROOT / (paper["stem"] + ".html"), output / (paper["stem"] + ".html"))
         shutil.copy2(artifact(paper, ".pdf"), output / (paper["stem"] + ".pdf"))
         text = artifact(paper, ".tex").read_text(encoding="utf-8")
-        text = text.replace("{../../subset-sum/", "{subset-sum/")
+        def rebase(match):
+            target = directory(paper) / match[2]
+            relative = Path(os.path.relpath(target.resolve(), ROOT)).as_posix()
+            return match[1] + relative + match[3]
+        text = re.sub(r"(\\(?:input|includegraphics)(?:\[[^\]]*\])?\{)([^}]+)(\})", rebase, text)
         (output / (paper["stem"] + ".tex")).write_text(text, encoding="utf-8")
     for paper in PAPERS:
         if not paper["published"]:
-            assert not (output / "notes" / paper["folder"]).exists()
-            assert not any(output.rglob(paper["stem"] + ".*"))
-    print(f"Prepared four published notes and legacy download aliases at {output}")
+            assert not (output / "notes" / paper["folder"] / (paper["stem"] + ".html")).exists()
+    published = sum(p["published"] for p in PAPERS)
+    print(f"Prepared {len(PAPERS)} note entries, {published} HTML papers, draft downloads and evidence at {output}")
 
 
 if __name__ == "__main__":

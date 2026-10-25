@@ -24,7 +24,7 @@ window.MathJax = {
   <a href="Probability_Valued_Subset_Sum.tex">LaTeX source</a>
 </nav>
 <header>
-  <span class="series-label">Companion note III of IV</span>
+  <span class="series-label">Companion note III of VI</span>
   <h1>Probability-Valued Subset Sum: Certified Bounds and Learned Guidance</h1>
   <div class="byline">Jonathan R. Landers<br>October 2026</div>
 </header>
@@ -81,7 +81,7 @@ H_m(s)=\sum_{i=0}^{m-1}\min\{a_i,b_{(s-i)\bmod m}\}.\]</span> The minimum of the
 <h2 id="the-initial-check-of-bound-quality">The initial check of bound quality</h2>
 <p>We reused the held-out <span class="math inline">\(n=16\)</span> lists from the classifier experiment in note II. For each of <span class="math inline">\(50\)</span> lists, the target set <span class="math inline">\(D\)</span> was the integer middle <span class="math inline">\(40\%\)</span> of the list’s total sum, restricted to targets that passed the experiment’s residue tests modulo <span class="math inline">\(8,10,16,32\)</span>. Conditional on that filter, targets were drawn uniformly from <span class="math inline">\(D\)</span>. The same residue tests therefore supply no further upper-bound reduction on this particular <span class="math inline">\(D\)</span>.</p>
 <p>The lower bound used distinct sums from <span class="math inline">\(512\)</span> randomly sampled subsets; the upper bound used <span class="math inline">\(K(w)/|D|\)</span>. We enumerated all attainable sums to measure the exact <span class="math inline">\(q_\mu(w)\)</span> <em>for evaluation only</em>. Each computed interval contained the exact value.</p>
-<table class="paper-table">
+<div class="table-wrap"><table class="paper-table">
 <caption>Medians across held-out <span class="math inline">\(n=16\)</span> lists. Columns are separate medians, not one interval for a representative list.</caption>
 <thead>
 <tr class="header">
@@ -115,9 +115,9 @@ H_m(s)=\sum_{i=0}^{m-1}\min\{a_i,b_{(s-i)\bmod m}\}.\]</span> The minimum of the
 <td style="text-align: right;"><span class="math inline">\(36.0\%\)</span></td>
 </tr>
 </tbody>
-</table>
+</table></div>
 <figure>
-<img src="../../subset-sum/instance_probability_bounds.png" alt="Each vertical segment is a certified interval for one list; the dark point is its exact reachable-target fraction. The low-budget witness bound is often loose." /><figcaption aria-hidden="true">Each vertical segment is a certified interval for one list; the dark point is its exact reachable-target fraction. The low-budget witness bound is often loose.</figcaption>
+<img src="../../subset-sum/instance_probability_bounds.png" alt="Each vertical segment is a certified interval for one list; the dark point is its exact reachable-target fraction. The low-budget witness bound is often loose." /><figcaption>Each vertical segment is a certified interval for one list; the dark point is its exact reachable-target fraction. The low-budget witness bound is often loose.</figcaption>
 </figure>
 <p>These bounds do not claim a runtime improvement. They show that counting possible selections can sometimes limit the probability without deciding each target, while a small witness budget leaves much of the mass unresolved.</p>
 <h2 id="per-target-statistical-probabilities-and-guidance">Per-target statistical probabilities and guidance</h2>
@@ -134,7 +134,7 @@ s^+=\frac{(q-\widehat q)_+}{W}.\]</span> Collapsed intervals return their exact 
 <p>For finite allowances, the algebraic width identity is <span class="math display">\[\frac{|I_*|}{W}=\min\{p,c^-\}+\min\{1-p,c^+\}
  \le\min\{1,c^-+c^+\}.\]</span> It guarantees shrinkage for fixed allowances, independently of whether the new interval contains the truth. It does not convert statistical coverage into the pointwise containment of Proposition 2.</p>
 <p>The frozen experiment used <span class="math inline">\(1{,}200\)</span> training, <span class="math inline">\(500\)</span> calibration, and <span class="math inline">\(1{,}000\)</span> fresh test lists with <span class="math inline">\(16\)</span> weights, plus a prespecified <span class="math inline">\(240\)</span>-list <span class="math inline">\(20\)</span>-weight size-transfer diagnostic. Each list independently selected the independent-weight or repeated-pair generator with equal probability, retaining the middle-<span class="math inline">\(40\%\)</span>, residue-filtered target rule. The original analytic interval used <span class="math inline">\(512\)</span> subset witnesses and the multiplicity upper bound. Exact fractions supplied labels, not test features. The fixed structural predictor was a histogram gradient-boosted regressor with <span class="math inline">\(200\)</span> iterations, at most <span class="math inline">\(15\)</span> leaves, learning rate <span class="math inline">\(0.05\)</span>, minimum leaf size <span class="math inline">\(20\)</span>, and <span class="math inline">\(L^2\)</span> regularization <span class="math inline">\(1\)</span>. The density baseline used quadratic ridge regression on three cheap features; the midpoint predicted <span class="math inline">\(p=1/2\)</span>. No tuning or recalibration followed test inspection. At <span class="math inline">\(\alpha=0.05\)</span>, each calibration rank was <span class="math inline">\(489\)</span>.</p>
-<table class="paper-table">
+<div class="table-wrap"><table class="paper-table">
 <caption>List-level calibrated refinement. Width removal is the mean per-list fractional reduction on the matched <span class="math inline">\(n=16\)</span> test. The larger-list diagnostic uses the same fitted model and allowances.</caption>
 <thead>
 <tr class="header">
@@ -164,14 +164,14 @@ s^+=\frac{(q-\widehat q)_+}{W}.\]</span> Collapsed intervals return their exact 
 <td style="text-align: right;">239/240</td>
 </tr>
 </tbody>
-</table>
+</table></div>
 <p>For the structural model, <span class="math inline">\(c^-=0.132124\)</span> and <span class="math inline">\(c^+=0.099358\)</span>. Matched coverage was <span class="math inline">\(97.5\%\)</span>, but larger-list coverage was <span class="math inline">\(88.75\%\)</span>, below the intended <span class="math inline">\(95\%\)</span>. All <span class="math inline">\(25\)</span> matched misses occurred among repeated-pair lists. The size shift removes the exchangeability justification. Successful transfer of the simpler baselines is an empirical observation, not a universal robustness guarantee. Intersecting a valid statistical interval with an always-valid deterministic interval preserves its original marginal coverage; it does not repair this observed transfer failure. Refitting normalized residuals inside a changed envelope requires new training and calibration or a separate justification.</p>
 <h2 id="deterministic-reproduction-and-prospective-cost-study">Deterministic reproduction and prospective cost study</h2>
 <p>On the already-inspected <span class="math inline">\(1{,}000\)</span>-list matched cohort, range counting reproduced <span class="math inline">\(778\)</span> strict upper-endpoint improvements and <span class="math inline">\(13.10\%\)</span> mean per-list narrowing, with every interval containing the truth. Mean width changed from <span class="math inline">\(0.4044522\)</span> to <span class="math inline">\(0.3729270\)</span>: a <span class="math inline">\(7.79\%\)</span> reduction in the mean, which is a different statistic. This is a regression reproduction, not untouched evidence for methods developed using that cohort.</p>
 <p>For the prospective study, the method, protocol, and protected source hashes were frozen before generating fresh weights or labels. The new seed produced <span class="math inline">\(20\)</span> lists of each family at each size <span class="math inline">\(n=12,16,20,22\)</span>, totaling <span class="math inline">\(160\)</span>, with no sorted-list overlap with the original <span class="math inline">\(2{,}940\)</span> lists. The partition assigned complete value groups in ascending order to the block of smaller accumulated <span class="math inline">\(\sum\log_2(c_j+1)\)</span>, breaking ties toward the first block. The partial certificates selected at most <span class="math inline">\(8\)</span> or <span class="math inline">\(32\)</span> common adjacent half-sum gaps, ordered by descending product of gap frequencies and then increasing integer gap. Selection did not read exact labels.</p>
 <p>All deterministic endpoints used exact integer arithmetic. Tests included all weight multisets of lengths <span class="math inline">\(1\)</span>–<span class="math inline">\(6\)</span> over <span class="math inline">\(\{1,2,3,4\}\)</span>, random small cases with irregular target sets, the full difference identity, zero-support and singleton cases, the worked example, and an independent integer optimization of the collision upper bound. On the old cohort, full histograms independently checked the partial collision certificates. Such a histogram already reveals exact support and is an evaluation oracle, not a proposed approximation shortcut.</p>
 <p>On every fresh list, standalone positive-weight set DP truncated at the upper target supplied exact truth only after all tested intervals were constructed. GCD-compressed, truncated integer-bitset DP independently agreed on <span class="math inline">\(149\)</span> lists; <span class="math inline">\(11\)</span> exceeded its predeclared <span class="math inline">\(100\)</span>-million-bit cap. Every deterministic method contained all <span class="math inline">\(160\)</span> exact answers.</p>
-<table class="paper-table">
+<div class="table-wrap"><table class="paper-table">
 <caption>Fresh multi-size study. Width removal is the mean per-list fractional reduction. Total time includes all preprocessing. Bitset statistics use only its feasible subset; other rows use all <span class="math inline">\(160\)</span> lists.</caption>
 <thead>
 <tr class="header">
@@ -233,11 +233,11 @@ s^+=\frac{(q-\widehat q)_+}{W}.\]</span> Collapsed intervals return their exact 
 <td style="text-align: right;">0.670</td>
 </tr>
 </tbody>
-</table>
+</table></div>
 <p>The exact-decision sampling baseline drew uniform eligible targets with replacement and used half-sum membership to label them, with checkpoints <span class="math inline">\(m=128,512,2048\)</span>. Each Hoeffding band used <span class="math inline">\(\alpha_m=0.05/3\)</span>, with radius <span class="math inline">\(\sqrt{\log(2/\alpha_m)/(2m)}\)</span>, and was intersected with the original certified interval. A union bound gives at least <span class="math inline">\(95\%\)</span> simultaneous coverage across the three checkpoints for each fixed list; all <span class="math inline">\(160\)</span> lists were covered simultaneously in this run. Empty intersections count as misses and never as successful accuracy attainment. This sampling guarantee differs from deterministic containment.</p>
 <p>Range counting removed <span class="math inline">\(14.15\%\)</span> of width on average; the combined method removed <span class="math inline">\(14.19\%\)</span>. The latter improved <span class="math inline">\(75\)</span> intervals further, but removed only <span class="math inline">\(0.00012839\)</span> additional absolute width on average. The conservative cap and the small partial collision counts limit the practical correction. Full collision information can narrow much more, at the cost of already computing exact support. These observations limit the tested certificate scheme, not the validity or possible usefulness of other collision certificates.</p>
 <figure>
-<img src="../../subset-sum/probability_refinement_tradeoff.png" alt="Fresh certified width versus total work, pooling both families at each size. Points show mean width and median total time. Exact bitset points use feasible lists only. The range and combined bounds have nearly the same width, while the latter costs more." /><figcaption aria-hidden="true">Fresh certified width versus total work, pooling both families at each size. Points show mean width and median total time. Exact bitset points use feasible lists only. The range and combined bounds have nearly the same width, while the latter costs more.</figcaption>
+<img src="../../subset-sum/probability_refinement_tradeoff.png" alt="Fresh certified width versus total work, pooling both families at each size. Points show mean width and median total time. Exact bitset points use feasible lists only. The range and combined bounds have nearly the same width, while the latter costs more." /><figcaption>Fresh certified width versus total work, pooling both families at each size. Points show mean width and median total time. Exact bitset points use feasible lists only. The range and combined bounds have nearly the same width, while the latter costs more.</figcaption>
 </figure>
 <p>Each timing was one untraced standalone run per method and list, in a reproducibly shuffled order, charging target-support construction, witnesses, half sets, sorting, and certificate work. Exact methods ran independently. Python-traced memory was profiled separately on the first list of each size/family stratum, eight cases, excluding the interpreter baseline and allocator retention. These are small synthetic experiments and descriptive timings, not stable speedup estimates.</p>
 <p>At full interval width <span class="math inline">\(0.10\)</span>, the original bounds met the tolerance on <span class="math inline">\(64/160\)</span> lists, and both range and combined methods on <span class="math inline">\(67/160\)</span>. Sampling met it on all <span class="math inline">\(160\)</span> by its final checkpoint, with a statistical guarantee and exact-label costs. On the same lists, the report compares each successful method against the faster feasible exact solver. Cheap but wide intervals cannot be credited with an accuracy-matched speedup. Exact bitset computation often finished faster; these results show no broad computational advantage.</p>
@@ -256,6 +256,8 @@ python build_papers.py --paper Probability_Valued_Subset_Sum</code></pre>
     <a href="../01-certified-coverage/Certified_Coverage_of_Exponential_Search_Spaces.html">Note I: Framework</a>
     <a href="../02-subset-sum-stress-test/Subset_Sum_as_a_Stress_Test.html">Note II: Exact-search stress test</a>
     <a href="../04-certified-approximation/Certified_Approximation_of_Subset_Sum.html">Note IV: Pairing in approximation</a>
+    <a href="../05-structural-distance/Structural_Distance_in_Subset_Sum.pdf">Note V: Structural distance (PDF draft)</a>
+    <a href="../06-learned-solvability/Predicting_Subset_Sum_Completion.html">Note VI: Learned completion</a>
     <a href="../../subset-sum/PROBABILITY_REFINEMENT.md">Methods and data</a>
   </div>
 </footer>

@@ -1,7 +1,9 @@
 # Paper VI: stage 6 development checkpoint
 
-Historical development checkpoint. The subsequent fresh evaluation and current
-stages 7-8 status are in [PROSPECTIVE_FINDINGS.md](PROSPECTIVE_FINDINGS.md).
+Historical development checkpoint. Later evidence is in
+[the original frozen findings](PROSPECTIVE_FINDINGS.md) and the independent
+[branch-pruning follow-up](BRANCH_FINDINGS.md). Both are now included in
+[Paper VI](../notes/06-learned-solvability/Predicting_Subset_Sum_Completion.html).
 
 October 25, 2026. The accepted target-aware and progression-aware comparison is
 implemented and fitted. Pause for discussion before freezing the final study.

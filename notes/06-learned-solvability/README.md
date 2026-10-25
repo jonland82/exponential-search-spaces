@@ -1,18 +1,32 @@
 # Note VI: Predicting Subset-Sum Completion
 
-**The Value and Cost of Structural Features.** First review draft, October 25,
-2026. Stage 9 is complete as a scoped prior-work audit, manuscript and built PDF.
-This is an unpublished PDF/LaTeX draft; the published website remains four notes.
+**The Value and Cost of Structural Features.** Updated HTML/PDF note, October 25,
+2026. The manuscript includes the original frozen study and Stage 10's independent
+certified branch-pruning experiment. Both are preserved and reported separately.
 
+- [Read HTML](Predicting_Subset_Sum_Completion.html).
 - [Read the PDF](Predicting_Subset_Sum_Completion.pdf).
 - [LaTeX source](Predicting_Subset_Sum_Completion.tex).
 - [Generated evidence manifest](paper_evidence.json).
 - [Scoped literature audit](../../Learned_Solvability_Subset_Sum/LITERATURE.md).
 - [Frozen findings](../../Learned_Solvability_Subset_Sum/PROSPECTIVE_FINDINGS.md).
+- [Branch-pruning findings](../../Learned_Solvability_Subset_Sum/BRANCH_FINDINGS.md).
 
 Build with `python build_papers.py --paper 6`. The builder verifies frozen
 source/model/data hashes and generates measured values, tables and the plot.
-It performs no training, experiment reruns, HTML generation or publication.
+It regenerates PDF/HTML and performs no training or experiment reruns.
+
+## Latest result
+
+At 50 ms per case on 216 fresh inputs, median completions are 152 for DFS,
+159 for combined ML guidance and 162 for a simple distance rule. Exact checks
+certify internal subtrees as impossible, but the transferred completion model
+adds no demonstrated benefit over the rule. Matched acquisition controls,
+component costs and uncertainty are included in the new manuscript section.
+
+The original primary probability comparison remains unfavorable: combined
+Brier score 0.0266 versus ordinary features' 0.0211. The original live-pool
+gain and work-counter failure are retained, with their attribution limits.
 
 ## Research question
 
@@ -35,11 +49,13 @@ prove polynomial asymptotic solvability.
 
 ## Connection to the sequence
 
-Note V proves a sufficient regime using one structural distance. Note VI proposes
+Note V proves a sufficient regime using one structural distance. Note VI tests
 a learned combination of several such distances, retaining exact solvers for all
 answers. Unlike the earlier learned reachability classifier in Notes II-III, the
 labels concern solver completion. Feature and inference costs must be paid, and
-simple conventional predictors must be competitive baselines.
+simple conventional predictors must be competitive baselines. The branch
+follow-up directly implements Note I: predictions suggest checks, exact
+certificates resolve subtrees, and ordinary search handles the remainder.
 
 ## Execution and manuscript plan
 
@@ -51,11 +67,13 @@ simple conventional predictors must be competitive baselines.
 6. Fit and calibrate simple models; compare conventional features and ablations. Complete as development work.
 7. Freeze new test inputs; hold out lists, families, sizes and bit lengths. Complete.
 8. Compare budgeted prioritization with simpler policies using total costs. Complete.
-9. Audit prior literature and write the paper around results that survive these checks. **Current checkpoint: first review draft complete.**
+9. Audit prior literature and write the paper around results that survive these checks. Complete.
+10. Transfer frozen scores to certified branch checks with native and matched-acquisition controls. Complete.
+11. Incorporate those results, refresh the six-note index/docs and publish HTML/PDF. Current publication update.
 
 The manuscript covers problem definition, certified feature construction,
 elementary guarantees, experimental protocol, calibrated prediction, shifts,
-paid practical utility and limitations. Its primary prediction comparison is
+paid practical utility, certified branch checks and limitations. Its primary prediction comparison is
 unfavorable. Some live-time benefit coexists with a work-counter failure.
 
 ## Current evidence and discussion
@@ -89,5 +107,8 @@ The [protocol](../../Learned_Solvability_Subset_Sum/PROSPECTIVE_PROTOCOL.md) and
 [overview figure](../../Learned_Solvability_Subset_Sum/results/prospective_20261025/figures/overview.pdf)
 make the experiment reviewable alongside the manuscript.
 
-The manuscript is in the six-paper build catalog. Its draft and experiment
-package remain outside the published four-note website and staged site payload.
+The manuscript and experiment package are included in the six-note website.
+Next research controls are root-only structural checks and branch-specific
+prediction of net time saved, with independent training and test trees.
+
+[All notes](../README.md) | [Repository guide](../../README.md)

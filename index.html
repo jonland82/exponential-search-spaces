@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Four research notes by Jonathan R. Landers: certified coverage, exact subset-sum experiments, random-target probability, and a controlled negative timing result for pairing in approximation.">
+<meta name="description" content="Six research notes by Jonathan R. Landers: certified coverage, subset-sum experiments, probability bounds, approximation, structural distance, and learned completion with certified pruning.">
 <title>Certified Coverage: A Research Sequence</title>
 <script>
 window.MathJax = {
@@ -23,10 +23,10 @@ window.MathJax = {
 </nav>
 
 <header>
-  <span class="series-label">A four-note research sequence</span>
+  <span class="series-label">A six-note research sequence</span>
   <h1>Certified Coverage of Exponential Search Spaces</h1>
   <div class="byline">Jonathan R. Landers · September–October 2026</div>
-  <p class="deck">A coverage framework, an exact-search stress test, and two extensions that separate useful guarantees from demonstrated computational gains.</p>
+  <p class="deck">From certified coverage to structural distance and learned search guidance: six notes measuring what exact structure saves and what discovering it costs.</p>
 </header>
 
 <div class="abstract">
@@ -36,6 +36,8 @@ window.MathJax = {
 <section aria-labelledby="arc">
   <h2 id="arc">The narrative arc</h2>
   <p><strong>Reading order:</strong> <a href="notes/01-certified-coverage/Certified_Coverage_of_Exponential_Search_Spaces.html">I: Framework</a> → <a href="notes/02-subset-sum-stress-test/Subset_Sum_as_a_Stress_Test.html">II: Exact-search test</a> → <a href="notes/03-probability-valued-subset-sum/Probability_Valued_Subset_Sum.html">III: Random-target probability</a> → <a href="notes/04-certified-approximation/Certified_Approximation_of_Subset_Sum.html">IV: Pairing in approximation</a>. Notes III and IV branch from II; either can be read independently after the framework and exact-search test.</p>
+
+  <p>Continue with <a href="notes/05-structural-distance/Structural_Distance_in_Subset_Sum.pdf">V: Structural distance (working draft)</a> and <a href="notes/06-learned-solvability/Predicting_Subset_Sum_Completion.html">VI: Learned completion and certified pruning</a>. These return to exact solving: discover easy cores, predict budgeted completion, then test whether structural checks improve search within Note I's framework.</p>
 
   <article class="series-card">
     <span class="series-label">Note I · The framework</span>
@@ -104,6 +106,37 @@ window.MathJax = {
       <a href="subset-sum/APPROXIMATION_RESULTS.md">Experiments and data</a>
     </div>
   </article>
+  <article class="series-card">
+    <span class="series-label">Note V &middot; Structural distance &middot; Working draft</span>
+    <h3><a href="notes/05-structural-distance/Structural_Distance_in_Subset_Sum.pdf">How Far from Easy? Structural Distance in Subset Sum</a></h3>
+    <p>Finds a largest superincreasing core and searches only its exceptions. Logarithmically many exceptions give a sufficient polynomial regime. More elaborate core selectors reduce residual support on some constructed lists, but their discovery costs outweigh the query savings in the experiment.</p>
+    <div class="math">\[
+      T(x)\le F(L)+2^k\bigl(Q(L)+\operatorname{poly}(L)\bigr).
+    \]</div>
+    <p class="meta">\(k\) is the number of exceptions; \(F\) discovers the core and \(Q\) answers an exact core query. Available as a PDF/source working draft.</p>
+    <div class="link-row">
+      <a href="notes/05-structural-distance/Structural_Distance_in_Subset_Sum.pdf">Read PDF draft</a>
+      <a href="notes/05-structural-distance/Structural_Distance_in_Subset_Sum.tex">LaTeX</a>
+      <a href="Structural_Distance_Subset_Sum/FINDINGS.md">Experiments and data</a>
+    </div>
+  </article>
+
+  <article class="series-card">
+    <span class="series-label">Note VI &middot; Prediction and verified search</span>
+    <h3><a href="notes/06-learned-solvability/Predicting_Subset_Sum_Completion.html">Predicting Subset-Sum Completion: The Value and Cost of Structural Features</a></h3>
+    <p>Combines five distances to easy cases with ten standard features to predict whether an exact solver finishes within a budget. The primary prediction comparison does not improve. A separate branch experiment tries exact structural checks inside the search tree: at 50 ms each, ordinary search solves 152 of 216 fresh cases, combined ML guidance 159, and a simple distance rule 162.</p>
+    <div class="math">\[
+      \widehat p(x)\approx\Pr(\text{exact completion within budget}\mid\phi(x)).
+    \]</div>
+    <p class="meta">Predictions choose checks; exact certificates resolve branches. All feature, prediction and checking costs are paid. Counts are median totals over three timing repeats.</p>
+    <div class="link-row">
+      <a href="notes/06-learned-solvability/Predicting_Subset_Sum_Completion.html">Read HTML</a>
+      <a href="notes/06-learned-solvability/Predicting_Subset_Sum_Completion.pdf">PDF</a>
+      <a href="notes/06-learned-solvability/Predicting_Subset_Sum_Completion.tex">LaTeX</a>
+      <a href="Learned_Solvability_Subset_Sum/README.md">Methods and data</a>
+      <a href="Learned_Solvability_Subset_Sum/BRANCH_FINDINGS.md">Pruning findings</a>
+    </div>
+  </article>
 </section>
 
 <section aria-labelledby="formalism">
@@ -132,6 +165,8 @@ window.MathJax = {
 <section aria-labelledby="language">
   <h2 id="language">What the results say</h2>
   <div class="note">
+    <p><strong>Easy structure can certify whole branches.</strong> Note VI's follow-up implements Note I's proposal and verification framework. Structural checks improve the observed number of exact completions over DFS, but the transferred ML gate does not beat a simple distance rule. The paired uncertainty intervals span zero; these are results on a constructed test set.</p>
+    <p><strong>Better structure must pay for discovery.</strong> Note V's selectors reduce residual support on 18 of 54 structured lists, yet neither is faster on their 162 targets. Note VI likewise finds that fewer search nodes can coexist with more computation spent acquiring features.</p>
     <p><strong>Representation must earn its cost.</strong> The paired subset-sum solver was slower than meet-in-the-middle on all 18 constructed hard no-solution cases tested.</p>
     <p><strong>Prediction helps choose work.</strong> The classifier's held-out area under the receiver operating characteristic curve (AUC), a ranking measure, was 0.866, close to a simple density model's 0.864. Two of its 43 most confident NO proposals were actually YES, so exact elimination still needs a verifier.</p>
     <p><strong>Probability bounds can be tightened with certificates.</strong> On 160 fresh lists of 12–22 weights, range counting removes 14.15% of interval width on average, and tested collision/residue refinements raise this to 14.19%; every deterministic interval contains the truth. Separately, calibrated learning removes 76.96% on matched data with 97.5% coverage, but coverage falls to 88.75% on larger lists. Exact bitset computation often finishes faster.</p>

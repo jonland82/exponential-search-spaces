@@ -1,9 +1,10 @@
 # Paper VI: stages 7-8 frozen-results checkpoint
 
-Historical results checkpoint. Stage 9 is now complete as a first
-[review manuscript](../notes/06-learned-solvability/Predicting_Subset_Sum_Completion.pdf)
-with a [scoped prior-work audit](LITERATURE.md). The findings below remain the
-claim boundary for that draft.
+Historical results checkpoint for the original frozen experiment. The updated
+[paper](../notes/06-learned-solvability/Predicting_Subset_Sum_Completion.html)
+includes these findings and the separate [branch follow-up](BRANCH_FINDINGS.md),
+with a [scoped prior-work audit](LITERATURE.md). The findings below retain their
+original claim boundary; the new study does not change this evidence.
 
 October 25, 2026. The fresh prediction comparison and paid practical prioritization
 test are complete and validated. Pause before the literature audit and full

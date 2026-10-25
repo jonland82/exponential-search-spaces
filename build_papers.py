@@ -6,6 +6,7 @@ import argparse
 import html
 import os
 from pathlib import Path
+import re
 import shutil
 import subprocess
 import sys
@@ -17,9 +18,13 @@ def relative(target, base):
     return Path(os.path.relpath(target, base)).as_posix()
 
 
-def build_one(paper, pdf_only=False):
+def build_one(paper, pdf_only=False, html_only=False):
     folder = directory(paper)
     stem = paper["stem"]
+    if html_only:
+        if paper["published"] and not paper["maintained_html"]:
+            build_html(paper)
+        return
     if paper["number"] == "III":
         subprocess.run(
             [sys.executable, str(ROOT / "subset-sum/probability_refinement_artifacts.py")],
@@ -48,20 +53,44 @@ def build_one(paper, pdf_only=False):
     if pdf_only or not paper["published"] or paper["maintained_html"]:
         print(f"Built {artifact(paper, '.pdf').relative_to(ROOT)}")
         return
+    build_html(paper)
+
+
+def build_html(paper):
+    folder, stem = directory(paper), paper["stem"]
+    source = artifact(paper, ".tex").read_text(encoding="utf-8")
+    bibliography = re.search(r"\\begin\{thebibliography\}\{[^}]*\}(.*?)\\end\{thebibliography\}", source, re.S)
+    if bibliography:
+        keys = re.findall(r"\\bibitem\{([^}]+)\}", bibliography.group(1))
+        numbers = {key: i + 1 for i, key in enumerate(keys)}
+        entries = re.sub(r"\\bibitem\{([^}]+)\}",
+                         lambda m: r"\item \hypertarget{ref-" + m[1] + "}{} ", bibliography.group(1))
+        source = source[:bibliography.start()] + r"\section{References}\begin{enumerate}" + entries + r"\end{enumerate}" + source[bibliography.end():]
+        source = re.sub(r"\\cite\{([^}]+)\}", lambda m: ", ".join(
+            r"\hyperlink{ref-" + key.strip() + "}{[" + str(numbers[key.strip()]) + "]}"
+            for key in m[1].split(",")), source)
     result = subprocess.run(
-        ["pandoc", str(artifact(paper, ".tex")), "-f", "latex", "-t", "html", "--mathjax"],
-        cwd=folder, check=True, capture_output=True,
+        ["pandoc", "-f", "latex", "-t", "html", "--mathjax"],
+        input=source.encode("utf-8"), cwd=folder, check=True, capture_output=True,
     )
     body = result.stdout.decode("utf-8").replace("\r\n", "\n")
     body = body[body.index('<div class="tcolorbox">'):]
     body = body.replace('<div class="tcolorbox">', '<div class="abstract">', 1)
     body = body.replace('<div class="tcolorbox">', '<div class="keyeq">')
+    body = body.replace("<h3 ", "<h4 ").replace("</h3>", "</h4>")
+    body = body.replace("<h2 ", "<h3 ").replace("</h2>", "</h3>")
     body = body.replace("<h1 ", "<h2 ").replace("</h1>", "</h2>")
     body = body.replace("<table>", '<table class="paper-table">')
+    body = re.sub(r'(<table\b.*?</table>)', r'<div class="table-wrap">\1</div>', body, flags=re.S)
+    body = body.replace('src="prediction_plot.pdf"', 'src="prediction_plot.png"')
+    body = body.replace('<embed src="prediction_plot.png" />', '<img src="prediction_plot.png" width="1188" height="684" alt="Brier scores for five distances, ordinary features and their combination">')
+    body = body.replace('<figcaption aria-hidden="true">', '<figcaption>')
+    body = body.replace('alt=""', 'alt="Comparison of Brier scores for five distances, ordinary features and their combination"')
     title, description = html.escape(paper["title"]), html.escape(paper["description"])
     related = "\n    ".join(
-        f'<a href="{relative(artifact(other, ".html"), folder)}">{html.escape(other["nav_label"])}</a>'
-        for other in PAPERS if other["published"] and other is not paper
+        f'<a href="{relative(artifact(other, ".html" if other["published"] else ".pdf"), folder)}">'
+        f'{html.escape(other["nav_label"])}{" (PDF draft)" if not other["published"] else ""}</a>'
+        for other in PAPERS if other is not paper
     )
     home = relative(ROOT / "index.html", folder)
     css = relative(ROOT / "paper.css", folder)
@@ -92,7 +121,7 @@ window.MathJax = {{
   <a href="{stem}.tex">LaTeX source</a>
 </nav>
 <header>
-  <span class="series-label">Companion note {paper["number"]} of IV</span>
+  <span class="series-label">Companion note {paper["number"]} of {PAPERS[-1]["number"]}</span>
   <h1>{title}</h1>
   <div class="byline">Jonathan R. Landers<br>October 2026</div>
 </header>
@@ -109,7 +138,18 @@ window.MathJax = {{
 </html>
 """
     artifact(paper, ".html").write_text(content, encoding="utf-8")
-    print(f"Built {artifact(paper, '.pdf').relative_to(ROOT)} and published HTML")
+    legacy = ROOT / (stem + ".html")
+    if not legacy.exists():
+        target = artifact(paper, ".html").relative_to(ROOT).as_posix()
+        legacy.write_text(f'''<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="refresh" content="0; url={target}">
+<link rel="canonical" href="{target}"><title>Note moved</title>
+<script>location.replace('{target}' + location.search + location.hash);</script>
+</head><body><p><a href="{target}">Continue to the note</a>.</p></body></html>
+''', encoding="utf-8")
+    print(f"Built {artifact(paper, '.html').relative_to(ROOT)}")
 
 
 def main():
@@ -117,11 +157,14 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--paper", choices=choices, help="Note number or filename stem; default: all catalog entries.")
     parser.add_argument("--pdf-only", action="store_true", help="Build PDFs without updating published HTML.")
+    parser.add_argument("--html-only", action="store_true", help="Update generated HTML using existing evidence assets, without rebuilding PDFs.")
     args = parser.parse_args()
+    if args.pdf_only and args.html_only:
+        parser.error("choose either --pdf-only or --html-only")
     for number, paper in enumerate(PAPERS, 1):
         if args.paper and args.paper not in (str(number), paper["stem"]):
             continue
-        build_one(paper, args.pdf_only)
+        build_one(paper, args.pdf_only, args.html_only)
 
 
 if __name__ == "__main__":

@@ -13,6 +13,7 @@ sys.path.insert(0, str(ROOT))
 from tools.paper_catalog import PAPERS, directory
 
 STUDY = ROOT / "Learned_Solvability_Subset_Sum/results/prospective_20261025"
+BRANCH = ROOT / "Learned_Solvability_Subset_Sum/results/branch_pruning_20261025"
 
 
 def sha(path):
@@ -69,6 +70,8 @@ def build():
         "SixPrimaryFive": f"{prediction['models']['five:logistic']['in_distribution']['all']['brier']:.4f}",
         "SixPrimaryOrdinary": f"{prediction['models']['conventional:logistic']['in_distribution']['all']['brier']:.4f}",
         "SixPrimaryCombined": f"{prediction['models']['hybrid:logistic']['in_distribution']['all']['brier']:.4f}",
+        "SixAccuracyCombined": f"{100*prediction['models']['hybrid:logistic']['in_distribution']['all']['accuracy_at_half']:.1f}",
+        "SixAccuracyOrdinary": f"{100*prediction['models']['conventional:logistic']['in_distribution']['all']['accuracy_at_half']:.1f}",
     }
     primary = prediction["paired"]["hybrid:logistic minus conventional:logistic"]["in_distribution"]
     values.update(SixPrimaryDifference=f"{primary['difference']:+.4f}",
@@ -122,6 +125,7 @@ def build():
     values["SixOvershootMs"] = f"{1000*max(r.get('overshoot_seconds', 0) for r in pools):.2f}"
     values["SixCombinedPlanningStops"] = sum(r["mode"] == "work" and r["policy"] == "hybrid" and
         r["exhausted_phase"] in ("features", "inference", "sorting", "core_queries") for r in pools)
+    branch_inputs = branch_artifacts(output, values)
     text = "% Generated from hashed saved evidence; do not edit measured values.\n"
     for name, value in values.items():
         formatted = f"{value:,}".replace(",", "{,}") if isinstance(value, int) else value
@@ -129,11 +133,12 @@ def build():
     (output / "study_values.tex").write_text(text, encoding="utf-8")
     shutil.copyfile(STUDY / "figures/overview.pdf", output / "study_overview.pdf")
     prediction_plot(output, prediction, labels)
-    generated = ("prediction_table.tex", "policy_table.tex", "forest_table.tex", "study_values.tex",
-                 "study_overview.pdf", "prediction_plot.pdf")
+    generated = ("prediction_table.tex", "policy_table.tex", "forest_table.tex", "branch_table.tex", "study_values.tex",
+                 "study_overview.pdf", "prediction_plot.pdf", "prediction_plot.png")
     evidence = {"frozen_at_utc": protocol["frozen_at_utc"], "values": values,
                 "inputs": {name: sha(STUDY / name) for name in ("protocol.json", "data_hashes.json",
                     "prediction_metrics.json", "priority_runs.jsonl", "priority_summary.json")},
+                "branch_inputs": branch_inputs,
                 "outputs": {name: sha(output / name) for name in generated},
                 "note": "artifact build only; no experiments, training or timing rerun"}
     (output / "paper_evidence.json").write_text(json.dumps(evidence, indent=2) + "\n", encoding="utf-8")
@@ -157,7 +162,81 @@ def prediction_plot(output, prediction, labels):
     ax.set_xlabel("Brier score (lower is better)", fontsize=9)
     ax.legend(fontsize=8, loc="upper right")
     fig.savefig(output / "prediction_plot.pdf")
+    fig.savefig(output / "prediction_plot.png", dpi=180)
     plt.close(fig)
+
+
+def branch_artifacts(output, values):
+    """Audit the independent follow-up and derive every quoted branch result."""
+    manifest = json.loads((BRANCH / "artifact_hashes.json").read_text())
+    for name, expected in manifest.items():
+        if sha(BRANCH / name) != expected:
+            raise AssertionError(f"branch result changed: {name}")
+    protocol = json.loads((BRANCH / "protocol.json").read_text())
+    if protocol["model_sha256"] != sha(STUDY / "models.joblib"):
+        raise AssertionError("branch experiment did not use the frozen model")
+    for name, expected in protocol["sources"].items():
+        if sha(ROOT / name) != expected or sha(BRANCH / "sources" / name) != expected:
+            raise AssertionError(f"branch source changed: {name}")
+    cases = read_rows(BRANCH / "cases.jsonl")
+    runs = [row for path in sorted(BRANCH.glob("runs_*.jsonl")) for row in read_rows(path)]
+    case_map = {c["case_id"]: c for c in cases}
+    if len(cases) != 216 or len(runs) != 6048:
+        raise AssertionError("unexpected branch evidence counts")
+    for row in runs:
+        case = case_map[row["case_id"]]
+        if row["status"] != "unresolved" and row["status"] != case["truth"]:
+            raise AssertionError("incorrect saved branch decision")
+        if row["status"] == "yes" and sum(case["weights"][i] for i in row["witness"]) != case["target"]:
+            raise AssertionError("invalid branch witness")
+    summary = json.loads((BRANCH / "summary.json").read_text())
+    policies = [("dfs", "DFS"), ("always_native", "Always, native"),
+                ("distance_native", "Distance rule, native"), ("always_matched", "Always, matched"),
+                ("distance_matched", "Distance rule, matched"),
+                ("conventional", "Ordinary ML"), ("hybrid", "Combined ML")]
+    table = [r"\begin{tabular}{lrrrrr}", r"\toprule",
+             r"Policy & Live & Node cap & Nodes & Seconds\\", r"\midrule"]
+    for policy, label in policies:
+        live = summary["by_mode"]["live"][policy]["median"]
+        node = summary["by_mode"]["nodes"][policy]["median"]
+        live_repeats = [sum(r["status"] != "unresolved" for r in runs if
+                           (r["mode"], r["policy"], r["repeat"]) == ("live", policy, repeat))
+                        for repeat in range(3)]
+        node_runs = [r for r in runs if r["mode"] == "nodes" and r["policy"] == policy]
+        if live["completed"] != median(live_repeats) or node["completed"] != sum(
+                r["status"] != "unresolved" for r in node_runs):
+            raise AssertionError("branch summary differs from raw records")
+        table.append(f"{label} & {int(live['completed'])} & {int(node['completed'])} & "
+                     + f"{int(node['total_nodes']):,}".replace(",", r"\,")
+                     + f" & {node['total_seconds']:.3f}" + r"\\")
+    table += [r"\bottomrule", r"\end{tabular}"]
+    (output / "branch_table.tex").write_text("\n".join(table) + "\n", encoding="utf-8")
+    nodes = {p: {r["case_id"]: r for r in runs if r["mode"] == "nodes" and r["policy"] == p}
+             for p in ("dfs", "hybrid")}
+    hybrid = list(nodes["hybrid"].values())
+    root_no = sum(r["counts"]["structural_no"] for r in hybrid if r["counts"]["nodes"] == 1)
+    gains = [r for r in hybrid if r["status"] != "unresolved" and nodes["dfs"][r["case_id"]]["status"] == "unresolved"]
+    values.update(SixBranchLists=len({c["list_id"] for c in cases}), SixBranchCases=len(cases),
+                  SixBranchRuns=len(runs), SixBranchLiveDfs=int(summary["by_mode"]["live"]["dfs"]["median"]["completed"]),
+                  SixBranchLiveCombined=int(summary["by_mode"]["live"]["hybrid"]["median"]["completed"]),
+                  SixBranchLiveRule=int(summary["by_mode"]["live"]["distance_native"]["median"]["completed"]),
+                  SixBranchInternalNo=sum(r["counts"]["structural_no"] for r in hybrid)-root_no,
+                  SixBranchGains=len(gains),
+                  SixBranchRootGains=sum(r["counts"]["nodes"] == 1 for r in gains),
+                  SixBranchInternalGains=sum(r["counts"]["nodes"] > 1 for r in gains),
+                  SixBranchDiagnosticNodes=summary["diagnostics"]["hybrid"]["completion"]["n"],
+                  SixBranchDiagnosticAccuracy=f"{100*summary['diagnostics']['hybrid']['completion']['accuracy']:.1f}",
+                  SixBranchNoPrecision=f"{100*summary['diagnostics']['hybrid']['no']['precision']:.1f}",
+                  SixBranchOvershootMs=f"{1000*max(r['overshoot'] for r in runs):.3f}")
+    for baseline, name in (("dfs", "Dfs"), ("distance_native", "Rule")):
+        lo, hi = summary["live_paired"][baseline]["list_bootstrap_95_percentile"]
+        values[f"SixBranch{name}Low"] = f"{lo:.1f}"
+        values[f"SixBranch{name}High"] = f"{hi:.1f}"
+    paired = summary["paired"]["dfs"]
+    values.update(SixBranchCommonCases=paired["both_complete"],
+                  SixBranchCommonCombinedTime=f"{paired['hybrid_seconds']:.3f}",
+                  SixBranchCommonDfsTime=f"{paired['baseline_seconds']:.3f}")
+    return {name: sha(BRANCH / name) for name in manifest} | {"artifact_hashes.json": sha(BRANCH / "artifact_hashes.json")}
 
 
 if __name__ == "__main__":

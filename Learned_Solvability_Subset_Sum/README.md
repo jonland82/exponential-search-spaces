@@ -1,7 +1,8 @@
 # Learned solvability from distance to easy subset-sum structure
 
-Paper VI. **Stage 9 complete as a first review draft: scoped prior-work audit,
-manuscript and PDF built from preserved evidence.** The paper remains unpublished.
+Paper VI. **Updated HTML/PDF paper: prediction, paid prioritization, and
+Stage 10 certified branch-pruning results.** The six-note website links the paper
+and its supporting evidence.
 The original feasibility pilot and model-development results remain preserved.
 
 **Stage 10 follow-up complete:** certified structural checks resolve search
@@ -10,9 +11,11 @@ rule. At 50 ms, median completions were 152/216 for DFS, 159 for the combined
 gate and 162 for the rule. See [branch findings and discussion point](BRANCH_FINDINGS.md),
 [protocol](BRANCH_PROTOCOL.md), [soundness](BRANCH_THEORY.md) and
 [saved report](results/branch_pruning_20261025/REPORT.md). This new exploratory
-batch leaves the original frozen study and review manuscript unchanged.
+batch leaves the original frozen study intact; its results are now included as
+a separate exploratory section in the paper.
 
-- [Paper VI prospectus and remaining plan](../notes/06-learned-solvability/README.md).
+- [Paper VI guide and current status](../notes/06-learned-solvability/README.md).
+- [Read Paper VI in HTML](../notes/06-learned-solvability/Predicting_Subset_Sum_Completion.html).
 - [Feature definitions, proofs, exact queries, and limits](THEORY.md).
 - [Findings and decisions for discussion](FINDINGS.md).
 - [Pilot report](results/pilot_20261025/REPORT.md).
@@ -97,8 +100,8 @@ label. `fit_end_to_end.py` predicts each pipeline's actual completion including
 extraction and reuse cost, with matched labels for all predictors within a task.
 Both use logistic/forest models and disjoint calibration lists. Model outputs
 include raw/calibrated probabilities, conventional and hybrid comparisons,
-list-bootstrap intervals and subgroup metrics. Predictions have not yet been
-used to guide solving, and inference cost has not yet been measured.
+list-bootstrap intervals and subgroup metrics. These historical development
+reports precede the paid-priority and branch-guidance experiments described below.
 
 ## Frozen evaluation and priorities
 
@@ -110,15 +113,18 @@ counter replay and separately measured live deadlines. `validate_prospective.py`
 audits all model/data hashes, features, answers, probabilities and policy traces.
 `plot_prospective.py` renders the saved results without any new model fitting.
 
-## Paper and review status
+## Paper and publication status
 
-The first manuscript presents definitions, elementary guarantees, matched
-prediction comparisons, paid practical policies and limits. It cites established
+The updated manuscript presents definitions, elementary guarantees, matched
+prediction comparisons, paid practical policies, certified branch checks and
+limits. It cites established
 empirical performance modeling, structural knapsack features, calibration,
 backdoors and feature-cost accounting. No broad novelty or complexity claim is
 made. The costed policy benefit cannot be isolated to the learned five inputs
-without an additional matched core-reuse control.
+without an additional matched core-reuse control for that original pool task.
+The independent branch experiment supplies matched acquisition/common-checker
+controls for its own task and finds no learned advantage over the distance rule.
 
 `python build_papers.py --paper 6` verifies saved evidence and generates tables,
-values, a paper-sized plot and the review PDF without rerunning experiments.
-Notes V-VI remain excluded from the published four-note site and site staging.
+values, a paper-sized plot, the PDF and HTML without rerunning experiments.
+The six-note site includes this paper, its methods and its preserved evidence.

@@ -24,7 +24,7 @@ window.MathJax = {
   <a href="Certified_Approximation_of_Subset_Sum.tex">LaTeX source</a>
 </nav>
 <header>
-  <span class="series-label">Companion note IV of IV</span>
+  <span class="series-label">Companion note IV of VI</span>
   <h1>Does Pairing Add Value to Certified Approximation? A Subset-Sum Experiment</h1>
   <div class="byline">Jonathan R. Landers<br>October 2026</div>
 </header>
@@ -60,7 +60,7 @@ window.MathJax = {
 <h2 id="the-negative-finding-and-its-controls">The negative finding and its controls</h2>
 <p>The central result is the comparison with sequential additive trimming, which uses the same approximation rule. With greedy disabled, <span class="math inline">\(n=32\)</span>, and <span class="math inline">\(\varepsilon=10^{-4}\)</span>, pairing is faster on <span class="math inline">\(7\)</span> of <span class="math inline">\(15\)</span> jointly certified inputs. The median of the per-input sequential/paired time ratios is <span class="math inline">\(0.993\)</span>, near parity. Pairing certifies all <span class="math inline">\(16\)</span> inputs within the per-summary state cap; the sequential method certifies <span class="math inline">\(15\)</span>. This combination is the empirical result: no consistent additional timing benefit in the key approximation comparison, with a resource-limit exception in pairing’s favor.</p>
 <p>Table 1 reports the largest inputs. Each entry gives median milliseconds over certified outcomes, followed by the number certified out of <span class="math inline">\(16\)</span>. Different success counts imply different sets of inputs in those medians; the technical report also supplies matched per-input comparisons and memory measurements. Very small greedy-only times should not be interpreted as stable differences among compression algorithms.</p>
-<table class="paper-table">
+<div class="table-wrap"><table class="paper-table">
 <caption>Largest-size results, <span class="math inline">\(n=32\)</span>. Milliseconds (certified/total).</caption>
 <thead>
 <tr class="header">
@@ -122,9 +122,9 @@ window.MathJax = {
 <td style="text-align: right;">50.94 (16/16)</td>
 </tr>
 </tbody>
-</table>
+</table></div>
 <figure>
-<img src="../../subset-sum/approximation_tradeoff.png" alt="Runtime among successful outcomes and the corresponding certification counts. Tolerance increases from left to right. Both must be read together." /><figcaption aria-hidden="true">Runtime among successful outcomes and the corresponding certification counts. Tolerance increases from left to right. Both must be read together.</figcaption>
+<img src="../../subset-sum/approximation_tradeoff.png" alt="Runtime among successful outcomes and the corresponding certification counts. Tolerance increases from left to right. Both must be read together." /><figcaption>Runtime among successful outcomes and the corresponding certification counts. Tolerance increases from left to right. Both must be read together.</figcaption>
 </figure>
 <p>The sequential additive control makes the negative finding informative. A paired win over multiplicative trimming alone could reflect the error-allocation rule. A shared greedy witness that already meets the tolerance removes the need for every method’s summaries. Controlling these mechanisms reveals whether pairing itself earns an additional timing advantage.</p>
 <p>At <span class="math inline">\(\varepsilon=10^{-2}\)</span>, the common greedy search alone certifies every <span class="math inline">\(n=32\)</span> input. These runs establish that a loose accuracy requirement can make a cheap witness sufficient; they cannot establish an advantage from compression. With greedy disabled and <span class="math inline">\(\varepsilon=10^{-4}\)</span>, paired summaries beat exact-half MITM on <span class="math inline">\(14\)</span> of <span class="math inline">\(16\)</span> jointly certified inputs, with a median per-input MITM/paired ratio of <span class="math inline">\(1.140\)</span>. That gain over an exact-summary baseline coexists with near parity against sequential additive trimming. The latter comparison limits attribution of the gain to pairing.</p>
@@ -172,6 +172,8 @@ window.MathJax = {
     <a href="../01-certified-coverage/Certified_Coverage_of_Exponential_Search_Spaces.html">Note I: Framework</a>
     <a href="../02-subset-sum-stress-test/Subset_Sum_as_a_Stress_Test.html">Note II: Exact-search stress test</a>
     <a href="../03-probability-valued-subset-sum/Probability_Valued_Subset_Sum.html">Note III: Random-target probability</a>
+    <a href="../05-structural-distance/Structural_Distance_in_Subset_Sum.pdf">Note V: Structural distance (PDF draft)</a>
+    <a href="../06-learned-solvability/Predicting_Subset_Sum_Completion.html">Note VI: Learned completion</a>
     <a href="../../subset-sum/APPROXIMATION_RESULTS.md">Methods and data</a>
   </div>
 </footer>

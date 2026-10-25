@@ -1,4 +1,4 @@
-"""Check active local links, paper assets, and unpublished-draft isolation."""
+"""Check active local links, all six note entries and available paper assets."""
 
 import argparse
 from html.parser import HTMLParser
@@ -70,19 +70,22 @@ def check(root, site=False):
                 if unquote(parsed.fragment) not in parser.ids:
                     failures.append(f"{path.relative_to(root)}: missing fragment {link}")
     home = (root / "index.html").read_text(encoding="utf-8")
-    if home.count('class="series-card"') != 4:
-        failures.append("index.html: expected exactly four published note cards")
+    if home.count('class="series-card"') != len(PAPERS):
+        failures.append(f"index.html: expected exactly {len(PAPERS)} note cards")
     for path in [root / "index.html", *root.glob("*.html"), *root.glob("notes/*/*.html")]:
         text = path.read_text(encoding="utf-8")
-        if any(paper["folder"] in text or paper["stem"] in text
-               for paper in PAPERS if not paper["published"]):
-            failures.append(f"{path.relative_to(root)}: draft leaked into published HTML")
+        parser = Links()
+        parser.feed(text)
+        if any(paper["stem"] + ".html" in urlsplit(link).path
+               for paper in PAPERS if not paper["published"] for link in parser.links):
+            failures.append(f"{path.relative_to(root)}: link to unavailable draft HTML")
     if site:
-        if (any((root / "notes" / paper["folder"]).exists() for paper in PAPERS if not paper["published"])
-                or any((root / name).exists() for name in (
-                    "Structural_Distance_Subset_Sum", "Learned_Solvability_Subset_Sum"))):
-            failures.append("draft files or draft experiment package leaked into staged site")
         for paper in PAPERS:
+            for extension in (".pdf", ".tex"):
+                if not (root / "notes" / paper["folder"] / (paper["stem"] + extension)).is_file():
+                    failures.append(f"missing canonical paper asset: {paper['stem']}{extension}")
+            if not paper["published"] and (root / "notes" / paper["folder"] / (paper["stem"] + ".html")).exists():
+                failures.append("unexpected draft HTML: " + paper["stem"])
             if paper["published"]:
                 for extension in (".html", ".pdf", ".tex"):
                     if not (root / (paper["stem"] + extension)).is_file():
@@ -94,7 +97,8 @@ def check(root, site=False):
     if failures:
         print("\n".join(failures))
         raise SystemExit(f"{len(failures)} broken or forbidden links")
-    print(f"Checked {count} active local links/assets; four published notes; unpublished drafts remain isolated.")
+    print(f"Checked {count} active local links/assets; {len(PAPERS)} note entries, "
+          f"{sum(p['published'] for p in PAPERS)} HTML papers; draft status respected.")
 
 
 if __name__ == "__main__":

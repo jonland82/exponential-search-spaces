@@ -1,7 +1,10 @@
 # Feasibility checkpoint for proposed Paper VI
 
-Historical stage 4 checkpoint. The subsequent accepted comparison and current
-stage 6 status are in [DEVELOPMENT_FINDINGS.md](DEVELOPMENT_FINDINGS.md).
+Historical stage 4 checkpoint. Later stages are preserved in
+[development findings](DEVELOPMENT_FINDINGS.md), [frozen findings](PROSPECTIVE_FINDINGS.md)
+and [branch-pruning findings](BRANCH_FINDINGS.md). The
+[updated paper](../notes/06-learned-solvability/Predicting_Subset_Sum_Completion.html)
+includes both the original frozen comparison and the independent branch study.
 
 October 25, 2026. Stage 4 is complete: first feature implementation, elementary
 theory and exploratory pilot. Model training has not begun. The next step is a

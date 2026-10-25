@@ -36,12 +36,12 @@
 \begin{document}
 \maketitle
 \vspace{-1em}
-\noindent\textcolor{paperaccent}{\footnotesize\textsc{Companion note VI \(\cdot\) Working draft}}
+\noindent\textcolor{paperaccent}{\footnotesize\textsc{Companion note VI \(\cdot\) Prediction and certified pruning}}
 \par\noindent\textcolor{paperaccent}{\rule{.11\linewidth}{1.5pt}}\textcolor{paperline}{\rule{.89\linewidth}{.45pt}}
 \vspace{.5em}
 
 \begin{tcolorbox}[accentbox]
-\textbf{Abstract.} Can distance from easily solved subset-sum structures predict exact completion within a computational budget, and does obtaining that information repay its cost? We construct five certified distance features, compare them with ten ordinary numerical features and their combination, and distinguish probability quality from paid solving performance. A local freeze fixes models, calibration, sources and protocol before \(\SixBaseLists\) fresh base lists produce \(\SixCases\) paired encoded cases. On the primary prediction comparison, the combined logistic model has Brier score \(\SixPrimaryCombined\), versus \(\SixPrimaryOrdinary\) for ordinary features; no improvement is established. Under the tighter live-time pool budgets, the combined policy completes a median \(\SixTimeTightCombined\) cases versus \(\SixTimeTightOrdinary\), including online costs. Under the separate work-counter budgets it completes \(\SixWorkTightCombined\) versus \(\SixWorkTightOrdinary\). The live gain is modest, machine-specific and partly inseparable from exact core reuse. The experiment supports conditional predictive value and a concrete cost constraint, not a general speedup or a learned certificate of polynomial-time solvability.
+\textbf{Abstract.} Can distance from easily solved subset-sum structures predict exact completion within a computational budget, and does obtaining that information repay its cost? We construct five certified distances, compare them with ten ordinary numerical features and their combination, and distinguish prediction quality from paid solving performance. A local freeze precedes \(\SixCases\) fresh paired encoded cases. Combined logistic Brier score is \(\SixPrimaryCombined\), versus \(\SixPrimaryOrdinary\) for ordinary features; the primary comparison does not improve. Tighter live-time pool budgets give \(\SixTimeTightCombined\) versus \(\SixTimeTightOrdinary\) completions, but work-counter budgets give \(\SixWorkTightCombined\) versus \(\SixWorkTightOrdinary\). A separate exploratory transfer test applies the same frozen model to certified branch checks on \(\SixBranchCases\) fresh problems. At 50 ms each, combined guidance completes \(\SixBranchLiveCombined\), ordinary search \(\SixBranchLiveDfs\), and a simple distance rule \(\SixBranchLiveRule\). Exact structural checks help on this sample; the learned gate adds no demonstrated advantage. These results connect prediction to Note I's verified coverage framework while retaining its discovery and certification costs. They establish neither a general speedup nor a learned certificate of polynomial-time solvability.
 \end{tcolorbox}
 
 \section{The question is completion, not reachability}
@@ -59,14 +59,14 @@ A model fitted under distribution \(\mathcal D\) estimates
 \]
 This is different from predicting whether a subset exists. Completion can be a correct YES or a correct NO. A run reaching a limit is unresolved, even when an independent experimental oracle knows the answer. Polynomial time is an asymptotic statement about an algorithm on a family; finite-budget completion is an observable event.
 
-To compare feature information, all predictors first use the same reference label, excluding feature acquisition. A separate practical experiment pays for acquisition, inference, ordering, exact core queries and returned-witness checks. A model that predicts this reference event accurately can still be a poor use of a shared budget.
+To compare feature information, all predictors first use the same reference label, excluding feature acquisition. A separate practical experiment pays for acquisition, inference, ordering, exact core queries and returned-witness checks. A model that predicts this reference event accurately can still be a poor use of a shared budget. A later exploratory experiment transfers the frozen model into a search tree, using exact structural checks to resolve residual subproblems. Its independent evidence is reported separately from the original frozen comparison.
 
 \section{Established setting and narrow contribution}
 Instance-feature runtime and success prediction belong to empirical performance modeling~\cite{hutter}. Learned solver portfolios such as SATzilla already account for presolving and feature cost~\cite{satzilla}. ASlib explicitly records feature costs and instances solved while computing features~\cite{aslib}. Our practical task orders instances for a fixed fallback portfolio; it does not learn which constituent solver to select.
 
 A close domain precedent is Jooken, Leyman and De Causmaecker's use of structural knapsack features to predict empirical difficulty~\cite{jooken}. Thus neither theory-derived hardness features nor their combination with learning is a new general idea. Sigmoid probability calibration is also established~\cite{calibration}. The tractable-core framing has relatives in backdoors~\cite{backdoors}; superincreasing membership and support-sensitive subset sum have established treatments~\cite{sage,support}.
 
-The contribution here is a reproducible, bounded-cost five-coordinate construction and a frozen subset-sum comparison that keeps prediction, exact solving, feature cost and resource definitions separate. The primary unfavorable result is retained. We claim no new learning method, optimal allocation rule, state-of-the-art subset-sum solver, or novelty of the elementary core lemmas. A claim-by-claim audit accompanies the draft.
+The contribution here is a reproducible, bounded-cost five-coordinate construction, a frozen subset-sum comparison, and an exploratory certified-pruning test that keep prediction, exact solving, feature cost and resource definitions separate. The primary unfavorable result is retained. We claim no new learning method, optimal allocation rule, state-of-the-art subset-sum solver, or novelty of the elementary core lemmas. A claim-by-claim audit accompanies the paper.
 
 \section{Five distances with exact core procedures}
 First apply exact target-dependent reductions. Reject an out-of-range target. If \(t>\sum_iw_i/2\), use the complementary target. Discard weights exceeding the current remainder; reject a deficient total or a gcd obstruction. Force an item when all other remaining items together cannot reach the remainder, subtract it, and repeat. A zero remainder supplies a witness; incompatible forced choices prove NO.
@@ -157,6 +157,8 @@ Secondary shifts show both advantages and failures. Combined beats ordinary desc
 
 Full metrics retain log loss, AUC, calibration bins and unresolved-kernel-only subgroups. Empty-kernel shortcuts appear in the overall prediction evaluation, so those known exact completions are not an ML discovery. Secondary forest results, which vary by shift, are reported in Appendix B rather than substituted for the primary model after observing outcomes.
 
+At the fixed probability threshold 0.5, combined classification accuracy on the primary cohort is \(\SixAccuracyCombined\%\), versus \(\SixAccuracyOrdinary\%\) for ordinary features. These descriptive accuracies concern whole-instance completion of the reference pipeline. They measure neither infeasibility nor the quality of a pruning decision inside a search tree.
+
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=.97\linewidth]{prediction_plot.pdf}
@@ -200,21 +202,55 @@ Under the tighter work share, combined completes \(\SixWorkTightCombined\) versu
 
 These counter units are explicit but unequal: a bitset update, dictionary entry and scan can have different CPU costs. The opposite live and counter outcomes must remain distinct. The unfavorable work result is not evidence that the mathematical instances are hard, and a live-time advantage cannot validate a uniform-operation complexity claim.
 
+\section{From completion prediction to certified branch checks}
+The follow-up implements Note I's proposal--verification framework within exact search. At a node, selected prefix items contribute \(s\), the remaining items are \(W\), and the residual target is \(t-s\). Apply the same exact reduction and witness map used above. For the unresolved kernel, select the core with the smallest of the five deletion counts, breaking ties by coordinate order. If its exceptional set \(E\) has at most six items, enumerate its at most 64 subsets and query the easy core \(C\):
+\[
+t-s\text{ is reachable in }W
+\quad\Longleftrightarrow\quad
+\exists A\subseteq E:\ u-\textstyle\sum_{i\in A}v_i
+\text{ is reachable in }C,
+\]
+where \((v,u)\) is the reduced kernel instance. A successful query supplies a witness, lifted to the original instance. Failure of every exceptional selection certifies NO for the entire subtree. An interrupted check returns unresolved. Prediction alone removes no branch.
+
+\subsection{A new exploratory protocol}
+This is a separate transfer experiment, not an additional prespecified endpoint of the original study. The source and protocol were saved before generating \(\SixBranchLists\) fresh lists: \(n=24,32,36\), the same twelve family constructions, replacement fractions zero and one eighth, and one list per cell. Previously saved lists are excluded. Each list has a planted, uniform middle-range, and odd-below-largest target, giving \(\SixBranchCases\) cases. Independent half enumeration supplies 87 YES and 129 NO labels; oracle data are destroyed before measured solving. No model, calibration or threshold is refitted.
+
+All policies use descending-weight, include-first depth-first search (DFS), suffix range/gcd tests, and no memoization. Checkpoints occur every four levels while at least eight items remain, up to 128 checkpoints. All policies, including DFS, receive the same exact target reductions at those checkpoints. Structural policies then acquire the five kernel distances. Numerical features, when acquired, describe the residual instance before reduction, as in model training.
+
+Always-check policies attempt any core with at most six exceptions. The distance rule attempts only cores with at most two. Learned gates attempt a feasible check when the frozen ordinary or combined logistic score is at least 0.5. Native controls acquire only the distances; matched controls also acquire the ten ordinary features, isolating acquisition cost from the learned decision. Both learned gates use that same matched acquisition. Scalar inference is algebraically equivalent to the saved scaler/logistic/calibration pipeline and agrees with saved probabilities to eleven decimal places.
+
+There are two separate resource experiments: one deterministic pass with at most 10,000 visited DFS nodes, and three live repeats with 50 ms per input and a one-million-node safety cap. Policy/case execution is seed-shuffled within each pass. Sorting, reductions, acquisition, inference, queries and witness checks occur inside the clock; model loading, oracle construction and serialization are outside. Deadlines are cooperative; late answers are excluded. The largest overshoot is \(\SixBranchOvershootMs\) ms. The \(\SixBranchRuns\) runs have no incorrect completed decision.
+
+\begin{table}[htbp]
+\centering\small
+\input{branch_table.tex}
+\caption{Fresh branch-check comparison. Live is the median aggregate number completed at 50 ms per case over three repeats. Node cap is completions in the separate 10,000-node pass; Nodes and Seconds describe that pass, including acquisition and checking. The node allowance is not a uniform computational-work budget.}
+\end{table}
+
+\subsection{Certificates help; the learned gate does not win}
+At 50 ms, combined completes \(\SixBranchLiveCombined\) cases against DFS's \(\SixBranchLiveDfs\), but the distance rule completes \(\SixBranchLiveRule\). Matched acquisition retains the simple rule's advantage. The descriptive 95\% list-bootstrap interval for combined-minus-DFS repeat-average completions is \([\SixBranchDfsLow,\SixBranchDfsHigh]\); against the native rule it is \([\SixBranchRuleLow,\SixBranchRuleHigh]\). Both span zero. These are 1,000 conditional whole-list resamples with fixed models and no multiple-comparison adjustment, not independent-node uncertainty or general hardware guarantees.
+
+Pruning occurs inside the tree as well as at its root. In the node-capped pass, combined certifies \(\SixBranchInternalNo\) internal NO subtrees. Of its \(\SixBranchGains\) extra completions versus DFS, \(\SixBranchRootGains\) finish with a root structural query and \(\SixBranchInternalGains\) require further search. However, the \(\SixBranchCommonCases\) cases completed by both use \(\SixBranchCommonCombinedTime\) seconds with combined gating versus \(\SixBranchCommonDfsTime\) for DFS. Feature acquisition can make already manageable cases slower. Fewer visited nodes therefore do not imply less paid work.
+
+For a diagnostic only, take the first eight unresolved checkpoints per unguided node-capped DFS case. On these \(\SixBranchDiagnosticNodes\) selected, dependent residual problems, the combined score has \(\SixBranchDiagnosticAccuracy\%\) accuracy for completion of the bounded checker without a diagnostic deadline. That event means the six-exception limit permits exhaustive checking, not the old portfolio's budgeted completion. Treating the same high score as a NO prediction would have only \(\SixBranchNoPrecision\%\) precision; the solver never does so. The earlier whole-instance accuracy does not transfer unchanged to this task.
+
+A certified NO node with \(m\) undecided original items resolves \(2^m\) assignment leaves. Such pruned subtrees are disjoint within this traversal, but these counts are neither visited nodes actually saved nor proof of a polynomial residual. In Note I's notation they can increase \(a(n)\delta(n)\), while discovery and checking increase \(P(n)\). The observed benefit belongs to exact structure and its use; this experiment establishes no additional benefit from the transferred learned gate.
+
 \section{Limits and interpretation}
 The most direct predictive conclusion is unfavorable on the prespecified primary endpoint. Favorable secondary shifts and forest outcomes do not replace it. The training sample is small, families are synthetic, and larger means 38 items. No comparison against every strong theoretical or optimized practical subset-sum algorithm is attempted.
 
-The combined policy includes certified core queries that the ordinary policy does not construct. Therefore its live gain cannot be assigned solely to the five learned inputs. The nonlearned distance policy is an important control, but a matched-acquisition/core-reuse control is still needed to isolate that marginal learning effect. That control was not retrofitted onto the frozen test inputs.
+The original combined pool policy includes certified core queries that the ordinary pool policy does not construct. Therefore its live gain cannot be assigned solely to the five learned inputs. A matched-acquisition/core-reuse control was not retrofitted onto the original frozen inputs. The independent branch experiment supplies matched acquisition and common-verifier controls for a different task; it does not repair attribution in the earlier pool experiment. Its learned gate fails to beat the distance rule.
 
 The paired scaling changes budgets and disables some bitset runs while preserving answers. It tests representation sensitivity, not an independent population of larger mathematical problems. Bootstrap units are base lists; live repetitions describe machine variation on fixed pools. Short cooperative deadlines and small absolute time differences limit transfer to other hardware. The saved environment is Python 3.13.5 on Windows 11, NumPy 2.1.3 and scikit-learn 1.6.1; a full CPU/load characterization was not recorded.
 
 Prediction quality and solving utility are different objectives. A good Brier score gives no allocation guarantee, and sigmoid calibration fitted on one distribution gives no guarantee under a shift. For this implementation, structural features sometimes complement ordinary summaries and help a live policy after their costs are paid. They also fail the primary predictive comparison and impose substantial cost under the declared counter model.
 
-The next controlled alternatives are selective acquisition, reuse across related targets, and matched core-reuse comparisons, each with a new development/evaluation boundary. The present record supports a scoped empirical study of the value and cost of structural features. It does not support an intrinsic solvability classifier, learned mathematical exclusions, or a new general complexity bound.
+The next controlled alternatives include a root-only structural control to isolate repeated internal checks, selective acquisition, reuse across related targets, and prediction of branch-specific net time saved. Any fitting or threshold selection needs its own training trees and fresh held-out lists. The present record supports a scoped empirical study of the value and cost of structural features. It does not support an intrinsic solvability classifier, learned mathematical exclusions, or a new general complexity bound.
 
 \section{Reproducibility}
-The repository's \texttt{Learned\_Solvability\_Subset\_Sum} package contains baseline and advanced extractors, exact membership/witness routines, the scoped literature audit, development evidence, the local freeze, fitted model hashes, all fresh inputs and oracle witnesses, every reference/priority trace, deadline exclusions, counters and figures. Frozen results reside in \texttt{results/prospective\_20261025}. The source protocol specifies seeds and charges; the separate audit reproduces saved probabilities, metrics and counter traces.
+The repository's \texttt{Learned\_Solvability\_Subset\_Sum} package contains baseline and advanced extractors, exact membership/witness routines, the scoped literature audit, development evidence, fitted model hashes, all fresh inputs and oracle witnesses, every reference/priority trace, deadline exclusions, counters and figures. The original local freeze is in \texttt{results/prospective\_20261025}; the independent branch follow-up is in \texttt{results/branch\_pruning\_20261025}, with its own protocol, source snapshots, raw runs, diagnostics and audit. Both validators preserve the distinction between the experiments and confirm answers against independent labels.
 
-Run \texttt{python build\_papers.py --paper 6} to verify preserved evidence and regenerate this PDF's values, tables and figure, without rerunning training or experiments. The evidence manifest beside the source records input/output hashes. This remains a review draft; the four-note published website is unchanged.
+Run \texttt{python build\_papers.py --paper 6} to verify both preserved experiments and regenerate the PDF, HTML, values, tables and figure without rerunning training or timing. The evidence manifest beside the source records input/output hashes. The series website links the paper and supporting methods at \url{https://jonland82.github.io/exponential-search-spaces/}; the repository preserves executable sources and full raw evidence at \url{https://github.com/jonland82/exponential-search-spaces}.
 
 \appendix
 \section{Appendix A: Implementation details for the five coordinates}

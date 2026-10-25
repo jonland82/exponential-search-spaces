@@ -36,10 +36,10 @@ PAPERS = (
     dict(number="VI", folder="06-learned-solvability",
          stem="Predicting_Subset_Sum_Completion",
          title="Predicting Subset-Sum Completion: The Value and Cost of Structural Features",
-         description="A working draft testing structural features, calibrated completion prediction, and paid prioritization.",
+         description="Five structural distances, calibrated completion prediction, paid prioritization, and certified branch-pruning experiments.",
          nav_label="Note VI: Learned completion",
-         data="Learned_Solvability_Subset_Sum/PROSPECTIVE_FINDINGS.md",
-         published=False, maintained_html=False),
+         data="Learned_Solvability_Subset_Sum/README.md",
+         published=True, maintained_html=False),
 )
 
 

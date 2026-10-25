@@ -2,7 +2,9 @@
 
 The first branch-pruning experiment is complete. It is an exploratory transfer
 test of the frozen Paper VI model in Paper I's proposal--verification framework.
-The original prospective study, fitted models and manuscript evidence are intact.
+The original prospective study and fitted models are intact. These results are
+now incorporated as a separate section in the updated
+[HTML/PDF paper](../notes/06-learned-solvability/README.md).
 
 ## Main result
 

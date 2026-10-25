@@ -55,6 +55,8 @@
 
 *{ box-sizing:border-box; }
 
+a, code{ overflow-wrap:anywhere; }
+
 html{
   background:var(--paper);
   -webkit-text-size-adjust:100%;
