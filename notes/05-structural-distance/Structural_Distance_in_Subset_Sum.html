@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="A working draft about tractable cores, residual sums, and the cost of selecting structure.">
+<title>How Far from Easy? Structural Distance in Subset Sum | Jonathan R. Landers</title>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']], tags: 'none' },
+  svg: { fontCache: 'global', scale: 0.98 },
+  options: { enableMenu: false }
+};
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<link rel="stylesheet" href="../../paper.css">
+</head>
+<body>
+<main>
+<nav class="top-links" aria-label="Paper links">
+  <a href="../../index.html">&larr; Series home</a>
+  <a href="https://github.com/jonland82/exponential-search-spaces">GitHub repository</a>
+  <a href="Structural_Distance_in_Subset_Sum.pdf">Download PDF</a>
+  <a href="Structural_Distance_in_Subset_Sum.tex">LaTeX source</a>
+</nav>
+<header>
+  <span class="series-label">Companion note V of VI &middot; Working draft</span>
+  <h1>How Far from Easy? Structural Distance in Subset Sum</h1>
+  <div class="byline">Jonathan R. Landers<br>October 2026</div>
+</header>
+<div class="abstract">
+<p><strong>Abstract.</strong> How far can a subset-sum list depart from an easily solved structure before the remaining search becomes large? We make this question concrete by finding a largest superincreasing core and searching its exceptions. Sorted greedy discovery takes <span class="math inline">\(O(n\log(n+1))\)</span> operations. Logarithmically many exceptions give a sufficient polynomial regime; merging equal exceptional sums can extend it. A frozen comparison then tests whether choosing a different core helps. Two selectors reduce residual support on <span class="math inline">\(18\)</span> of <span class="math inline">\(54\)</span> structured lists, but neither is faster on any of their <span class="math inline">\(162\)</span> target cases. Their paired median total-time ratios to the simple core solver are about nine. The constructive guarantee holds; these attempts to improve the decomposition do not repay their cost.</p>
+</div>
+<h2 id="a-list-can-be-mostly-easy">A list can be mostly easy</h2>
+<p><strong>How far can a list depart from an easily solved structure before the unresolved search becomes large?</strong></p>
+<p>In subset sum, a <em>weight</em> is simply one of the numbers in a list. Given positive integer weights <span class="math inline">\(w_1,\ldots,w_n\)</span> and an integer target <span class="math inline">\(t\)</span>, we may take each listed item once or leave it out. We ask whether some selection adds up to <span class="math inline">\(t\)</span>. Equal numbers are still separate copies. The target and list are fixed throughout this note.</p>
+<p>There are <span class="math inline">\(2^n\)</span> selections. The first note’s coverage framing asks how many can be handled without checking them individually, while charging for the work that makes this possible. The experiments in notes II–IV show why that last condition matters. Here we choose a structure whose solution is easy to explain, whose presence can be checked, and whose distance from an arbitrary list can be measured.</p>
+<p>Consider the list <span class="math display">\[[2,\;5,\;6,\;11,\;23].\]</span> Set aside <span class="math inline">\(6\)</span>. Every number in the remaining list <span class="math inline">\([2,5,11,23]\)</span> exceeds the sum of all smaller numbers in that list. This property is called <em>superincreasing</em>. It makes the choices forced when we work downward from the largest number.</p>
+<p>If the largest number exceeds the target remainder, we must leave it out. Otherwise we must take it: all smaller numbers together cannot reach even that largest number. Subtract it and continue. A zero remainder gives a solution; a nonzero remainder at the end proves that none exists.</p>
+<p>For target <span class="math inline">\(17\)</span>, the easy part alone fails. We therefore try the other possibility for the exceptional item: take <span class="math inline">\(6\)</span>, leaving target <span class="math inline">\(11\)</span>. The easy part reaches <span class="math inline">\(11\)</span>, giving the original solution <span class="math inline">\(6+11=17\)</span>. We have replaced the full search by two simple questions.</p>
+<h2 id="finding-the-easy-part-is-also-easy">Finding the easy part is also easy</h2>
+<p>A sorted core <span class="math inline">\(g_1,\ldots,g_m\)</span> is superincreasing when <span class="math display">\[g_j&gt;\sum_{h&lt;j}g_h.\]</span> We can find a largest such core by sorting the full list, starting with total zero, and keeping a number exactly when it exceeds the total already kept. Put every rejected item among the exceptions.</p>
+<div class="keyeq">
+<p><strong>Proposition 1.</strong> This scan finds a maximum-size superincreasing core. Including sorting, discovery takes <span class="math inline">\(O(n\log(n+1))\)</span> arithmetic/comparison operations.</p>
+</div>
+<p><em>Why it works.</em> Compare the greedy choices with any other valid core, in increasing order. Greedy’s first choice is no larger. Suppose its first <span class="math inline">\(j-1\)</span> choices have appeared no later and have no greater total. The other core’s <span class="math inline">\(j\)</span>th number exceeds its own preceding total, so it also exceeds greedy’s. Greedy can therefore accept a <span class="math inline">\(j\)</span>th number no later, and no larger. Induction proves that greedy reaches every feasible length. Its own choices satisfy the defining inequalities, so its length is maximum. The scan is linear after sorting. <span class="math inline">\(\square\)</span></p>
+<p>This is stronger than merely recognizing a supplied easy list. The algorithm discovers the core itself. We independently verify its inequalities and its partition of the indexed input. Exhaustive checks on small lists also confirm the maximum-cardinality claim. The empty core and target zero are handled as ordinary boundary cases.</p>
+<h2 id="count-what-remains">Count what remains</h2>
+<p>Let <span class="math inline">\(C\)</span> be the discovered core and <span class="math inline">\(E\)</span> its complement. Define <span class="math display">\[k(w)=\text{fewest items removable to leave a superincreasing list}.\]</span> Proposition 1 gives <span class="math inline">\(|E|=k(w)\)</span>. For each selection of exceptional items with sum <span class="math inline">\(s\)</span>, ask whether the core reaches <span class="math inline">\(t-s\)</span>. The original answer is YES exactly when one of these core queries succeeds.</p>
+<p>There are at most <span class="math inline">\(2^{k(w)}\)</span> exceptional selections. Each core query takes <span class="math inline">\(O(n+1)\)</span> operations. Thus sorting, core discovery, and residual search have the operation bound <span class="math display">\[O\!\left(n\log(n+1)+(n+1)2^{k(w)}\right).\]</span> The count describes structural search. Including encoded-integer arithmetic, input checks, and root gcd checks gives a conservative bit-cost bound <span class="math inline">\(\operatorname{poly}(L)2^{k(w)}\)</span>, where <span class="math inline">\(L\)</span> is the full binary input length.</p>
+<div class="keyeq">
+<p><strong>A sufficient polynomial regime.</strong> If a family has <span class="math inline">\(k(w)=O(\log(n+1))\)</span>, the exact method, including discovery of its easy core, takes polynomial time in the input length.</p>
+</div>
+<p>This is a guarantee for the family, including NO answers. A large value of <span class="math inline">\(k\)</span> does not prove that another algorithm must struggle.</p>
+<p>Exception count is only a first measure. Distinct exceptional selections can have the same sum, and hence ask exactly the same question of the core. Write <span class="math display">\[\mathcal A(E)=\left\{\sum_{i\in B}w_i:B\subseteq E\right\},
+\qquad M(E)=|\mathcal A(E)|.\]</span> If twelve exceptional items all equal the same positive value, their sums are just zero through twelve copies of that value: <span class="math inline">\(M=13\)</span>, rather than <span class="math inline">\(2^{12}=4096\)</span> possibilities.</p>
+<p>Construct the distinct sums from <span class="math inline">\(\{0\}\)</span>, merging the sorted list with a copy shifted by each next weight. Retain one indexed witness per sum. Every prefix sum survives in the final set, bounding intermediate lists by <span class="math inline">\(M(E)\)</span> and construction by <span class="math inline">\(O(|E|M(E))\)</span>. Querying once per distinct sum gives <span class="math display">\[O\!\left(n\log(n+1)+(n+1)M(E)\right)\]</span> for the structural algorithm, or conservatively <span class="math inline">\(\operatorname{poly}(L)M(E)\)</span> in the bit model. A polynomially bounded residual support is sufficient even with many exceptions.</p>
+<h2 id="a-smaller-remainder-may-be-expensive-to-find">A smaller remainder may be expensive to find</h2>
+<p>A largest core need not leave the fewest distinct sums. For <span class="math display">\[[1,1,1,2,3],\]</span> greedy keeps <span class="math inline">\([1,2]\)</span>; its exceptions <span class="math inline">\([1,1,3]\)</span> have six sums, <span class="math inline">\(0,\ldots,5\)</span>. The equally large core <span class="math inline">\([2,3]\)</span> leaves <span class="math inline">\([1,1,1]\)</span>, with only four sums. Neither core can be enlarged to three items.</p>
+<p>This suggests searching for a better decomposition. We test two explicit policies. Both scan single-item exchanges between the greedy core and its exceptions, verify each candidate, and preserve the maximum core size. The first chooses by a cheap bound obtained from value multiplicities: count how many copies of each value could be taken. The second constructs the actual supports of at most four candidates and selects the smallest, reusing its representatives.</p>
+<p>The second policy must pay for every support it probes, including losing candidates. With candidate support sizes <span class="math inline">\(M_1,\ldots,M_b\)</span>, its construction work depends on <span class="math inline">\(\sum_j M_j\)</span>, not only on <span class="math inline">\(\min_j M_j\)</span>. A better final representation does not make its discovery free.</p>
+<h2 id="a-comparison-that-charges-for-structure">A comparison that charges for structure</h2>
+<p>We froze the protocol, generators, solver variants, reporting plan, and source hashes before generating <span class="math inline">\(60\)</span> fresh lists at <span class="math inline">\(n=20,28,36\)</span>. Fifty-four lists combine a superincreasing core with <span class="math inline">\(4,8,\)</span> or <span class="math inline">\(12\)</span> injected items. The families use unrelated exceptions, repeated exceptions, and the exchange example above extended with larger superincreasing weights. Six random <span class="math inline">\(41\)</span>-bit lists provide unstructured controls. Actual deletion distance is measured; it need not equal the injected count.</p>
+<p>Each list supplies three targets: a random-subset target, a uniform integer from the middle <span class="math inline">\(40\%\)</span> of its total, and a target from that same range accepted only if it passes reachable-residue checks modulo <span class="math inline">\(8,10,16,32\)</span> and an independent exact oracle labels it NO. Lists have no common divisor greater than one. This deliberately conditioned NO cohort tests more than immediate root exclusions; it does not estimate unconditional average performance.</p>
+<p>The <span class="math inline">\(180\)</span> targets comprise <span class="math inline">\(60\)</span> YES and <span class="math inline">\(120\)</span> NO cases. The unconditioned uniform targets happened to be NO throughout this sparse synthetic sample. Every planned conditioned-NO slot was filled, and no new list duplicates a pilot list.</p>
+<p>Seven methods include the two simple core solvers, the two selectors, memoized bounded depth-first search (DFS), meet-in-the-middle (MITM), and integer-bitset dynamic programming where its width cap permits it. Each timing uses fresh preprocessing and includes discovery, verification, selection, construction, and queries. Three shuffled-order repetitions per case give <span class="math inline">\(3{,}780\)</span> runs. Comparisons use per-case medians and require both methods to complete every repetition.</p>
+<p>All <span class="math inline">\(3{,}117\)</span> completed timing answers agree with independent binary-mask half-enumeration labels, and every returned witness is valid. The other <span class="math inline">\(663\)</span> runs reached declared work, time, or bitset limits; they return unresolved. Sixteen independent test groups passed before the freeze.</p>
+<h2 id="what-the-measurements-say">What the measurements say</h2>
+<p>Both selectors reduce support on <span class="math inline">\(18\)</span> structured lists, all from the predeclared exchange family. There the residual support falls from <span class="math inline">\(k+3\)</span> to <span class="math inline">\(k+1\)</span>. Yet neither selector beats the simple greedy-core distinct-sum solver on any of the <span class="math inline">\(162\)</span> structured target cases.</p>
+<div class="table-wrap"><table class="paper-table">
+<caption>All completed paired cases. Ratios compare total time with the simple greedy-core distinct-sum solver; smaller than <span class="math inline">\(1\)</span> favors selection.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Method</th>
+<th style="text-align: right;">Completed</th>
+<th style="text-align: right;">Wins / paired</th>
+<th style="text-align: right;">Median ratio</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Simple greedy core</td>
+<td style="text-align: right;">168/180</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">1.000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Multiplicity-ranked core</td>
+<td style="text-align: right;">168/180</td>
+<td style="text-align: right;">5/168</td>
+<td style="text-align: right;">9.034</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Exact-support probes</td>
+<td style="text-align: right;">162/180</td>
+<td style="text-align: right;">0/162</td>
+<td style="text-align: right;">9.211</td>
+</tr>
+</tbody>
+</table></div>
+<p>The cheap selector’s five wins are on unstructured <span class="math inline">\(20\)</span>-item controls with the same selected core and the same <span class="math inline">\(M=262144\)</span> as the simple method. They do not demonstrate a gain from a better decomposition. Across matched cases, the selectors’ median time ratios are about nine. Candidate selection itself takes median times of roughly <span class="math inline">\(1.91\)</span> and <span class="math inline">\(2.38\)</span> ms, compared with about <span class="math inline">\(0.10\)</span> ms for their completed queries. These component medians are descriptive, not a subtraction of matched total times.</p>
+<p>Ordinary search remains competitive. The simple distinct-sum core solver completes <span class="math inline">\(168/180\)</span> cases and beats the fastest feasible elementary baseline (DFS, MITM, or bitset) on <span class="math inline">\(31\)</span> of those paired cases; its median ratio to that baseline is <span class="math inline">\(1.899\)</span>. MITM completes every case, including the larger-distance controls on which core methods reach limits. We therefore have a constructive special-case guarantee, with no general practical speed advantage established by this comparison.</p>
+<p>Memory tells a related story. A separate pass profiles four predeclared NO cases, one per family at <span class="math inline">\(n=20\)</span>, giving <span class="math inline">\(28\)</span> profiles. Time limits are disabled during tracing; the other limits remain. All <span class="math inline">\(24\)</span> completed answers are correct. On the unstructured case, storing exceptional sums peaks at <span class="math inline">\(34.3\)</span> MiB of new Python-traced allocations. Exact support selection reaches <span class="math inline">\(67.5\)</span> MiB and still stops at its work limit. Visiting exceptional selections one at a time uses about <span class="math inline">\(6\)</span> KiB there, while paying for repeated queries in time. These are allocation diagnostics on four cases, not process-memory or universal rankings.</p>
+<h2 id="the-lesson-for-certified-coverage">The lesson for certified coverage</h2>
+<p>The constructive part answers the opening question for one precise structure. We can discover a largest tractable core cheaply. Logarithmically many remaining binary choices give polynomial work. Many more exceptional items can also be manageable when their distinct sums merge into a small set.</p>
+<p>The experiment asks what happens when we try to improve that representation. It finds genuine support reductions, but these particular selectors spend more obtaining them than they save. The costed coverage framing therefore becomes operational: record the unresolved possibilities <em>and</em> the full effort needed to expose them.</p>
+<p>This note uses established ingredients. Superincreasing membership is classical [1]; branching on exceptional choices has relatives in backdoors to tractable classes [2]; support-sensitive subset-sum algorithms are a substantial existing subject [3,4]. We do not establish novelty of the greedy core lemma, a new general complexity bound, or a universal speedup.</p>
+<p>The next useful improvement must earn its discovery cost: cheaper recognition, a structure removing much more work, or an adaptive procedure that exposes it only where needed. The present evidence supports retaining the simple core solver alongside ordinary exact baselines while those directions are investigated.</p>
+<p><strong>Reproducibility.</strong> Full proofs, the local freeze, saved inputs and labels, every timing repetition, memory profiles, and the claim-by-claim literature audit are in the <a href="https://github.com/jonland82/exponential-search-spaces/tree/master/Structural_Distance_Subset_Sum">companion experiment package</a>. This working draft is available in HTML/PDF with source through the six-note website. Note VI extends the structural-distance question to budgeted completion prediction and certified branch checks.</p>
+<h2 id="references">References</h2>
+<ol>
+<li><p>SageMath. <em>Knapsack problems: Superincreasing sequences</em>. <a href="https://doc.sagemath.org/html/en/reference/numerical/sage/numerical/knapsack.html">https://doc.sagemath.org/html/en/reference/numerical/sage/numerical/knapsack.html</a>.</p></li>
+<li><p>Ryan Williams, Carla P. Gomes, and Bart Selman. <em>Backdoors To Typical Case Complexity</em>. IJCAI, 2003. <a href="https://www.cs.cornell.edu/selman/papers/pdf/03.ijcai.backdoors.pdf">https://www.cs.cornell.edu/selman/papers/pdf/03.ijcai.backdoors.pdf</a>.</p></li>
+<li><p>Karl Bringmann and Vasileios Nakos. <em>Top-k-Convolution and the Quest for Near-Linear Output-Sensitive Subset Sum</em>. Full version of STOC 2020. <a href="https://arxiv.org/abs/2107.13206">https://arxiv.org/abs/2107.13206</a>.</p></li>
+<li><p>Karl Bringmann, Nick Fischer, and Vasileios Nakos. <em>Beating Bellman’s Algorithm for Subset Sum</em>. SODA 2025. <a href="https://arxiv.org/abs/2410.21942">https://arxiv.org/abs/2410.21942</a>.</p></li>
+</ol>
+
+<footer>
+  <p>Part of the <a href="../../index.html">Certified Coverage research sequence</a>.</p>
+  <div class="link-row">
+    <a href="../01-certified-coverage/Certified_Coverage_of_Exponential_Search_Spaces.html">Note I: Framework</a>
+    <a href="../02-subset-sum-stress-test/Subset_Sum_as_a_Stress_Test.html">Note II: Exact-search stress test</a>
+    <a href="../03-probability-valued-subset-sum/Probability_Valued_Subset_Sum.html">Note III: Random-target probability</a>
+    <a href="../04-certified-approximation/Certified_Approximation_of_Subset_Sum.html">Note IV: Pairing in approximation</a>
+    <a href="../06-learned-solvability/Predicting_Subset_Sum_Completion.html">Note VI: Learned completion</a>
+    <a href="../../Structural_Distance_Subset_Sum/FINDINGS.md">Methods and data</a>
+  </div>
+</footer>
+</main>
+</body>
+</html>

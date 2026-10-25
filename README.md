@@ -4,7 +4,7 @@ Jonathan R. Landers | September-October 2026
 
 [Six-note research sequence](https://jonland82.github.io/exponential-search-spaces/) | [All six note folders](notes/README.md)
 
-The sequence follows one question: when can useful structure account for enough of an exponential search that only manageable work remains? The website indexes all six notes. Notes I-IV and VI have HTML/PDF versions; Note V remains a clearly labeled PDF/source working draft.
+The sequence follows one question: when can useful structure account for enough of an exponential search that only manageable work remains? All six notes have HTML/PDF versions. Note V remains clearly labeled as a working draft.
 
 ## Notes
 
@@ -14,7 +14,7 @@ The sequence follows one question: when can useful structure account for enough 
 | **II. Subset Sum as a Stress Test for Certified Coverage** (published) | Do exact pairing, pruning, and learned proposals save work? | [HTML](notes/02-subset-sum-stress-test/Subset_Sum_as_a_Stress_Test.html) / [PDF](notes/02-subset-sum-stress-test/Subset_Sum_as_a_Stress_Test.pdf) / [LaTeX](notes/02-subset-sum-stress-test/Subset_Sum_as_a_Stress_Test.tex) |
 | **III. Probability-Valued Subset Sum: Certified Bounds and Learned Guidance** (published) | How tightly can we bound random-target reachability? | [HTML](notes/03-probability-valued-subset-sum/Probability_Valued_Subset_Sum.html) / [PDF](notes/03-probability-valued-subset-sum/Probability_Valued_Subset_Sum.pdf) / [LaTeX](notes/03-probability-valued-subset-sum/Probability_Valued_Subset_Sum.tex) |
 | **IV. Does Pairing Add Value to Certified Approximation? A Subset-Sum Experiment** (published) | Does pairing add value beyond the same approximation rule? | [HTML](notes/04-certified-approximation/Certified_Approximation_of_Subset_Sum.html) / [PDF](notes/04-certified-approximation/Certified_Approximation_of_Subset_Sum.pdf) / [LaTeX](notes/04-certified-approximation/Certified_Approximation_of_Subset_Sum.tex) |
-| **V. How Far from Easy? Structural Distance in Subset Sum** (draft; PDF/LaTeX only) | How far can a list depart from an easy structure before residual search grows? | [PDF](notes/05-structural-distance/Structural_Distance_in_Subset_Sum.pdf) / [LaTeX](notes/05-structural-distance/Structural_Distance_in_Subset_Sum.tex) |
+| **V. How Far from Easy? Structural Distance in Subset Sum** (working draft) | How far can a list depart from an easy structure before residual search grows? | [HTML](notes/05-structural-distance/Structural_Distance_in_Subset_Sum.html) / [PDF](notes/05-structural-distance/Structural_Distance_in_Subset_Sum.pdf) / [LaTeX](notes/05-structural-distance/Structural_Distance_in_Subset_Sum.tex) |
 | **VI. Predicting Subset-Sum Completion: The Value and Cost of Structural Features** (published) | Do structural distances improve prediction and certified pruning after their costs are paid? | [HTML](notes/06-learned-solvability/Predicting_Subset_Sum_Completion.html) / [PDF](notes/06-learned-solvability/Predicting_Subset_Sum_Completion.pdf) / [LaTeX](notes/06-learned-solvability/Predicting_Subset_Sum_Completion.tex) |
 
 Read I, then II. Notes III and IV branch into random-target probability and fixed-target approximation. Note V returns to exact search: it proves a concrete tractable regime and measures the cost of trying to improve the discovered structure.
@@ -53,7 +53,7 @@ python tools/check_links.py
 python -m unittest discover -s Structural_Distance_Subset_Sum -p "test_*.py" -v
 ```
 
-The builder accepts a note number or filename stem. It builds all six PDFs by default and updates generated HTML for Notes II-IV and VI; Note I's maintained HTML is preserved. Note V remains a PDF/source draft. Use `--html-only` to refresh generated HTML without rebuilding PDFs, or `--pdf-only` for PDFs alone. Generated Note III, V and VI artifacts come from preserved measurements with integrity checks. Paper VI includes both the original frozen study and the separate branch-pruning follow-up. No experiments or model fitting are rerun by a paper build.
+The builder accepts a note number or filename stem. It builds all six PDFs by default and updates generated HTML for Notes II-VI; Note I's maintained HTML is preserved. Note V retains its visible working-draft label. Use `--html-only` to refresh generated HTML without rebuilding PDFs, or `--pdf-only` for PDFs alone. Generated Note III, V and VI artifacts come from preserved measurements with integrity checks. Paper VI includes both the original frozen study and the separate branch-pruning follow-up. No experiments or model fitting are rerun by a paper build.
 
 See [Note V's findings](Structural_Distance_Subset_Sum/FINDINGS.md), [its full study report](Structural_Distance_Subset_Sum/results/prospective_20261024/REPORT.md), and [Note III's methods ledger](subset-sum/PROBABILITY_REFINEMENT.md) for the guarantees, results, and their limits.
 
@@ -68,6 +68,6 @@ python tools/prepare_site.py --output .build/site
 python tools/check_links.py --site .build/site
 ```
 
-The staged payload contains all six canonical note folders, supporting evidence packages, Markdown guides, figures and TeX inputs. It retains the old root HTML, PDF and LaTeX URLs for HTML papers. Compatibility downloads are generated there instead of cluttering the research repository root. Note V's draft PDF/source is available without an HTML page. Use a new output directory for another staged copy.
+The staged payload contains all six canonical note folders, supporting evidence packages, Markdown guides, figures and TeX inputs. It retains the root HTML, PDF and LaTeX URLs for all six papers. Compatibility downloads are generated there instead of cluttering the research repository root. Note V's HTML/PDF versions remain labeled as working drafts. Use a new output directory for another staged copy.
 
 These notes establish model criteria and results on specified synthetic families. They do not claim a new general worst-case subset-sum bound.

@@ -94,6 +94,11 @@ def check(root, site=False):
         for paper in PAPERS:
             if not paper["published"] and artifact(paper, ".html").exists():
                 failures.append(f"Note {paper['number']} HTML should not exist")
+    for paper in PAPERS:
+        if paper.get("working_draft"):
+            page = root / "notes" / paper["folder"] / (paper["stem"] + ".html")
+            if not page.exists() or "Working draft" not in page.read_text(encoding="utf-8"):
+                failures.append(f"Note {paper['number']}: missing visible working-draft label")
     if failures:
         print("\n".join(failures))
         raise SystemExit(f"{len(failures)} broken or forbidden links")
