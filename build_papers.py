@@ -1,4 +1,4 @@
-"""Build all five PDFs and the published HTML pages from organized note sources."""
+"""Build the catalog's PDFs and published HTML pages from organized note sources."""
 
 from __future__ import annotations
 
@@ -28,6 +28,10 @@ def build_one(paper, pdf_only=False):
     if paper["number"] == "V":
         subprocess.run(
             [sys.executable, str(ROOT / "tools/note_v_artifacts.py")], cwd=ROOT, check=True,
+        )
+    if paper["number"] == "VI":
+        subprocess.run(
+            [sys.executable, str(ROOT / "tools/note_vi_artifacts.py")], cwd=ROOT, check=True,
         )
     output = ROOT / ".build" / "latex" / paper["folder"]
     output.mkdir(parents=True, exist_ok=True)
@@ -109,9 +113,9 @@ window.MathJax = {{
 
 
 def main():
-    choices = [paper["stem"] for paper in PAPERS] + [str(i) for i in range(1, 6)]
+    choices = [paper["stem"] for paper in PAPERS] + [str(i) for i in range(1, len(PAPERS) + 1)]
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--paper", choices=choices, help="Note number or existing filename stem; default: all five.")
+    parser.add_argument("--paper", choices=choices, help="Note number or filename stem; default: all catalog entries.")
     parser.add_argument("--pdf-only", action="store_true", help="Build PDFs without updating published HTML.")
     args = parser.parse_args()
     for number, paper in enumerate(PAPERS, 1):

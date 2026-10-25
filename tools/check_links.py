@@ -1,4 +1,4 @@
-"""Check active local links, paper assets, and Note V publication isolation."""
+"""Check active local links, paper assets, and unpublished-draft isolation."""
 
 import argparse
 from html.parser import HTMLParser
@@ -74,22 +74,27 @@ def check(root, site=False):
         failures.append("index.html: expected exactly four published note cards")
     for path in [root / "index.html", *root.glob("*.html"), *root.glob("notes/*/*.html")]:
         text = path.read_text(encoding="utf-8")
-        if "05-structural-distance" in text or PAPERS[-1]["stem"] in text:
+        if any(paper["folder"] in text or paper["stem"] in text
+               for paper in PAPERS if not paper["published"]):
             failures.append(f"{path.relative_to(root)}: draft leaked into published HTML")
     if site:
-        if (root / "notes" / PAPERS[-1]["folder"]).exists() or (root / "Structural_Distance_Subset_Sum").exists():
+        if (any((root / "notes" / paper["folder"]).exists() for paper in PAPERS if not paper["published"])
+                or any((root / name).exists() for name in (
+                    "Structural_Distance_Subset_Sum", "Learned_Solvability_Subset_Sum"))):
             failures.append("draft files or draft experiment package leaked into staged site")
         for paper in PAPERS:
             if paper["published"]:
                 for extension in (".html", ".pdf", ".tex"):
                     if not (root / (paper["stem"] + extension)).is_file():
                         failures.append("missing legacy route: " + paper["stem"] + extension)
-    elif artifact(PAPERS[-1], ".html").exists():
-        failures.append("Note V HTML should not exist")
+    else:
+        for paper in PAPERS:
+            if not paper["published"] and artifact(paper, ".html").exists():
+                failures.append(f"Note {paper['number']} HTML should not exist")
     if failures:
         print("\n".join(failures))
         raise SystemExit(f"{len(failures)} broken or forbidden links")
-    print(f"Checked {count} active local links/assets; four published notes; Note V remains a PDF/LaTeX draft.")
+    print(f"Checked {count} active local links/assets; four published notes; unpublished drafts remain isolated.")
 
 
 if __name__ == "__main__":

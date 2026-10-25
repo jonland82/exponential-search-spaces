@@ -1,0 +1,69 @@
+{
+  "config": {
+    "status": "exploratory feasibility pilot; no fitted model or prospective performance claim",
+    "seed": 610251026,
+    "sizes": [
+      16,
+      24,
+      32
+    ],
+    "replacement_fractions": [
+      0,
+      0.125,
+      0.25
+    ],
+    "replicates": 2,
+    "families": [
+      "superincreasing",
+      "coverage",
+      "few_values",
+      "small_support",
+      "interval_union",
+      "progression",
+      "near_equal",
+      "random_wide",
+      "filtered_modular"
+    ],
+    "targets": [
+      "planted",
+      "uniform_middle",
+      "odd_below_largest"
+    ],
+    "features": {
+      "distinct_values": 2,
+      "support_cap": 128,
+      "interval_cap": 8
+    },
+    "budget_multipliers": [
+      8,
+      32
+    ],
+    "budget": "multiplier * input_length(weights, target) instrumented work units",
+    "portfolio": [
+      "filtered_range_gcd",
+      "bitset",
+      "core_enumerate",
+      "dfs",
+      "mitm"
+    ],
+    "schedule": "preprocess, then divide remaining work among remaining methods; carry unused work forward",
+    "max_states": 32768,
+    "max_bitset_bits": 1000000,
+    "timing": "one run per case, budget, and cost policy; descriptive only",
+    "policies": [
+      "without_features",
+      "with_features"
+    ],
+    "label": "portfolio completes under its budget and memory caps; not reachability"
+  },
+  "recorded_before_generation_utc": "2026-10-25T16:02:31.851080+00:00",
+  "python": "3.13.5 | packaged by Anaconda, Inc. | (main, Jun 12 2025, 16:37:03) [MSC v.1929 64 bit (AMD64)]",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "source_hashes": {
+    "Learned_Solvability_Subset_Sum\\features.py": "93de025d5c976ccf96a74b4bd177526a37902a53daa7012aa6eba91268e75e36",
+    "Learned_Solvability_Subset_Sum\\run_pilot.py": "fcbbfd295095eb6b3d8f4f601d5f35539557453dbe71943305220dce575753ad",
+    "Learned_Solvability_Subset_Sum\\test_features.py": "fb6561c0a12b466408d9ff06e7846a84653bfa649dc02a2e6e851e8e9c6d9385",
+    "Learned_Solvability_Subset_Sum\\test_pilot.py": "4599a7d810be9434fb110d88937ffeb7767ba7498e5d8dc51883b30d18210aef",
+    "Structural_Distance_Subset_Sum\\structural_subset_sum.py": "2198fd70b6f33c764207a89d8f124b9982876fa96fe5e8900eb48f9a627478c2"
+  }
+}

@@ -1,4 +1,4 @@
-"""Stage the four published notes, preserving legacy URLs and excluding Note V."""
+"""Stage the four published notes, preserving legacy URLs and excluding drafts."""
 
 import argparse
 from pathlib import Path
@@ -35,8 +35,10 @@ def prepare(output):
         text = artifact(paper, ".tex").read_text(encoding="utf-8")
         text = text.replace("{../../subset-sum/", "{subset-sum/")
         (output / (paper["stem"] + ".tex")).write_text(text, encoding="utf-8")
-    assert not (output / "notes" / PAPERS[-1]["folder"]).exists()
-    assert not any(output.rglob(PAPERS[-1]["stem"] + ".*"))
+    for paper in PAPERS:
+        if not paper["published"]:
+            assert not (output / "notes" / paper["folder"]).exists()
+            assert not any(output.rglob(paper["stem"] + ".*"))
     print(f"Prepared four published notes and legacy download aliases at {output}")
 
 

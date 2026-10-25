@@ -1,0 +1,316 @@
+{
+  "lists": 162,
+  "cases": 486,
+  "portfolio_runs": 1944,
+  "completed_answers_checked": 1640,
+  "answer_mismatches": 0,
+  "features": {
+    "superincreasing": {
+      "min": 0,
+      "max": 30,
+      "median": 20.0,
+      "distinct_values": 27,
+      "zero_distance_lists": 6
+    },
+    "coverage": {
+      "min": 0,
+      "max": 32,
+      "median": 16.0,
+      "distinct_values": 13,
+      "zero_distance_lists": 12
+    },
+    "few_values": {
+      "min": 0,
+      "max": 30,
+      "median": 14.0,
+      "distinct_values": 27,
+      "zero_distance_lists": 12
+    },
+    "small_support": {
+      "min": 0,
+      "max": 25,
+      "median": 9.0,
+      "distinct_values": 23,
+      "zero_distance_lists": 12
+    },
+    "interval_union": {
+      "min": 0,
+      "max": 29,
+      "median": 13.0,
+      "distinct_values": 20,
+      "zero_distance_lists": 26
+    }
+  },
+  "budgets": {
+    "8L:without_features": {
+      "completed": 411,
+      "unresolved": 75,
+      "mixed_outcome_lists": 34,
+      "empirical_feature_majority_ceiling": 0.9238683127572016,
+      "feature_cost_exceeds_budget": 0,
+      "median_total_ms": 1.417449995642528,
+      "families": {
+        "superincreasing": {
+          "cases": 54,
+          "completed": 54
+        },
+        "coverage": {
+          "cases": 54,
+          "completed": 54
+        },
+        "few_values": {
+          "cases": 54,
+          "completed": 53
+        },
+        "small_support": {
+          "cases": 54,
+          "completed": 54
+        },
+        "interval_union": {
+          "cases": 54,
+          "completed": 54
+        },
+        "progression": {
+          "cases": 54,
+          "completed": 45
+        },
+        "near_equal": {
+          "cases": 54,
+          "completed": 41
+        },
+        "random_wide": {
+          "cases": 54,
+          "completed": 30
+        },
+        "filtered_modular": {
+          "cases": 54,
+          "completed": 26
+        }
+      },
+      "sizes": {
+        "16": {
+          "cases": 162,
+          "completed": 162
+        },
+        "24": {
+          "cases": 162,
+          "completed": 132
+        },
+        "32": {
+          "cases": 162,
+          "completed": 117
+        }
+      }
+    },
+    "8L:with_features": {
+      "completed": 320,
+      "unresolved": 166,
+      "mixed_outcome_lists": 45,
+      "empirical_feature_majority_ceiling": 0.9032921810699589,
+      "feature_cost_exceeds_budget": 60,
+      "median_total_ms": 1.555900031235069,
+      "families": {
+        "superincreasing": {
+          "cases": 54,
+          "completed": 54
+        },
+        "coverage": {
+          "cases": 54,
+          "completed": 12
+        },
+        "few_values": {
+          "cases": 54,
+          "completed": 51
+        },
+        "small_support": {
+          "cases": 54,
+          "completed": 27
+        },
+        "interval_union": {
+          "cases": 54,
+          "completed": 50
+        },
+        "progression": {
+          "cases": 54,
+          "completed": 39
+        },
+        "near_equal": {
+          "cases": 54,
+          "completed": 33
+        },
+        "random_wide": {
+          "cases": 54,
+          "completed": 30
+        },
+        "filtered_modular": {
+          "cases": 54,
+          "completed": 24
+        }
+      },
+      "sizes": {
+        "16": {
+          "cases": 162,
+          "completed": 146
+        },
+        "24": {
+          "cases": 162,
+          "completed": 94
+        },
+        "32": {
+          "cases": 162,
+          "completed": 80
+        }
+      }
+    },
+    "8L:cost_comparison": {
+      "lost_completions": 91,
+      "gained_completions": 0,
+      "note": "Same solver schedule, no learned policy; allocation changes can affect completion."
+    },
+    "32L:without_features": {
+      "completed": 455,
+      "unresolved": 31,
+      "mixed_outcome_lists": 12,
+      "empirical_feature_majority_ceiling": 0.9753086419753086,
+      "feature_cost_exceeds_budget": 0,
+      "median_total_ms": 4.454650013940409,
+      "families": {
+        "superincreasing": {
+          "cases": 54,
+          "completed": 54
+        },
+        "coverage": {
+          "cases": 54,
+          "completed": 54
+        },
+        "few_values": {
+          "cases": 54,
+          "completed": 54
+        },
+        "small_support": {
+          "cases": 54,
+          "completed": 54
+        },
+        "interval_union": {
+          "cases": 54,
+          "completed": 54
+        },
+        "progression": {
+          "cases": 54,
+          "completed": 53
+        },
+        "near_equal": {
+          "cases": 54,
+          "completed": 51
+        },
+        "random_wide": {
+          "cases": 54,
+          "completed": 42
+        },
+        "filtered_modular": {
+          "cases": 54,
+          "completed": 39
+        }
+      },
+      "sizes": {
+        "16": {
+          "cases": 162,
+          "completed": 162
+        },
+        "24": {
+          "cases": 162,
+          "completed": 162
+        },
+        "32": {
+          "cases": 162,
+          "completed": 131
+        }
+      }
+    },
+    "32L:with_features": {
+      "completed": 454,
+      "unresolved": 32,
+      "mixed_outcome_lists": 12,
+      "empirical_feature_majority_ceiling": 0.9753086419753086,
+      "feature_cost_exceeds_budget": 0,
+      "median_total_ms": 4.230450053000823,
+      "families": {
+        "superincreasing": {
+          "cases": 54,
+          "completed": 54
+        },
+        "coverage": {
+          "cases": 54,
+          "completed": 54
+        },
+        "few_values": {
+          "cases": 54,
+          "completed": 54
+        },
+        "small_support": {
+          "cases": 54,
+          "completed": 54
+        },
+        "interval_union": {
+          "cases": 54,
+          "completed": 54
+        },
+        "progression": {
+          "cases": 54,
+          "completed": 52
+        },
+        "near_equal": {
+          "cases": 54,
+          "completed": 51
+        },
+        "random_wide": {
+          "cases": 54,
+          "completed": 42
+        },
+        "filtered_modular": {
+          "cases": 54,
+          "completed": 39
+        }
+      },
+      "sizes": {
+        "16": {
+          "cases": 162,
+          "completed": 162
+        },
+        "24": {
+          "cases": 162,
+          "completed": 162
+        },
+        "32": {
+          "cases": 162,
+          "completed": 130
+        }
+      }
+    },
+    "32L:cost_comparison": {
+      "lost_completions": 1,
+      "gained_completions": 0,
+      "note": "Same solver schedule, no learned policy; allocation changes can affect completion."
+    }
+  },
+  "unique_feature_vectors": 110,
+  "duplicate_sorted_lists": 0,
+  "feature_correlations": {
+    "superincreasing:coverage": 0.236966826682605,
+    "superincreasing:few_values": 0.1581475938090968,
+    "superincreasing:small_support": 0.2682445547298927,
+    "superincreasing:interval_union": 0.22068108976975823,
+    "coverage:few_values": 0.5083443889676419,
+    "coverage:small_support": 0.7899600824949575,
+    "coverage:interval_union": 0.9888414641832455,
+    "few_values:small_support": 0.8835917314817748,
+    "few_values:interval_union": 0.5856274877653329,
+    "small_support:interval_union": 0.8359308316989202
+  },
+  "feature_extraction": {
+    "median_ms": 0.6479999865405262,
+    "max_ms": 3.0254999874159694,
+    "median_work": 4156.0,
+    "max_work": 8924
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "config": {
+    "status": "development comparison; not final prospective evidence",
+    "seed": 620251026,
+    "sizes": [
+      24,
+      32,
+      36
+    ],
+    "fractions": [
+      0,
+      0.125,
+      0.25
+    ],
+    "replicates": 4,
+    "families": [
+      "superincreasing",
+      "coverage",
+      "few_values",
+      "small_support",
+      "interval_union",
+      "progression",
+      "near_equal",
+      "random_wide",
+      "filtered_modular"
+    ],
+    "heldout_families": [
+      "near_equal",
+      "filtered_modular"
+    ],
+    "larger_size": 36,
+    "targets": [
+      "planted",
+      "uniform_middle",
+      "odd_below_largest",
+      "uniform_low"
+    ],
+    "features": {
+      "distinct_values": 2,
+      "support_cap": 128,
+      "interval_cap": 8
+    },
+    "max_progression_steps": 16,
+    "budget_multiplier": 8,
+    "budget": "8 * features.input_length(original_weights, original_target)",
+    "shared_solver": "exact target reduction, then feasibility-pilot fixed portfolio",
+    "primary_comparison": "same solver-only label for all feature vectors; feature costs reported separately",
+    "cost_policy": "shared exact prechecks first; if unresolved, prepay features, reuse full-core certificates, then fixed portfolio",
+    "target_policy": "complement, prune overweight, force required items, repeat; range and gcd certificates",
+    "split": "heldout families first; larger size next; other rep 0/1 train, 2 calibration, 3 test",
+    "oracle": "independent full binary-mask half enumeration, destroyed before measured solving",
+    "timing": "single measured run per case/policy; all orders seed-shuffled, descriptive only"
+  },
+  "recorded_before_generation_utc": "2026-10-25T16:12:04.127900+00:00",
+  "python": "3.13.5 | packaged by Anaconda, Inc. | (main, Jun 12 2025, 16:37:03) [MSC v.1929 64 bit (AMD64)]",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "source_hashes": {
+    "Learned_Solvability_Subset_Sum\\features.py": "93de025d5c976ccf96a74b4bd177526a37902a53daa7012aa6eba91268e75e36",
+    "Learned_Solvability_Subset_Sum\\advanced_features.py": "0c6c6d40fe2c71f886080d5536bd0aa5ff981368f882648f6f5e9ed72d9469fe",
+    "Learned_Solvability_Subset_Sum\\run_pilot.py": "fcbbfd295095eb6b3d8f4f601d5f35539557453dbe71943305220dce575753ad",
+    "Learned_Solvability_Subset_Sum\\run_development.py": "0d436ac3f6ed8e7bc5848e0aaff3eddfa6ae6da539c31700467d84fe05f1195a",
+    "Learned_Solvability_Subset_Sum\\test_features.py": "fb6561c0a12b466408d9ff06e7846a84653bfa649dc02a2e6e851e8e9c6d9385",
+    "Learned_Solvability_Subset_Sum\\test_pilot.py": "4599a7d810be9434fb110d88937ffeb7767ba7498e5d8dc51883b30d18210aef",
+    "Learned_Solvability_Subset_Sum\\test_advanced_features.py": "85a68f358a4fca4310ad39ee70d796d5033d760578b0f754cf8a7c88cfd07731",
+    "Learned_Solvability_Subset_Sum\\test_development.py": "5206968bbd0f0dacdc4af76c6bdcc2824e9cd73df0f11990ecec860173848ae4",
+    "Structural_Distance_Subset_Sum\\structural_subset_sum.py": "2198fd70b6f33c764207a89d8f124b9982876fa96fe5e8900eb48f9a627478c2"
+  }
+}

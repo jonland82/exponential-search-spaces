@@ -33,6 +33,13 @@ PAPERS = (
          description="A working draft about tractable cores, residual sums, and the cost of selecting structure.",
          nav_label="Note V: Structural distance",
          data="Structural_Distance_Subset_Sum/FINDINGS.md", published=False, maintained_html=False),
+    dict(number="VI", folder="06-learned-solvability",
+         stem="Predicting_Subset_Sum_Completion",
+         title="Predicting Subset-Sum Completion: The Value and Cost of Structural Features",
+         description="A working draft testing structural features, calibrated completion prediction, and paid prioritization.",
+         nav_label="Note VI: Learned completion",
+         data="Learned_Solvability_Subset_Sum/PROSPECTIVE_FINDINGS.md",
+         published=False, maintained_html=False),
 )
 
 

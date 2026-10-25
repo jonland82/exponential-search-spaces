@@ -29,7 +29,7 @@ def build():
         record = json.loads((study / stage).read_text())
         assert digest(study / filename) == record[key]
     assert data["mismatches"] == 0 and data["cases"] == 180
-    output = directory(PAPERS[-1])
+    output = directory(next(paper for paper in PAPERS if paper["number"] == "V"))
     def grouped(value):
         return f"{value:,}".replace(",", "{,}")
     values = {
