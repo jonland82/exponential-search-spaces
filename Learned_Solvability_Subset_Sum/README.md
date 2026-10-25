@@ -4,6 +4,14 @@ Paper VI. **Stage 9 complete as a first review draft: scoped prior-work audit,
 manuscript and PDF built from preserved evidence.** The paper remains unpublished.
 The original feasibility pilot and model-development results remain preserved.
 
+**Stage 10 follow-up complete:** certified structural checks resolve search
+subtrees, but the transferred combined model does not beat a simple distance
+rule. At 50 ms, median completions were 152/216 for DFS, 159 for the combined
+gate and 162 for the rule. See [branch findings and discussion point](BRANCH_FINDINGS.md),
+[protocol](BRANCH_PROTOCOL.md), [soundness](BRANCH_THEORY.md) and
+[saved report](results/branch_pruning_20261025/REPORT.md). This new exploratory
+batch leaves the original frozen study and review manuscript unchanged.
+
 - [Paper VI prospectus and remaining plan](../notes/06-learned-solvability/README.md).
 - [Feature definitions, proofs, exact queries, and limits](THEORY.md).
 - [Findings and decisions for discussion](FINDINGS.md).

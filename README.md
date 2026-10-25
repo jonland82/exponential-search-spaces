@@ -21,6 +21,12 @@ Read I, then II. Notes III and IV branch into random-target probability and fixe
 
 [Note VI](notes/06-learned-solvability/README.md) combines five certified structural features with numerical summaries. Its [experiment package](Learned_Solvability_Subset_Sum/README.md) includes theory, a [prior-work audit](Learned_Solvability_Subset_Sum/LITERATURE.md), calibrated models and [mixed frozen-study findings](Learned_Solvability_Subset_Sum/PROSPECTIVE_FINDINGS.md). The primary probability comparison does not improve; a modest live-time policy gain coexists with an unfavorable work-counter endpoint.
 
+A separate [branch-pruning follow-up](Learned_Solvability_Subset_Sum/BRANCH_FINDINGS.md)
+implements Note I's proposal--verification framework using exact easy-core queries.
+On 216 fresh cases, a simple distance rule completed 162 within 50 ms each,
+compared with 159 for the combined learned gate and 152 for DFS (median totals).
+The transferred model has not demonstrated an advantage over the rule.
+
 ## Repository layout
 
 - `notes/01-...` through `notes/06-...` contain each note's source, PDF, and local guide. Published notes also have HTML. Drafts remain outside the published navigation.
