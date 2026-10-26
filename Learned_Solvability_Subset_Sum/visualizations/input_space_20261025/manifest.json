@@ -1,6 +1,6 @@
 {
   "created_utc": "2026-10-25T22:22:11.109867+00:00",
-  "source_sha256": "942c060854a9ad07804ce1cb92d1e1d2d17b6a8fd2abd8ea07eecb6accb68db8",
+  "source_sha256": "4de3398f340d13ac8a2bf0dab669cea8bf5d97275a18b3820068fc3b7568e2a8",
   "inputs": {
     "data_hashes.json": "db0ea298d1af433984cb45ef0078854e7124a5b20f7c9b7970c6b51094b13eed",
     "cases.jsonl": "34c3a42d2e90b096e3d487bf87c7df783f38a5f6685498863f2a21970f9b5c9f",
@@ -12,11 +12,11 @@
   },
   "outputs": {
     "README.md": "607c205876064933dde64a32acab1469120948bdb91e9682c96344e7f17480ee",
-    "input_space.html": "c16af8c52e6072fe63ae9a7b08d0dcdc10202bdb6ca691a086dce70a65d94c1b",
+    "input_space.html": "a3e8f08b9a74593788208de24144a6695cc7e031791234a2588e9370cbb71749",
     "input_space.pdf": "a8ca696d0a5ec9432137b839839376af0a58e132318c32787b86afff50c954be",
     "input_space.png": "e229c9f8aa4024ba4700387a06def13c5729e5f5d4f1338a3d6803986f6de62f",
-    "input_space_template.html": "a99785bd172c5421171bdee506d3e080f7d8a5001108f0685468bf4364cfc308",
-    "plot_input_space.py": "942c060854a9ad07804ce1cb92d1e1d2d17b6a8fd2abd8ea07eecb6accb68db8",
+    "input_space_template.html": "8c60e7052f018e1e5639e5fd5d8bd14c159f4b9c0547794f9dd3b4b66fa252ad",
+    "plot_input_space.py": "4de3398f340d13ac8a2bf0dab669cea8bf5d97275a18b3820068fc3b7568e2a8",
     "points.csv": "c0cdbcef50de5ab8c12bc3dba4d4c86802fc47bb14d5d3da3ee33769d1905ea1",
     "points.json": "1c2c674b63b4d2ec750dcdd666823c4dfffaf2d06e589f81e15c74abdce8ca60",
     "prediction_overlay.json": "2f843e1e40cf177d6dad5f80a4497a3fb39959b930c7e42d8899becd11e31177",
@@ -110,8 +110,8 @@
     }
   },
   "scope": "presentation only; unsupervised PCA; no predictor fitting or solver reruns",
-  "template_sha256": "a99785bd172c5421171bdee506d3e080f7d8a5001108f0685468bf4364cfc308",
-  "presentation_updated_utc": "2026-10-25T23:03:06.787569+00:00",
+  "template_sha256": "8c60e7052f018e1e5639e5fd5d8bd14c159f4b9c0547794f9dd3b4b66fa252ad",
+  "presentation_updated_utc": "2026-10-26T12:51:01.264261+00:00",
   "prediction_sources": {
     "Learned_Solvability_Subset_Sum\\results\\neighbors_20261025\\old_predictions_exploratory.jsonl": "93a557230656e0a370ee0314c8c1055ff26d4ba8c6a49b7394f5c405120472f1",
     "Learned_Solvability_Subset_Sum\\results\\neighbors_20261025\\protocol.json": "06a1ad5d49a0c01aba01751ab5d2cff25fd1157f82cce2107fc20569d8f46f40",

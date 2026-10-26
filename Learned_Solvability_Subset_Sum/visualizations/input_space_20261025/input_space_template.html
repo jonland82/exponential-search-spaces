@@ -10,7 +10,7 @@
 *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:14px/1.5 "Inter","Segoe UI",Arial,sans-serif;-webkit-font-smoothing:antialiased}
 button,input,select{font:inherit}button,a,input{ -webkit-tap-highlight-color:transparent }button{cursor:pointer}button:disabled{cursor:default}a{color:inherit;text-decoration:none}
 button:focus-visible,a:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid #8aa6ff;outline-offset:3px}
-svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.65;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.topbar svg,.metric svg,.viz-toolbar svg,.canvas-gestures svg,.empty-icon svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.65;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
 .topbar{height:66px;border-bottom:1px solid var(--line);background:#ffffffd9;display:flex;align-items:center;justify-content:space-between;padding:0 34px;gap:16px}
 .brand{display:flex;align-items:center;gap:11px;font-size:13px;font-weight:650;letter-spacing:-.2px}.brand-icon{display:grid;place-items:center;width:30px;height:30px;border-radius:9px;background:#e9eeff;color:var(--accent)}
 .brand-separator{height:16px;width:1px;background:#d8deea;margin:0 4px}.brand-sub{font-weight:400;color:var(--muted)}
@@ -23,7 +23,7 @@ h1{font-size:clamp(27px,2.6vw,37px);line-height:1.18;letter-spacing:-1.2px;font-
 .metric-label{font-size:11px;letter-spacing:.15px;color:#7b879a;display:flex;align-items:center;justify-content:space-between;gap:5px}.metric-label svg{width:14px;height:14px;opacity:.65}
 .metric-line{display:flex;align-items:baseline;gap:10px;margin-top:3px}.metric-value{font-size:29px;line-height:1.25;letter-spacing:-.9px;font-weight:650;font-variant-numeric:tabular-nums}.metric-note{font-size:10px;color:#8b95a5}.metric.easy .metric-value{color:var(--green)}.metric.hard .metric-value{color:var(--red)}.metric.missed .metric-value{color:#a17b32}
 .metric-track{height:3px;background:#f0f3f7;border-radius:4px;margin-top:10px;overflow:hidden}.metric-track span{height:100%;display:block;background:#aebfe9;transition:width .25s}.metric.easy .metric-track span{background:#58b39b}.metric.hard .metric-track span{background:#e09099}.metric.missed .metric-track span{background:#d5b06c}
-.workspace{display:grid;grid-template-columns:minmax(0,1fr) 302px;gap:20px;align-items:start}.viz-card{background:var(--dark);border:1px solid #1e2b40;border-radius:var(--radius);overflow:hidden;box-shadow:0 10px 26px #1526470b;position:relative}
+.workspace{display:grid;grid-template-columns:minmax(0,1fr) 302px;gap:20px;align-items:start}.viz-column{min-width:0}.viz-card{background:var(--dark);border:1px solid #1e2b40;border-radius:var(--radius);overflow:hidden;box-shadow:0 10px 26px #1526470b;position:relative}
 .viz-toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:18px 21px 14px;color:#d3dcee;border-bottom:1px solid #ffffff0a;flex-wrap:wrap}
 .viz-title{font-size:13px;font-weight:600;letter-spacing:.1px;display:flex;align-items:center;gap:8px}.viz-title svg{color:#7894c6;width:16px;height:16px}.viz-actions{display:flex;gap:7px}
 .icon-button{display:inline-flex;align-items:center;justify-content:center;gap:6px;background:#ffffff06;border:1px solid #ffffff14;color:#a8b9d4;border-radius:7px;padding:6px 9px;font-size:10px;min-height:30px;transition:background .15s,color .15s}.icon-button svg{width:13px;height:13px}.icon-button:hover{background:#ffffff13;color:#fff}.icon-button span{white-space:nowrap}
@@ -31,6 +31,7 @@ h1{font-size:clamp(27px,2.6vw,37px);line-height:1.18;letter-spacing:-1.2px;font-
 .plot-region{height:var(--plot-height,calc(100dvh - 480px));min-height:160px;position:relative}.plot-region>div{width:100%;height:100%}
 .empty-plot{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#111b2bcc;color:#ced9ec;z-index:2;pointer-events:none}.empty-plot[hidden]{display:none}.empty-plot strong{font-size:15px;font-weight:500}.empty-plot span{font-size:11px;color:#8197b8;margin-top:6px}
 .plot-region .modebar{display:none!important}.plot-region .js-plotly-plot .plotly .cursor-crosshair{cursor:grab}.plot-region .js-plotly-plot .plotly .cursor-crosshair:active{cursor:grabbing}
+.plot-region .navigating .hovertext{visibility:hidden}
 .canvas-bottom{display:flex;align-items:center;justify-content:space-between;gap:14px;color:#8295b3;padding:0 23px 18px;font-size:10px;flex-wrap:wrap}.canvas-gestures{display:flex;align-items:center;gap:15px}.canvas-gestures span{display:flex;align-items:center;gap:5px}.canvas-gestures svg{width:12px;height:12px;opacity:.7}.variance-chip{background:#ffffff06;border:1px solid #ffffff0e;padding:4px 8px;border-radius:5px;color:#a0b5d4;font-size:10px;font-variant-numeric:tabular-nums}
 .plot-caption{display:flex;justify-content:space-between;gap:12px;padding:13px 3px 0;font-size:10px;color:#8792a5}.plot-caption span:first-child{max-width:70%}.plot-caption a{color:#647caa;white-space:nowrap}
 .sidebar{display:flex;flex-direction:column;gap:15px}.panel{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px}.panel-header{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:14px}.panel-title{margin:0;font-size:12px;font-weight:650;letter-spacing:-.1px}.text-button{border:0;background:transparent;color:#8a97ab;font-size:10px;padding:3px 0}.text-button:hover{color:var(--accent)}
@@ -135,6 +136,8 @@ const NAMES=['Superincreasing','Complete coverage','Few distinct values','Small 
 const SYMBOLS=['SI','COV','VAL','SUP','REP'];
 const VIEW_NAMES={combined:'Combined feature space',distances:'Distance-to-easy space',interpretable:'Original input space'};
 const HOME_CAMERA={eye:{x:1.35,y:1.45,z:1},center:{x:0,y:0,z:0}};
+// Wheel zoom updates the live scene before Plotly copies it into the layout.
+const currentCamera=()=>JSON.parse(JSON.stringify(chart._fullLayout?.scene?._scene?.getCamera()||chart._fullLayout?.scene?.camera||HOME_CAMERA));
 const state={space:'combined',outcome:'all',types:new Set([0,1,2,3,4,5,6]),selected:null,lens:'errors',model:'baseline',focus:'all'};
 const ERROR_NAMES={correct_easy:'Easy recognized',correct_hard:'Hard caught',missed:'Missed hard',false:'Easy flagged as hard'};
 const ERROR_COLORS={correct_easy:'#8097b4',correct_hard:'#57d8b5',missed:'#ff789a',false:'#ffc46b'};
@@ -143,7 +146,11 @@ const predictedEasy=i=>probability(i)>=PREDICTIONS.threshold;
 const category=i=>DATA[i].completed?(predictedEasy(i)?'correct_easy':'false'):(predictedEasy(i)?'missed':'correct_hard');
 const matchesFocus=i=>state.focus==='all'||category(i)===state.focus||(state.focus==='errors'&&['missed','false'].includes(category(i)))||(state.focus==='correct'&&category(i).startsWith('correct'));
 const esc=s=>String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;');
-let currentIds=[],renderVersion=0,renderedSpace=null;
+let currentIds=[],renderedSpace=null,rendering=false,pendingRender=false;
+const markerSize=(i,kind,dim)=>i===state.selected?10:dim?3:['missed','false'].includes(kind)?8:state.lens==='errors'?4.5:DATA[i].completed?6.3:5.2;
+// Do not leave a hover card over the cloud while rotating, zooming or leaving it.
+for(const event of ['pointerdown','pointerleave','wheel'])chart.addEventListener(event,()=>chart.classList.add('navigating'),{passive:true});
+chart.addEventListener('pointermove',event=>{if(!event.buttons)chart.classList.remove('navigating');},{passive:true});
 // Fit the desktop chart below the measured header, including its controls and caption.
 // Document coordinates keep the layout stable when the page is scrolled.
 let fitFrame=0;
@@ -166,7 +173,8 @@ function fitWorkspace(){
     root.style.removeProperty('--workspace-height');
    }
   }
-  if(chart._fullLayout)Plotly.Plots.resize(chart);
+  // Plotly's resize path schedules a relayout, even when nothing changed.
+  if(chart._fullLayout&&(Math.abs(chart.clientWidth-chart._fullLayout.width)>1||Math.abs(chart.clientHeight-chart._fullLayout.height)>1))Plotly.Plots.resize(chart);
  });
 }
 window.addEventListener('resize',fitWorkspace);
@@ -177,6 +185,10 @@ const baseIds=()=>DATA.map((_,i)=>i).filter(i=>(document.getElementById('scaled'
 function axis(title,range){return {title:{text:title,font:{size:10,color:'#91a6c7'}},range,autorange:false,tickfont:{size:9,color:'#6e83a5'},showbackground:true,backgroundcolor:'#111b2b',gridcolor:'#35496366',zerolinecolor:'#49638488',linecolor:'#344761',showspikes:false,ticks:'',nticks:5};}
 function setMetric(key,value,note,fraction){document.getElementById('count-'+key).textContent=value.toLocaleString();if(note!==null)document.getElementById('note-'+key).textContent=note;document.getElementById('bar-'+key).style.width=Math.max(0,Math.min(100,fraction))+'%';}
 function update(){
+ // Coalesce rapid filter changes instead of overlapping WebGL redraws.
+ if(rendering){pendingRender=true;return;}
+ rendering=true;
+ chart.classList.add('navigating');
  const view=VIEWS[state.space],base=baseIds(),eligible=base.filter(i=>state.types.has(DATA[i].primary_type)),ids=eligible.filter(matchesFocus);currentIds=ids;
  const context=document.getElementById('context').checked&&state.focus!=='all'?eligible.filter(i=>!matchesFocus(i)):[];
  const frame=view.coordinates.filter((_,i)=>document.getElementById('scaled').checked||DATA[i].scale===1);
@@ -191,7 +203,7 @@ function update(){
  }
  const makeTrace=(points,name,color,kind,dim=false)=>({type:'scatter3d',mode:labels&&!dim?'markers+text':'markers',name,
    x:points.map(i=>view.coordinates[i][0]),y:points.map(i=>view.coordinates[i][1]),z:points.map(i=>view.coordinates[i][2]),
-   marker:{color,size:points.map(i=>i===state.selected?10:dim?3:['missed','false'].includes(kind)?8:state.lens==='errors'?4.5:DATA[i].completed?6.3:5.2),symbol:points.map(i=>DATA[i].completed?'circle':'x'),opacity:dim?.12:kind==='correct_easy'&&state.focus==='all'?.5:.95,line:{color:'#111b2b',width:.4}},
+   marker:{color,size:points.map(i=>markerSize(i,kind,dim)),symbol:points.map(i=>DATA[i].completed?'circle':'x'),opacity:dim?.12:kind==='correct_easy'&&state.focus==='all'?.5:.95,line:{color:'#111b2b',width:.4}},
    text:points.map(i=>DATA[i].label),textposition:'top center',textfont:{size:9,color:'#b6c5dc'},customdata:points,
    hovertext:points.map(i=>{const r=DATA[i];return '<b>'+esc(ERROR_NAMES[category(i)])+'</b><br>Observed: '+(r.completed?'easy / completed':'hard / unresolved')+'<br>Predicted: '+(predictedEasy(i)?'easy':'hard')+' · P(easy) '+(100*probability(i)).toFixed(1)+'%<br>'+esc(NAMES[r.primary_type])+' · '+r.n+' weights<br>'+esc(r.case_id)+(dim?'<br>Context point; outside focus':'')+'<br><span style="color:#9baecc">Click for full input details</span>';}),
    hovertemplate:'%{hovertext}<extra></extra>',meta:{kind,context:dim}});
@@ -237,13 +249,14 @@ function update(){
  document.getElementById('projection').textContent=state.space==='interpretable'?'Direct input properties, with separate units on each axis.':'PCA projection of '+(state.space==='combined'?'15 model features':'the five structural distances')+'. Position is determined by features only.';
  document.querySelectorAll('[data-space]').forEach(b=>{const active=b.dataset.space===state.space;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active));});
  document.querySelectorAll('[data-outcome]').forEach(b=>{const active=b.dataset.outcome===state.outcome;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active));});
- const camera=renderedSpace===state.space&&chart._fullLayout?.scene?.camera?JSON.parse(JSON.stringify(chart._fullLayout.scene.camera)):JSON.parse(JSON.stringify(HOME_CAMERA));
+ const camera=renderedSpace===state.space?currentCamera():JSON.parse(JSON.stringify(HOME_CAMERA));
  renderedSpace=state.space;
- const version=++renderVersion;
  return Plotly.react(chart,traces,{autosize:true,paper_bgcolor:'#111b2b',plot_bgcolor:'#111b2b',font:{family:'Segoe UI,Arial,sans-serif',color:'#a3b6d2'},showlegend:false,margin:{l:4,r:4,b:0,t:0},
   hoverlabel:{bgcolor:'#1c2b43',bordercolor:'#3b5274',font:{family:'Segoe UI,Arial,sans-serif',size:11,color:'#e6edf8'},align:'left'},
   scene:{bgcolor:'#111b2b',xaxis:axis(view.axes[0],ranges[0]),yaxis:axis(view.axes[1],ranges[1]),zaxis:axis(view.axes[2],ranges[2]),camera,aspectmode:state.space==='interpretable'?'cube':'manual',aspectratio,dragmode:'orbit'},uirevision:state.space},
-  {responsive:true,displaylogo:false,displayModeBar:false,scrollZoom:true}).then(()=>{if(version===renderVersion){chart.setAttribute('aria-label',ids.length+' inputs in a three-dimensional scatter plot');fitWorkspace();}});
+  {responsive:false,displaylogo:false,displayModeBar:false,scrollZoom:true,plotGlPixelRatio:1}).then(()=>{
+   chart.setAttribute('aria-label',ids.length+' inputs in a three-dimensional scatter plot');fitWorkspace();
+  }).finally(()=>{rendering=false;if(pendingRender){pendingRender=false;update();}});
 }
 function showPoint(index,redraw=true){
  const r=DATA[index];if(!r)return;state.selected=index;
@@ -261,7 +274,12 @@ function showPoint(index,redraw=true){
   '<table class="model-estimates" aria-label="Saved model completion estimates">'+Object.entries(PREDICTIONS.models).map(([key,name])=>'<tr class="'+(key===state.model?'active':'')+'"><td>'+esc(name)+'</td><td>'+(100*PREDICTIONS.records[index].probabilities[key]).toFixed(1)+'%</td></tr>').join('')+'</table>'+
   (PREDICTIONS.records[index].hard_distance!==undefined?'<div class="neighbor-distance-row"><span>To hard: '+PREDICTIONS.records[index].hard_distance.toFixed(2)+'</span><span>To easy: '+PREDICTIONS.records[index].easy_distance.toFixed(2)+'</span></div>':'')+
   '<details class="input-more"><summary>Full input & diagnostics</summary><dl><dt>Target</dt><dd><code>'+esc(r.target)+'</code></dd><dt>Weights</dt><dd><code>'+esc(r.weights.join(', '))+'</code></dd><dt>All exact type memberships</dt><dd>'+esc(r.exact_memberships.map(i=>TYPES[i]).join('; ')||'No full-input certificate among these five types')+'</dd><dt>Model kernel distances</dt><dd>'+esc(r.model_distances.join(', '))+'</dd><dt>Kernel</dt><dd>'+r.kernel_n+' weights · '+esc(r.kernel_status)+'</dd><dt>Budget / work used</dt><dd>'+r.budget+' / '+r.work+'</dd><dt>Independent reachability truth</dt><dd>'+esc(r.truth.toUpperCase())+'</dd><dt>Display label</dt><dd>'+esc(r.primary_label)+'</dd><dt>Scaled encoding</dt><dd>'+esc(r.scale)+'</dd></dl></details>';
- if(redraw){update();if(window.innerWidth>800){const sidebar=document.querySelector('.sidebar'),inspector=document.querySelector('.inspector');sidebar.scrollTo({top:inspector.getBoundingClientRect().top-sidebar.getBoundingClientRect().top+sidebar.scrollTop,behavior:'smooth'});}}
+ if(redraw){
+  // Selecting an input changes marker sizes, not coordinates, traces or layout.
+  if(rendering)pendingRender=true;
+  else Plotly.update(chart,{'marker.size':chart.data.map(trace=>trace.customdata.map(i=>markerSize(i,trace.meta.kind,trace.meta.context)))},{'scene.camera':currentCamera()});
+  if(window.innerWidth>800){const sidebar=document.querySelector('.sidebar'),inspector=document.querySelector('.inspector');sidebar.scrollTo({top:inspector.getBoundingClientRect().top-sidebar.getBoundingClientRect().top+sidebar.scrollTop,behavior:'smooth'});}
+ }
 }
 document.getElementById('prediction-model').innerHTML=Object.entries(PREDICTIONS.models).map(([key,name])=>'<option value="'+key+'">'+esc(name)+'</option>').join('');
 document.getElementById('prediction-model').addEventListener('change',event=>{state.model=event.target.value;update();});
@@ -281,7 +299,7 @@ document.getElementById('export-image').addEventListener('click',async()=>{
  const button=document.getElementById('export-image');button.disabled=true;
  const node=document.createElement('div');node.style.cssText='position:fixed;left:-10000px;top:0;width:1500px;height:1000px';document.body.appendChild(node);
  try{
-  const camera=JSON.parse(JSON.stringify(chart._fullLayout.scene.camera));
+  const camera=currentCamera();
   await Plotly.newPlot(node,chart.data,{...chart.layout,width:1500,height:1000,showlegend:true,
    title:{text:'Subset-sum input space · '+({structure:'Structure',predictions:'Predictions',errors:'Mistakes'}[state.lens])+' · '+esc(PREDICTIONS.models[state.model])+'<br><sup>'+currentIds.length+' focused inputs · '+esc(document.getElementById('prediction-focus').selectedOptions[0].text)+' · Circle = completed; cross = unresolved</sup>',font:{size:18,color:'#d9e5f7'},x:.04,xanchor:'left'},
    legend:{x:1.02,y:.98,font:{size:11,color:'#b5c5de'},title:{text:state.lens==='structure'?'Structural type':state.lens==='errors'?'Prediction result':'Model prediction'},itemsizing:'constant'},
@@ -295,8 +313,9 @@ document.addEventListener('fullscreenchange',()=>{fitWorkspace();const active=!!
 document.querySelector('.top-links a[href="#notes"]').addEventListener('click',()=>document.getElementById('notes').open=true);
 document.querySelector('.plot-caption a').addEventListener('click',()=>document.getElementById('notes').open=true);
 document.getElementById('download-data').addEventListener('click',()=>{const quote=s=>'"'+String(s).replaceAll('"','""')+'"';const headers=['case_id','family','n','scale','completed','display_type','all_exact_types','completion_method','prediction_model','probability_easy','predicted_label','prediction_result','projection','x','y','z'];const lines=[headers.map(quote).join(',')];currentIds.forEach(i=>{const r=DATA[i];lines.push([r.case_id,r.family,r.n,r.scale,r.completed,r.primary_label,r.exact_memberships.map(k=>TYPES[k]).join('; '),r.completion_method,state.model,probability(i),predictedEasy(i)?'easy':'hard',category(i),state.space,...VIEWS[state.space].coordinates[i]].map(quote).join(','));});const url=URL.createObjectURL(new Blob([lines.join(String.fromCharCode(13,10))],{type:'text/csv;charset=utf-8'}));const a=document.createElement('a');a.href=url;a.download='paper_vi_visible_inputs.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);});
-chart.on('plotly_click',event=>{const index=event.points?.[0]?.customdata;if(Number.isInteger(index))showPoint(index);});
-update();
+// The 3D renderer can emit clicks again while the button is held. Redrawing an
+// already selected input here would trigger another render and another click.
+update().then(()=>chart.on('plotly_click',event=>{const index=event.points?.[0]?.customdata;if(Number.isInteger(index)&&index!==state.selected)showPoint(index);}));
 </script>
 </body>
 </html>

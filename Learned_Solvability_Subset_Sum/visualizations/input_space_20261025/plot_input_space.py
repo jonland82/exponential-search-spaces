@@ -18,8 +18,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 import numpy as np
-import plotly.graph_objects as go
-import plotly.io as pio
+from plotly.offline import get_plotlyjs
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
 
@@ -207,10 +206,11 @@ def prediction_overlay(records):
 def render_interactive(records, views, overlay):
     """Render the offline interface; keep data and coordinates supplied by callers."""
     template = HERE / "input_space_template.html"
-    stub = go.Figure(go.Scatter3d(x=[], y=[], z=[]))
-    stub.update_layout(paper_bgcolor="#111b2b", plot_bgcolor="#111b2b")
-    embedded = pio.to_html(stub, full_html=False, include_plotlyjs=True, div_id="input-space",
-                           default_height="100%", config=dict(displaylogo=False, displayModeBar=False))
+    # Initialize the real chart once. An empty newPlot here races the template's
+    # first react call and allocates an unnecessary WebGL scene on startup.
+    embedded = ('<script>' + get_plotlyjs() + '</script>'
+                '<div id="input-space" class="plotly-graph-div" '
+                'style="height:100%;width:100%"></div>')
     content = template.read_text(encoding="utf-8").replace("__PLOT__", embedded)
     for token, value in (("__DATA__", records), ("__VIEWS__", views), ("__TYPES__", TYPES), ("__COLORS__", COLORS), ("__PREDICTIONS__", overlay)):
         content = content.replace(token, json.dumps(value, separators=(",", ":")))
