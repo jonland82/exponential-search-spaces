@@ -12,9 +12,26 @@ certified branch-pruning experiment. Both are preserved and reported separately.
 - [Frozen findings](../../Learned_Solvability_Subset_Sum/PROSPECTIVE_FINDINGS.md).
 - [Branch-pruning findings](../../Learned_Solvability_Subset_Sum/BRANCH_FINDINGS.md).
 
-Build with `python build_papers.py --paper 6`. The builder verifies frozen
-source/model/data hashes and generates measured values, tables and the plot.
-It regenerates PDF/HTML and performs no training or experiment reruns.
+Build the main paper with `python build_papers.py --paper 6`. The builder verifies
+frozen source/model/data hashes and generates measured values, tables and the
+plot. It regenerates PDF/HTML and performs no training or experiment reruns.
+
+## Companion note: why unresolved inputs cluster
+
+[Three-page PDF](Why_Unresolved_Inputs_Cluster.pdf) | [LaTeX source](Why_Unresolved_Inputs_Cluster.tex) |
+[3D figure](cluster_geometry.png) | [Descriptive evidence](cluster_evidence.json).
+
+October 26, 2026. A focused account of the structural residual-search bound,
+the union of affordable core-solving routes, and the probability identity behind
+hard-neighbor enrichment. It distinguishes unresolved portfolio runs from
+intrinsic hardness and separates an ideal local-pair explanation from the exact
+finite-neighbor graph calculation. The figure reuses the frozen PCA coordinates;
+the full-space neighborhood rate is 586/730, or 80.27%, against 25.35% unresolved
+overall. This is descriptive reuse of the original sample, not a new experiment.
+
+Rebuild with `python tools/note_vi_cluster_artifacts.py --pdf`. The script checks
+saved evidence hashes and identities, regenerates the figure and numerical
+macros, and compiles the PDF. It does not rerun solvers, fit models or refit PCA.
 
 ## Latest result
 

@@ -1,0 +1,69 @@
+{
+  "scope": "Descriptive reuse of original unscaled prospective sample; no solver reruns or model fitting.",
+  "geometry": "Original 15 features; use the saved plot standardization fitted on 576 unscaled rows, not the later training-bank geometry.",
+  "neighbor_rule": "Euclidean; nearest frozen target per base list; exclude entire own base list; choose five distinct lists; target ties use frozen row order, list ties lexicographic ID.",
+  "input_sha256": {
+    "Learned_Solvability_Subset_Sum/results/prospective_20261025/cases.jsonl": "34c3a42d2e90b096e3d487bf87c7df783f38a5f6685498863f2a21970f9b5c9f",
+    "Learned_Solvability_Subset_Sum/results/prospective_20261025/references.jsonl": "df762185f00c276922fe155bdeabf5249fb47201aab1e440c55ae80c7ae930d9",
+    "Learned_Solvability_Subset_Sum/visualizations/input_space_20261025/points.json": "1c2c674b63b4d2ec750dcdd666823c4dfffaf2d06e589f81e15c74abdce8ca60",
+    "Learned_Solvability_Subset_Sum/visualizations/input_space_20261025/views.json": "7ee18104970756f2dc6312f760f220845f17ed8d70d867bf7f3f2cad82012f1f",
+    "Learned_Solvability_Subset_Sum/visualizations/input_space_20261025/projection.json": "5a862b9082ee0f87237677e899b99f8a0b5a112cc75dadc63a81505f757ab49b"
+  },
+  "full15": {
+    "query_count": 576,
+    "hard_queries": 146,
+    "k": 5,
+    "hard_query_neighbor_positions": 730,
+    "hard_neighbor_positions": 586,
+    "conditional_hard_fraction": 0.8027397260273973,
+    "global_hard_fraction": 0.2534722222222222,
+    "enrichment_ratio": 3.1669731656971294,
+    "incoming_hard_positions": 750,
+    "total_neighbor_positions": 2880,
+    "incoming_hard_fraction": 0.2604166666666667,
+    "edge_label_covariance": 0.1374638310185185,
+    "hard_queries_with_an_easy_neighbor": 56,
+    "hard_queries_with_majority_hard_neighbors": 119,
+    "hard_neighbor_count_histogram": {
+      "0": 6,
+      "1": 11,
+      "2": 10,
+      "3": 11,
+      "4": 18,
+      "5": 90
+    },
+    "neighbor_index_sha256": "2b0c853cc28284525481e05f1f3e1b696a528d8f21c4a58143ca2a24a67b7f19"
+  },
+  "pca3": {
+    "query_count": 576,
+    "hard_queries": 146,
+    "k": 5,
+    "hard_query_neighbor_positions": 730,
+    "hard_neighbor_positions": 587,
+    "conditional_hard_fraction": 0.8041095890410959,
+    "global_hard_fraction": 0.2534722222222222,
+    "enrichment_ratio": 3.1723775567648715,
+    "incoming_hard_positions": 747,
+    "total_neighbor_positions": 2880,
+    "incoming_hard_fraction": 0.259375,
+    "edge_label_covariance": 0.13807508680555555,
+    "hard_queries_with_an_easy_neighbor": 59,
+    "hard_queries_with_majority_hard_neighbors": 123,
+    "hard_neighbor_count_histogram": {
+      "0": 5,
+      "1": 13,
+      "2": 5,
+      "3": 15,
+      "4": 21,
+      "5": 87
+    },
+    "neighbor_index_sha256": "1226f0aaa841b43c674f3bcf43f69af54431e4eef63bfebc68c5854c667b4677"
+  },
+  "pca_retained_variance": 0.7244365755780017,
+  "certificate_outcome_counts": {
+    "certified_completed": 135,
+    "certified_unresolved": 9,
+    "uncertified_completed": 295,
+    "uncertified_unresolved": 137
+  }
+}
