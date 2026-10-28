@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="An exact geometric core route with fresh paid completion gains and a bounds-first construction ablation.">
+<title>Geometric Cores and Exceptions in Subset Sum | Jonathan R. Landers</title>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']], tags: 'none' },
+  svg: { fontCache: 'global', scale: 0.98 },
+  options: { enableMenu: false }
+};
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<link rel="stylesheet" href="../../paper.css">
+</head>
+<body>
+<main>
+<nav class="top-links" aria-label="Paper links">
+  <a href="../../index.html">&larr; Series home</a>
+  <a href="https://github.com/jonland82/exponential-search-spaces">GitHub repository</a>
+  <a href="Geometric_Cores_and_Exceptions_in_Subset_Sum.pdf">Download PDF</a>
+  <a href="Geometric_Cores_and_Exceptions_in_Subset_Sum.tex">LaTeX source</a>
+</nav>
+<header>
+  <span class="series-label">Companion note VII of VII &middot; Working draft</span>
+  <h1>Geometric Cores and Exceptions in Subset Sum</h1>
+  <div class="byline">Jonathan R. Landers<br>October 2026</div>
+</header>
+<div class="abstract">
+<p><strong>Abstract.</strong> Can a subset-sum instance be solved more cheaply by representing most weights in a narrow geometric core and enumerating a few exceptions? We implement an exact route that discovers a decomposition <span class="math inline">\(w_i=Mp_i+r_i\)</span>, removes a bounded number of large residuals, and reuses one two-coordinate dynamic-programming table across exceptional assignments. In a locally frozen study of 576 fresh targets, the route completes 469 decisions under the declared work cap, versus 453 for matched root geometry: a net gain of 16 with conditional whole-list-bootstrap 95% interval [4.00, 30.02]. A second frozen study of 1,152 fresh targets obtains 954 versus 916 root completions. Its primary incremental comparison with previous reuse is only 1 completion, with interval [0.00, 3.00]. A matched ablation explains a smaller efficiency gain: necessary bounds avoid 90 of 182 table constructions; faster discovery and delayed construction together reduce capped work by 1.74%. We prove correctness, safe truncation and the conditional construction saving. All online acquisition and verification are charged. The result is an exact structural improvement on the declared constructed mixture, without a new general worst-case bound or a demonstrated incremental wall-clock speedup from the final refinement.</p>
+</div>
+<h2 id="from-predicted-solvability-to-an-executable-route">From predicted solvability to an executable route</h2>
+<p>Note I asks whether certified representations or exclusions can account for enough of an exponential search space that the residual becomes affordable. Notes V and VI turn this into a core-and-exceptions program: find an exactly queryable core, enumerate the exceptions, and charge discovery and checking. The earlier prediction work also exposes a practical limitation. A classifier can select an existing route; improving its input geometry does not by itself supply a missing exact solver.</p>
+<p>This note develops such a route. The motivating inspected failures included large-base weights whose residuals were mostly small, with a few items making an otherwise compact aggregate representation unaffordable. Those failures informed the design. They are not counted as fresh confirmation. Two subsequent source/configuration freezes precede two new samples, with prior normalized lists excluded.</p>
+<p>The main empirical result is improved paid exact completion over the matched original root-geometry portfolio. The main mechanism is an explicit, auditable representation: one exact table serves many shifted targets. The later bounds-first experiment separates this route’s useful exact queries from table construction that was unnecessary. No ML is fitted in either solver experiment.</p>
+<h2 id="aggregate-geometry-and-a-bounded-exceptional-set">Aggregate geometry and a bounded exceptional set</h2>
+<p>Consider positive integer weights and an integer target. Apply exact range, complement, exclusion, forcing and gcd reductions, retaining the information needed to lift witnesses. For an unresolved normalized kernel <span class="math inline">\(u_1,\ldots,u_n\)</span> and target <span class="math inline">\(T\)</span>, discover a base <span class="math inline">\(M\ge2\)</span> and write <span class="math display">\[u_i=Mp_i+r_i,\qquad
+p_i=\left\lfloor\frac{u_i+\lfloor M/2\rfloor}{M}\right\rfloor\ge0.\]</span> The residuals may be negative. The detector uses at most 24 data-only candidates: observed minimum/median weights, nearby powers of two, and large observed gaps divided by small integers. It receives neither a planted base nor an outlier or family label. It selects one projection by its fixed aggregate-range/history score.</p>
+<p>Split the indices into core <span class="math inline">\(C\)</span> and exceptions <span class="math inline">\(E\)</span>, with <span class="math inline">\(m=|C|\)</span> and <span class="math inline">\(k=|E|\)</span>. The implementation ranks decreasing <span class="math inline">\(|r_i|\)</span>, breaking ties by kernel index, and considers removing the first <span class="math inline">\(0,1,\ldots,9\)</span> items. It accepts the first partition meeting fixed storage and work gates. This is a constructive heuristic, not a minimum deletion distance; discovery can fail even when another useful partition exists.</p>
+<p>For an exceptional subset <span class="math inline">\(A\subseteq E\)</span>, define the shifted core target and residual strip by <span class="math display">\[z_A=T-\sum_{i\in A}u_i,\qquad
+R_-=\sum_{i\in C}\min(0,r_i),\quad
+R_+=\sum_{i\in C}\max(0,r_i).\]</span> Any core selection has coordinates <span class="math inline">\(q=\sum_{i\in C}p_ix_i\)</span> and <span class="math inline">\(s=\sum_{i\in C}r_ix_i\)</span>. It solves the shifted problem exactly when <span class="math inline">\(Mq+s=z_A\)</span>.</p>
+<p><strong>Proposition 1 (one safe quotient cap).</strong> Every core selection solving any shifted target lies in <span class="math display">\[0\le q\le Q=\min\left(\sum_{i\in C}p_i,
+\left\lfloor\frac{T-R_-}{M}\right\rfloor\right),
+\qquad R_-\le s\le R_+.\]</span> <em>Proof.</em> Positive exceptional weights imply <span class="math inline">\(z_A\le T\)</span>. Since <span class="math inline">\(s\ge R_-\)</span>, the identity <span class="math inline">\(Mq=z_A-s\)</span> gives <span class="math inline">\(Mq\le T-R_-\)</span>. Nonnegative quotients bound <span class="math inline">\(q\)</span> by their core total. The residual strip contains every subset residual, including every prefix residual. These bounds hold for all <span class="math inline">\(A\)</span>, so a single capped core representation suffices. <span class="math inline">\(\square\)</span></p>
+<h2 id="one-exact-table-reused-across-shifted-targets">One exact table, reused across shifted targets</h2>
+<p>Set <span class="math inline">\(H=Q+1\)</span> and <span class="math inline">\(W=R_+-R_-+1\)</span>. For a fixed order of core items, maintain reachable pairs <span class="math display">\[S_0=\{(0,0)\},\qquad
+S_j=S_{j-1}\cup\{(q+p_j,s+r_j):(q,s)\in S_{j-1}\},\]</span> restricted to <span class="math inline">\(0\le q\le Q\)</span> and <span class="math inline">\(R_-\le s\le R_+\)</span>. Store each quotient row as a residual bitset offset by <span class="math inline">\(-R_-\)</span>. Update rows in descending quotient order. If <span class="math inline">\(p_j=0\)</span>, each row reads its pre-update value once, so the item is still used at most once. Retain prefix rows for witness reconstruction.</p>
+<p><strong>Proposition 2 (exact reuse).</strong> After full construction, membership in <span class="math inline">\(S_m\)</span> answers every required shifted core query exactly. Exhausting all exceptional subsets with no successful membership proves NO; a successful membership yields an indexed witness.</p>
+<p><em>Proof.</em> The recurrence is the ordinary include/exclude induction, with an extra coordinate. Discarding <span class="math inline">\(q&gt;Q\)</span> is safe because later quotients are nonnegative. Every prefix residual belongs to the full core strip, so residual clipping removes no attainable prefix. Proposition 1 retains every pair that can solve a shifted target. Every original subset has exactly one exceptional part <span class="math inline">\(A\)</span> and one core part; querying all <span class="math inline">\(A\)</span> therefore covers all possibilities. Walk backward through prefix tables: omit the current item when the required pair was already reachable, otherwise include it and subtract its two coordinates. Combine with <span class="math inline">\(A\)</span>, lift the reductions, and verify the original weighted sum. <span class="math inline">\(\square\)</span></p>
+<p>For each shifted target, only quotient values in <span class="math display">\[\ell(z)=\max\left(0,\left\lceil\frac{z-R_+}{M}\right\rceil\right)
+\le q\le
+h(z)=\min\left(Q,\left\lfloor\frac{z-R_-}{M}\right\rfloor\right)\]</span> can work. Membership tests use <span class="math inline">\((q,z-Mq)\)</span>. Gray-code enumeration updates the exceptional sum by one signed item change per assignment. At most <span class="math display">\[G=\min\left(H,\left\lfloor\frac{W-1}{M}\right\rfloor+1\right)\]</span> quotients need testing for one assignment. The exponential enumeration is in <span class="math inline">\(k\)</span>, rather than in the full number of items. Rebuilding the core for every shifted target would repeat the largest shared computation.</p>
+<p>An interrupted table, enumeration or witness check returns <em>unresolved</em>. The implemented portfolio only returns an accepted exact decision after its required checks and final deadline check. A completed NO may come from preprocessing, necessary bounds, a complete core check, or the existing exact fallback; a failed heuristic never supplies a NO certificate.</p>
+<h2 id="bounds-before-construction">Bounds before construction</h2>
+<p>Let <span class="math inline">\(U_C=\sum_{i\in C}u_i\)</span>. Reject an exceptional assignment immediately when <span class="math inline">\(z_A\notin[0,U_C]\)</span> or <span class="math inline">\(\ell(z_A)&gt;h(z_A)\)</span>.</p>
+<p><strong>Proposition 3 (a table-free NO).</strong> If every exceptional assignment is rejected by these necessary conditions, the original instance is NO without constructing <span class="math inline">\(S_m\)</span>.</p>
+<p><em>Proof.</em> A positive-weight core cannot attain a target outside <span class="math inline">\([0,U_C]\)</span>. Inside that range, every solution requires an integer quotient in <span class="math inline">\([\ell,h]\)</span>. An empty interval excludes that exceptional assignment. Exhausting all assignments excludes every original subset. <span class="math inline">\(\square\)</span></p>
+<p>A nonempty interval is only necessary. For example, with <span class="math inline">\(M=100\)</span>, core weights <span class="math inline">\((101,203)\)</span> have pairs <span class="math inline">\((0,0),(1,1),(2,3),(3,4)\)</span>; let the exception be <span class="math inline">\(149\)</span>. Target <span class="math inline">\(260\)</span> is rejected for both exceptional choices without a table. Target <span class="math inline">\(252\)</span> survives bounds after selecting <span class="math inline">\(149\)</span>: <span class="math inline">\(z=103\)</span> allows <span class="math inline">\(q=1,s=3\)</span>, but that core pair is unreachable. Exact membership proves NO. Target <span class="math inline">\(250\)</span> instead gives the reachable pair <span class="math inline">\((1,1)\)</span> and witness <span class="math inline">\(101+149\)</span>. Bounds-only cannot replace exact reachability.</p>
+<p>The bounds-first route constructs the table lazily, upon the first surviving assignment, and reuses it thereafter. It never constructs a second table.</p>
+<div class="keyeq">
+<p><strong>Algorithm: bounds-first exception-core solving.</strong></p>
+<ol>
+<li><p>Reduce the target exactly; reuse the five existing tractable-core queries.</p></li>
+<li><p>Discover a projection; try the original root bounds/DP when eligible.</p></li>
+<li><p>Find an affordable core/exception partition using capped discovery.</p></li>
+<li><p>Enumerate exceptional subsets. Reject empty range/quotient intervals.</p></li>
+<li><p>On the first surviving assignment, build one exact core table. Query the surviving pairs; reconstruct and verify any witness.</p></li>
+<li><p>Certify NO only after exhaustive rejection/querying. On an unavailable plan or interrupted route, spend the remaining allowance on the shared exact fallback.</p></li>
+</ol>
+</div>
+<h2 id="what-the-cost-identity-does-and-does-not-prove">What the cost identity does and does not prove</h2>
+<p>Let <span class="math inline">\(F\)</span> include acquisition/discovery, <span class="math inline">\(B\)</span> bound/enumeration work per assignment, <span class="math inline">\(D\)</span> one complete table construction, <span class="math inline">\(N_Q\)</span> the number of point queries, <span class="math inline">\(Q_{\rm pt}\)</span> their cost, and <span class="math inline">\(V\)</span> reconstruction/verification. If <span class="math inline">\(I\)</span> indicates that at least one assignment survives bounds, an accounting envelope is <span class="math display">\[C\le F+2^kB+I D+N_QQ_{\rm pt}+V,\qquad N_Q\le2^kG.\]</span> For an identical fixed plan/order with sufficient resources to finish, eager and lazy construction inspect the same necessary bounds and point queries. Their isolated construction-cost difference is <span class="math display">\[C_{\rm eager}-C_{\rm lazy}=(1-I)D\ge0.\]</span> The identity saves construction only when all assignments are excluded by bounds. It does not guarantee a better portfolio completion count: discovery can consume fallback budget, different gates can select different plans, and cooperative deadlines change which calls finish. The fast-eager control below holds discovery and the plan fixed to isolate the identity.</p>
+<p>The table has <span class="math inline">\(HW\)</span> logical bit positions; complete prefix history is bounded by <span class="math inline">\((m+1)HW\)</span> positions plus row/reference overhead. With machine-word width <span class="math inline">\(\omega\)</span>, bitset row updates have width-dependent cost, roughly <span class="math inline">\(O(\lceil W/\omega\rceil)\)</span> word operations rather than unit cost. A conservative construction estimate is <span class="math inline">\(O((m+1)H(1+\lceil W/\omega\rceil))\)</span>, with analogous prefix-storage accounting. Python point tests using shifts can also depend on bit width. Reported work counters charge row updates, reference copies and queries but are heterogeneous units, not uniform bit operations.</p>
+<p>As an elementary sufficient regime, if discovery and these core costs are polynomial in binary input length <span class="math inline">\(L\)</span> and <span class="math inline">\(k=O(\log L)\)</span>, the exact route takes polynomial bit time. This follows from the established exception-to-core principle of Notes V–VI. No bound here makes <span class="math inline">\(H,W\)</span> or <span class="math inline">\(k\)</span> small for arbitrary binary subset-sum instances, or guarantees that this detector finds a good core.</p>
+<h2 id="two-frozen-fresh-input-studies">Two frozen fresh-input studies</h2>
+<p>Both studies use sixteen constructed families, sizes <span class="math inline">\(n=24,30,36\)</span>, and three targets per weight list: planted, unconditioned middle-range, and fractional-band (or a fixed central target when no planted base exists). Study 04 has 192 lists / 576 targets; Study 05 doubles the lists to 384 / 1,152 targets. Their seeds are respectively 790281028 and 800281028. They exclude 2,052 and 2,244 previous normalized sorted-list signatures, respectively, plus within-study duplicates. Acceptance never depends on truth or solver completion.</p>
+<p>The primary allowance is <span class="math inline">\(32L\)</span>, with the inherited self-delimiting encoding proxy <span class="math display">\[L=2\operatorname{bits}(n)+1+
+\sum_i(2\operatorname{bits}(w_i)+1)+2\operatorname{bits}(|t|)+2,\]</span> where <span class="math inline">\(\operatorname{bits}(0)=0\)</span>. This budget is a declared counter schedule, not a complexity-model claim. All policies pay exact reductions, the original 15-feature acquisition and five existing zero-deletion core queries. Geometry policies share blind discovery, original root checking, and the same bitset/DFS/MITM fallback. The direct-MITM control skips geometry and gives its fallback allowance to MITM. No learned inference or additive-doubling acquisition is charged because these policies use neither.</p>
+<p>Fixed route gates permit <span class="math inline">\(HW\le2{,}000{,}000\)</span>, prefix history at most <span class="math inline">\(64{,}000{,}000\)</span> logical bits, and <span class="math inline">\(k\le9\)</span>. Execution receives at most 60,000 work units and three quarters of remaining work. Original root checking has a 12,000-unit cap and at most four candidate quotients; ordinary fallback keeps its 32,768-state / one-million-bit caps. Study 05 maintains residual/quotient totals incrementally, defers detailed estimates until storage gates pass, and caps partition discovery at <span class="math inline">\(\min(1024,\lfloor\text{remaining}/16\rfloor)\)</span> units.</p>
+<p>Independent half enumeration supplies exact truths offline. All returned witnesses, phase charges and caps are checked. Each study also measures a separate 20ms endpoint under the work cap in three randomized case/policy orders. Late outer calls are excluded. These repeats share the same inputs and are not independent samples. Whole-list bootstraps retain the three dependent targets together: 2,000 draws in Study 04 and 4,000 in Study 05. Intervals condition on the fixed methods and generated mixture; secondary comparisons are unadjusted exploratory evidence.</p>
+<div id="tab:results">
+<div class="table-wrap"><table class="paper-table">
+<caption>Individual 32L work caps and separate live 20ms medians over three orders. Counts in different studies have different denominators. Capped work charges unresolved calls their full allowance. All acquisition, checking, fallback and verification are paid.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Study</th>
+<th style="text-align: left;">Policy</th>
+<th style="text-align: right;">Exact / targets</th>
+<th style="text-align: right;">Capped work</th>
+<th style="text-align: left;">Live 20ms [range]</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">04</td>
+<td style="text-align: left;">Lean, no geometry</td>
+<td style="text-align: right;">434/576</td>
+<td style="text-align: right;">16,798,497</td>
+<td style="text-align: left;">356 [353,356]</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">04</td>
+<td style="text-align: left;">Root geometry</td>
+<td style="text-align: right;">453/576</td>
+<td style="text-align: right;">14,421,224</td>
+<td style="text-align: left;">407 [402,408]</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">04</td>
+<td style="text-align: left;">Discovery only</td>
+<td style="text-align: right;">450/576</td>
+<td style="text-align: right;">14,664,555</td>
+<td style="text-align: left;">407 [404,408]</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">04</td>
+<td style="text-align: left;">Exception-core reuse</td>
+<td style="text-align: right;">469/576</td>
+<td style="text-align: right;">13,098,104</td>
+<td style="text-align: left;">440 [434,440]</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">04</td>
+<td style="text-align: left;">Direct MITM</td>
+<td style="text-align: right;">412/576</td>
+<td style="text-align: right;">16,292,072</td>
+<td style="text-align: left;">358 [357,362]</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">05</td>
+<td style="text-align: left;">Root geometry</td>
+<td style="text-align: right;">916/1152</td>
+<td style="text-align: right;">28,582,458</td>
+<td style="text-align: left;">836 [823,836]</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">05</td>
+<td style="text-align: left;">Exception-core reuse</td>
+<td style="text-align: right;">953/1152</td>
+<td style="text-align: right;">26,463,413</td>
+<td style="text-align: left;">896 [884,898]</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">05</td>
+<td style="text-align: left;">Bounds only</td>
+<td style="text-align: right;">933/1152</td>
+<td style="text-align: right;">27,494,127</td>
+<td style="text-align: left;">862 [846,862]</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">05</td>
+<td style="text-align: left;">Bounds first + reuse</td>
+<td style="text-align: right;">954/1152</td>
+<td style="text-align: right;">26,002,456</td>
+<td style="text-align: left;">897 [889,897]</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">05</td>
+<td style="text-align: left;">Fast discovery, eager table</td>
+<td style="text-align: right;">954/1152</td>
+<td style="text-align: right;">26,122,175</td>
+<td style="text-align: left;">894 [884,898]</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p><strong>The original route gain.</strong> Study 04’s locally frozen primary is reuse minus root: 469 versus 453, a net <span class="math inline">\(+16\)</span> exact completions, interval [4.00, 30.02]. There are 19 gains and three losses. Discovery-only completes 450 versus root’s 453; the three lost cases have no affordable new plan and lose a fallback answer to discovery overhead. This isolates a real acquisition cost.</p>
+<p>Study 05 supports the wider route on another fresh sample: bounds-first completes 954 versus root’s 916, a net <span class="math inline">\(+38\)</span> with exploratory interval [20.00, 57.03]. There are 39 gains and one root-only completion; the latter is a near-equal NO with no affordable plan. The original reuse policy already completes 953 targets. These are distinct studies with distinct endpoints and denominators; their gains are not pooled into a single primary statistic.</p>
+<p><strong>The incremental refinement is smaller.</strong> Study 05’s primary is bounds-first minus previous reuse: 1 additional completion, interval [0.00, 3.00], with one gain and no loss. It does not establish a reliable incremental completion improvement. Capped work, which charges each unresolved run its full allowance, falls by 460,957 units (1.74%). Its exploratory interval is approximately [371,704, 566,671] units. Actual work falls from 25,735,033 to 25,218,397; this 2.01% is not a CPU-speedup estimate and mixes slightly different completion sets.</p>
+<figure>
+<img src="geometric_gain.png" id="fig:gain"  alt="Paired exact-completion gains and avoided core-table constructions"><figcaption>A: Stored whole-list-bootstrap intervals, rescaled to percentage points without new resampling; only Study 04’s original route comparison and Study 05’s incremental comparison are their respective primaries. B: Matched-plan construction ablation in Study 05. The figure separates the route gain from the smaller final refinement.</figcaption>
+</figure>
+<h2 id="ablation-regressions-and-remaining-failures">Ablation, regressions and remaining failures</h2>
+<div id="tab:ablation">
+<div class="table-wrap"><table class="paper-table">
+<caption>Study 05 mechanism ablation. Fast-eager and bounds-first select the same plans. The 90 omitted tables correspond to complete bounds-only NO certificates.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Policy</th>
+<th style="text-align: right;">Core calls</th>
+<th style="text-align: right;">Tables built</th>
+<th style="text-align: right;">Point queries</th>
+<th style="text-align: right;">Discovery work</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Exception-core reuse</td>
+<td style="text-align: right;">182</td>
+<td style="text-align: right;">182</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">875,473</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Bounds only</td>
+<td style="text-align: right;">182</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">249,587</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Fast discovery, eager table</td>
+<td style="text-align: right;">182</td>
+<td style="text-align: right;">182</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">249,587</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Bounds first + reuse</td>
+<td style="text-align: right;">182</td>
+<td style="text-align: right;">92</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">249,587</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p>The matched fast-eager and bounds-first controls both complete 954 targets. Bounds-first avoids 90 of 182 tables (49.5%) and saves 119,719 capped-work units against fast-eager, with exploratory interval approximately [47,781, 219,337]. Every omitted table corresponds to a complete bounds-only NO; those constructions were unnecessary for those decisions. Both controls make the same 100 point queries. The surviving 92 table calls retain exact reachability when necessary.</p>
+<p>Bounds-only completes 933 targets, versus 954 with the table available: 21 additional exact decisions, interval [12,31]. This control uses the same DP-affordability gates and stops unresolved at its first interval-feasible assignment. It is an attribution control, not an independently optimized unrestricted bounds solver. Fast-eager ties bounds-first on completion, so the one additional answer over previous reuse comes from discovery changes rather than lazy construction. Discovery work falls from 875,473 to 249,587 units.</p>
+<p>The improvement has recognizable structure. In Study 04, many-outlier large-base cases improve from 22 to 34 of 36 targets; near-equal cases improve 20 to 25. In Study 05, many-outlier cases improve from root’s 45 to 66 of 72, and near-equal cases from 56 to 68. The three old acquisition regressions are all recovered by the faster-discovery policies in an explicitly retrospective replay. The earlier 115 inspected failures yield 25 repairs from core reuse versus 15 from direct MITM, also retrospective. Neither diagnostic is added to fresh counts.</p>
+<p>At the separate live endpoint, Study 04’s medians are 407 root versus 440 reuse completions. Study 05’s medians are 896 previous reuse versus 897 bounds-first, with overlapping ranges; the final refinement establishes no clear further wall-clock advantage. Deadlines are cooperative: recorded maximum outer overshoots in Study 05 are approximately 52.1ms for previous reuse, 1.81ms for bounds-first and 61.4ms for root, and all late answers are excluded. These maxima do not imply hard latency guarantees.</p>
+<p>The new route does not dominate every policy or budget. In Study 04’s earlier-family shared pools, lean search remains better at the 50% nominal allowance (334 versus reuse’s 332); direct MITM is better at 20% (median 165 versus 136). On Study 05’s 198 remaining unresolved targets, two-scale and two-progression families account for 88, random-wide for 48 and filtered-modular for 34. These are descriptive failure concentrations, not intrinsic-hardness certificates. A materially wider completion gain needs additional routes and stronger comparisons, not just further avoided table construction.</p>
+<h2 id="relation-to-the-literature-and-the-research-program">Relation to the literature and the research program</h2>
+<p>The decomposition <span class="math inline">\(Mp+r\)</span> has a direct precedent in decomposable knapsack: Krishnamoorthy and Pataki study conditions under which ordinary variable branching is difficult and aggregate branching or lattice reformulation is effective <a href="#ref-kp">[1]</a>. Their solver-specific statements do not imply that every generated large-base case here satisfies their hypotheses. Our signed coordinate DP and bounded exceptional enumeration are an elementary exact implementation inspired by that geometry, not a new general reformulation theorem.</p>
+<p>Meet-in-the-middle is a standard exact baseline <a href="#ref-hs">[2]</a>. Numeric density and additive structure support other algorithms: Bringmann and Wellnitz give a dense-regime parameter dichotomy <a href="#ref-dense">[3]</a>; Randolph and Węgrzycki study bounded additive doubling <a href="#ref-doubling">[4]</a>. These results motivate possible additional routes, but a density feature or doubling estimate is not a cheap universal solvability certificate. We do not implement or claim superiority over those algorithms.</p>
+<p>The specific contribution is a scoped, reproducible exact route that pays for discovery and improves budgeted completion over its matched root portfolio on fresh constructed inputs. The bounds-first ablation then identifies which part of the exact representation can be skipped. Notes I, V and VI supply the general coverage and exception-to-core principles <a href="#ref-note1">[5]</a>, <a href="#ref-note5">[6]</a>, <a href="#ref-note6">[7]</a>; this note supplies an executable geometric instance and measured positive evidence. It establishes neither a new worst-case subset-sum bound nor general state-of-the-art superiority. Larger sizes, independent machines and stronger tuned portfolios remain necessary for broader claims.</p>
+<h2 id="reproducibility">Reproducibility</h2>
+<p>All experiments, seeds, protocols, raw inputs, witnesses, counter/live traces and pre-generation source snapshots are retained under <code>Structural_Geometry_Subset_Sum/results/04_exception_core_20261028</code> and <code>05_bounds_first_20261028</code>. Their successful independent audits check source/input/artifact hashes, exact truths, partitions, witness recovery, complete bounds certificates and deterministic replays. Study 04 audits 2,880 fresh counter runs, 8,640 live records, 60 work pools and 345 retrospective calls. Study 05 audits 5,760 fresh counter runs, 17,280 live records and 15 retrospective calls.</p>
+<p>The manuscript generator verifies the saved freezes and artifact manifests, checks table counts against raw counter runs, and creates the tables, values, figure and <code>paper_evidence.json</code>. It performs no solver reruns, training, new timing trials or new bootstrap. Rebuild the note with <code>python build_papers.py –paper 7</code>; run the study audit commands documented with the saved evidence for full independent replay. The working draft and its generated assets are separate from the frozen experiments.</p>
+<h2 id="references">References</h2>
+<ol>
+<li><div id="ref-kp">
+
+</div>
+<p>B. Krishnamoorthy and G. Pataki. Column basis reduction, and decomposable knapsack problems. <em>Discrete Optimization</em> 6(3), 242–270, 2009. <a href="https://arxiv.org/abs/0807.1317">https://arxiv.org/abs/0807.1317</a>.</p></li>
+<li><div id="ref-hs">
+
+</div>
+<p>E. Horowitz and S. Sahni. Computing partitions with applications to the knapsack problem. <em>Journal of the ACM</em> 21(2), 277–292, 1974. <a href="https://doi.org/10.1145/321812.321823">https://doi.org/10.1145/321812.321823</a>.</p></li>
+<li><div id="ref-dense">
+
+</div>
+<p>K. Bringmann and P. Wellnitz. On near-linear-time algorithms for dense subset sum. <em>SODA</em>, 2021. <a href="https://arxiv.org/abs/2010.09096">https://arxiv.org/abs/2010.09096</a>.</p></li>
+<li><div id="ref-doubling">
+
+</div>
+<p>T. Randolph and K. Węgrzycki. Parameterized algorithms on integer sets with small doubling: Integer Programming, Subset Sum and k-SUM. <em>ESA</em>, 96:1–96:19, 2024. <a href="https://doi.org/10.4230/LIPIcs.ESA.2024.96">https://doi.org/10.4230/LIPIcs.ESA.2024.96</a>.</p></li>
+<li><div id="ref-note1">
+
+</div>
+<p>J. R. Landers. <em>Certified Coverage of Exponential Search Spaces</em>. Companion note I, 2026. <a href="../01-certified-coverage/Certified_Coverage_of_Exponential_Search_Spaces.pdf">Series manuscript</a>.</p></li>
+<li><div id="ref-note5">
+
+</div>
+<p>J. R. Landers. <em>How Far from Easy? Structural Distance in Subset Sum</em>. Companion note V, working draft, 2026. <a href="../05-structural-distance/Structural_Distance_in_Subset_Sum.pdf">Series manuscript</a>.</p></li>
+<li><div id="ref-note6">
+
+</div>
+<p>J. R. Landers. <em>Predicting Subset-Sum Completion: The Value and Cost of Structural Features</em>. Companion note VI, 2026. <a href="../06-learned-solvability/Predicting_Subset_Sum_Completion.pdf">Series manuscript</a>.</p></li>
+</ol>
+
+<footer>
+  <p>Part of the <a href="../../index.html">Certified Coverage research sequence</a>.</p>
+  <div class="link-row">
+    <a href="../01-certified-coverage/Certified_Coverage_of_Exponential_Search_Spaces.html">Note I: Framework</a>
+    <a href="../02-subset-sum-stress-test/Subset_Sum_as_a_Stress_Test.html">Note II: Exact-search stress test</a>
+    <a href="../03-probability-valued-subset-sum/Probability_Valued_Subset_Sum.html">Note III: Random-target probability</a>
+    <a href="../04-certified-approximation/Certified_Approximation_of_Subset_Sum.html">Note IV: Pairing in approximation</a>
+    <a href="../05-structural-distance/Structural_Distance_in_Subset_Sum.html">Note V: Structural distance (working draft)</a>
+    <a href="../06-learned-solvability/Predicting_Subset_Sum_Completion.html">Note VI: Learned completion</a>
+    <a href="../../Structural_Geometry_Subset_Sum/README.md">Methods and data</a>
+  </div>
+</footer>
+</main>
+</body>
+</html>

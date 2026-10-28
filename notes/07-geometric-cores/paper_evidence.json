@@ -1,0 +1,108 @@
+{
+  "status": "verified",
+  "generator_sha256": "9a05813bb8a8e67b9e33479f88b2bd647d79220c996161b161aad023088df6e1",
+  "input_sha256": {
+    "Structural_Geometry_Subset_Sum\\results\\04_exception_core_20261028\\protocol.json": "a8a6095e92a62bf87bc15aa1213565505140440b0d0e19e59b097377e5d75afe",
+    "Structural_Geometry_Subset_Sum\\results\\04_exception_core_20261028\\protocol.sha256": "83a5d39fdbbc704cf9f04bf17fcad189b662c42af6950ea113841973b34e302f",
+    "Structural_Geometry_Subset_Sum\\results\\04_exception_core_20261028\\VALIDATION.json": "649d5064da6f4b698d179c2b384030603f8dc9cc66a564b8c014c2434d6b6aee",
+    "Structural_Geometry_Subset_Sum\\results\\04_exception_core_20261028\\summary.json": "33e3cb02e58b2939acf6fb6ad63061266bf0d2cc904e42f127ce8d2e138a6d43",
+    "Structural_Geometry_Subset_Sum\\results\\04_exception_core_20261028\\cases.jsonl": "e740d37e5cad37c1cff2b5137b810ec80bca3a7084ea7049af2dd40b90496875",
+    "Structural_Geometry_Subset_Sum\\results\\04_exception_core_20261028\\counter_runs.jsonl": "789af1cb33aa2393072bf1524a5b235b47af558aaf6c8594e4499c09dd555442",
+    "Structural_Geometry_Subset_Sum\\results\\04_exception_core_20261028\\data_hashes.json": "cb6644928394ef8b2f1efbcf5463204b5c54f303e752c72318164bd5530b2feb",
+    "Structural_Geometry_Subset_Sum\\results\\04_exception_core_20261028\\evaluation_hashes.json": "6acf64e8b38788c01921345dc2ba9ce254357d433d3800434ae4fdea715ed6ff",
+    "Structural_Geometry_Subset_Sum\\results\\05_bounds_first_20261028\\protocol.json": "26fff5d1b9f8af8bf7e720f16c2f7b03e6156b4ed37c84caa99c3ced8047a3f5",
+    "Structural_Geometry_Subset_Sum\\results\\05_bounds_first_20261028\\protocol.sha256": "9da0494cd89cbde558142a435644fe1b127e6b0c40148147d67566b5db02a61f",
+    "Structural_Geometry_Subset_Sum\\results\\05_bounds_first_20261028\\VALIDATION.json": "7de074e156de56a0051faea08433b2a9cf853582343a8319c764da578328dc3f",
+    "Structural_Geometry_Subset_Sum\\results\\05_bounds_first_20261028\\summary.json": "4fb8546f03b97cf81c76239f568b49650a06fc2a8f4cef14fb21963f3acf4508",
+    "Structural_Geometry_Subset_Sum\\results\\05_bounds_first_20261028\\cases.jsonl": "6729bab99b17a95b09b8c0dd103d2465080bbf8f4f04c5b7eccef1356365c878",
+    "Structural_Geometry_Subset_Sum\\results\\05_bounds_first_20261028\\counter_runs.jsonl": "2788b7ccc34196d098236ec556920c3585ec54ca4a8d9723c37ed679a5d151e1",
+    "Structural_Geometry_Subset_Sum\\results\\05_bounds_first_20261028\\data_hashes.json": "49d584e8c883bf47473c637b8af7d3a547137ea63739a5b31f423b8ae3649cf2",
+    "Structural_Geometry_Subset_Sum\\results\\05_bounds_first_20261028\\evaluation_hashes.json": "c735690b6812518375c696a1cd834d8b243c8ccc9eb5318c0a4498825ecf6a1f"
+  },
+  "studies": {
+    "04": {
+      "cases": 576,
+      "lists": 192,
+      "primary": {
+        "difference": 16,
+        "lists": 192,
+        "list_bootstrap_95": [
+          4.0,
+          30.024999999999864
+        ],
+        "first_only": 19,
+        "second_only": 3
+      },
+      "validation": {
+        "status": "passed",
+        "utc": "2026-10-28T18:55:38.196768+00:00",
+        "auditor_sha256": "ebffd24ed017f3d4e55a9ffd4464ef078c25cf5d6b51b04b051e61cbf86d26ab",
+        "lists": 192,
+        "fresh_cases": 576,
+        "fresh_counter_replays": 2880,
+        "live_runs": 8640,
+        "counter_pool_replays": 60,
+        "retrospective_replays": 345,
+        "checks": "sources/inputs/artifacts; independent fresh truths; partition/decomposition arithmetic; one-build/full-enumeration invariants; witnesses; all counter/pool/retrospective replays; live deadlines; report reconstruction"
+      }
+    },
+    "05": {
+      "cases": 1152,
+      "lists": 384,
+      "primary": {
+        "difference": 1,
+        "list_bootstrap_95": [
+          0.0,
+          3.0
+        ],
+        "first_only": 1,
+        "second_only": 0,
+        "lists": 384
+      },
+      "validation": {
+        "status": "passed",
+        "utc": "2026-10-28T19:16:08.953344+00:00",
+        "auditor_sha256": "61c6d05af65cf0137433c6e0d00eff04febf5e258f03eaa737817c04fef0f9b1",
+        "lists": 384,
+        "fresh_cases": 1152,
+        "fresh_counter_replays": 5760,
+        "live_runs": 17280,
+        "retrospective_replays": 15,
+        "checks": "source/input/artifact hashes; fresh independent truths; partition and projection arithmetic; independent complete bounds NO certificates; charged phases/caps; all deterministic counter and retrospective replays; live witnesses/deadlines; matched discovery plans; report reconstruction"
+      }
+    }
+  },
+  "derived": {
+    "values": {
+      "SevenFirstCases": 576,
+      "SevenFirstRoot": 453,
+      "SevenFirstReuse": 469,
+      "SevenFirstGain": 16,
+      "SevenFirstInterval": "[4.00, 30.02]",
+      "SevenSecondCases": 1152,
+      "SevenSecondRoot": 916,
+      "SevenSecondReuse": 953,
+      "SevenSecondBounds": 954,
+      "SevenSecondOnly": 933,
+      "SevenSecondGain": 38,
+      "SevenSecondInterval": "[20.00, 57.03]",
+      "SevenIncrement": 1,
+      "SevenIncrementInterval": "[0.00, 3.00]",
+      "SevenWorkSaved": 460957,
+      "SevenWorkPercent": "1.74",
+      "SevenAvoided": 90,
+      "SevenEagerBuilds": 182,
+      "SevenLazyBuilds": 92
+    },
+    "capped_work_saved": 460957,
+    "tables_avoided": 90
+  },
+  "claim_boundaries": "No experiment rerun, model fit, new timing trial or new bootstrap performed. Stored bootstrap endpoints are rescaled only for the figure. Secondary comparisons remain exploratory.",
+  "output_sha256": {
+    "study_values.tex": "bfea9ee1351aba0f2a85e32e339b72701fae3a35664ad6862823831916ef0aee",
+    "results_table.tex": "6a18e5fb79ffb63ccb5f8f36b962d549f282bf5281f46d3f0ca226c56817df74",
+    "ablation_table.tex": "ff13848f44a9d0b2501bf798afa40356cd5017217149aef4cb3e7f53392ae638",
+    "geometric_gain.pdf": "fa5eb8fd262c0a4473950fd33b335b9974578fcced1595d6b2806caa7d4ffba4",
+    "geometric_gain.png": "3dcf4958c62dd37e092e3502e9728c5c6498925c5b7ff685adcc243719056d08"
+  }
+}

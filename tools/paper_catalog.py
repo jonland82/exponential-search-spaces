@@ -41,6 +41,13 @@ PAPERS = (
          nav_label="Note VI: Learned completion",
          data="Learned_Solvability_Subset_Sum/README.md",
          published=True, maintained_html=False),
+    dict(number="VII", folder="07-geometric-cores",
+         stem="Geometric_Cores_and_Exceptions_in_Subset_Sum",
+         title="Geometric Cores and Exceptions in Subset Sum",
+         description="An exact geometric core route with fresh paid completion gains and a bounds-first construction ablation.",
+         nav_label="Note VII: Geometric core reuse",
+         data="Structural_Geometry_Subset_Sum/README.md",
+         published=True, working_draft=True, maintained_html=False),
 )
 
 

@@ -1,0 +1,15 @@
+\begin{table}[htbp]
+\centering\small
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+Policy & Core calls & Tables built & Point queries & Discovery work \\
+\midrule
+Exception-core reuse & 182 & 182 & 100 & 875,473 \\
+Bounds only & 182 & 0 & 0 & 249,587 \\
+Fast discovery, eager table & 182 & 182 & 100 & 249,587 \\
+Bounds first + reuse & 182 & 92 & 100 & 249,587 \\
+\bottomrule
+\end{tabular}
+\caption{Study 05 mechanism ablation. Fast-eager and bounds-first select the same plans. The 90 omitted tables correspond to complete bounds-only NO certificates.}
+\label{tab:ablation}
+\end{table}

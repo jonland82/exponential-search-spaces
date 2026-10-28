@@ -1,4 +1,4 @@
-"""Check active local links, all six note entries and available paper assets."""
+"""Check active local links, catalog note entries and available paper assets."""
 
 import argparse
 from html.parser import HTMLParser

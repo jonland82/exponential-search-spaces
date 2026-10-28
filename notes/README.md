@@ -1,7 +1,7 @@
-# The six notes
+# The seven notes
 
-All six notes have HTML and PDF versions on the website.
-Note V remains clearly labeled as a working draft.
+All seven notes have repository HTML and PDF versions.
+Notes V and VII are clearly labeled as working drafts.
 
 - **I. [Certified Coverage of Exponential Search Spaces](01-certified-coverage/README.md)** - published note.
 - **II. [Subset Sum as a Stress Test for Certified Coverage](02-subset-sum-stress-test/README.md)** - published note.
@@ -9,6 +9,7 @@ Note V remains clearly labeled as a working draft.
 - **IV. [Does Pairing Add Value to Certified Approximation? A Subset-Sum Experiment](04-certified-approximation/README.md)** - published note.
 - **V. [How Far from Easy? Structural Distance in Subset Sum](05-structural-distance/README.md)** - working draft; HTML/PDF with LaTeX source.
 - **VI. [Predicting Subset-Sum Completion: The Value and Cost of Structural Features](06-learned-solvability/README.md)** - HTML/PDF paper, including the certified branch-pruning follow-up.
+- **VII. [Geometric Cores and Exceptions in Subset Sum](07-geometric-cores/README.md)** - working draft; exact reuse, fresh paid completion gains and bounds-first ablation.
 
 Each folder owns its source and PDF. Shared methods and frozen raw evidence stay in the experiment packages, rather than being duplicated into the note folders.
 

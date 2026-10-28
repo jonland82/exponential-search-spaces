@@ -38,6 +38,10 @@ def build_one(paper, pdf_only=False, html_only=False):
         subprocess.run(
             [sys.executable, str(ROOT / "tools/note_vi_artifacts.py")], cwd=ROOT, check=True,
         )
+    if paper["number"] == "VII":
+        subprocess.run(
+            [sys.executable, str(ROOT / "tools/note_vii_artifacts.py")], cwd=ROOT, check=True,
+        )
     output = ROOT / ".build" / "latex" / paper["folder"]
     output.mkdir(parents=True, exist_ok=True)
     for _ in range(2):
@@ -83,6 +87,9 @@ def build_html(paper):
     body = body.replace("<table>", '<table class="paper-table">')
     body = re.sub(r'(<table\b.*?</table>)', r'<div class="table-wrap">\1</div>', body, flags=re.S)
     body = body.replace('src="prediction_plot.pdf"', 'src="prediction_plot.png"')
+    body = body.replace('src="geometric_gain.pdf"', 'src="geometric_gain.png"')
+    body = re.sub(r'<embed src="geometric_gain.png"([^>]*?)/?>',
+                  r'<img src="geometric_gain.png"\1 alt="Paired exact-completion gains and avoided core-table constructions">', body)
     body = body.replace('<embed src="prediction_plot.png" />', '<img src="prediction_plot.png" width="1188" height="684" alt="Brier scores for five distances, ordinary features and their combination">')
     body = body.replace('<figcaption aria-hidden="true">', '<figcaption>')
     body = body.replace('alt=""', 'alt="Comparison of Brier scores for five distances, ordinary features and their combination"')

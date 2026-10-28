@@ -1,0 +1,22 @@
+\begin{table}[htbp]
+\centering\small
+\begin{tabular}{@{}llrrl@{}}
+\toprule
+Study & Policy & Exact / targets & Capped work & Live 20ms [range] \\
+\midrule
+04 & Lean, no geometry & 434/576 & 16,798,497 & 356 [353,356] \\
+04 & Root geometry & 453/576 & 14,421,224 & 407 [402,408] \\
+04 & Discovery only & 450/576 & 14,664,555 & 407 [404,408] \\
+04 & Exception-core reuse & 469/576 & 13,098,104 & 440 [434,440] \\
+04 & Direct MITM & 412/576 & 16,292,072 & 358 [357,362] \\
+\midrule
+05 & Root geometry & 916/1152 & 28,582,458 & 836 [823,836] \\
+05 & Exception-core reuse & 953/1152 & 26,463,413 & 896 [884,898] \\
+05 & Bounds only & 933/1152 & 27,494,127 & 862 [846,862] \\
+05 & Bounds first + reuse & 954/1152 & 26,002,456 & 897 [889,897] \\
+05 & Fast discovery, eager table & 954/1152 & 26,122,175 & 894 [884,898] \\
+\bottomrule
+\end{tabular}
+\caption{Individual 32L work caps and separate live 20ms medians over three orders. Counts in different studies have different denominators. Capped work charges unresolved calls their full allowance. All acquisition, checking, fallback and verification are paid.}
+\label{tab:results}
+\end{table}

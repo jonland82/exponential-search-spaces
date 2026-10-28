@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Six research notes by Jonathan R. Landers: certified coverage, subset-sum experiments, probability bounds, approximation, structural distance, and learned completion with certified pruning.">
+<meta name="description" content="Seven research notes by Jonathan R. Landers: certified coverage, subset-sum experiments, probability bounds, approximation, structural distance, learned completion with certified pruning, and exact geometric core reuse.">
 <title>Certified Coverage: A Research Sequence</title>
 <script>
 window.MathJax = {
@@ -23,10 +23,10 @@ window.MathJax = {
 </nav>
 
 <header>
-  <span class="series-label">A six-note research sequence</span>
+  <span class="series-label">A seven-note research sequence</span>
   <h1>Certified Coverage of Exponential Search Spaces</h1>
   <div class="byline">Jonathan R. Landers · September–October 2026</div>
-  <p class="deck">From certified coverage to structural distance and learned search guidance: six notes measuring what exact structure saves and what discovering it costs.</p>
+  <p class="deck">From certified coverage to structural distance and learned search guidance and exact core reuse: seven notes measuring what exact structure saves and what discovering it costs.</p>
 </header>
 
 <div class="abstract">
@@ -37,7 +37,7 @@ window.MathJax = {
   <h2 id="arc">The narrative arc</h2>
   <p><strong>Reading order:</strong> <a href="notes/01-certified-coverage/Certified_Coverage_of_Exponential_Search_Spaces.html">I: Framework</a> → <a href="notes/02-subset-sum-stress-test/Subset_Sum_as_a_Stress_Test.html">II: Exact-search test</a> → <a href="notes/03-probability-valued-subset-sum/Probability_Valued_Subset_Sum.html">III: Random-target probability</a> → <a href="notes/04-certified-approximation/Certified_Approximation_of_Subset_Sum.html">IV: Pairing in approximation</a>. Notes III and IV branch from II; either can be read independently after the framework and exact-search test.</p>
 
-  <p>Continue with <a href="notes/05-structural-distance/Structural_Distance_in_Subset_Sum.html">V: Structural distance (working draft)</a> and <a href="notes/06-learned-solvability/Predicting_Subset_Sum_Completion.html">VI: Learned completion and certified pruning</a>. These return to exact solving: discover easy cores, predict budgeted completion, then test whether structural checks improve search within Note I's framework.</p>
+  <p>Continue with <a href="notes/05-structural-distance/Structural_Distance_in_Subset_Sum.html">V: Structural distance (working draft)</a> and <a href="notes/06-learned-solvability/Predicting_Subset_Sum_Completion.html">VI: Learned completion and certified pruning</a>. These return to exact solving: discover easy cores, predict budgeted completion, then test whether structural checks improve search within Note I's framework. <a href="notes/07-geometric-cores/Geometric_Cores_and_Exceptions_in_Subset_Sum.html">VII: Geometric core reuse (working draft)</a> develops an exact route that improves paid completion on fresh constructed inputs.</p>
 
   <article class="series-card">
     <span class="series-label">Note I · The framework</span>
@@ -136,6 +136,22 @@ window.MathJax = {
       <a href="notes/06-learned-solvability/Predicting_Subset_Sum_Completion.tex">LaTeX</a>
       <a href="Learned_Solvability_Subset_Sum/README.md">Methods and data</a>
       <a href="Learned_Solvability_Subset_Sum/docs/BRANCH_FINDINGS.md">Pruning findings</a>
+    </div>
+  </article>
+
+  <article class="series-card">
+    <span class="series-label">Note VII &middot; Exact geometric reuse &middot; Working draft</span>
+    <h3><a href="notes/07-geometric-cores/Geometric_Cores_and_Exceptions_in_Subset_Sum.html">Geometric Cores and Exceptions in Subset Sum</a></h3>
+    <p>Finds a narrow geometric core, enumerates a few exceptions, and reuses one exact table. Fresh work-capped completions improve from 453 to 469 of 576 targets over matched root geometry. A second fresh study obtains 954 versus root's 916 of 1,152 targets. Its final bounds-first refinement mainly saves work: 90 avoided tables and 1.74% lower capped cost, with no clear incremental runtime gain.</p>
+    <div class="math">\[
+      C\le F+2^k B+I D+N_Q Q_{\mathrm{pt}}+V.
+    \]</div>
+    <p class="meta">Discovery, bounds, conditional table construction, exact queries and verification are paid. The two studies retain separate primary comparisons and scoped claims.</p>
+    <div class="link-row">
+      <a href="notes/07-geometric-cores/Geometric_Cores_and_Exceptions_in_Subset_Sum.html">Read HTML draft</a>
+      <a href="notes/07-geometric-cores/Geometric_Cores_and_Exceptions_in_Subset_Sum.pdf">PDF</a>
+      <a href="notes/07-geometric-cores/Geometric_Cores_and_Exceptions_in_Subset_Sum.tex">LaTeX</a>
+      <a href="Structural_Geometry_Subset_Sum/README.md">Methods and data</a>
     </div>
   </article>
 </section>

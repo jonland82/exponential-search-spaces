@@ -1,4 +1,4 @@
-"""Stage the six-note index, available papers and supporting evidence."""
+"""Stage the series index, available papers and supporting evidence."""
 
 import argparse
 import os
@@ -17,10 +17,11 @@ def prepare(output):
     if output.exists():
         raise FileExistsError("Choose a new output folder; existing staged sites are preserved.")
     output.mkdir(parents=True)
-    for name in ("index.html", "paper.css", ".nojekyll", "README.md", ".gitattributes", ".gitignore", "build_papers.py"):
+    for name in ("index.html", "paper.css", ".nojekyll", "README.md", "CONTRIBUTING.md", ".gitattributes", ".gitignore", "build_papers.py"):
         shutil.copy2(ROOT / name, output / name)
     for name in ("fonts", "tools", "subset-sum", "Subset_Sum_Refinement_Experiment",
-                 "Structural_Distance_Subset_Sum", "Learned_Solvability_Subset_Sum"):
+                 "Structural_Distance_Subset_Sum", "Learned_Solvability_Subset_Sum",
+                 "Structural_Geometry_Subset_Sum"):
         shutil.copytree(
             ROOT / name, output / name,
             ignore=shutil.ignore_patterns("__pycache__", "*.pyc", "*.aux", "*.log", "*.out"),

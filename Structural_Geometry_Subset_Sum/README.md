@@ -5,6 +5,9 @@ I-VI. Use established tractable structures and solver-specific obstructions to
 discover exact solving routes whose benefits exceed acquisition/checking costs.
 Earlier packages, frozen studies, models, plots and manuscripts are preserved.
 
+The [Note VII working draft](../notes/07-geometric-cores/README.md) gives the exact
+core-and-exceptions algorithm, correctness proofs and both fresh studies.
+
 - [Literature map](LITERATURE.md): guarantees and limits, with primary sources.
 - [Theory](THEORY.md): exact aggregate geometry, signed DP, witnesses and costs.
 - [First protocol](experiments/01_large_base/PROTOCOL.md): fixed methods and fresh inputs.
