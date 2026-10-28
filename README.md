@@ -2,7 +2,7 @@
 
 Jonathan R. Landers | September-October 2026
 
-[Live research site](https://jonland82.github.io/exponential-search-spaces/) | [All seven notes and two companions](notes/README.md)
+[Live research site](https://jonland82.github.io/exponential-search-spaces/) | [Latest papers](https://jonland82.github.io/exponential-search-spaces/#latest) | [All seven notes and two companions](notes/README.md)
 
 The sequence follows one question: when can useful structure account for enough of an exponential search that only manageable work remains? This checkout contains HTML/PDF versions of all seven notes and both short companions. Notes V, VII and the runtime companion are labeled as working drafts. **`master` is the single branch for the research, GitHub's default view and the live Pages site.**
 
