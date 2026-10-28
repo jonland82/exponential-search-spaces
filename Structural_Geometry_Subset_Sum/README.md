@@ -7,7 +7,7 @@ Earlier packages, frozen studies, models, plots and manuscripts are preserved.
 
 The [Note VII working draft](../notes/07-geometric-cores/README.md) gives the exact
 core-and-exceptions algorithm, correctness proofs and both fresh studies.
-Its [two-page runtime companion](../notes/07-geometric-cores/Runtime_of_Geometric_Core_Subset_Sum.html)
+Its [three-page runtime companion](../notes/07-geometric-cores/Runtime_of_Geometric_Core_Subset_Sum.html)
 derives bit-cost and memory bounds and compares general algorithms.
 
 ## Current result

@@ -180,7 +180,7 @@ adds a reusable core with exceptional weights and reports fresh costed gains.
 The [bounds-first follow-up](../Structural_Geometry_Subset_Sum/BOUNDS_FINDINGS.md)
 then avoids unnecessary table construction. These exact-route results are
 written up in [Note VII](../notes/07-geometric-cores/README.md), with a separate
-[two-page runtime companion](../notes/07-geometric-cores/Runtime_of_Geometric_Core_Subset_Sum.html).
+[three-page runtime companion](../notes/07-geometric-cores/Runtime_of_Geometric_Core_Subset_Sum.html).
 The [three-page clustering companion to Note VI](../notes/06-learned-solvability/Why_Unresolved_Inputs_Cluster.pdf)
 explains descriptive enrichment in the original frozen input space.
 

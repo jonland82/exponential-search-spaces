@@ -15,7 +15,7 @@ Two unnumbered companions live in the corresponding note folders.
 ## Short companions
 
 - **[Why Unresolved Inputs Cluster: A Structural and Statistical Account](06-learned-solvability/Why_Unresolved_Inputs_Cluster.html)** (Note VI, three pages): sufficient structural routes and descriptive neighborhood enrichment. [PDF](06-learned-solvability/Why_Unresolved_Inputs_Cluster.pdf), [source](06-learned-solvability/Why_Unresolved_Inputs_Cluster.tex) and [reproduction guide](06-learned-solvability/README.md#companion-note-why-unresolved-inputs-cluster). Built with `python build_papers.py --paper 6`.
-- **[The Runtime of Geometric Core Subset Sum](07-geometric-cores/Runtime_of_Geometric_Core_Subset_Sum.html)** (Note VII, two-page working draft): table/query costs, polynomial structured regimes and comparisons with general algorithms. [PDF](07-geometric-cores/Runtime_of_Geometric_Core_Subset_Sum.pdf) and [source](07-geometric-cores/Runtime_of_Geometric_Core_Subset_Sum.tex). Built with `python build_papers.py --paper 7`.
+- **[The Runtime of Geometric Core Subset Sum](07-geometric-cores/Runtime_of_Geometric_Core_Subset_Sum.html)** (Note VII, three-page working draft): table/query costs, polynomial structured regimes and comparisons with general algorithms. [PDF](07-geometric-cores/Runtime_of_Geometric_Core_Subset_Sum.pdf) and [source](07-geometric-cores/Runtime_of_Geometric_Core_Subset_Sum.tex). Built with `python build_papers.py --paper 7`.
 
 ## Evidence and builds
 

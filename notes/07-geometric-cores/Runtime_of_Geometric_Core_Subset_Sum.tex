@@ -27,61 +27,104 @@
 \author{Jonathan R. Landers}
 \date{October 28, 2026}
 \begin{document}
-\maketitle
-\vspace{-1.4em}
+{\LARGE\sffamily\bfseries The Runtime of Geometric Core Subset Sum}\par
+\vspace{3pt}
+{\small Jonathan R. Landers \hfill October 28, 2026}\par
 \noindent\textcolor{paperaccent}{\footnotesize\textsc{Runtime companion to Note VII $\cdot$ Working draft}}
 
 \begin{tcolorbox}[accentbox]
-\textbf{Purpose.} Note VII~\cite{vii} gives an exact geometric route and fresh paid-completion gains. This companion explains its runtime: discover a narrow core, build one exact table, and enumerate the exceptional items. The gain depends on the discovered structure. It supplies no improved general worst-case subset-sum bound.
+\textbf{Purpose.} This companion defines the geometric core route of Note VII~\cite{vii}, translates its runtime into Note I's certified-coverage accounting, and compares general algorithms. The improvement depends on discovered structure; it supplies no new general worst-case bound.
 \end{tcolorbox}
 
-\section{The parameters that control the work}
-After exact reductions, let $u_1,\ldots,u_n$ be positive integer weights, $T$ the target, and $L$ their total binary encoding length. Discover $u_i=Mp_i+r_i$, with $M\ge2$ and $p_i\ge0$, and split the indices into a core $C$ of size $m$ and exceptions $E$ of size $k$. Define
+\section{The problem and the structural opportunity}
+Given positive integer weights $w_1,\ldots,w_N$ and target $t$, subset sum asks whether
 $$
-R_-=\sum_{i\in C}\min(0,r_i),\quad R_+=\sum_{i\in C}\max(0,r_i),\quad
-Q=\min\left(\sum_{i\in C}p_i,\left\lfloor\frac{T-R_-}{M}\right\rfloor\right).
+\exists x\in\{0,1\}^N:\quad \sum_{i=1}^N w_ix_i=t.
 $$
-For an eligible plan with $Q\ge0$, the exact core table has dimensions
+YES supplies a matching subset; NO excludes every subset. Direct enumeration has $2^N$ choices. An exact summary can compress this search, but its numeric size must be charged in binary input length.
+
+After exact range, complement and gcd reductions, consider an unresolved kernel $u_1,\ldots,u_n$ with target $T$ and binary encoding length $L$. The route discovers a base $M\ge2$ and writes $u_i=Mp_i+r_i$, with $p_i\ge0$ and possibly signed residuals $r_i$. Retain a core $\mathcal K$ of $m$ items with a narrow residual range and put the remaining $e=n-m$ items in $E$. We use $e$ for the exception count called $k$ in Note VII, to distinguish it from Note I's coverage function.
+
+\section{One core representation, many shifted targets}
+A core selection has coordinates $q=\sum_{i\in\mathcal K}p_ix_i$ and $s=\sum_{i\in\mathcal K}r_ix_i$. Define
 $$
-H=Q+1,\qquad W=R_+-R_-+1.
+R_-=\sum_{i\in\mathcal K}\min(0,r_i),\quad R_+=\sum_{i\in\mathcal K}\max(0,r_i),\quad
+Q=\min\left(\sum_{i\in\mathcal K}p_i,\left\lfloor\frac{T-R_-}{M}\right\rfloor\right).
 $$
-The two coordinates are selected quotient sum and selected residual sum. For an exceptional subset $A$, query the shifted target $z_A=T-\sum_{i\in A}u_i$. A possible quotient must satisfy
+For $Q\ge0$, the exact reachable-pair table has height $H=Q+1$ and width $W=R_+-R_-+1$. From $(0,0)$, each item preserves a pair or adds $(p_i,r_i)$. Nonnegative quotients and the full prefix residual strip justify clipping. Multiple subsets may share a pair: $HW$ counts table positions, not original subsets.
+
+For each exceptional subset $A\subseteq E$, solve the shifted core query
+$$
+z_A=T-\sum_{i\in A}u_i,\qquad Mq+s=z_A.
+$$
+The same table serves all $2^e$ assignments. For example, core $(101,203)$ and exception $149$, with $M=100$, solve target $250$: choosing the exception leaves $z_A=101$, reached by the core pair $(1,1)$.
+
+Reject $A$ if $z_A$ lies outside $[0,\sum_{i\in\mathcal K}u_i]$, or if this necessary quotient interval is empty:
 $$
 \max\left(0,\left\lceil\frac{z_A-R_+}{M}\right\rceil\right)
 \le q\le
 \min\left(Q,\left\lfloor\frac{z_A-R_-}{M}\right\rfloor\right).
 $$
-This interval contains at most $G=\min(H,\lfloor(W-1)/M\rfloor+1)$ candidates. Test the corresponding exact pair $(q,z_A-Mq)$; interval feasibility alone cannot prove YES. All $2^k$ exceptional choices share the same table.
+Otherwise test $(q,z_A-Mq)$, at most $G=\min(H,\lfloor(W-1)/M\rfloor+1)$ pairs per assignment. Interval feasibility alone cannot prove YES. Exhaustive exclusion proves NO; a reachable pair supplies a reconstructed, verified witness.
 
-\section{One construction plus exceptional queries}
-Let $F$ pay reductions, acquisition and discovery; $B$ pay enumeration and bounds per assignment; $D$ pay one table construction; $P$ pay one point test; and $V$ pay reconstruction and verification. If $I$ indicates that any assignment survives the necessary bounds, then
+\section{The paid route cost}
+Let $F$ pay reductions, acquisition and discovery; $B$ pay enumeration/bounds per assignment; $D$ pay one table construction; $Q_{\rm pt}$ pay a point test; and $V$ pay reconstruction/verification. If $I$ indicates that any assignment survives bounds, then
 $$
-\boxed{T_{\rm route}\le F+2^kB+I D+2^kG P+V.}
+\boxed{T_{\rm route}\le F+2^eB+ID+N_QQ_{\rm pt}+V,\qquad N_Q\le2^eG.}
 $$
-Bounds-first builds only upon the first surviving assignment. For the same plan and sufficient resources, the isolated saving over eager construction is exactly $(1-I)D$. If every assignment is excluded, it certifies NO without any table. Otherwise it still pays for one complete table, never one per assignment.
-
-With word width $\omega$, a conservative bitset estimate is $D=O((m+1)H(1+\lceil W/\omega\rceil))$ word operations, apart from scalar arithmetic. Python shifts used for point tests also have width-dependent cost; $P$ is not automatically constant. Prefix tables for witnesses occupy at most $(m+1)HW$ logical bits, plus row, pointer and interpreter overhead.
-
-In the bit-cost model, suppressing polynomial factors in $L$ with $O^*$ gives the convenient upper bounds
-$$
-T_{\rm route}=F+O^*(HW+2^kGW)
-\;\le\;F+O^*(2^kHW).
-$$
-The first expression exposes core reuse. The second is a looser shorthand, not a claim that the table is rebuilt $2^k$ times. Neither hides $H$, $W$ or $2^k$ as polynomial input costs.
+Build the table only on the first surviving assignment. For the same plan and sufficient resources, $T_{\rm eager}-T_{\rm lazy}=(1-I)D\ge0$: complete bounds rejection avoids construction; otherwise one table is built and reused.
 
 \newpage
-\section{When the bound gives an advantage}
-\textbf{Polynomial structured regime.} If discovery costs $\poly(L)$, $HW=\poly(L)$, and $k=O(\log L)$, the complete route takes polynomial bit time. Indeed $G\le H$ and $2^k=\poly(L)$ bound every term above. Small $k$ alone is insufficient: the numeric table dimensions can be exponential in binary input length. A useful core must also be found and checked within the discovery allowance. We do not prove this detector finds every affordable core.
-
-\textbf{Exponential-scale comparison.} The coarse bound places the route below a benchmark scale $2^{cn}$ whenever, for some fixed $\epsilon>0$,
+\section{Replacing the generic functions in Note I}
+Under Note I's accounting assumptions~\cite{i}, certified coverage and residual states are
 $$
-F=O^*(2^{(c-\epsilon)n}),\qquad
-k+\log_2(HW)\le(c-\epsilon)n.
+C(n)=k(n)+a(n)\delta(n)+p(n),\qquad r(n)=2^n-C(n),
 $$
-This is a sufficient condition, not a necessary one; the sharper bound above can do better. For the usual $n$-based comparison assume polynomial-bit inputs, so polynomial factors in $L$ are subexponential in $n$. Use $c=1/2$ for the classical scale, or $c=0.49$ for the recent preprint's claimed scale. These inequalities compare bounds, not measured speedups or hidden constants.
+and modeled runtime is
+$$
+T_{\rm I}(n)=\underbrace{P(n)+Q_{\rm pair}(n)+\log_2 k(n)}_{\text{discovery, representation and lookup overhead}}+r(n).
+$$
+Here $k(n)$ is structural coverage, $a(n)\delta(n)$ is certified learned elimination, and $p(n)$ is additional pairing coverage. These are counts under that framework, not the new exception count or table size. $P$ pays preprocessing and $Q_{\rm pair}$ pays pairing. The model charges explicit residual search in proportion to the number of uncovered original states.
 
-\section{General algorithms and the scope of the comparison}
-The table compares classical algorithms; $n$ counts input integers. The cited randomized algorithms have bounded error, whereas our completed decisions are exact. $O^*$ suppresses polynomial encoding-length factors; ordinary $O$ in the cited results uses their stated RAM model.
+\textbf{The cost-level translation.} A core query now represents a whole block of original choices. If assignment $A$ makes $g_A$ point tests, with $g_A\le G$, the replacement of accounting roles is
+$$
+\boxed{\begin{aligned}
+P(n)+Q_{\rm pair}(n)+\log_2 k(n)&\;\rightsquigarrow\;F+ID+V,\\[3pt]
+2^n-C(n)&\;\rightsquigarrow\;\sum_{A\subseteq E}\bigl(B+g_AQ_{\rm pt}\bigr).
+\end{aligned}}
+$$
+Summing gives $2^eB+N_QQ_{\rm pt}$, where $N_Q=\sum_Ag_A\le2^eG$, and hence the boxed route bound on page 1. Early success can stop before this full-enumeration envelope. The arrows specialize the computational roles; they are not algebraic equalities between a state count and a query cost. The route uses no learned gate: exact structure and checks earn its decisions.
+
+\textbf{Coverage still counts original subsets.} Fix an exceptional assignment $A$. Its block $\mathcal B_A$ contains every selection of the $m$ core items, so
+$$
+|\mathcal B_A|=2^m,\qquad 2^n=2^e2^m.
+$$
+A certified NO for that assignment excludes the entire block, using bounds or exact reachability. At a stage accounted for solely by $j$ such disjoint NO blocks,
+$$
+C_{\rm blocks}(n)=j2^m,\qquad r_{\rm states}(n)=(2^e-j)2^m.
+$$
+Thus $2^e$ is the number of block queries, not the number of original residual states. A YES witness may stop without excluding all other blocks. The new representation changes how remaining work is processed; it does not invalidate Note I's criterion for its explicit-search model. In particular, neither $HW$ nor $2^n-2^e$ can simply be substituted for certified coverage.
+
+\section{Bit costs and the sufficient polynomial regime}
+With word width $\omega$, a conservative construction estimate is
+$$
+D=O\!\left((m+1)H\left(1+\left\lceil W/\omega\right\rceil\right)\right)
+$$
+word operations, apart from scalar arithmetic. Python point tests use integer shifts and also have width-dependent cost. Prefix history for witness reconstruction occupies at most $(m+1)HW$ logical bits, plus row, pointer and interpreter overhead. Logical bit caps are not Python memory measurements.
+
+In bit time, $O^*$ suppressing polynomial factors in binary input length $L$ gives
+$$
+T_{\rm route}=F+O^*(HW+2^eGW)\le F+O^*(2^eHW).
+$$
+The first bound exposes one shared construction; the second is a looser shorthand. Neither hides the numeric table dimensions. A sufficient polynomial regime is
+$$
+F=\poly(L),\qquad HW=\poly(L),\qquad e=O(\log L).
+$$
+Indeed $G\le H$ and $2^e=\poly(L)$ bound the query work. Small $e$ alone is insufficient. We do not prove that this detector finds every useful core or that arbitrary binary inputs have compact tables.
+
+\newpage
+\section{Comparison with general subset-sum algorithms}
+The table compares classical algorithms; $n$ counts the items in the problem being solved. The cited randomized methods have bounded error, whereas our completed decisions are exact. Ordinary $O$ in those results uses their stated RAM model; $O^*$ here suppresses polynomial encoding-length factors.
 
 \begin{center}
 \small
@@ -92,17 +135,25 @@ Method & Time bound & Scope \\
 Horowitz--Sahni~\cite{hs} & $O^*(2^{n/2})$ & General, deterministic exact search. \\
 Chen et al.~\cite{cjrs} & $O(2^{n/2}n^{-\gamma})$ & Published randomized result; $\gamma>0.5023$, word/circuit RAM. \\
 October 2026 preprint~\cite{oai} & Claims $O(2^{0.49n})$ & General randomized decision; polynomial-bit inputs, stated word RAM. \\
-Our geometric route & $F+O^*(HW+2^kGW)$ & Exact when completed; depends on discovered core and exceptions. \\
+Our geometric route & $F+O^*(HW+2^eGW)$ & Exact when completed; depends on discovered core and exceptions. \\
 \bottomrule
 \end{tabular}
 \end{center}
 
-The October 4 preprint states success probability at least $2/3$ per input and its runtime cap on every random execution~\cite{oai}. It is a recent claim, not an algorithm implemented or independently validated in our experiments. The published comparison remains useful because a polynomial-factor improvement and a smaller exponential rate are different claims. Target-dependent pseudopolynomial algorithms are another comparison axis: even elementary $O(nT)$ dynamic programming can be preferable for small numerical $T$; this is not polynomial in $\log T$.
+The October 4 preprint states success probability at least $2/3$ per input, with its runtime cap on every execution~\cite{oai}. It is a recent claim, not an algorithm independently validated or implemented in our experiments. A polynomial-factor saving and a smaller exponential rate are different claims. Target-dependent pseudopolynomial algorithms are another comparison axis: even elementary $O(nT)$ dynamic programming can be preferable for small numerical $T$, while remaining exponential in the target's bit length.
 
-\section{What Note VII establishes}
-The implementation caps exceptions, table/history size, work and time. On exhaustion it may return \emph{unresolved}, so bounded runtime does not make it a complete polynomial-time algorithm. A complete MITM fallback, preceded by a polynomially budgeted geometric attempt, would preserve $O^*(2^{n/2})$ worst-case time. This completion guarantee is a possible wrapper, not a new bound proved for the capped experimental portfolio.
+\textbf{A sufficient exponential-scale advantage.} For polynomial-bit inputs and some fixed $\epsilon>0$, the coarse structural bound lies below the benchmark scale $2^{cn}$ if
+$$
+F=O^*(2^{(c-\epsilon)n}),\qquad e+\log_2(HW)\le(c-\epsilon)n.
+$$
+Use $c=1/2$ for the classical scale, or $c=0.49$ for the preprint's claimed scale. Polynomial factors in $L$ are then subexponential in $n$. This sufficient condition compares bounds, not measured speedups or hidden constants; the sharper shared-table expression can allow better regimes.
 
-Note VII reports 453 to 469 completions on 576 fresh targets for core reuse versus root geometry. The later bounds-first refinement avoids 90 of 182 tables; its primary incremental completion comparison is only 953 versus 954, with interval $[0,3]$. These are paid-budget results, not an asymptotic improvement or a demonstrated speedup over the algorithms above. The research target is to enlarge the families where cheap discovery yields small $k$ and compact $HW$, while preserving exact decisions and charging all acquisition costs. No new experiment is run for this companion.
+\section{What the experiments establish, and what remains open}
+The implementation caps exceptions, table/history size, work and time. It may return \emph{unresolved}: neither YES nor NO has been established within the allowance. Bounded execution therefore does not make it a complete polynomial-time algorithm. A complete MITM fallback preceded by a polynomially budgeted geometric attempt would retain $O^*(2^{n/2})$ worst-case time. This is a possible complete wrapper, not a stronger bound for the capped experimental portfolio.
+
+Note VII reports 453 to 469 completions on 576 fresh targets for core reuse versus matched root geometry. Its later bounds-first refinement avoids 90 of 182 tables; the primary incremental completion comparison is only 953 versus 954, with interval $[0,3]$, and no clear incremental wall-clock advantage. These are paid-budget results on constructed inputs, not an asymptotic improvement or demonstrated superiority over the general algorithms above.
+
+The research program's concrete progress is an exact, reusable representation whose discovery and checking costs are charged and whose paid completion improves on a matched structural baseline. The next theoretical target is to characterize larger families where cheap discovery guarantees compact $HW$ and few exceptions. Note I's coverage principle remains the organizing test: the representation must earn its cost. This companion adds explanation, not a new experiment.
 
 \begingroup\footnotesize
 \begin{thebibliography}{9}
@@ -111,6 +162,7 @@ Note VII reports 453 to 469 completions on 576 fresh targets for core reuse vers
 \bibitem{cjrs} X. Chen, Y. Jin, T. Randolph and R. A. Servedio. Subset Sum in Time $2^{n/2}/\poly(n)$. \emph{APPROX/RANDOM}, 39:1--39:18, 2023. \url{https://doi.org/10.4230/LIPIcs.APPROX/RANDOM.2023.39}.
 \bibitem{oai} OpenAI. \emph{Subset Sum in Time $O(2^{0.49n})$}. Preprint, October 4, 2026. \href{https://github.com/openai/math/blob/main/preprints/Subset-Sum-in-Time-2-power-0-49n-October-4-2026/subset-sum.pdf}{Manuscript and stated computational model}.
 \bibitem{vii} J. R. Landers. \emph{Geometric Cores and Exceptions in Subset Sum}. Note VII, working draft, 2026. \href{Geometric_Cores_and_Exceptions_in_Subset_Sum.pdf}{Main note, proofs and frozen-study evidence}.
+\bibitem{i} J. R. Landers. \emph{Certified Coverage of Exponential Search Spaces}. Note I, 2026. \href{../01-certified-coverage/Certified_Coverage_of_Exponential_Search_Spaces.pdf}{Generic framework and coverage criterion}.
 \end{thebibliography}
 \endgroup
 \end{document}

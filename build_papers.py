@@ -18,9 +18,9 @@ RUNTIME_COMPANION = dict(
     next(paper for paper in PAPERS if paper["number"] == "VII"),
     number="VII-runtime", stem="Runtime_of_Geometric_Core_Subset_Sum",
     title="The Runtime of Geometric Core Subset Sum",
-    description="A two-page runtime companion to Note VII: bit costs, structural regimes and general-algorithm comparisons.",
+    description="A three-page runtime companion to Note VII: subset-sum context, the Note I equation mapping, bit costs and general-algorithm comparisons.",
     series_label="Runtime companion to Note VII &middot; Working draft",
-    create_legacy_redirect=False,
+    create_legacy_redirect=False, max_pages=3,
 )
 CLUSTER_COMPANION = dict(
     next(paper for paper in PAPERS if paper["number"] == "VI"),
@@ -77,6 +77,11 @@ def build_one(paper, pdf_only=False, html_only=False):
         if result.returncode:
             print(result.stdout.decode("utf-8", errors="replace")[-7000:])
             result.check_returncode()
+    if paper.get("max_pages"):
+        log = (output / (stem + ".log")).read_text(encoding="utf-8", errors="replace")
+        pages = re.search(r"\((\d+) pages?,\s*\d+ bytes\)", log)
+        if pages is None or int(pages[1]) > paper["max_pages"]:
+            raise ValueError(f"{stem} must fit within {paper['max_pages']} pages")
     shutil.copyfile(output / (stem + ".pdf"), artifact(paper, ".pdf"))
     if pdf_only or not paper["published"] or paper["maintained_html"]:
         print(f"Built {artifact(paper, '.pdf').relative_to(ROOT)}")
