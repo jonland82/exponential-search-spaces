@@ -5,4 +5,19 @@
 *.fls
 *.fdb_latexmk
 __pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+.env
+.env.*
+!.env.example
+.DS_Store
+Thumbs.db
 .build/
+
+# Frozen experiment results, models and source snapshots are intentional evidence.
