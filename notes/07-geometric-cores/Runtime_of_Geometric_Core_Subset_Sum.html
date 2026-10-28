@@ -29,7 +29,7 @@ window.MathJax = {
   <div class="byline">Jonathan R. Landers<br>October 2026</div>
 </header>
 <div class="abstract">
-<p><strong>Purpose.</strong> This companion defines the geometric core route of Note VII <a href="#ref-vii">[4]</a>, translates its runtime into Note I’s certified-coverage accounting, and compares general algorithms. The improvement depends on discovered structure; it supplies no new general worst-case bound.</p>
+<p><strong>Purpose.</strong> Can we make an enormous search cheaper by finding and reusing structure? This companion defines the geometric core route of Note VII <a href="#ref-vii">[4]</a>, translates its runtime into Note I’s certified-coverage accounting, and compares general algorithms. The improvement depends on discovered structure; it supplies no new general worst-case bound.</p>
 </div>
 <h2 id="the-problem-and-the-structural-opportunity">The problem and the structural opportunity</h2>
 <p>Given positive integer weights <span class="math inline">\(w_1,\ldots,w_N\)</span> and target <span class="math inline">\(t\)</span>, subset sum asks whether <span class="math display">\[\exists x\in\{0,1\}^N:\quad \sum_{i=1}^N w_ix_i=t.\]</span> YES supplies a matching subset; NO excludes every subset. Direct enumeration has <span class="math inline">\(2^N\)</span> choices. An exact summary can compress this search, but its numeric size must be charged in binary input length.</p>
