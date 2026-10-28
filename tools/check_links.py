@@ -102,8 +102,9 @@ def check(root, site=False):
     if failures:
         print("\n".join(failures))
         raise SystemExit(f"{len(failures)} broken or forbidden links")
-    print(f"Checked {count} active local links/assets; {len(PAPERS)} note entries, "
-          f"{sum(p['published'] for p in PAPERS)} HTML papers; draft status respected.")
+    html_count = sum(1 for _ in root.glob("notes/*/*.html"))
+    print(f"Checked {count} active local links/assets; {len(PAPERS)} numbered notes, "
+          f"{html_count} HTML papers including companions; draft status respected.")
 
 
 if __name__ == "__main__":

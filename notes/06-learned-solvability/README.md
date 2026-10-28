@@ -12,13 +12,13 @@ certified branch-pruning experiment. Both are preserved and reported separately.
 - [Frozen findings](../../Learned_Solvability_Subset_Sum/docs/PROSPECTIVE_FINDINGS.md).
 - [Branch-pruning findings](../../Learned_Solvability_Subset_Sum/docs/BRANCH_FINDINGS.md).
 
-Build the main paper with `python build_papers.py --paper 6`. The builder verifies
+Build the main paper and clustering companion with `python build_papers.py --paper 6`. The builder verifies
 frozen source/model/data hashes and generates measured values, tables and the
 plot. It regenerates PDF/HTML and performs no training or experiment reruns.
 
 ## Companion note: why unresolved inputs cluster
 
-[Three-page PDF](Why_Unresolved_Inputs_Cluster.pdf) | [LaTeX source](Why_Unresolved_Inputs_Cluster.tex) |
+[Read HTML](Why_Unresolved_Inputs_Cluster.html) | [Three-page PDF](Why_Unresolved_Inputs_Cluster.pdf) | [LaTeX source](Why_Unresolved_Inputs_Cluster.tex) |
 [3D figure](cluster_geometry.png) | [Descriptive evidence](cluster_evidence.json).
 
 October 26, 2026. A focused account of the structural residual-search bound,
@@ -29,7 +29,10 @@ finite-neighbor graph calculation. The figure reuses the frozen PCA coordinates;
 the full-space neighborhood rate is 586/730, or 80.27%, against 25.35% unresolved
 overall. This is descriptive reuse of the original sample, not a new experiment.
 
-Rebuild with `python tools/note_vi_cluster_artifacts.py --pdf`. The script checks
+Rebuild both formats with `python build_papers.py --paper 6`, or refresh only
+the HTML with `python build_papers.py --paper 6 --html-only`. The standalone
+`python tools/note_vi_cluster_artifacts.py --pdf` also rebuilds the figure,
+statistics and PDF. The script checks
 saved evidence hashes and identities, regenerates the figure and numerical
 macros, and compiles the PDF. It does not rerun solvers, fit models or refit PCA.
 

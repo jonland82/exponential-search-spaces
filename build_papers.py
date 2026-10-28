@@ -22,6 +22,15 @@ RUNTIME_COMPANION = dict(
     series_label="Runtime companion to Note VII &middot; Working draft",
     create_legacy_redirect=False,
 )
+CLUSTER_COMPANION = dict(
+    next(paper for paper in PAPERS if paper["number"] == "VI"),
+    number="VI-cluster", stem="Why_Unresolved_Inputs_Cluster",
+    title="Why Unresolved Inputs Cluster: A Structural and Statistical Account",
+    description="A three-page companion explaining structural solving routes and descriptive clustering of budgeted portfolio failures.",
+    series_label="Companion to Note VI &middot; Structural and statistical geometry",
+    body_start="<p>The subset-sum plot", number_equations=True,
+    create_legacy_redirect=False,
+)
 
 
 def relative(target, base):
@@ -52,6 +61,11 @@ def build_one(paper, pdf_only=False, html_only=False):
         subprocess.run(
             [sys.executable, str(ROOT / "tools/note_vii_artifacts.py")], cwd=ROOT, check=True,
         )
+    if paper["number"] == "VI-cluster":
+        subprocess.run(
+            [sys.executable, str(ROOT / "tools/note_vi_cluster_artifacts.py")],
+            cwd=ROOT, check=True,
+        )
     output = ROOT / ".build" / "latex" / paper["folder"]
     output.mkdir(parents=True, exist_ok=True)
     for _ in range(2):
@@ -73,6 +87,20 @@ def build_one(paper, pdf_only=False, html_only=False):
 def build_html(paper):
     folder, stem = directory(paper), paper["stem"]
     source = artifact(paper, ".tex").read_text(encoding="utf-8")
+    if paper.get("number_equations"):
+        equations = {}
+        def numbered_equation(match):
+            label = re.search(r"\\label\{([^}]+)\}", match[1])
+            if label is None:
+                return match[0]
+            key, number = label[1], len(equations) + 1
+            equations[key] = number
+            equation = match[1].replace(label[0], rf"\tag{{{number}}}")
+            return rf"\hypertarget{{{key}}}{{}}\begin{{equation}}{equation}\end{{equation}}"
+        source = re.sub(r"\\begin\{equation\}(.*?)\\end\{equation\}",
+                        numbered_equation, source, flags=re.S)
+        source = re.sub(r"\\eqref\{([^}]+)\}",
+                        lambda match: rf"\hyperlink{{{match[1]}}}{{({equations[match[1]]})}}", source)
     bibliography = re.search(r"\\begin\{thebibliography\}\{[^}]*\}(.*?)\\end\{thebibliography\}", source, re.S)
     if bibliography:
         keys = re.findall(r"\\bibitem\{([^}]+)\}", bibliography.group(1))
@@ -88,7 +116,10 @@ def build_html(paper):
         input=source.encode("utf-8"), cwd=folder, check=True, capture_output=True,
     )
     body = result.stdout.decode("utf-8").replace("\r\n", "\n")
-    body = body[body.index('<div class="tcolorbox">'):]
+    body = body[body.index(paper.get("body_start", '<div class="tcolorbox">')):]
+    if paper.get("body_start"):
+        end = body.index("</p>") + len("</p>")
+        body = '<div class="abstract">' + body[:end] + '</div>' + body[end:]
     body = body.replace('<div class="tcolorbox">', '<div class="abstract">', 1)
     body = body.replace('<div class="tcolorbox">', '<div class="keyeq">')
     body = body.replace("<h3 ", "<h4 ").replace("</h3>", "</h4>")
@@ -102,6 +133,9 @@ def build_html(paper):
                   r'<img src="geometric_gain.png"\1 alt="Paired exact-completion gains and avoided core-table constructions">', body)
     body = body.replace('<embed src="prediction_plot.png" />', '<img src="prediction_plot.png" width="1188" height="684" alt="Brier scores for five distances, ordinary features and their combination">')
     body = body.replace('<figcaption aria-hidden="true">', '<figcaption>')
+    body = body.replace('<img src="cluster_geometry.png" alt="image" />',
+                        '<img src="cluster_geometry.png" style="width:100%;height:auto" '
+                        'alt="Frozen input-space projection showing structural certificates and unresolved portfolio outcomes" />')
     body = body.replace('alt=""', 'alt="Comparison of Brier scores for five distances, ordinary features and their combination"')
     title, description = html.escape(paper["title"]), html.escape(paper["description"])
     related = "\n    ".join(
@@ -182,12 +216,18 @@ def main():
     args = parser.parse_args()
     if args.pdf_only and args.html_only:
         parser.error("choose either --pdf-only or --html-only")
+    selected = []
     for number, paper in enumerate(PAPERS, 1):
         if args.paper and args.paper not in (str(number), paper["stem"]):
             continue
         build_one(paper, args.pdf_only, args.html_only)
+        selected.append(paper)
+        if paper["number"] == "VI":
+            build_one(CLUSTER_COMPANION, args.pdf_only, args.html_only)
         if paper["number"] == "VII":
             build_one(RUNTIME_COMPANION, args.pdf_only, args.html_only)
+    from tools.prepare_site import sync_downloads
+    sync_downloads(ROOT, selected)
 
 
 if __name__ == "__main__":

@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="A three-page companion explaining structural solving routes and descriptive clustering of budgeted portfolio failures.">
+<title>Why Unresolved Inputs Cluster: A Structural and Statistical Account | Jonathan R. Landers</title>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']], tags: 'none' },
+  svg: { fontCache: 'global', scale: 0.98 },
+  options: { enableMenu: false }
+};
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<link rel="stylesheet" href="../../paper.css">
+</head>
+<body>
+<main>
+<nav class="top-links" aria-label="Paper links">
+  <a href="../../index.html">&larr; Series home</a>
+  <a href="https://github.com/jonland82/exponential-search-spaces">GitHub repository</a>
+  <a href="Why_Unresolved_Inputs_Cluster.pdf">Download PDF</a>
+  <a href="Why_Unresolved_Inputs_Cluster.tex">LaTeX source</a>
+</nav>
+<header>
+  <span class="series-label">Companion to Note VI &middot; Structural and statistical geometry</span>
+  <h1>Why Unresolved Inputs Cluster: A Structural and Statistical Account</h1>
+  <div class="byline">Jonathan R. Landers<br>October 2026</div>
+</header>
+<div class="abstract"><p>The subset-sum plot suggests a geography: several routes into easy solving, a concentration of unsuccessful runs, and a mixed boundary. In the original 15-feature space, 80.27% of the five nearest neighbors of unresolved inputs are also unresolved, against 25.35% unresolved overall. This note explains what our formalism contributes to that observation. Structural guarantees identify several affordable solving regions; a probability identity explains how uneven local failure rates produce neighbor enrichment. Neither argument proves that the observed concentration is inevitable or intrinsic to subset sum.</p></div>
+<h2 id="the-object-being-mapped">The object being mapped</h2>
+<p>An instance is <span class="math inline">\(x=(w,t)\)</span>, with positive integer weights and a fixed target. Fix an exact portfolio <span class="math inline">\(A\)</span>, its schedule and resource caps, and its declared work allowance <span class="math inline">\(B(L_x)=8L_x\)</span>, where <span class="math inline">\(L_x\)</span> is encoded input length. Define <span class="math display">\[H_A(x)=\mathbf 1\{A\text{ leaves }x\text{ unresolved under these limits}\}.\]</span> Unresolved means that the run did not establish either YES or NO before reaching a limit. It says neither that no subset exists nor that another method would fail. The work units are those of the reference implementation, not uniform bit operations.</p>
+<p>Our coordinates are <span class="math display">\[z(x)=S\bigl(k_1(x),\ldots,k_5(x),c_1(x),\ldots,c_{10}(x)\bigr).\]</span> The five <span class="math inline">\(k_i\)</span> are deletion counts on an exactly reduced, target-dependent kernel: superincreasing structure, complete coverage, few values, small reachable support, and compact interval/progression representations. Three counts are exact minima under their definitions; two are constructive upper bounds. The ten <span class="math inline">\(c_j\)</span> describe size, encoding, weight magnitudes and target position. <span class="math inline">\(S\)</span> is the saved plot standardization. Thus the geometry records particular structural and numerical similarities, rather than distance between raw lists.</p>
+<h2 id="several-routes-to-an-affordable-exact-decision">Several routes to an affordable exact decision</h2>
+<p>Suppose extractor <span class="math inline">\(i\)</span> leaves a certified core and <span class="math inline">\(k_i\)</span> exceptional items. Enumerating the <span class="math inline">\(2^{k_i}\)</span> exceptional selections and querying the core for the residual target gives <span id="eq:core"></span><span class="math display">\[T_{C_i}(x)\le F_i(L_x)+2^{k_i(x)}\bigl(Q_i(L_x)+\operatorname{poly}(L_x)\bigr)=:U_i(x).
+ \tag{1}\]</span> Here <span class="math inline">\(F_i\)</span> includes reduction and extraction; <span class="math inline">\(Q_i\)</span> includes exact core membership and witness recovery. This is the sufficient-condition argument of Notes V–VI. If these costs are polynomial and <span class="math inline">\(k_i=O(\log L_x)\)</span>, the resulting method is polynomial on that family. At a finite budget, one affordable route suffices: <span id="eq:union"></span><span class="math display">\[\mathcal E_B^{\rm core}=\bigcup_{i=1}^{5}\{x:U_i(x)\le B(L_x)\}.
+ \tag{2}\]</span> All costs in this comparison must use the same accounting. The reference portfolio does not implement every <span class="math inline">\(C_i\)</span>, so membership in this union is not a completion guarantee for <span class="math inline">\(A\)</span>. Outside the union, <span class="math inline">\(U_i(x)&gt;B(L_x)\)</span> for every <span class="math inline">\(i\)</span>: our five bounds provide no affordable route, but supply no hardness lower bound. This is a plausible mechanism for a shared region of solver resistance, not a proof that the observed labels must cluster.</p>
+<h2 id="the-observed-geography">The observed geography</h2>
+<div class="center">
+<p><img src="cluster_geometry.png" style="width:100%;height:auto" alt="Frozen input-space projection showing structural certificates and unresolved portfolio outcomes" /></p>
+</div>
+<p><span><strong>Figure 1.</strong> Frozen inputs in the saved three-dimensional PCA projection of the 15 standardized features; 72.4% of feature variance is retained. Positions were computed without outcome labels. Colors show one full-input structural type, while shape preserves observed completion. The neighborhood statistic below uses the full 15-dimensional geometry, not distances read from this image.</span></p>
+<p>The figure contains 576 original-encoding target cases from 144 base weight lists, including 430 completions and 146 unresolved runs. To prevent the four targets of one list from supplying their own neighbors, each query excludes its entire base list. For each remaining list, choose its nearest target in Euclidean feature distance, then take the nearest five distinct lists. Ties use frozen target order and then lexicographic list ID.</p>
+<p>Writing <span class="math inline">\(N_5(i)\)</span> for those five neighbors and <span class="math inline">\(H_i=H_A(x_i)\)</span>, the measured fraction is <span id="eq:observed"></span><span class="math display">\[\widehat Q_H=
+ \frac{\sum_{i:H_i=1}\sum_{j\in N_5(i)}H_j}{5\sum_i H_i}
+ =\frac{586}{730}=80.27\%,
+ \qquad \widehat p=\frac{146}{576}=25.35\%.
+ \tag{3}\]</span> The neighborhood rate is 3.17 times the overall rate. This is <em>enrichment</em>: unresolved runs are more common near unresolved runs than across the sample. Repeating the construction in the 3D projection gives 80.41%; the similar full-space result shows that the concentration is not solely a projection effect. Nevertheless, 56 of the 146 unresolved inputs have at least one completed neighbor in the original space. The boundary is mixed.</p>
+<div class="center">
+<div class="table-wrap"><table class="paper-table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Full-input membership in the five certified types</th>
+<th style="text-align: right;">Completed</th>
+<th style="text-align: right;">Unresolved</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">At least one certificate</td>
+<td style="text-align: right;">135</td>
+<td style="text-align: right;">9</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">None of these certificates</td>
+<td style="text-align: right;">295</td>
+<td style="text-align: right;">137</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p>The 295 other completions show that these five full-input classes do not exhaust practical easiness. The nine certified-but-unresolved cases show that structural tractability and this portfolio’s behavior are different objects. These memberships concern the full list; the model’s five distances concern the reduced kernel. Their distinction is intentional.</p>
+<h2 id="why-uneven-local-difficulty-produces-enrichment">Why uneven local difficulty produces enrichment</h2>
+<p>Fix an input distribution <span class="math inline">\(\mathcal D\)</span> and let <span class="math inline">\(Z=z(X)\)</span>. Define <span class="math display">\[q(z)=\Pr_{X\sim\mathcal D}(H_A(X)=1\mid Z=z),
+ \qquad p=\mathbb E[q(Z)]&gt;0.\]</span> The conditional probability averages over information absent from our features. It is not randomness in the answer to a fixed subset-sum instance. Our structural story suggests that <span class="math inline">\(q\)</span> can vary across feature space: different locations preserve different combinations of affordable shortcuts. The bound alone does not establish this variation or local smoothness.</p>
+<p><strong>An ideal local-pair identity.</strong> Draw <span class="math inline">\(Z\)</span> from its population distribution, then draw two inputs independently conditional on <span class="math inline">\(Z\)</span>, with failure labels <span class="math inline">\(H,H&#39;\)</span>. Conditional independence gives <span class="math inline">\(\mathbb E[HH&#39;\mid Z]=q(Z)^2\)</span>, hence <span id="eq:population"></span><span class="math display">\[\Pr(H&#39;=1\mid H=1)
+ =\frac{\mathbb E[q(Z)^2]}p
+ =\boxed{p+\frac{\operatorname{Var}(q(Z))}{p}}.
+ \tag{4}\]</span> If every location has the same failure probability, the variance vanishes and conditioning on one failure does not enrich the other. When local probabilities differ, observing a failure preferentially selects locations with larger <span class="math inline">\(q\)</span>; a second input from that location is consequently more likely to fail. This elementary identity explains the mechanism without asserting that nearby inputs always share a label.</p>
+<p>The actual five-neighbor graph uses finite distances and dependent observations. Equation <a href="#eq:population">(4)</a> is therefore an idealization, not an exact model of its 80% rate. For an exact finite-sample statement, choose a query index <span class="math inline">\(I\)</span> uniformly and then <span class="math inline">\(J\)</span> uniformly from <span class="math inline">\(N_5(I)\)</span>. Let <span class="math inline">\(p_N=\mathbb E[H_J]\)</span>. Directly from the definition of covariance, <span id="eq:graph"></span><span class="math display">\[\widehat Q_H
+ =\frac{\mathbb E[H_IH_J]}{\widehat p}
+ =p_N+\frac{\operatorname{Cov}(H_I,H_J)}{\widehat p}.
+ \tag{5}\]</span> Here <span class="math inline">\(p_N=26.04\%\)</span>, slightly above <span class="math inline">\(\widehat p=25.35\%\)</span>, because some inputs are chosen as neighbors more often. Thus the observed 80.27% reflects substantial positive label association along graph edges even after allowing for unequal neighbor frequency. This identity is descriptive; it does not make the edges independent statistical trials.</p>
+<h2 id="what-the-story-supports">What the story supports</h2>
+<p>The supported picture is a landscape of <em>budgeted portfolio failure</em>. Structural certificates provide several routes to efficient exact solution. Our features partly record where those routes survive, and unresolved outcomes concentrate in certain neighborhoods. The ideal-pair identity links uneven local failure probabilities to neighbor enrichment; the graph identity states the empirical association exactly. Neither proves that missing these five shortcuts causes failure, that Euclidean proximity preserves runtime, or that the same geometry holds for arbitrary inputs.</p>
+<p>These deliberately structured synthetic families remain related after own-list exclusion. Family, size, target choice, encoding and caps can all shape the landscape; 3D projection also discards variance. A mechanistic follow-up should measure enrichment within family/size strata, account for neighbor radii, and repeat the analysis after exact reductions or core reuse. The present claim is narrower: <em>our chosen features organize this fixed solver’s unresolved cases into locally enriched regions, consistent with multiple structural routes to easiness and a residual region where those routes are less effective.</em></p>
+<p><strong>Sources and reproducibility.</strong> Structural guarantees: Notes V–VI and the experiment’s <code>THEORY.md</code>/<code>ADVANCED_THEORY.md</code>. Figure and counts: frozen prospective cases, work-reference outcomes and saved projection. The accompanying <code>cluster_evidence.json</code> records hashes, geometry, tie rules and counts; <code>tools/note_vi_cluster_artifacts.py --pdf</code> rebuilds this note without fitting models or rerunning solvers. This descriptive reuse is separate from the later training-bank proximity experiment.</p>
+
+<footer>
+  <p>Part of the <a href="../../index.html">Certified Coverage research sequence</a>.</p>
+  <div class="link-row">
+    <a href="../01-certified-coverage/Certified_Coverage_of_Exponential_Search_Spaces.html">Note I: Framework</a>
+    <a href="../02-subset-sum-stress-test/Subset_Sum_as_a_Stress_Test.html">Note II: Exact-search stress test</a>
+    <a href="../03-probability-valued-subset-sum/Probability_Valued_Subset_Sum.html">Note III: Random-target probability</a>
+    <a href="../04-certified-approximation/Certified_Approximation_of_Subset_Sum.html">Note IV: Pairing in approximation</a>
+    <a href="../05-structural-distance/Structural_Distance_in_Subset_Sum.html">Note V: Structural distance (working draft)</a>
+    <a href="Predicting_Subset_Sum_Completion.html">Note VI: Learned completion</a>
+    <a href="../07-geometric-cores/Geometric_Cores_and_Exceptions_in_Subset_Sum.html">Note VII: Geometric core reuse (working draft)</a>
+    <a href="../../Learned_Solvability_Subset_Sum/README.md">Methods and data</a>
+  </div>
+</footer>
+</main>
+</body>
+</html>

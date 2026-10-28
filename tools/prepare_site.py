@@ -12,6 +12,21 @@ sys.path.insert(0, str(ROOT))
 from tools.paper_catalog import PAPERS, artifact, directory
 
 
+def sync_downloads(output, papers=PAPERS):
+    """Keep historical root PDF/TeX URLs current on the single Pages branch."""
+    for paper in papers:
+        if not paper["published"]:
+            continue
+        shutil.copy2(artifact(paper, ".pdf"), output / (paper["stem"] + ".pdf"))
+        text = artifact(paper, ".tex").read_text(encoding="utf-8")
+        def rebase(match):
+            target = directory(paper) / match[2]
+            relative = Path(os.path.relpath(target.resolve(), ROOT)).as_posix()
+            return match[1] + relative + match[3]
+        text = re.sub(r"(\\(?:input|includegraphics)(?:\[[^\]]*\])?\{)([^}]+)(\})", rebase, text)
+        (output / (paper["stem"] + ".tex")).write_text(text, encoding="utf-8")
+
+
 def prepare(output):
     output = output.resolve()
     if output.exists():
@@ -35,21 +50,14 @@ def prepare(output):
         if not paper["published"]:
             assert not (destination / (paper["stem"] + ".html")).exists()
             continue
-        # Compatibility downloads exist only in the deployment artifact.
+        # Root HTML redirects and downloads preserve earlier published URLs.
         shutil.copy2(ROOT / (paper["stem"] + ".html"), output / (paper["stem"] + ".html"))
-        shutil.copy2(artifact(paper, ".pdf"), output / (paper["stem"] + ".pdf"))
-        text = artifact(paper, ".tex").read_text(encoding="utf-8")
-        def rebase(match):
-            target = directory(paper) / match[2]
-            relative = Path(os.path.relpath(target.resolve(), ROOT)).as_posix()
-            return match[1] + relative + match[3]
-        text = re.sub(r"(\\(?:input|includegraphics)(?:\[[^\]]*\])?\{)([^}]+)(\})", rebase, text)
-        (output / (paper["stem"] + ".tex")).write_text(text, encoding="utf-8")
+    sync_downloads(output)
     for paper in PAPERS:
         if not paper["published"]:
             assert not (output / "notes" / paper["folder"] / (paper["stem"] + ".html")).exists()
-    published = sum(p["published"] for p in PAPERS)
-    print(f"Prepared {len(PAPERS)} note entries, {published} HTML papers, draft downloads and evidence at {output}")
+    html_count = sum(1 for _ in output.glob("notes/*/*.html"))
+    print(f"Prepared {len(PAPERS)} numbered notes, {html_count} HTML papers including companions, downloads and evidence at {output}")
 
 
 if __name__ == "__main__":
