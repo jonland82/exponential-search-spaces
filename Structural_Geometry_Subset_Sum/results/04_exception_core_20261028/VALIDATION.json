@@ -1,0 +1,12 @@
+{
+  "status": "passed",
+  "utc": "2026-10-28T18:55:38.196768+00:00",
+  "auditor_sha256": "ebffd24ed017f3d4e55a9ffd4464ef078c25cf5d6b51b04b051e61cbf86d26ab",
+  "lists": 192,
+  "fresh_cases": 576,
+  "fresh_counter_replays": 2880,
+  "live_runs": 8640,
+  "counter_pool_replays": 60,
+  "retrospective_replays": 345,
+  "checks": "sources/inputs/artifacts; independent fresh truths; partition/decomposition arithmetic; one-build/full-enumeration invariants; witnesses; all counter/pool/retrospective replays; live deadlines; report reconstruction"
+}

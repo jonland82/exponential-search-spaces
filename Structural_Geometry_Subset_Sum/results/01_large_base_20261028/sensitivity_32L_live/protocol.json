@@ -1,0 +1,31 @@
+{
+  "status": "post-hoc budget sensitivity; reused inspected inputs, not a fresh prospective test",
+  "reason": "original live safety work cap allowed the early core method to consume the deadline",
+  "fixed_before_timing_utc": "2026-10-28T17:44:17.501521+00:00",
+  "primary_protocol_sha256": "2f2aeb1ed794e3f08c16c9f8190e04f188ae3d741d8363615a8eaf46664072f5",
+  "case_sha256": "fbb375df31a4e8eafe087a480fd4802f726732d030aff4444f386b503b1279d1",
+  "primary_validation_sha256": "317c9abac873f764e05bbd62f46c9509c09e5ecd663b2d61409a98622da217c5",
+  "source_sha256": "ae34c7e9b38418e5a242f752564b6dbc45f1445b70c60eada3de7c8b6d643727",
+  "online_work_cap": "the original prespecified deterministic 32L allowance",
+  "seconds": 0.05,
+  "repeats": 3,
+  "unchanged_detector_and_solver": {
+    "candidate_cap": 24,
+    "check_work_cap": 12000,
+    "max_dp_bits": 2000000,
+    "max_history_bits": 64000000,
+    "max_q_count": 4,
+    "stride": 4,
+    "minimum_remaining": 8,
+    "checkpoint_cap": 16,
+    "max_states": 32768,
+    "max_bitset_bits": 1000000
+  },
+  "seed": 760281028,
+  "policies": [
+    "portfolio",
+    "detect_only",
+    "root_geometry",
+    "selective_geometry"
+  ]
+}

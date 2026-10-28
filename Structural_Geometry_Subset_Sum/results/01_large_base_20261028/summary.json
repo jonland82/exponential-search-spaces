@@ -1,0 +1,341 @@
+{
+  "cases": 324,
+  "lists": 108,
+  "runs": 5184,
+  "truth_counts": {
+    "yes": 140,
+    "no": 184
+  },
+  "policies": {
+    "work": {
+      "portfolio": {
+        "completed_median": 240,
+        "completed_range": [
+          240,
+          240
+        ],
+        "capped_seconds_median": 8.321410799981095,
+        "root_yes": 0,
+        "root_no": 0,
+        "internal_yes": 0,
+        "internal_no": 0,
+        "discovery_seconds": 0.0,
+        "checker_seconds": 0.0,
+        "max_overshoot_seconds": 0,
+        "peak_history_logical_bits": 0
+      },
+      "detect_only": {
+        "completed_median": 236,
+        "completed_range": [
+          236,
+          236
+        ],
+        "capped_seconds_median": 8.03428239992354,
+        "root_yes": 0,
+        "root_no": 0,
+        "internal_yes": 0,
+        "internal_no": 0,
+        "discovery_seconds": 0.1462576986523345,
+        "checker_seconds": 0.0,
+        "max_overshoot_seconds": 0,
+        "peak_history_logical_bits": 0
+      },
+      "root_geometry": {
+        "completed_median": 287,
+        "completed_range": [
+          287,
+          287
+        ],
+        "capped_seconds_median": 3.2153088989434764,
+        "root_yes": 48,
+        "root_no": 103,
+        "internal_yes": 0,
+        "internal_no": 0,
+        "discovery_seconds": 0.147420599241741,
+        "checker_seconds": 0.010862499591894448,
+        "max_overshoot_seconds": 0,
+        "peak_history_logical_bits": 11769552
+      },
+      "selective_geometry": {
+        "completed_median": 270,
+        "completed_range": [
+          270,
+          270
+        ],
+        "capped_seconds_median": 1.8171515004942194,
+        "root_yes": 48,
+        "root_no": 103,
+        "internal_yes": 12,
+        "internal_no": 363,
+        "discovery_seconds": 0.5484920013695955,
+        "checker_seconds": 0.014614001847803593,
+        "max_overshoot_seconds": 0,
+        "peak_history_logical_bits": 11769552
+      }
+    },
+    "time": {
+      "portfolio": {
+        "completed_median": 121,
+        "completed_range": [
+          120,
+          121
+        ],
+        "capped_seconds_median": 10.496724300901406,
+        "root_yes": 0,
+        "root_no": 0,
+        "internal_yes": 0,
+        "internal_no": 0,
+        "discovery_seconds": 0.0,
+        "checker_seconds": 0.0,
+        "max_overshoot_seconds": 0.000118000013753769,
+        "peak_history_logical_bits": 0
+      },
+      "detect_only": {
+        "completed_median": 121,
+        "completed_range": [
+          121,
+          121
+        ],
+        "capped_seconds_median": 10.528830099152401,
+        "root_yes": 0,
+        "root_no": 0,
+        "internal_yes": 0,
+        "internal_no": 0,
+        "discovery_seconds": 0.4821674998383969,
+        "checker_seconds": 0.0,
+        "max_overshoot_seconds": 8.429998997598609e-05,
+        "peak_history_logical_bits": 0
+      },
+      "root_geometry": {
+        "completed_median": 244,
+        "completed_range": [
+          244,
+          245
+        ],
+        "capped_seconds_median": 4.282426298945211,
+        "root_yes": 144,
+        "root_no": 309,
+        "internal_yes": 0,
+        "internal_no": 0,
+        "discovery_seconds": 0.48758459801319987,
+        "checker_seconds": 0.03593180177267641,
+        "max_overshoot_seconds": 8.000007364898643e-05,
+        "peak_history_logical_bits": 11769552
+      },
+      "selective_geometry": {
+        "completed_median": 245,
+        "completed_range": [
+          245,
+          245
+        ],
+        "capped_seconds_median": 4.275527199963108,
+        "root_yes": 144,
+        "root_no": 309,
+        "internal_yes": 0,
+        "internal_no": 0,
+        "discovery_seconds": 0.48226039961446077,
+        "checker_seconds": 0.03590150026138872,
+        "max_overshoot_seconds": 8.449999149888476e-05,
+        "peak_history_logical_bits": 11769552
+      }
+    }
+  },
+  "families": {
+    "work": {
+      "coverage": {
+        "portfolio": 36,
+        "detect_only": 36,
+        "root_geometry": 36,
+        "selective_geometry": 36
+      },
+      "few_values": {
+        "portfolio": 36,
+        "detect_only": 36,
+        "root_geometry": 36,
+        "selective_geometry": 36
+      },
+      "large_base": {
+        "portfolio": 31,
+        "detect_only": 31,
+        "root_geometry": 36,
+        "selective_geometry": 36
+      },
+      "large_base_many_outliers": {
+        "portfolio": 20,
+        "detect_only": 19,
+        "root_geometry": 25,
+        "selective_geometry": 19
+      },
+      "large_base_one_outlier": {
+        "portfolio": 26,
+        "detect_only": 26,
+        "root_geometry": 34,
+        "selective_geometry": 35
+      },
+      "near_equal": {
+        "portfolio": 12,
+        "detect_only": 12,
+        "root_geometry": 36,
+        "selective_geometry": 36
+      },
+      "progression": {
+        "portfolio": 31,
+        "detect_only": 28,
+        "root_geometry": 36,
+        "selective_geometry": 36
+      },
+      "random_wide": {
+        "portfolio": 12,
+        "detect_only": 12,
+        "root_geometry": 12,
+        "selective_geometry": 0
+      },
+      "superincreasing": {
+        "portfolio": 36,
+        "detect_only": 36,
+        "root_geometry": 36,
+        "selective_geometry": 36
+      }
+    },
+    "time": {
+      "coverage": {
+        "portfolio": 36,
+        "detect_only": 36,
+        "root_geometry": 36,
+        "selective_geometry": 36
+      },
+      "few_values": {
+        "portfolio": 16,
+        "detect_only": 16,
+        "root_geometry": 19,
+        "selective_geometry": 19
+      },
+      "large_base": {
+        "portfolio": 7,
+        "detect_only": 7,
+        "root_geometry": 36,
+        "selective_geometry": 36
+      },
+      "large_base_many_outliers": {
+        "portfolio": 6,
+        "detect_only": 6,
+        "root_geometry": 16,
+        "selective_geometry": 17
+      },
+      "large_base_one_outlier": {
+        "portfolio": 5,
+        "detect_only": 5,
+        "root_geometry": 29,
+        "selective_geometry": 29
+      },
+      "near_equal": {
+        "portfolio": 4,
+        "detect_only": 4,
+        "root_geometry": 36,
+        "selective_geometry": 36
+      },
+      "progression": {
+        "portfolio": 11,
+        "detect_only": 11,
+        "root_geometry": 36,
+        "selective_geometry": 36
+      },
+      "random_wide": {
+        "portfolio": 0,
+        "detect_only": 0,
+        "root_geometry": 0,
+        "selective_geometry": 0
+      },
+      "superincreasing": {
+        "portfolio": 36,
+        "detect_only": 36,
+        "root_geometry": 36,
+        "selective_geometry": 36
+      }
+    }
+  },
+  "sizes": {
+    "work": {
+      "20": {
+        "portfolio": 108,
+        "detect_only": 108,
+        "root_geometry": 108,
+        "selective_geometry": 91
+      },
+      "28": {
+        "portfolio": 80,
+        "detect_only": 79,
+        "root_geometry": 94,
+        "selective_geometry": 92
+      },
+      "36": {
+        "portfolio": 52,
+        "detect_only": 49,
+        "root_geometry": 85,
+        "selective_geometry": 87
+      }
+    },
+    "time": {
+      "20": {
+        "portfolio": 54,
+        "detect_only": 54,
+        "root_geometry": 88,
+        "selective_geometry": 88
+      },
+      "28": {
+        "portfolio": 38,
+        "detect_only": 38,
+        "root_geometry": 80,
+        "selective_geometry": 81
+      },
+      "36": {
+        "portfolio": 29,
+        "detect_only": 29,
+        "root_geometry": 76,
+        "selective_geometry": 76
+      }
+    }
+  },
+  "comparisons": {
+    "root_geometry_vs_portfolio": {
+      "repeat_average_difference": 123.66666666666666,
+      "list_bootstrap_95": [
+        101.64999999999999,
+        145.34166666666664
+      ],
+      "independent_lists": 108,
+      "conditional_on_policies_and_observed_timings": true,
+      "jointly_completed_all_repeats": 119,
+      "median_second_over_first_seconds": 0.9191611131249477
+    },
+    "selective_geometry_vs_root_geometry": {
+      "repeat_average_difference": 0.6666666666666666,
+      "list_bootstrap_95": [
+        0.0,
+        1.6666666666666665
+      ],
+      "independent_lists": 108,
+      "conditional_on_policies_and_observed_timings": true,
+      "jointly_completed_all_repeats": 243,
+      "median_second_over_first_seconds": 1.0007391819801374
+    },
+    "detect_only_vs_portfolio": {
+      "repeat_average_difference": 0.3333333333333333,
+      "list_bootstrap_95": [
+        0.0,
+        1.0
+      ],
+      "independent_lists": 108,
+      "conditional_on_policies_and_observed_timings": true,
+      "jointly_completed_all_repeats": 120,
+      "median_second_over_first_seconds": 0.9143466338695032
+    }
+  },
+  "memory_profiles": 32,
+  "peak_python_traced_bytes": {
+    "portfolio": 3267422,
+    "detect_only": 3269818,
+    "root_geometry": 3269802,
+    "selective_geometry": 303124
+  }
+}

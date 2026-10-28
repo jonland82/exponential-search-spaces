@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "utc": "2026-10-28T18:38:54.849950+00:00",
+  "cases": 576,
+  "selected_failures": 115,
+  "exact_probe_runs": 345,
+  "original_input_truths": "from independently audited parent dataset",
+  "completed_probe_answers_and_witnesses_checked": true,
+  "sources_and_parent_inputs_unchanged": true
+}

@@ -1,0 +1,261 @@
+{
+  "cases": 576,
+  "unresolved": 115,
+  "every_policy_unresolved": 100,
+  "by_family": {
+    "superincreasing": {
+      "unresolved": 0,
+      "total": 36,
+      "fraction": 0.0
+    },
+    "coverage": {
+      "unresolved": 0,
+      "total": 36,
+      "fraction": 0.0
+    },
+    "few_values": {
+      "unresolved": 0,
+      "total": 36,
+      "fraction": 0.0
+    },
+    "small_support": {
+      "unresolved": 0,
+      "total": 36,
+      "fraction": 0.0
+    },
+    "interval_union": {
+      "unresolved": 0,
+      "total": 36,
+      "fraction": 0.0
+    },
+    "progression": {
+      "unresolved": 4,
+      "total": 36,
+      "fraction": 0.1111111111111111
+    },
+    "random_wide": {
+      "unresolved": 24,
+      "total": 36,
+      "fraction": 0.6666666666666666
+    },
+    "near_equal": {
+      "unresolved": 12,
+      "total": 36,
+      "fraction": 0.3333333333333333
+    },
+    "filtered_modular": {
+      "unresolved": 13,
+      "total": 36,
+      "fraction": 0.3611111111111111
+    },
+    "block_pairs": {
+      "unresolved": 0,
+      "total": 36,
+      "fraction": 0.0
+    },
+    "two_scale": {
+      "unresolved": 23,
+      "total": 36,
+      "fraction": 0.6388888888888888
+    },
+    "two_progressions": {
+      "unresolved": 23,
+      "total": 36,
+      "fraction": 0.6388888888888888
+    },
+    "large_base": {
+      "unresolved": 0,
+      "total": 36,
+      "fraction": 0.0
+    },
+    "large_base_one_outlier": {
+      "unresolved": 1,
+      "total": 36,
+      "fraction": 0.027777777777777776
+    },
+    "large_base_many_outliers": {
+      "unresolved": 14,
+      "total": 36,
+      "fraction": 0.3888888888888889
+    },
+    "wide_aggregate": {
+      "unresolved": 1,
+      "total": 36,
+      "fraction": 0.027777777777777776
+    }
+  },
+  "by_size": {
+    "24": {
+      "unresolved": 0,
+      "total": 192,
+      "fraction": 0.0
+    },
+    "30": {
+      "unresolved": 48,
+      "total": 192,
+      "fraction": 0.25
+    },
+    "36": {
+      "unresolved": 67,
+      "total": 192,
+      "fraction": 0.3489583333333333
+    }
+  },
+  "by_truth": {
+    "yes": {
+      "unresolved": 52,
+      "total": 255,
+      "fraction": 0.20392156862745098
+    },
+    "no": {
+      "unresolved": 63,
+      "total": 321,
+      "fraction": 0.19626168224299065
+    }
+  },
+  "by_target_rule": {
+    "planted": {
+      "unresolved": 42,
+      "total": 192,
+      "fraction": 0.21875
+    },
+    "middle": {
+      "unresolved": 37,
+      "total": 192,
+      "fraction": 0.19270833333333334
+    },
+    "fractional_band": {
+      "unresolved": 36,
+      "total": 192,
+      "fraction": 0.1875
+    }
+  },
+  "baseline_rescues": {
+    "lean_never": 2,
+    "never": 0,
+    "always": 0,
+    "simple": 0,
+    "learned": 0,
+    "direct_mitm": 15
+  },
+  "geometry_cap_violations": {
+    "aggregate_count": 37,
+    "dp_area": 114,
+    "history_area": 114
+  },
+  "eligible_failures": 1,
+  "method_failure_reasons": {
+    "bitset:bitset_limit": 115,
+    "dfs:work_limit": 115,
+    "mitm:state_limit": 58,
+    "mitm:work_limit": 57
+  },
+  "failure_min_structural_distance": {
+    "minimum": 15,
+    "median": 27,
+    "maximum": 29
+  },
+  "failures_by_replacement": {
+    "filtered_modular": {
+      "0": 10,
+      "9": 3
+    },
+    "large_base_many_outliers": {
+      "not_applicable": 14
+    },
+    "large_base_one_outlier": {
+      "not_applicable": 1
+    },
+    "near_equal": {
+      "8": 3,
+      "9": 9
+    },
+    "progression": {
+      "9": 4
+    },
+    "random_wide": {
+      "0": 18,
+      "8": 3,
+      "9": 3
+    },
+    "two_progressions": {
+      "8": 9,
+      "0": 2,
+      "9": 12
+    },
+    "two_scale": {
+      "8": 9,
+      "0": 11,
+      "9": 3
+    },
+    "wide_aggregate": {
+      "not_applicable": 1
+    }
+  },
+  "full_core_trim_hypotheses": {
+    "0": 1,
+    "1": 2,
+    "4": 7,
+    "5": 16,
+    "9": 29
+  },
+  "resource_probes": {
+    "memory_only": {
+      "completed": 17,
+      "total": 115,
+      "by_size": {
+        "30": 12,
+        "36": 5
+      },
+      "by_family": {
+        "filtered_modular": 1,
+        "large_base_many_outliers": 5,
+        "large_base_one_outlier": 1,
+        "near_equal": 7,
+        "progression": 0,
+        "random_wide": 0,
+        "two_progressions": 3,
+        "two_scale": 0,
+        "wide_aggregate": 0
+      }
+    },
+    "work_only": {
+      "completed": 20,
+      "total": 115,
+      "by_size": {
+        "30": 10,
+        "36": 10
+      },
+      "by_family": {
+        "filtered_modular": 0,
+        "large_base_many_outliers": 7,
+        "large_base_one_outlier": 1,
+        "near_equal": 9,
+        "progression": 1,
+        "random_wide": 0,
+        "two_progressions": 2,
+        "two_scale": 0,
+        "wide_aggregate": 0
+      }
+    },
+    "memory_and_work": {
+      "completed": 115,
+      "total": 115,
+      "by_size": {
+        "30": 48,
+        "36": 67
+      },
+      "by_family": {
+        "filtered_modular": 13,
+        "large_base_many_outliers": 14,
+        "large_base_one_outlier": 1,
+        "near_equal": 12,
+        "progression": 4,
+        "random_wide": 24,
+        "two_progressions": 23,
+        "two_scale": 23,
+        "wide_aggregate": 1
+      }
+    }
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "training_decisions": 28,
+  "positive": 14,
+  "negative": 14,
+  "mean_absolute_saving": 2541.0714285714284,
+  "thresholds": [
+    {
+      "threshold": 0.0,
+      "capped_cost": 8031181,
+      "completed": 220,
+      "checks": 11
+    },
+    {
+      "threshold": 0.1,
+      "capped_cost": 8020178,
+      "completed": 220,
+      "checks": 9
+    },
+    {
+      "threshold": 0.25,
+      "capped_cost": 8020178,
+      "completed": 220,
+      "checks": 9
+    },
+    {
+      "threshold": 0.5,
+      "capped_cost": 8021221,
+      "completed": 220,
+      "checks": 7
+    },
+    {
+      "threshold": 0.75,
+      "capped_cost": 8021448,
+      "completed": 220,
+      "checks": 6
+    },
+    {
+      "threshold": 0.9,
+      "capped_cost": 8022109,
+      "completed": 220,
+      "checks": 4
+    },
+    {
+      "threshold": 1.1,
+      "capped_cost": 8040860,
+      "completed": 220,
+      "checks": 0
+    }
+  ],
+  "training_pairs": 576,
+  "training_eligible": 28,
+  "zero_saving_eligible": 0
+}

@@ -5,6 +5,33 @@ Stage 10 certified branch-pruning results.** The six-note website links the pape
 and its supporting evidence.
 The original feasibility pilot and model-development results remain preserved.
 
+**Stage 13 complete: training-only feature pruning.** A separate October 28 experiment
+selects nested top-five/top-ten subsets from the 27 candidates using recursive
+elimination on development training lists only. It freezes calibrated logistic
+models before another 144 fresh base lists / 1,152 paired-encoding cases.
+See the [protocol](PRUNING_PROTOCOL.md), [saved guide](results/pruning_20261028/README.md),
+[prediction report](results/pruning_20261028/PREDICTION_REPORT.md),
+[paid solver report](results/pruning_20261028/PRIORITY_REPORT.md) and
+[findings](PRUNING_FINDINGS.md). Original models and all earlier evidence are preserved.
+Top five improves the unscaled Brier point estimate (0.06808 versus baseline
+0.07414), with uncertainty spanning zero; top ten worsens it. Neither model
+establishes better paid solving. All 50 tests and the independent 576-pool audit pass.
+
+**Stage 12 complete: prototype geometry and structural interactions.** A separate
+October 28 experiment reruns calibrated logistic regression with 15 baseline,
+17 prototype, 25 interaction and 27 combined features. It uses training-only
+geometry, out-of-list training prototypes, and 144 fresh base lists / 1,152
+paired-encoding cases. See the [protocol](GEOMETRIC_PROTOCOL.md),
+[experiment guide](results/geometric_20261028/README.md),
+[prediction report](results/geometric_20261028/PREDICTION_REPORT.md),
+[paid solver report](results/geometric_20261028/PRIORITY_REPORT.md) and
+[findings](GEOMETRIC_FINDINGS.md). This tests whole-input completion prediction
+and paid prioritization; it does not rerun the branch-checking experiment or
+replace the default model. Earlier frozen evidence and the manuscript are preserved.
+The combined features do not improve the primary Brier endpoint (0.08576 versus
+0.08220); small live-time differences coexist with worse work-counter outcomes.
+All 43 tests and the independent 1,152-case / 576-pool audit pass.
+
 **Stage 11 complete: proximity to observed easy/hard inputs.** A separate model freeze
 tests empirical neighbor distances in the original 15-feature space on another
 144 base lists / 1,152 paired-encoding cases. Related targets never serve as
@@ -131,6 +158,18 @@ audits all model/data hashes, features, answers, probabilities and policy traces
 `plot_prospective.py` renders the saved results without any new model fitting.
 
 ## Paper and publication status
+
+A separate [literature-geometry classifier follow-up](../Structural_Geometry_Subset_Sum/CLASSIFIER_FINDINGS.md)
+tests the original 15 inputs plus blind large-base decomposition descriptors
+and additive doubling on matched expanded training data. Its protocol, models,
+fresh tests and paid comparisons live in the structural-geometry package;
+earlier frozen models and the manuscript remain preserved.
+The [mathematical overview](../Structural_Geometry_Subset_Sum/experiments/02_literature_classifier/OVERVIEW.md)
+connects the literature, all 19 feature definitions and the broader research program.
+The subsequent [cost-aware gate study](../Structural_Geometry_Subset_Sum/COST_GATE_FINDINGS.md)
+trains on paired check-versus-skip savings and compares paid exact policies.
+The [exact geometric-core follow-up](../Structural_Geometry_Subset_Sum/EXCEPTION_FINDINGS.md)
+adds a reusable core with exceptional weights and reports fresh costed gains.
 
 The updated manuscript presents definitions, elementary guarantees, matched
 prediction comparisons, paid practical policies, certified branch checks and

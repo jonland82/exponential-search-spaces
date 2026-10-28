@@ -34,6 +34,7 @@ The transferred model has not demonstrated an advantage over the rule.
 - `Subset_Sum_Refinement_Experiment/` preserves Note III's statistical and deterministic follow-ups, including frozen evidence and reruns.
 - `Structural_Distance_Subset_Sum/` contains Note V's proofs, exact solvers, tests, literature audit, frozen study, and raw measurements.
 - `Learned_Solvability_Subset_Sum/` contains Note VI's certified features, theory, scoped literature audit, frozen models, exact evidence and prioritization traces.
+- `Structural_Geometry_Subset_Sum/` contains a separate literature-guided direction: exact geometric solving routes, classifier features and cost-aware gates. The [reusable exception-core experiment](Structural_Geometry_Subset_Sum/EXCEPTION_FINDINGS.md) improves fresh work-capped completions from 453 to 469 over matched root geometry, with full cost accounting and scoped claims.
 - `tools/` contains the note catalog, evidence-to-paper helpers, link checking, and website staging.
 - `index.html`, `paper.css`, and `fonts/` are the six-note website. Small root HTML redirects preserve earlier entrypoints.
 - `.build/` holds ignored LaTeX byproducts and optional staged website files.
@@ -41,6 +42,9 @@ The transferred model has not demonstrated an advantage over the rule.
 The experiment packages retain their existing locations and frozen source bytes. Their protocols and measured data were not regenerated for the reorganization.
 
 ## Build and check
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for Git workflow, verification and preservation
+of frozen research evidence.
 
 Requires `pdflatex` and `pandoc`. Numerical tests use Python's standard library; plots use Matplotlib.
 

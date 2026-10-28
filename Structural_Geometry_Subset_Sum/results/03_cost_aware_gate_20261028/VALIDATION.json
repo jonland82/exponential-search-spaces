@@ -1,0 +1,12 @@
+{
+  "status": "passed",
+  "utc": "2026-10-28T18:29:35.944824+00:00",
+  "auditor_sha256": "2dee579470059c712075661ee50191152a137dc70ce9c26d7ddc321a9ee95865",
+  "lists": 480,
+  "cases": 1440,
+  "development_action_pairs": 864,
+  "test_counter_replays": 3456,
+  "pool_runs": 144,
+  "deterministic_pool_replays": 72,
+  "checks": "hashes; exact truth; group separation; paired costs/labels; weighted refit; threshold replay; folded-score parity; all counter replays; certificates/witnesses; pool accounting/deadlines; reconstructed summaries"
+}

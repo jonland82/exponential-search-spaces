@@ -1,0 +1,423 @@
+{
+  "cases": 576,
+  "lists": 192,
+  "work": {
+    "lean": {
+      "completed": 434,
+      "actual_work": 16157748,
+      "capped_cost": 16798497,
+      "plans": 0,
+      "core_calls": 0,
+      "core_completed": 0,
+      "core_builds": 0,
+      "max_history_bits": 0
+    },
+    "root": {
+      "completed": 453,
+      "actual_work": 13990563,
+      "capped_cost": 14421224,
+      "plans": 0,
+      "core_calls": 0,
+      "core_completed": 0,
+      "core_builds": 0,
+      "max_history_bits": 40408128
+    },
+    "discover_only": {
+      "completed": 450,
+      "actual_work": 14272360,
+      "capped_cost": 14664555,
+      "plans": 98,
+      "core_calls": 0,
+      "core_completed": 0,
+      "core_builds": 0,
+      "max_history_bits": 40408128
+    },
+    "reuse": {
+      "completed": 469,
+      "actual_work": 12708976,
+      "capped_cost": 13098104,
+      "plans": 98,
+      "core_calls": 98,
+      "core_completed": 98,
+      "core_builds": 98,
+      "max_history_bits": 40408128
+    },
+    "direct_mitm": {
+      "completed": 412,
+      "actual_work": 11704849,
+      "capped_cost": 16292072,
+      "plans": 0,
+      "core_calls": 0,
+      "core_completed": 0,
+      "core_builds": 0,
+      "max_history_bits": 0
+    }
+  },
+  "live": {
+    "lean": {
+      "median": 356,
+      "minimum": 353,
+      "maximum": 356,
+      "max_overshoot_seconds": 0.0008954999689012762
+    },
+    "root": {
+      "median": 407,
+      "minimum": 402,
+      "maximum": 408,
+      "max_overshoot_seconds": 0.0007839000504463907
+    },
+    "discover_only": {
+      "median": 407,
+      "minimum": 404,
+      "maximum": 408,
+      "max_overshoot_seconds": 0.0009735999815165992
+    },
+    "reuse": {
+      "median": 440,
+      "minimum": 434,
+      "maximum": 440,
+      "max_overshoot_seconds": 0.0008375999936833974
+    },
+    "direct_mitm": {
+      "median": 358,
+      "minimum": 357,
+      "maximum": 362,
+      "max_overshoot_seconds": 0.039610900003463026
+    }
+  },
+  "families": {
+    "superincreasing": {
+      "lean": 36,
+      "root": 36,
+      "discover_only": 36,
+      "reuse": 36,
+      "direct_mitm": 36
+    },
+    "coverage": {
+      "lean": 36,
+      "root": 36,
+      "discover_only": 36,
+      "reuse": 36,
+      "direct_mitm": 26
+    },
+    "few_values": {
+      "lean": 36,
+      "root": 36,
+      "discover_only": 36,
+      "reuse": 36,
+      "direct_mitm": 36
+    },
+    "small_support": {
+      "lean": 36,
+      "root": 36,
+      "discover_only": 36,
+      "reuse": 36,
+      "direct_mitm": 36
+    },
+    "interval_union": {
+      "lean": 36,
+      "root": 36,
+      "discover_only": 36,
+      "reuse": 36,
+      "direct_mitm": 36
+    },
+    "progression": {
+      "lean": 33,
+      "root": 33,
+      "discover_only": 33,
+      "reuse": 33,
+      "direct_mitm": 29
+    },
+    "random_wide": {
+      "lean": 12,
+      "root": 12,
+      "discover_only": 12,
+      "reuse": 12,
+      "direct_mitm": 12
+    },
+    "near_equal": {
+      "lean": 21,
+      "root": 20,
+      "discover_only": 20,
+      "reuse": 25,
+      "direct_mitm": 25
+    },
+    "filtered_modular": {
+      "lean": 22,
+      "root": 22,
+      "discover_only": 22,
+      "reuse": 22,
+      "direct_mitm": 20
+    },
+    "block_pairs": {
+      "lean": 36,
+      "root": 36,
+      "discover_only": 36,
+      "reuse": 36,
+      "direct_mitm": 16
+    },
+    "two_scale": {
+      "lean": 15,
+      "root": 13,
+      "discover_only": 11,
+      "reuse": 11,
+      "direct_mitm": 12
+    },
+    "two_progressions": {
+      "lean": 15,
+      "root": 14,
+      "discover_only": 13,
+      "reuse": 13,
+      "direct_mitm": 17
+    },
+    "large_base": {
+      "lean": 34,
+      "root": 36,
+      "discover_only": 36,
+      "reuse": 36,
+      "direct_mitm": 36
+    },
+    "large_base_one_outlier": {
+      "lean": 28,
+      "root": 34,
+      "discover_only": 34,
+      "reuse": 36,
+      "direct_mitm": 36
+    },
+    "large_base_many_outliers": {
+      "lean": 19,
+      "root": 22,
+      "discover_only": 22,
+      "reuse": 34,
+      "direct_mitm": 24
+    },
+    "wide_aggregate": {
+      "lean": 19,
+      "root": 31,
+      "discover_only": 31,
+      "reuse": 31,
+      "direct_mitm": 15
+    }
+  },
+  "pools": [
+    {
+      "cohort": "large_base",
+      "fraction": 0.2,
+      "policy": "direct_mitm",
+      "median": 49,
+      "minimum": 46,
+      "maximum": 54
+    },
+    {
+      "cohort": "large_base",
+      "fraction": 0.2,
+      "policy": "discover_only",
+      "median": 58,
+      "minimum": 55,
+      "maximum": 75
+    },
+    {
+      "cohort": "large_base",
+      "fraction": 0.2,
+      "policy": "lean",
+      "median": 33,
+      "minimum": 28,
+      "maximum": 37
+    },
+    {
+      "cohort": "large_base",
+      "fraction": 0.2,
+      "policy": "reuse",
+      "median": 97,
+      "minimum": 96,
+      "maximum": 107
+    },
+    {
+      "cohort": "large_base",
+      "fraction": 0.2,
+      "policy": "root",
+      "median": 58,
+      "minimum": 55,
+      "maximum": 76
+    },
+    {
+      "cohort": "large_base",
+      "fraction": 0.5,
+      "policy": "direct_mitm",
+      "median": 111,
+      "minimum": 111,
+      "maximum": 111
+    },
+    {
+      "cohort": "large_base",
+      "fraction": 0.5,
+      "policy": "discover_only",
+      "median": 123,
+      "minimum": 123,
+      "maximum": 123
+    },
+    {
+      "cohort": "large_base",
+      "fraction": 0.5,
+      "policy": "lean",
+      "median": 70,
+      "minimum": 69,
+      "maximum": 73
+    },
+    {
+      "cohort": "large_base",
+      "fraction": 0.5,
+      "policy": "reuse",
+      "median": 137,
+      "minimum": 137,
+      "maximum": 137
+    },
+    {
+      "cohort": "large_base",
+      "fraction": 0.5,
+      "policy": "root",
+      "median": 123,
+      "minimum": 123,
+      "maximum": 123
+    },
+    {
+      "cohort": "legacy_families",
+      "fraction": 0.2,
+      "policy": "direct_mitm",
+      "median": 165,
+      "minimum": 162,
+      "maximum": 169
+    },
+    {
+      "cohort": "legacy_families",
+      "fraction": 0.2,
+      "policy": "discover_only",
+      "median": 127,
+      "minimum": 111,
+      "maximum": 139
+    },
+    {
+      "cohort": "legacy_families",
+      "fraction": 0.2,
+      "policy": "lean",
+      "median": 150,
+      "minimum": 125,
+      "maximum": 151
+    },
+    {
+      "cohort": "legacy_families",
+      "fraction": 0.2,
+      "policy": "reuse",
+      "median": 136,
+      "minimum": 118,
+      "maximum": 146
+    },
+    {
+      "cohort": "legacy_families",
+      "fraction": 0.2,
+      "policy": "root",
+      "median": 136,
+      "minimum": 114,
+      "maximum": 142
+    },
+    {
+      "cohort": "legacy_families",
+      "fraction": 0.5,
+      "policy": "direct_mitm",
+      "median": 301,
+      "minimum": 301,
+      "maximum": 301
+    },
+    {
+      "cohort": "legacy_families",
+      "fraction": 0.5,
+      "policy": "discover_only",
+      "median": 314,
+      "minimum": 306,
+      "maximum": 318
+    },
+    {
+      "cohort": "legacy_families",
+      "fraction": 0.5,
+      "policy": "lean",
+      "median": 334,
+      "minimum": 334,
+      "maximum": 334
+    },
+    {
+      "cohort": "legacy_families",
+      "fraction": 0.5,
+      "policy": "reuse",
+      "median": 332,
+      "minimum": 332,
+      "maximum": 332
+    },
+    {
+      "cohort": "legacy_families",
+      "fraction": 0.5,
+      "policy": "root",
+      "median": 324,
+      "minimum": 320,
+      "maximum": 327
+    }
+  ],
+  "primary": {
+    "difference": 16,
+    "lists": 192,
+    "list_bootstrap_95": [
+      4.0,
+      30.024999999999864
+    ],
+    "first_only": 19,
+    "second_only": 3
+  },
+  "secondary": {
+    "lean": {
+      "difference": 35,
+      "lists": 192,
+      "list_bootstrap_95": [
+        16.0,
+        57.0
+      ],
+      "first_only": 42,
+      "second_only": 7
+    },
+    "discover_only": {
+      "difference": 19,
+      "lists": 192,
+      "list_bootstrap_95": [
+        8.0,
+        33.0
+      ],
+      "first_only": 19,
+      "second_only": 0
+    },
+    "direct_mitm": {
+      "difference": 57,
+      "lists": 192,
+      "list_bootstrap_95": [
+        31.0,
+        87.0
+      ],
+      "first_only": 68,
+      "second_only": 11
+    }
+  },
+  "retrospective": {
+    "root": {
+      "completed": 0,
+      "selected_cases": 115,
+      "many_outlier_completed": 0
+    },
+    "reuse": {
+      "completed": 25,
+      "selected_cases": 115,
+      "many_outlier_completed": 11
+    },
+    "direct_mitm": {
+      "completed": 15,
+      "selected_cases": 115,
+      "many_outlier_completed": 5
+    }
+  }
+}

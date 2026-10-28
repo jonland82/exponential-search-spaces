@@ -1,0 +1,12 @@
+{
+  "status": "passed",
+  "audited_at_utc": "2026-10-28T18:03:02.930381+00:00",
+  "auditor_sha256": "b4cc8fd3608ba5fbfbb832147e0fb5b62e06e0633e5cf6337f7435f9b94af39d",
+  "lists": 270,
+  "development_cases": 405,
+  "test_cases": 405,
+  "pending_test_cases": 250,
+  "pool_runs": 96,
+  "deterministic_pool_replays": 48,
+  "checks": "source/input/model/data/result hashes; exact truth; descriptor arithmetic; labels; refits/calibration; predictions; summaries; paid answers/deadlines; all deterministic pools"
+}

@@ -1,0 +1,587 @@
+{
+  "cases": 576,
+  "lists": 192,
+  "work": {
+    "lean_never": {
+      "completed": 431,
+      "capped_cost": 16274475,
+      "actual_work": 15719129,
+      "eligible": 0,
+      "checks": 0,
+      "checker_completed": 0
+    },
+    "never": {
+      "completed": 461,
+      "capped_cost": 13417540,
+      "actual_work": 13072957,
+      "eligible": 34,
+      "checks": 0,
+      "checker_completed": 0
+    },
+    "always": {
+      "completed": 461,
+      "capped_cost": 13364119,
+      "actual_work": 13025492,
+      "eligible": 34,
+      "checks": 34,
+      "checker_completed": 32
+    },
+    "simple": {
+      "completed": 461,
+      "capped_cost": 13364119,
+      "actual_work": 13025492,
+      "eligible": 34,
+      "checks": 34,
+      "checker_completed": 32
+    },
+    "learned": {
+      "completed": 461,
+      "capped_cost": 13361360,
+      "actual_work": 13016844,
+      "eligible": 34,
+      "checks": 25,
+      "checker_completed": 25
+    },
+    "direct_mitm": {
+      "completed": 434,
+      "capped_cost": 15129245,
+      "actual_work": 11385152,
+      "eligible": 0,
+      "checks": 0,
+      "checker_completed": 0
+    }
+  },
+  "pools": [
+    {
+      "mode": "time",
+      "cohort": "large_base",
+      "fraction": 0.2,
+      "policy": "always",
+      "median": 79.0,
+      "minimum": 73,
+      "maximum": 81
+    },
+    {
+      "mode": "time",
+      "cohort": "large_base",
+      "fraction": 0.2,
+      "policy": "direct_mitm",
+      "median": 22.0,
+      "minimum": 16,
+      "maximum": 23
+    },
+    {
+      "mode": "time",
+      "cohort": "large_base",
+      "fraction": 0.2,
+      "policy": "lean_never",
+      "median": 15.0,
+      "minimum": 10,
+      "maximum": 16
+    },
+    {
+      "mode": "time",
+      "cohort": "large_base",
+      "fraction": 0.2,
+      "policy": "learned",
+      "median": 75.0,
+      "minimum": 71,
+      "maximum": 78
+    },
+    {
+      "mode": "time",
+      "cohort": "large_base",
+      "fraction": 0.2,
+      "policy": "never",
+      "median": 72.0,
+      "minimum": 59,
+      "maximum": 72
+    },
+    {
+      "mode": "time",
+      "cohort": "large_base",
+      "fraction": 0.2,
+      "policy": "simple",
+      "median": 80.0,
+      "minimum": 79,
+      "maximum": 81
+    },
+    {
+      "mode": "time",
+      "cohort": "large_base",
+      "fraction": 0.5,
+      "policy": "always",
+      "median": 121.0,
+      "minimum": 120,
+      "maximum": 121
+    },
+    {
+      "mode": "time",
+      "cohort": "large_base",
+      "fraction": 0.5,
+      "policy": "direct_mitm",
+      "median": 56.0,
+      "minimum": 55,
+      "maximum": 62
+    },
+    {
+      "mode": "time",
+      "cohort": "large_base",
+      "fraction": 0.5,
+      "policy": "lean_never",
+      "median": 34.0,
+      "minimum": 34,
+      "maximum": 43
+    },
+    {
+      "mode": "time",
+      "cohort": "large_base",
+      "fraction": 0.5,
+      "policy": "learned",
+      "median": 120.0,
+      "minimum": 119,
+      "maximum": 120
+    },
+    {
+      "mode": "time",
+      "cohort": "large_base",
+      "fraction": 0.5,
+      "policy": "never",
+      "median": 118.0,
+      "minimum": 118,
+      "maximum": 119
+    },
+    {
+      "mode": "time",
+      "cohort": "large_base",
+      "fraction": 0.5,
+      "policy": "simple",
+      "median": 121.0,
+      "minimum": 120,
+      "maximum": 121
+    },
+    {
+      "mode": "time",
+      "cohort": "legacy_families",
+      "fraction": 0.2,
+      "policy": "always",
+      "median": 175.0,
+      "minimum": 154,
+      "maximum": 185
+    },
+    {
+      "mode": "time",
+      "cohort": "legacy_families",
+      "fraction": 0.2,
+      "policy": "direct_mitm",
+      "median": 160.0,
+      "minimum": 137,
+      "maximum": 175
+    },
+    {
+      "mode": "time",
+      "cohort": "legacy_families",
+      "fraction": 0.2,
+      "policy": "lean_never",
+      "median": 176.0,
+      "minimum": 155,
+      "maximum": 178
+    },
+    {
+      "mode": "time",
+      "cohort": "legacy_families",
+      "fraction": 0.2,
+      "policy": "learned",
+      "median": 179.0,
+      "minimum": 155,
+      "maximum": 180
+    },
+    {
+      "mode": "time",
+      "cohort": "legacy_families",
+      "fraction": 0.2,
+      "policy": "never",
+      "median": 176.0,
+      "minimum": 153,
+      "maximum": 180
+    },
+    {
+      "mode": "time",
+      "cohort": "legacy_families",
+      "fraction": 0.2,
+      "policy": "simple",
+      "median": 179.0,
+      "minimum": 155,
+      "maximum": 185
+    },
+    {
+      "mode": "time",
+      "cohort": "legacy_families",
+      "fraction": 0.5,
+      "policy": "always",
+      "median": 315.0,
+      "minimum": 313,
+      "maximum": 315
+    },
+    {
+      "mode": "time",
+      "cohort": "legacy_families",
+      "fraction": 0.5,
+      "policy": "direct_mitm",
+      "median": 304.0,
+      "minimum": 304,
+      "maximum": 306
+    },
+    {
+      "mode": "time",
+      "cohort": "legacy_families",
+      "fraction": 0.5,
+      "policy": "lean_never",
+      "median": 313.0,
+      "minimum": 311,
+      "maximum": 314
+    },
+    {
+      "mode": "time",
+      "cohort": "legacy_families",
+      "fraction": 0.5,
+      "policy": "learned",
+      "median": 314.0,
+      "minimum": 314,
+      "maximum": 315
+    },
+    {
+      "mode": "time",
+      "cohort": "legacy_families",
+      "fraction": 0.5,
+      "policy": "never",
+      "median": 314.0,
+      "minimum": 314,
+      "maximum": 315
+    },
+    {
+      "mode": "time",
+      "cohort": "legacy_families",
+      "fraction": 0.5,
+      "policy": "simple",
+      "median": 314.0,
+      "minimum": 314,
+      "maximum": 314
+    },
+    {
+      "mode": "work",
+      "cohort": "large_base",
+      "fraction": 0.2,
+      "policy": "always",
+      "median": 68.0,
+      "minimum": 66,
+      "maximum": 77
+    },
+    {
+      "mode": "work",
+      "cohort": "large_base",
+      "fraction": 0.2,
+      "policy": "direct_mitm",
+      "median": 49.0,
+      "minimum": 47,
+      "maximum": 49
+    },
+    {
+      "mode": "work",
+      "cohort": "large_base",
+      "fraction": 0.2,
+      "policy": "lean_never",
+      "median": 27.0,
+      "minimum": 19,
+      "maximum": 28
+    },
+    {
+      "mode": "work",
+      "cohort": "large_base",
+      "fraction": 0.2,
+      "policy": "learned",
+      "median": 68.0,
+      "minimum": 66,
+      "maximum": 77
+    },
+    {
+      "mode": "work",
+      "cohort": "large_base",
+      "fraction": 0.2,
+      "policy": "never",
+      "median": 68.0,
+      "minimum": 66,
+      "maximum": 76
+    },
+    {
+      "mode": "work",
+      "cohort": "large_base",
+      "fraction": 0.2,
+      "policy": "simple",
+      "median": 68.0,
+      "minimum": 66,
+      "maximum": 77
+    },
+    {
+      "mode": "work",
+      "cohort": "large_base",
+      "fraction": 0.5,
+      "policy": "always",
+      "median": 128.0,
+      "minimum": 128,
+      "maximum": 128
+    },
+    {
+      "mode": "work",
+      "cohort": "large_base",
+      "fraction": 0.5,
+      "policy": "direct_mitm",
+      "median": 114.0,
+      "minimum": 114,
+      "maximum": 114
+    },
+    {
+      "mode": "work",
+      "cohort": "large_base",
+      "fraction": 0.5,
+      "policy": "lean_never",
+      "median": 67.0,
+      "minimum": 67,
+      "maximum": 69
+    },
+    {
+      "mode": "work",
+      "cohort": "large_base",
+      "fraction": 0.5,
+      "policy": "learned",
+      "median": 128.0,
+      "minimum": 128,
+      "maximum": 128
+    },
+    {
+      "mode": "work",
+      "cohort": "large_base",
+      "fraction": 0.5,
+      "policy": "never",
+      "median": 128.0,
+      "minimum": 128,
+      "maximum": 128
+    },
+    {
+      "mode": "work",
+      "cohort": "large_base",
+      "fraction": 0.5,
+      "policy": "simple",
+      "median": 128.0,
+      "minimum": 128,
+      "maximum": 128
+    },
+    {
+      "mode": "work",
+      "cohort": "legacy_families",
+      "fraction": 0.2,
+      "policy": "always",
+      "median": 146.0,
+      "minimum": 139,
+      "maximum": 156
+    },
+    {
+      "mode": "work",
+      "cohort": "legacy_families",
+      "fraction": 0.2,
+      "policy": "direct_mitm",
+      "median": 195.0,
+      "minimum": 176,
+      "maximum": 211
+    },
+    {
+      "mode": "work",
+      "cohort": "legacy_families",
+      "fraction": 0.2,
+      "policy": "lean_never",
+      "median": 162.0,
+      "minimum": 146,
+      "maximum": 172
+    },
+    {
+      "mode": "work",
+      "cohort": "legacy_families",
+      "fraction": 0.2,
+      "policy": "learned",
+      "median": 146.0,
+      "minimum": 139,
+      "maximum": 156
+    },
+    {
+      "mode": "work",
+      "cohort": "legacy_families",
+      "fraction": 0.2,
+      "policy": "never",
+      "median": 145.0,
+      "minimum": 139,
+      "maximum": 156
+    },
+    {
+      "mode": "work",
+      "cohort": "legacy_families",
+      "fraction": 0.2,
+      "policy": "simple",
+      "median": 146.0,
+      "minimum": 139,
+      "maximum": 156
+    },
+    {
+      "mode": "work",
+      "cohort": "legacy_families",
+      "fraction": 0.5,
+      "policy": "always",
+      "median": 333.0,
+      "minimum": 333,
+      "maximum": 333
+    },
+    {
+      "mode": "work",
+      "cohort": "legacy_families",
+      "fraction": 0.5,
+      "policy": "direct_mitm",
+      "median": 320.0,
+      "minimum": 320,
+      "maximum": 320
+    },
+    {
+      "mode": "work",
+      "cohort": "legacy_families",
+      "fraction": 0.5,
+      "policy": "lean_never",
+      "median": 334.0,
+      "minimum": 334,
+      "maximum": 334
+    },
+    {
+      "mode": "work",
+      "cohort": "legacy_families",
+      "fraction": 0.5,
+      "policy": "learned",
+      "median": 333.0,
+      "minimum": 333,
+      "maximum": 333
+    },
+    {
+      "mode": "work",
+      "cohort": "legacy_families",
+      "fraction": 0.5,
+      "policy": "never",
+      "median": 333.0,
+      "minimum": 333,
+      "maximum": 333
+    },
+    {
+      "mode": "work",
+      "cohort": "legacy_families",
+      "fraction": 0.5,
+      "policy": "simple",
+      "median": 333.0,
+      "minimum": 333,
+      "maximum": 333
+    }
+  ],
+  "paired": {
+    "lean_never": {
+      "completion_difference": 30,
+      "completion_list_bootstrap_95": [
+        16.0,
+        46.0
+      ],
+      "capped_cost_difference": -2913115,
+      "capped_cost_list_bootstrap_95": [
+        -3964791.025,
+        -1916591.675000001
+      ]
+    },
+    "never": {
+      "completion_difference": 0,
+      "completion_list_bootstrap_95": [
+        0.0,
+        0.0
+      ],
+      "capped_cost_difference": -56180,
+      "capped_cost_list_bootstrap_95": [
+        -102422.925,
+        -16488.65000000001
+      ]
+    },
+    "always": {
+      "completion_difference": 0,
+      "completion_list_bootstrap_95": [
+        0.0,
+        0.0
+      ],
+      "capped_cost_difference": -2759,
+      "capped_cost_list_bootstrap_95": [
+        -45933.05,
+        34050.35
+      ]
+    },
+    "simple": {
+      "completion_difference": 0,
+      "completion_list_bootstrap_95": [
+        0.0,
+        0.0
+      ],
+      "capped_cost_difference": -2759,
+      "capped_cost_list_bootstrap_95": [
+        -45933.05,
+        34050.35
+      ]
+    },
+    "direct_mitm": {
+      "completion_difference": 27,
+      "completion_list_bootstrap_95": [
+        5.0,
+        50.0
+      ],
+      "capped_cost_difference": -1767885,
+      "capped_cost_list_bootstrap_95": [
+        -3120514.7,
+        -532318.0750000017
+      ]
+    }
+  },
+  "primary": {
+    "endpoint": "learned minus simple exact completions at 50% work-pool budget, repeat-average summed across cohorts",
+    "totals_by_repeat": {
+      "lean_never": [
+        401,
+        401,
+        403
+      ],
+      "never": [
+        461,
+        461,
+        461
+      ],
+      "always": [
+        461,
+        461,
+        461
+      ],
+      "simple": [
+        461,
+        461,
+        461
+      ],
+      "learned": [
+        461,
+        461,
+        461
+      ],
+      "direct_mitm": [
+        434,
+        434,
+        434
+      ]
+    },
+    "learned_minus_simple": 0.0,
+    "uncertainty": "descriptive three paired arrival orders on one fixed test sample; per-case list-bootstrap comparisons are separate endpoints"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "status": "passed",
+  "cases": 1152,
+  "base_lists": 144,
+  "pool_runs": 576,
+  "counter_replays_checked": 288,
+  "selection_reproduced": true,
+  "independent_model_refits": true,
+  "selected_transforms_checked": true,
+  "original_controls_unchanged": true,
+  "oracle_replayed": true,
+  "hashes_verified": true,
+  "auditor_sha256": "55b6e3cdd3f19969a923e0a6a74b39e81d7f1edd5c768d5ec5cc85370d767956",
+  "utc": "2026-10-28T16:36:43.605835+00:00"
+}

@@ -1,0 +1,139 @@
+{
+  "baseline15": {
+    "names": [
+      "d_superincreasing",
+      "d_coverage",
+      "d_values",
+      "d_support",
+      "d_representation",
+      "n",
+      "input_length",
+      "log2_total_plus_one",
+      "log2_max_plus_one",
+      "log2_min_plus_one",
+      "distinct_fraction",
+      "coefficient_of_variation",
+      "target_fraction",
+      "complement_min_target_fraction",
+      "density_n_over_log2_max_plus_one"
+    ],
+    "standardized_coefficients": [
+      -1.5669635250099134,
+      -0.7412075498183778,
+      0.4055914863428006,
+      -0.37134624937211447,
+      -1.0178847365944244,
+      0.584125613898255,
+      0.026827264692457407,
+      0.39883894230037475,
+      -0.037464709687882077,
+      -0.3831085160449114,
+      -1.631315085704857,
+      0.5032264178414577,
+      0.14502633122732334,
+      -0.20326981700513716,
+      0.5393072748547602
+    ],
+    "intercept": [
+      0.8719667304302717
+    ],
+    "train_cases": 270,
+    "calibration_cases": 135
+  },
+  "geometry18": {
+    "names": [
+      "d_superincreasing",
+      "d_coverage",
+      "d_values",
+      "d_support",
+      "d_representation",
+      "n",
+      "input_length",
+      "log2_total_plus_one",
+      "log2_max_plus_one",
+      "log2_min_plus_one",
+      "distinct_fraction",
+      "coefficient_of_variation",
+      "target_fraction",
+      "complement_min_target_fraction",
+      "density_n_over_log2_max_plus_one",
+      "log1p_relative_residual_width",
+      "log1p_feasible_aggregate_count",
+      "log1p_projected_dp_bits"
+    ],
+    "standardized_coefficients": [
+      -1.0116364253501142,
+      -0.8963901325544171,
+      -0.5801676579499385,
+      -1.006935274570287,
+      -0.3698190015496916,
+      0.9370557115117706,
+      -0.13229478046999335,
+      0.48423380883024986,
+      0.4503824478075774,
+      -0.8274429546351586,
+      -1.0608037694459758,
+      1.1541019994914576,
+      0.28594239967942786,
+      -0.36700145862297656,
+      0.9143728937359408,
+      -2.1226891042352345,
+      1.3702904364343125,
+      -0.6794145181089646
+    ],
+    "intercept": [
+      1.3251510331453387
+    ],
+    "train_cases": 270,
+    "calibration_cases": 135
+  },
+  "doubling19": {
+    "names": [
+      "d_superincreasing",
+      "d_coverage",
+      "d_values",
+      "d_support",
+      "d_representation",
+      "n",
+      "input_length",
+      "log2_total_plus_one",
+      "log2_max_plus_one",
+      "log2_min_plus_one",
+      "distinct_fraction",
+      "coefficient_of_variation",
+      "target_fraction",
+      "complement_min_target_fraction",
+      "density_n_over_log2_max_plus_one",
+      "log1p_relative_residual_width",
+      "log1p_feasible_aggregate_count",
+      "log1p_projected_dp_bits",
+      "additive_doubling_distinct_weights"
+    ],
+    "standardized_coefficients": [
+      -1.1801563926559833,
+      -1.0438741656837212,
+      -0.36346282197890845,
+      -0.8695863561052034,
+      0.164679055383683,
+      0.8566474835659654,
+      -0.10494678112176345,
+      0.5542114445113738,
+      0.5658827195596391,
+      -0.9898305923337827,
+      -0.6810939094978317,
+      1.3115127647009004,
+      0.2851488980587109,
+      -0.36590802899101543,
+      0.8653065615825912,
+      -1.9291643661238935,
+      1.3941178361024198,
+      -0.456508286829971,
+      -1.232402102127027
+    ],
+    "intercept": [
+      1.2523116654257518
+    ],
+    "train_cases": 270,
+    "calibration_cases": 135
+  }
+}

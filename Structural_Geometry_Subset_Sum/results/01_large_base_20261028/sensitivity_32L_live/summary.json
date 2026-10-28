@@ -1,0 +1,67 @@
+{
+  "status": "post-hoc budget sensitivity; reused inspected inputs, not a fresh prospective test",
+  "policies": {
+    "portfolio": {
+      "completed_median": 219,
+      "completed_range": [
+        219,
+        219
+      ],
+      "internal_yes": 0,
+      "internal_no": 0,
+      "dfs_attempts": 648,
+      "mitm_attempts": 145
+    },
+    "detect_only": {
+      "completed_median": 219,
+      "completed_range": [
+        219,
+        220
+      ],
+      "internal_yes": 0,
+      "internal_no": 0,
+      "dfs_attempts": 651,
+      "mitm_attempts": 166
+    },
+    "root_geometry": {
+      "completed_median": 284,
+      "completed_range": [
+        284,
+        284
+      ],
+      "internal_yes": 0,
+      "internal_no": 0,
+      "dfs_attempts": 252,
+      "mitm_attempts": 61
+    },
+    "selective_geometry": {
+      "completed_median": 270,
+      "completed_range": [
+        270,
+        270
+      ],
+      "internal_yes": 36,
+      "internal_no": 1089,
+      "dfs_attempts": 252,
+      "mitm_attempts": 42
+    }
+  },
+  "root_vs_portfolio": {
+    "repeat_average_difference": 65.0,
+    "list_bootstrap_95": [
+      45.33333333333333,
+      85.34999999999998
+    ],
+    "independent_lists": 108,
+    "conditional_on_policies_and_observed_timings": true
+  },
+  "selective_vs_root": {
+    "repeat_average_difference": -14.0,
+    "list_bootstrap_95": [
+      -29.0,
+      -0.9999999999999996
+    ],
+    "independent_lists": 108,
+    "conditional_on_policies_and_observed_timings": true
+  }
+}
