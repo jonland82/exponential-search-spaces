@@ -33,7 +33,7 @@ Rebuild with `python tools/note_vi_cluster_artifacts.py --pdf`. The script check
 saved evidence hashes and identities, regenerates the figure and numerical
 macros, and compiles the PDF. It does not rerun solvers, fit models or refit PCA.
 
-## Latest result
+## Main manuscript results
 
 At 50 ms per case on 216 fresh inputs, median completions are 152 for DFS,
 159 for combined ML guidance and 162 for a simple distance rule. Exact checks
@@ -86,7 +86,7 @@ certificates resolve subtrees, and ordinary search handles the remainder.
 8. Compare budgeted prioritization with simpler policies using total costs. Complete.
 9. Audit prior literature and write the paper around results that survive these checks. Complete.
 10. Transfer frozen scores to certified branch checks with native and matched-acquisition controls. Complete.
-11. Incorporate those results, refresh the six-note index/docs and publish HTML/PDF. Current publication update.
+11. Incorporate those results and publish HTML/PDF with the branch-pruning section. Complete; subsequent experiments remain separate below.
 
 The manuscript covers problem definition, certified feature construction,
 elementary guarantees, experimental protocol, calibrated prediction, shifts,
@@ -118,14 +118,26 @@ The [fresh frozen study](../../Learned_Solvability_Subset_Sum/docs/PROSPECTIVE_F
 adds 144 base lists / 288 paired encodings / 1,152 cases and 672 practical pool
 runs. Combined logistic guidance gives a modest live-time completion benefit on
 these pools, but the primary probability comparison does not improve and the
-work-counter endpoint is unfavorable. The manuscript should preserve these mixed
-results and distinguish prediction, structural certificates and resource accounting.
+work-counter endpoint is unfavorable. The manuscript preserves these mixed
+results and distinguishes prediction, structural certificates and resource accounting.
 The [protocol](../../Learned_Solvability_Subset_Sum/docs/PROSPECTIVE_PROTOCOL.md) and
 [overview figure](../../Learned_Solvability_Subset_Sum/results/prospective_20261025/figures/overview.pdf)
 make the experiment reviewable alongside the manuscript.
 
-The manuscript and experiment package are included in the six-note website.
-Next research controls are root-only structural checks and branch-specific
-prediction of net time saved, with independent training and test trees.
+## Later experiments and Note VII
+
+The package also preserves separate [neighbor-distance](../../Learned_Solvability_Subset_Sum/docs/NEIGHBOR_FINDINGS.md),
+[prototype/interaction](../../Learned_Solvability_Subset_Sum/experiments/12_geometry/FINDINGS.md)
+and [feature-pruning](../../Learned_Solvability_Subset_Sum/experiments/13_feature_pruning/FINDINGS.md)
+studies. These do not replace the frozen main-paper model or establish a new
+paid-solving advantage. The package's [folder guide and launcher](../../Learned_Solvability_Subset_Sum/README.md#folder-guide)
+document the organized source and experiment locations.
+
+[Note VII](../07-geometric-cores/README.md) follows the literature-geometry
+classifier and cost-aware gate work with an exact reusable geometric-core route.
+It reports fresh paid-completion gains and the smaller bounds-first refinement.
+Its [runtime companion](../07-geometric-cores/Runtime_of_Geometric_Core_Subset_Sum.html)
+explains the conditional complexity without claiming a new general bound.
+These results are separate from Note VI's original and branch-pruning studies.
 
 [All notes](../README.md) | [Repository guide](../../README.md)

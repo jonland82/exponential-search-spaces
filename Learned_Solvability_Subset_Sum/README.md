@@ -1,7 +1,7 @@
 # Learned solvability from distance to easy subset-sum structure
 
 Paper VI. **Updated HTML/PDF paper: prediction, paid prioritization, and
-Stage 10 certified branch-pruning results.** The six-note website links the paper
+Stage 10 certified branch-pruning results.** The series index links the paper
 and its supporting evidence.
 The original feasibility pilot and model-development results remain preserved.
 
@@ -21,7 +21,7 @@ See the [protocol](experiments/13_feature_pruning/PROTOCOL.md), [saved guide](re
 [findings](experiments/13_feature_pruning/FINDINGS.md). Original models and all earlier evidence are preserved.
 Top five improves the unscaled Brier point estimate (0.06808 versus baseline
 0.07414), with uncertainty spanning zero; top ten worsens it. Neither model
-establishes better paid solving. All 50 tests and the independent 576-pool audit pass.
+establishes better paid solving. At this stage, all 50 tests and the independent 576-pool audit passed; the current launcher also includes two layout checks.
 
 **Stage 12 complete: prototype geometry and structural interactions.** A separate
 October 28 experiment reruns calibrated logistic regression with 15 baseline,
@@ -36,7 +36,7 @@ and paid prioritization; it does not rerun the branch-checking experiment or
 replace the default model. Earlier frozen evidence and the manuscript are preserved.
 The combined features do not improve the primary Brier endpoint (0.08576 versus
 0.08220); small live-time differences coexist with worse work-counter outcomes.
-All 43 tests and the independent 1,152-case / 576-pool audit pass.
+At this stage, all 43 tests and the independent 1,152-case / 576-pool audit passed; later suites also cover pruning and the organized layout.
 
 **Stage 11 complete: proximity to observed easy/hard inputs.** A separate model freeze
 tests empirical neighbor distances in the original 15-feature space on another
@@ -81,14 +81,14 @@ a separate exploratory section in the paper.
 
 ## Implemented
 
-`features.py` returns exactly five integer distance features plus certificates,
+`code/features.py` returns exactly five integer distance features plus certificates,
 indexed partitions, work counts, and timing diagnostics. Three distances are
 exact minima; two are bounded-cost constructive upper bounds. Every core type
 has an exact membership and original-index witness routine. Caps are explicit:
 two distinct values, 128 reachable sums, and eight reachable intervals per prefix.
 These are pilot choices, not optimized thresholds or final paper definitions.
 
-`run_pilot.py` generates nine synthetic families at n=16,24,32, with three
+`code/run_pilot.py` generates nine synthetic families at n=16,24,32, with three
 replacement levels, two replicates and three targets per list. It reuses Paper V's
 exact solvers and validates completed decisions against independent half enumeration.
 All raw weights, targets, oracle witness masks, certificates, attempts, work counts,
@@ -102,7 +102,8 @@ under that particular policy and its resource limits, not universal easiness.
 The cost comparison adds feature extraction to that same policy without reusing
 the new core certificates. It isolates a possible overhead, not the best feature-
 enabled solver and not a test of learned guidance. Subsequent implementations
-should reuse certificates and compare against direct exact-solving shortcuts.
+reuse certificates and compare against direct exact-solving shortcuts in the
+development, prioritization and branch-checking studies described here.
 
 ## Run and validate
 
@@ -176,6 +177,12 @@ The subsequent [cost-aware gate study](../Structural_Geometry_Subset_Sum/COST_GA
 trains on paired check-versus-skip savings and compares paid exact policies.
 The [exact geometric-core follow-up](../Structural_Geometry_Subset_Sum/EXCEPTION_FINDINGS.md)
 adds a reusable core with exceptional weights and reports fresh costed gains.
+The [bounds-first follow-up](../Structural_Geometry_Subset_Sum/BOUNDS_FINDINGS.md)
+then avoids unnecessary table construction. These exact-route results are
+written up in [Note VII](../notes/07-geometric-cores/README.md), with a separate
+[two-page runtime companion](../notes/07-geometric-cores/Runtime_of_Geometric_Core_Subset_Sum.html).
+The [three-page clustering companion to Note VI](../notes/06-learned-solvability/Why_Unresolved_Inputs_Cluster.pdf)
+explains descriptive enrichment in the original frozen input space.
 
 The updated manuscript presents definitions, elementary guarantees, matched
 prediction comparisons, paid practical policies, certified branch checks and
@@ -189,7 +196,7 @@ controls for its own task and finds no learned advantage over the distance rule.
 
 `python build_papers.py --paper 6` verifies saved evidence and generates tables,
 values, a paper-sized plot, the PDF and HTML without rerunning experiments.
-The six-note site includes this paper, its methods and its preserved evidence.
+The series index links this paper, its clustering companion, methods and preserved evidence.
 
 ## Folder guide
 

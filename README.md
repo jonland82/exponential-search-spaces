@@ -2,9 +2,9 @@
 
 Jonathan R. Landers | September-October 2026
 
-[Published research sequence](https://jonland82.github.io/exponential-search-spaces/) | [All seven note folders](notes/README.md)
+[Live research site](https://jonland82.github.io/exponential-search-spaces/) | [All seven notes and two companions](notes/README.md)
 
-The sequence follows one question: when can useful structure account for enough of an exponential search that only manageable work remains? This checkout contains HTML/PDF versions of all seven notes. Notes V and VII are clearly labeled as working drafts; pushing research to `master` does not deploy the separate Pages branch.
+The sequence follows one question: when can useful structure account for enough of an exponential search that only manageable work remains? This checkout contains HTML/PDF versions of all seven notes, plus two short companions. Notes V, VII and the runtime companion are labeled as working drafts. Research updates on `master` and the live Pages site on `main` have separate release histories.
 
 ## Notes
 
@@ -20,6 +20,15 @@ The sequence follows one question: when can useful structure account for enough 
 
 Read I, then II. Notes III and IV branch into random-target probability and fixed-target approximation. Note V returns to exact search: it proves a concrete tractable regime and measures the cost of trying to improve the discovered structure.
 
+## Short companions and latest results
+
+| Companion | Focus | Files |
+|---|---|---|
+| **Why Unresolved Inputs Cluster: A Structural and Statistical Account** (Note VI; three pages) | Several affordable solving routes and descriptive neighborhood enrichment; unresolved does not mean intrinsically hard. | [PDF](notes/06-learned-solvability/Why_Unresolved_Inputs_Cluster.pdf) / [LaTeX](notes/06-learned-solvability/Why_Unresolved_Inputs_Cluster.tex) / [Evidence and rebuild](notes/06-learned-solvability/README.md#companion-note-why-unresolved-inputs-cluster) |
+| **The Runtime of Geometric Core Subset Sum** (Note VII; two-page working draft) | One construction plus exceptional queries, memory costs, sufficient tractable regimes and general-algorithm comparisons. | [HTML](notes/07-geometric-cores/Runtime_of_Geometric_Core_Subset_Sum.html) / [PDF](notes/07-geometric-cores/Runtime_of_Geometric_Core_Subset_Sum.pdf) / [LaTeX](notes/07-geometric-cores/Runtime_of_Geometric_Core_Subset_Sum.tex) |
+
+[Note VII](notes/07-geometric-cores/README.md) supplies an exact geometric solving route: reuse one core table across exceptional assignments. Its first fresh study improves work-capped completions from 453 to 469 of 576 targets over matched root geometry. A second fresh study finds 954 versus root's 916 of 1,152 targets. The final bounds-first refinement mainly saves construction: 90 avoided tables and 1.74% lower capped work; its primary incremental completion comparison is only 953 versus 954, with interval [0,3]. Neither study establishes a new general worst-case bound. The companions explain existing evidence and run no new experiments.
+
 [Note VI](notes/06-learned-solvability/README.md) combines five certified structural features with numerical summaries. Its [experiment package](Learned_Solvability_Subset_Sum/README.md) includes theory, a [prior-work audit](Learned_Solvability_Subset_Sum/docs/LITERATURE.md), calibrated models and [mixed frozen-study findings](Learned_Solvability_Subset_Sum/docs/PROSPECTIVE_FINDINGS.md). The primary probability comparison does not improve; a modest live-time policy gain coexists with an unfavorable work-counter endpoint.
 
 A separate [branch-pruning follow-up](Learned_Solvability_Subset_Sum/docs/BRANCH_FINDINGS.md)
@@ -30,15 +39,15 @@ The transferred model has not demonstrated an advantage over the rule.
 
 ## Repository layout
 
-- `notes/01-...` through `notes/07-...` contain each note's source, PDF, and local guide. Available HTML papers and the working drafts are linked from the seven-note index.
+- `notes/01-...` through `notes/07-...` contain each note's source, PDF, and local guide. The two companions live alongside Notes VI and VII. The home index links all seven notes and both supplements.
 - `subset-sum/` contains the original experiments and publication artifacts for Notes II-IV.
 - `Subset_Sum_Refinement_Experiment/` preserves Note III's statistical and deterministic follow-ups, including frozen evidence and reruns.
 - `Structural_Distance_Subset_Sum/` contains Note V's proofs, exact solvers, tests, literature audit, frozen study, and raw measurements.
-- `Learned_Solvability_Subset_Sum/` contains Note VI's certified features, theory, scoped literature audit, frozen models, exact evidence and prioritization traces.
+- `Learned_Solvability_Subset_Sum/` contains Note VI's certified features, theory, scoped literature audit, frozen models, exact evidence and prioritization traces. Shared sources are in `code/`, guides in `docs/`, tests in `tests/`, and geometry/pruning follow-ups in `experiments/`; use the documented launchers to preserve frozen imports and paths.
 - `Structural_Geometry_Subset_Sum/` contains a separate literature-guided direction: exact geometric solving routes, classifier features and cost-aware gates. The [reusable exception-core experiment](Structural_Geometry_Subset_Sum/EXCEPTION_FINDINGS.md) improves fresh work-capped completions from 453 to 469 over matched root geometry, with full cost accounting and scoped claims.
 - Its [bounds-first follow-up](Structural_Geometry_Subset_Sum/BOUNDS_FINDINGS.md) tests 1,152 fresh targets: 954 versus 953 previous-reuse completions, with 1.74% lower capped work and 90 avoided tables; incremental completion and wall-clock gains remain unestablished.
 - `tools/` contains the note catalog, evidence-to-paper helpers, link checking, and website staging.
-- `index.html`, `paper.css`, and `fonts/` are the seven-note website. Small root HTML redirects preserve earlier entrypoints.
+- `index.html`, `paper.css`, and `fonts/` are the home site and shared presentation. Small root HTML redirects preserve earlier numbered-note entrypoints.
 - `.build/` holds ignored LaTeX byproducts and optional staged website files.
 
 The experiment packages retain their existing locations and frozen source bytes. Their protocols and measured data were not regenerated for the reorganization.
@@ -48,34 +57,34 @@ The experiment packages retain their existing locations and frozen source bytes.
 See [CONTRIBUTING.md](CONTRIBUTING.md) for Git workflow, verification and preservation
 of frozen research evidence.
 
-Requires `pdflatex` and `pandoc`. Numerical tests use Python's standard library; plots use Matplotlib.
+Paper builds require `pdflatex` and `pandoc`; plots use Matplotlib. Core exact-solver tests use Python's standard library. Learned-model suites also require the packages in [requirements-ml.txt](Learned_Solvability_Subset_Sum/requirements-ml.txt).
 
 ```powershell
 python build_papers.py
 python build_papers.py --paper 5
 python build_papers.py --paper 6
+python build_papers.py --paper 7
+python tools/note_vi_cluster_artifacts.py --pdf
 python build_papers.py --paper Probability_Valued_Subset_Sum
 python tools/check_links.py
 python -m unittest discover -s Structural_Distance_Subset_Sum -p "test_*.py" -v
 ```
 
-The builder accepts a note number or filename stem. It builds all seven PDFs by default and updates generated HTML for Notes II-VII; Note I's maintained HTML is preserved. Note V retains its visible working-draft label. Use `--html-only` to refresh generated HTML without rebuilding PDFs, or `--pdf-only` for PDFs alone. Generated Note III, V and VI artifacts come from preserved measurements with integrity checks. Paper VI includes both the original frozen study and the separate branch-pruning follow-up. No experiments or model fitting are rerun by a paper build.
+The builder accepts a note number or filename stem. By default it builds the seven numbered PDFs and Note VII's two-page runtime companion, and updates generated HTML for Notes II-VII and that companion; Note I's maintained HTML is preserved. Notes V and VII and the runtime companion retain visible working-draft labels. Use `--html-only` to refresh generated HTML without rebuilding PDFs, or `--pdf-only` for PDFs alone. Generated Note III, V, VI and VII evidence artifacts come from preserved measurements with integrity checks. Note VI includes both the original frozen study and the separate branch-pruning follow-up. Its three-page clustering companion uses the separate command above. No experiments or model fitting are rerun by these paper builds.
 
 See [Note V's findings](Structural_Distance_Subset_Sum/FINDINGS.md), [its full study report](Structural_Distance_Subset_Sum/results/prospective_20261024/REPORT.md), and [Note III's methods ledger](subset-sum/PROBABILITY_REFINEMENT.md) for the guarantees, results, and their limits.
 
 ## Website compatibility
 
-GitHub Pages serves the repository root on `main`; research development lives on `master`. Deploy a validated staged site as a new commit on `main`, preserving the existing Pages setting and branch history. The live index includes all seven notes and clearly identifies Note V's draft status.
+GitHub Pages uses the repository root on `main`; research development lives on `master`. Updating or pushing `master` does not deploy the live site. This branch's index includes seven notes and both companions; `origin/main` still contains the six-note index as checked on October 28, 2026. Publish a validated staged site as a separate commit on `main`, preserving its history and the Pages configuration.
 
-To prepare a deployable copy of the seven-note website:
+To prepare a deployable copy, choose a new output directory:
 
 ```powershell
-python tools/prepare_site.py --output .build/site
-python tools/check_links.py --site .build/site
+python tools/prepare_site.py --output .build/site-review-20261028
+python tools/check_links.py --site .build/site-review-20261028
 ```
 
-The staged payload contains all seven canonical note folders, supporting evidence packages, Markdown guides, figures and TeX inputs. It retains the root HTML, PDF and LaTeX URLs for all seven papers. Compatibility downloads are generated there instead of cluttering the research repository root. Note V's HTML/PDF versions remain labeled as working drafts. Use a new output directory for another staged copy.
+The staged payload contains all seven canonical note folders, both companions, supporting evidence packages, Markdown guides, figures and TeX inputs. It retains the root HTML, PDF and LaTeX URLs for all seven numbered papers. Compatibility downloads are generated there instead of cluttering the research repository root; companions keep their canonical URLs inside their note folders. Working-draft labels are preserved. Staging validates a candidate release; deployment remains a separate action.
 
 These notes establish model criteria and results on specified synthetic families. They do not claim a new general worst-case subset-sum bound.
-
-The [Note VII working draft](notes/07-geometric-cores/README.md) develops exact geometric core reuse, proves its correctness and bounds-first construction saving, and reports the two frozen fresh-input studies with their separate endpoints. Build it with `python build_papers.py --paper 7`.

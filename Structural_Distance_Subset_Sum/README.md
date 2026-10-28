@@ -1,6 +1,10 @@
 # Structural distance in exact subset sum
 
-First implementation milestone for [the proposed new note](../notes/05-structural-distance/Distance_From_Easy_Subset_Sum_Next_Note.md).
+Implementation and completed frozen comparison for [Note V](../notes/05-structural-distance/README.md)
+(working draft). The [original prospectus](../notes/05-structural-distance/Distance_From_Easy_Subset_Sum_Next_Note.md)
+is retained as historical planning material. [Note VI](../notes/06-learned-solvability/README.md)
+extends the work to learned completion and certified checks; [Note VII](../notes/07-geometric-cores/README.md)
+develops exact geometric core reuse and its paid runtime analysis.
 
 The [theory note](THEORY.md) proves that a sorted greedy scan finds a maximum-size
 superincreasing core. This improves the prospectus's initial $O(n^2)$ discovery
@@ -77,11 +81,10 @@ It varies total size and injected disruption, records actual discovered
 distance, compares repeated and unrelated exceptions, and labels both planted
 and uniformly drawn middle-range targets by a separate exact oracle.
 
-This is exploratory evidence. Timings use one shuffled-order run per case and
-method, and include instrumented Python overhead. Residual-record counts are
-reported; exact byte memory profiling and a fresh frozen prospective comparison
-remain subsequent work. Resource limits and bitset infeasibility are recorded
-as unresolved outcomes.
+This pilot is exploratory evidence. Timings use one shuffled-order run per case
+and method, and include instrumented Python overhead. Residual-record counts are
+reported. The later frozen comparison below adds Python-traced memory profiling
+and fresh inputs. Resource limits and bitset infeasibility remain unresolved outcomes.
 
 ## Frozen comparison
 

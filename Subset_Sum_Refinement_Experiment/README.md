@@ -3,7 +3,9 @@
 The October 23, 2026 revision integrates the theoretical and experimental
 follow-up into [Paper III](../notes/03-probability-valued-subset-sum/Probability_Valued_Subset_Sum.html)
 ([PDF](../notes/03-probability-valued-subset-sum/Probability_Valued_Subset_Sum.pdf), [LaTeX](../notes/03-probability-valued-subset-sum/Probability_Valued_Subset_Sum.tex)).
-The series remains four notes.
+This package remains evidence for Note III, rather than an additional numbered
+note. The [current series](../notes/README.md) has seven notes and two companions;
+dated reports below retain the four-note status at the time of integration.
 
 - [Publication methods ledger](../subset-sum/PROBABILITY_REFINEMENT.md):
   the theory, statistics, cost findings, source hashes, and rebuild commands.

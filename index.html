@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Seven research notes by Jonathan R. Landers: certified coverage, subset-sum experiments, probability bounds, approximation, structural distance, learned completion with certified pruning, and exact geometric core reuse.">
+<meta name="description" content="Seven research notes and two companions by Jonathan R. Landers: certified coverage, subset-sum experiments, learned completion, exact geometric core reuse, unresolved-input clustering, and runtime analysis.">
 <title>Certified Coverage: A Research Sequence</title>
 <script>
 window.MathJax = {
@@ -19,14 +19,15 @@ window.MathJax = {
 <main>
 <nav class="top-links" aria-label="Site links">
   <a href="https://github.com/jonland82/exponential-search-spaces">View the GitHub repository</a>
-  <a href="subset-sum/README.md">Experiments and data</a>
+  <a href="README.md">Research and experiment guide</a>
+  <a href="#companions">Companion notes</a>
 </nav>
 
 <header>
-  <span class="series-label">A seven-note research sequence</span>
+  <span class="series-label">Seven research notes and two companions</span>
   <h1>Certified Coverage of Exponential Search Spaces</h1>
   <div class="byline">Jonathan R. Landers · September–October 2026</div>
-  <p class="deck">From certified coverage to structural distance and learned search guidance and exact core reuse: seven notes measuring what exact structure saves and what discovering it costs.</p>
+  <p class="deck">From certified coverage to structural distance, learned search guidance and exact core reuse: measuring what exact structure saves and what discovering it costs.</p>
 </header>
 
 <div class="abstract">
@@ -38,6 +39,7 @@ window.MathJax = {
   <p><strong>Reading order:</strong> <a href="notes/01-certified-coverage/Certified_Coverage_of_Exponential_Search_Spaces.html">I: Framework</a> → <a href="notes/02-subset-sum-stress-test/Subset_Sum_as_a_Stress_Test.html">II: Exact-search test</a> → <a href="notes/03-probability-valued-subset-sum/Probability_Valued_Subset_Sum.html">III: Random-target probability</a> → <a href="notes/04-certified-approximation/Certified_Approximation_of_Subset_Sum.html">IV: Pairing in approximation</a>. Notes III and IV branch from II; either can be read independently after the framework and exact-search test.</p>
 
   <p>Continue with <a href="notes/05-structural-distance/Structural_Distance_in_Subset_Sum.html">V: Structural distance (working draft)</a> and <a href="notes/06-learned-solvability/Predicting_Subset_Sum_Completion.html">VI: Learned completion and certified pruning</a>. These return to exact solving: discover easy cores, predict budgeted completion, then test whether structural checks improve search within Note I's framework. <a href="notes/07-geometric-cores/Geometric_Cores_and_Exceptions_in_Subset_Sum.html">VII: Geometric core reuse (working draft)</a> develops an exact route that improves paid completion on fresh constructed inputs.</p>
+  <p>Two <a href="#companions">short companions</a> explain why unresolved inputs cluster and when the geometric runtime bound improves on general search. Notes V, VII and the runtime companion retain their working-draft labels.</p>
 
   <article class="series-card">
     <span class="series-label">Note I · The framework</span>
@@ -136,6 +138,7 @@ window.MathJax = {
       <a href="notes/06-learned-solvability/Predicting_Subset_Sum_Completion.tex">LaTeX</a>
       <a href="Learned_Solvability_Subset_Sum/README.md">Methods and data</a>
       <a href="Learned_Solvability_Subset_Sum/docs/BRANCH_FINDINGS.md">Pruning findings</a>
+      <a href="notes/06-learned-solvability/Why_Unresolved_Inputs_Cluster.pdf">Clustering companion PDF</a>
     </div>
   </article>
 
@@ -152,6 +155,33 @@ window.MathJax = {
       <a href="notes/07-geometric-cores/Geometric_Cores_and_Exceptions_in_Subset_Sum.pdf">PDF</a>
       <a href="notes/07-geometric-cores/Geometric_Cores_and_Exceptions_in_Subset_Sum.tex">LaTeX</a>
       <a href="Structural_Geometry_Subset_Sum/README.md">Methods and data</a>
+      <a href="notes/07-geometric-cores/Runtime_of_Geometric_Core_Subset_Sum.html">Runtime companion</a>
+    </div>
+  </article>
+</section>
+
+<section aria-labelledby="companions">
+  <h2 id="companions">Short companion notes</h2>
+  <p>These focused supplements belong to Notes VI and VII; they do not add new numbered notes or new experiments.</p>
+  <article class="series-card supplemental-card">
+    <span class="series-label">Companion to Note VI &middot; Three pages &middot; October 26, 2026</span>
+    <h3><a href="notes/06-learned-solvability/Why_Unresolved_Inputs_Cluster.pdf">Why Unresolved Inputs Cluster: A Structural and Statistical Account</a></h3>
+    <p>Connects several affordable exact-solving routes with the observed geography of portfolio failures. On the reused sample, 80.27% of neighbors of unresolved inputs are also unresolved, versus 25.35% overall. The note distinguishes this descriptive enrichment from intrinsic computational hardness.</p>
+    <div class="link-row">
+      <a href="notes/06-learned-solvability/Why_Unresolved_Inputs_Cluster.pdf">Read PDF</a>
+      <a href="notes/06-learned-solvability/Why_Unresolved_Inputs_Cluster.tex">LaTeX</a>
+      <a href="notes/06-learned-solvability/README.md#companion-note-why-unresolved-inputs-cluster">Evidence and rebuild guide</a>
+    </div>
+  </article>
+  <article class="series-card supplemental-card">
+    <span class="series-label">Companion to Note VII &middot; Two pages &middot; Working draft &middot; October 28, 2026</span>
+    <h3><a href="notes/07-geometric-cores/Runtime_of_Geometric_Core_Subset_Sum.html">The Runtime of Geometric Core Subset Sum</a></h3>
+    <p>Derives construction, query and memory costs; states sufficient polynomial-time regimes; and compares general classical algorithms, with the October 2026 result labeled as a preprint. The opportunity depends on few exceptions and a compact discovered core; there is no new general worst-case bound.</p>
+    <div class="link-row">
+      <a href="notes/07-geometric-cores/Runtime_of_Geometric_Core_Subset_Sum.html">Read HTML draft</a>
+      <a href="notes/07-geometric-cores/Runtime_of_Geometric_Core_Subset_Sum.pdf">PDF</a>
+      <a href="notes/07-geometric-cores/Runtime_of_Geometric_Core_Subset_Sum.tex">LaTeX</a>
+      <a href="notes/07-geometric-cores/README.md">Methods and rebuild guide</a>
     </div>
   </article>
 </section>
@@ -177,11 +207,17 @@ window.MathJax = {
   \qquad \ell\le d^*(w,t)\le u,\quad u-\ell\le\eta.
   \]</span></div>
   <p>The tolerance \(\eta\) permits nearby partial sums to share a representative while retaining a deterministic guarantee. The experiments compare the total work needed to reach the same tolerance.</p>
+  <p>Note VII reuses one exact geometric core table across exceptional assignments. The runtime companion gives a conservative bit-cost bound:</p>
+  <div class="keyeq"><span class="math display">\[
+    T_{\mathrm{route}}=F+O^*(HW+2^kGW).
+  \]</span></div>
+  <p>Here \(F\) pays discovery, \(k\) counts exceptions, \(H\times W\) is the core table, and \(G\le H\) bounds candidate queries per assignment. The notation \(O^*\) suppresses polynomial factors in binary input length. Polynomial discovery and table size, with logarithmically many exceptions, suffice for polynomial time on that structured family; no such guarantee holds for arbitrary inputs.</p>
 </section>
 
 <section aria-labelledby="language">
   <h2 id="language">What the results say</h2>
   <div class="note">
+    <p><strong>Exact core reuse improves paid completion on fresh constructed inputs.</strong> Note VII's original route gains 16 completions over matched root geometry, with a whole-list-bootstrap 95% interval approximately [4,30]. Its later bounds-first refinement avoids 90 of 182 tables, but the primary incremental completion difference is only +1 with interval [0,3], and no clear additional wall-clock gain. These comparisons support a scoped practical improvement.</p>
     <p><strong>Easy structure can certify whole branches.</strong> Note VI's follow-up implements Note I's proposal and verification framework. Structural checks improve the observed number of exact completions over DFS, but the transferred ML gate does not beat a simple distance rule. The paired uncertainty intervals span zero; these are results on a constructed test set.</p>
     <p><strong>Better structure must pay for discovery.</strong> Note V's selectors reduce residual support on 18 of 54 structured lists, yet neither is faster on their 162 targets. Note VI likewise finds that fewer search nodes can coexist with more computation spent acquiring features.</p>
     <p><strong>Representation must earn its cost.</strong> The paired subset-sum solver was slower than meet-in-the-middle on all 18 constructed hard no-solution cases tested.</p>

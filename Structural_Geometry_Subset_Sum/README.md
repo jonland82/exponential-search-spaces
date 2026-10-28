@@ -1,12 +1,28 @@
 # Structural geometry of subset sum
 
-A new research direction extending the certified-coverage framework of Papers
+A literature-guided research direction extending the certified-coverage framework of Papers
 I-VI. Use established tractable structures and solver-specific obstructions to
 discover exact solving routes whose benefits exceed acquisition/checking costs.
 Earlier packages, frozen studies, models, plots and manuscripts are preserved.
 
 The [Note VII working draft](../notes/07-geometric-cores/README.md) gives the exact
 core-and-exceptions algorithm, correctness proofs and both fresh studies.
+Its [two-page runtime companion](../notes/07-geometric-cores/Runtime_of_Geometric_Core_Subset_Sum.html)
+derives bit-cost and memory bounds and compares general algorithms.
+
+## Current result
+
+Core reuse improves work-capped completions from 453 to 469 of 576 fresh targets
+over matched root geometry (Study 04 primary net +16, whole-list-bootstrap 95%
+interval approximately [4,30]). Study 05 finds 954 bounds-first versus 916 root
+completions on 1,152 fresh targets, a secondary comparison. Its primary refinement
+comparison is only 954 versus 953 previous-reuse completions, interval [0,3].
+The refinement avoids 90 of 182 table builds and lowers capped work by 1.74%;
+incremental completion and wall-clock gains remain unestablished. Earlier ML
+feature and gating studies are separate comparisons, not the source of this
+exact-route gain. There is no new general worst-case bound.
+
+## Studies and evidence
 
 - [Literature map](LITERATURE.md): guarantees and limits, with primary sources.
 - [Theory](THEORY.md): exact aggregate geometry, signed DP, witnesses and costs.
@@ -34,7 +50,7 @@ core-and-exceptions algorithm, correctness proofs and both fresh studies.
 - [Bounds-first findings](BOUNDS_FINDINGS.md) and
   [saved bounds-first experiment](results/05_bounds_first_20261028/README.md).
 
-The first study is complete and validated. Root checks increase completions
+The original large-base study is complete and validated. Root checks increase completions
 against the declared shared portfolio. A separately labeled post-hoc live/work
 sensitivity gives 284/324 root completions versus 219 for portfolio; repeated
 checks finish 270. This reused sample does not establish superiority over a
@@ -72,6 +88,7 @@ cost_gate.py                     root decisions with paid exact fallback
 cost_gate_study.py               paired cost labels, fitting and paid pools
 experiments/03_cost_aware_gate/   cost-aware gate protocol and overview
 structures/exception_core.py     exact reusable table and exceptional queries
+structures/bounds_core.py        incremental discovery and lazy exact construction
 exception_solver.py             matched root/exception portfolios
 exception_study.py              fresh evidence and retrospective repair checks
 experiments/04_exception_core/   protocol, overview and exactness argument
@@ -79,7 +96,7 @@ bounds_solver.py                bounded discovery and bounds-first portfolios
 bounds_study.py                 fresh five-policy mechanism comparison
 experiments/05_bounds_first/     bounds-first protocol and mathematics
 tests/                           exactness, reconstruction and accounting
-results/01_large_base_20261028/   frozen evidence and measured outcomes
+results/01_... through 05_.../    separate frozen studies and measured outcomes
 ```
 
 Requires Python; plotting additionally uses Matplotlib already used elsewhere
@@ -91,7 +108,7 @@ and threadpoolctl, as used by the existing learned-classifier package.
 python -m unittest discover -s Structural_Geometry_Subset_Sum/tests -p "test_*.py" -v
 ```
 
-New runs require a new output directory. See the saved guide for the staged
+New runs require a new output directory. See each saved study's guide for its staged
 commands. A new freeze excludes all existing normalized lists and intentionally
 creates a new sample; source snapshots and deterministic traces permit replay
 of this sample, while wall-clock measurements vary by machine.

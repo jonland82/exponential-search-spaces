@@ -18,9 +18,14 @@ make the cost of discovering and certifying a tractable core smaller than the
 search it replaces, while retaining exact fallback and honest unresolved results.
 
 ```powershell
-python -m Structural_Geometry_Subset_Sum.bounds_study all --output Structural_Geometry_Subset_Sum/results/05_bounds_first_20261028
+python -m Structural_Geometry_Subset_Sum.bounds_study all --output Structural_Geometry_Subset_Sum/results/new_bounds_first
 python -m Structural_Geometry_Subset_Sum.bounds_audit --output Structural_Geometry_Subset_Sum/results/05_bounds_first_20261028
 ```
 
 Each new run needs a fresh directory. Source/configuration are frozen before
-generation. Results from old failure cases are labeled retrospective.
+generation. The audit command checks the saved study; substitute the new run's
+directory to audit a reproduction. Results from old failure cases are labeled retrospective.
+
+[Note VII](../../../notes/07-geometric-cores/README.md) reports this study alongside
+the original core-reuse study. Its [runtime companion](../../../notes/07-geometric-cores/Runtime_of_Geometric_Core_Subset_Sum.html)
+separates the conditional construction saving from general worst-case complexity.
