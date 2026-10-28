@@ -14,6 +14,16 @@ import sys
 from tools.paper_catalog import PAPERS, ROOT, artifact, directory
 
 
+RUNTIME_COMPANION = dict(
+    next(paper for paper in PAPERS if paper["number"] == "VII"),
+    number="VII-runtime", stem="Runtime_of_Geometric_Core_Subset_Sum",
+    title="The Runtime of Geometric Core Subset Sum",
+    description="A two-page runtime companion to Note VII: bit costs, structural regimes and general-algorithm comparisons.",
+    series_label="Runtime companion to Note VII &middot; Working draft",
+    create_legacy_redirect=False,
+)
+
+
 def relative(target, base):
     return Path(os.path.relpath(target, base)).as_posix()
 
@@ -102,6 +112,10 @@ def build_html(paper):
     home = relative(ROOT / "index.html", folder)
     css = relative(ROOT / "paper.css", folder)
     data = relative(ROOT / paper["data"], folder)
+    series_label = paper.get("series_label") or (
+        f'Companion note {paper["number"]} of {PAPERS[-1]["number"]}'
+        + (" &middot; Working draft" if paper.get("working_draft") else "")
+    )
     content = f"""<!doctype html>
 <html lang="en">
 <head>
@@ -128,7 +142,7 @@ window.MathJax = {{
   <a href="{stem}.tex">LaTeX source</a>
 </nav>
 <header>
-  <span class="series-label">Companion note {paper["number"]} of {PAPERS[-1]["number"]}{" &middot; Working draft" if paper.get("working_draft") else ""}</span>
+  <span class="series-label">{series_label}</span>
   <h1>{title}</h1>
   <div class="byline">Jonathan R. Landers<br>October 2026</div>
 </header>
@@ -146,7 +160,7 @@ window.MathJax = {{
 """
     artifact(paper, ".html").write_text(content, encoding="utf-8")
     legacy = ROOT / (stem + ".html")
-    if not legacy.exists():
+    if paper.get("create_legacy_redirect", True) and not legacy.exists():
         target = artifact(paper, ".html").relative_to(ROOT).as_posix()
         legacy.write_text(f'''<!doctype html>
 <html lang="en"><head><meta charset="utf-8">
@@ -172,6 +186,8 @@ def main():
         if args.paper and args.paper not in (str(number), paper["stem"]):
             continue
         build_one(paper, args.pdf_only, args.html_only)
+        if paper["number"] == "VII":
+            build_one(RUNTIME_COMPANION, args.pdf_only, args.html_only)
 
 
 if __name__ == "__main__":

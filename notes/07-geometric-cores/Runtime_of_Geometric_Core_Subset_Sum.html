@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="A two-page runtime companion to Note VII: bit costs, structural regimes and general-algorithm comparisons.">
+<title>The Runtime of Geometric Core Subset Sum | Jonathan R. Landers</title>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']], tags: 'none' },
+  svg: { fontCache: 'global', scale: 0.98 },
+  options: { enableMenu: false }
+};
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<link rel="stylesheet" href="../../paper.css">
+</head>
+<body>
+<main>
+<nav class="top-links" aria-label="Paper links">
+  <a href="../../index.html">&larr; Series home</a>
+  <a href="https://github.com/jonland82/exponential-search-spaces">GitHub repository</a>
+  <a href="Runtime_of_Geometric_Core_Subset_Sum.pdf">Download PDF</a>
+  <a href="Runtime_of_Geometric_Core_Subset_Sum.tex">LaTeX source</a>
+</nav>
+<header>
+  <span class="series-label">Runtime companion to Note VII &middot; Working draft</span>
+  <h1>The Runtime of Geometric Core Subset Sum</h1>
+  <div class="byline">Jonathan R. Landers<br>October 2026</div>
+</header>
+<div class="abstract">
+<p><strong>Purpose.</strong> Note VII <a href="#ref-vii">[4]</a> gives an exact geometric route and fresh paid-completion gains. This companion explains its runtime: discover a narrow core, build one exact table, and enumerate the exceptional items. The gain depends on the discovered structure. It supplies no improved general worst-case subset-sum bound.</p>
+</div>
+<h2 id="the-parameters-that-control-the-work">The parameters that control the work</h2>
+<p>After exact reductions, let <span class="math inline">\(u_1,\ldots,u_n\)</span> be positive integer weights, <span class="math inline">\(T\)</span> the target, and <span class="math inline">\(L\)</span> their total binary encoding length. Discover <span class="math inline">\(u_i=Mp_i+r_i\)</span>, with <span class="math inline">\(M\ge2\)</span> and <span class="math inline">\(p_i\ge0\)</span>, and split the indices into a core <span class="math inline">\(C\)</span> of size <span class="math inline">\(m\)</span> and exceptions <span class="math inline">\(E\)</span> of size <span class="math inline">\(k\)</span>. Define <span class="math display">\[R_-=\sum_{i\in C}\min(0,r_i),\quad R_+=\sum_{i\in C}\max(0,r_i),\quad
+Q=\min\left(\sum_{i\in C}p_i,\left\lfloor\frac{T-R_-}{M}\right\rfloor\right).\]</span> For an eligible plan with <span class="math inline">\(Q\ge0\)</span>, the exact core table has dimensions <span class="math display">\[H=Q+1,\qquad W=R_+-R_-+1.\]</span> The two coordinates are selected quotient sum and selected residual sum. For an exceptional subset <span class="math inline">\(A\)</span>, query the shifted target <span class="math inline">\(z_A=T-\sum_{i\in A}u_i\)</span>. A possible quotient must satisfy <span class="math display">\[\max\left(0,\left\lceil\frac{z_A-R_+}{M}\right\rceil\right)
+\le q\le
+\min\left(Q,\left\lfloor\frac{z_A-R_-}{M}\right\rfloor\right).\]</span> This interval contains at most <span class="math inline">\(G=\min(H,\lfloor(W-1)/M\rfloor+1)\)</span> candidates. Test the corresponding exact pair <span class="math inline">\((q,z_A-Mq)\)</span>; interval feasibility alone cannot prove YES. All <span class="math inline">\(2^k\)</span> exceptional choices share the same table.</p>
+<h2 id="one-construction-plus-exceptional-queries">One construction plus exceptional queries</h2>
+<p>Let <span class="math inline">\(F\)</span> pay reductions, acquisition and discovery; <span class="math inline">\(B\)</span> pay enumeration and bounds per assignment; <span class="math inline">\(D\)</span> pay one table construction; <span class="math inline">\(P\)</span> pay one point test; and <span class="math inline">\(V\)</span> pay reconstruction and verification. If <span class="math inline">\(I\)</span> indicates that any assignment survives the necessary bounds, then <span class="math display">\[\boxed{T_{\rm route}\le F+2^kB+I D+2^kG P+V.}\]</span> Bounds-first builds only upon the first surviving assignment. For the same plan and sufficient resources, the isolated saving over eager construction is exactly <span class="math inline">\((1-I)D\)</span>. If every assignment is excluded, it certifies NO without any table. Otherwise it still pays for one complete table, never one per assignment.</p>
+<p>With word width <span class="math inline">\(\omega\)</span>, a conservative bitset estimate is <span class="math inline">\(D=O((m+1)H(1+\lceil W/\omega\rceil))\)</span> word operations, apart from scalar arithmetic. Python shifts used for point tests also have width-dependent cost; <span class="math inline">\(P\)</span> is not automatically constant. Prefix tables for witnesses occupy at most <span class="math inline">\((m+1)HW\)</span> logical bits, plus row, pointer and interpreter overhead.</p>
+<p>In the bit-cost model, suppressing polynomial factors in <span class="math inline">\(L\)</span> with <span class="math inline">\(O^*\)</span> gives the convenient upper bounds <span class="math display">\[T_{\rm route}=F+O^*(HW+2^kGW)
+\;\le\;F+O^*(2^kHW).\]</span> The first expression exposes core reuse. The second is a looser shorthand, not a claim that the table is rebuilt <span class="math inline">\(2^k\)</span> times. Neither hides <span class="math inline">\(H\)</span>, <span class="math inline">\(W\)</span> or <span class="math inline">\(2^k\)</span> as polynomial input costs.</p>
+<h2 id="when-the-bound-gives-an-advantage">When the bound gives an advantage</h2>
+<p><strong>Polynomial structured regime.</strong> If discovery costs <span class="math inline">\(\operatorname{poly}(L)\)</span>, <span class="math inline">\(HW=\operatorname{poly}(L)\)</span>, and <span class="math inline">\(k=O(\log L)\)</span>, the complete route takes polynomial bit time. Indeed <span class="math inline">\(G\le H\)</span> and <span class="math inline">\(2^k=\operatorname{poly}(L)\)</span> bound every term above. Small <span class="math inline">\(k\)</span> alone is insufficient: the numeric table dimensions can be exponential in binary input length. A useful core must also be found and checked within the discovery allowance. We do not prove this detector finds every affordable core.</p>
+<p><strong>Exponential-scale comparison.</strong> The coarse bound places the route below a benchmark scale <span class="math inline">\(2^{cn}\)</span> whenever, for some fixed <span class="math inline">\(\epsilon&gt;0\)</span>, <span class="math display">\[F=O^*(2^{(c-\epsilon)n}),\qquad
+k+\log_2(HW)\le(c-\epsilon)n.\]</span> This is a sufficient condition, not a necessary one; the sharper bound above can do better. For the usual <span class="math inline">\(n\)</span>-based comparison assume polynomial-bit inputs, so polynomial factors in <span class="math inline">\(L\)</span> are subexponential in <span class="math inline">\(n\)</span>. Use <span class="math inline">\(c=1/2\)</span> for the classical scale, or <span class="math inline">\(c=0.49\)</span> for the recent preprint’s claimed scale. These inequalities compare bounds, not measured speedups or hidden constants.</p>
+<h2 id="general-algorithms-and-the-scope-of-the-comparison">General algorithms and the scope of the comparison</h2>
+<p>The table compares classical algorithms; <span class="math inline">\(n\)</span> counts input integers. The cited randomized algorithms have bounded error, whereas our completed decisions are exact. <span class="math inline">\(O^*\)</span> suppresses polynomial encoding-length factors; ordinary <span class="math inline">\(O\)</span> in the cited results uses their stated RAM model.</p>
+<div class="center">
+<div class="table-wrap"><table style="width:93%;">
+<colgroup>
+<col style="width: 31%" />
+<col style="width: 27%" />
+<col style="width: 35%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Method</th>
+<th style="text-align: left;">Time bound</th>
+<th style="text-align: left;">Scope</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Horowitz–Sahni <a href="#ref-hs">[1]</a></td>
+<td style="text-align: left;"><span class="math inline">\(O^*(2^{n/2})\)</span></td>
+<td style="text-align: left;">General, deterministic exact search.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Chen et al. <a href="#ref-cjrs">[2]</a></td>
+<td style="text-align: left;"><span class="math inline">\(O(2^{n/2}n^{-\gamma})\)</span></td>
+<td style="text-align: left;">Published randomized result; <span class="math inline">\(\gamma&gt;0.5023\)</span>, word/circuit RAM.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">October 2026 preprint <a href="#ref-oai">[3]</a></td>
+<td style="text-align: left;">Claims <span class="math inline">\(O(2^{0.49n})\)</span></td>
+<td style="text-align: left;">General randomized decision; polynomial-bit inputs, stated word RAM.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Our geometric route</td>
+<td style="text-align: left;"><span class="math inline">\(F+O^*(HW+2^kGW)\)</span></td>
+<td style="text-align: left;">Exact when completed; depends on discovered core and exceptions.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p>The October 4 preprint states success probability at least <span class="math inline">\(2/3\)</span> per input and its runtime cap on every random execution <a href="#ref-oai">[3]</a>. It is a recent claim, not an algorithm implemented or independently validated in our experiments. The published comparison remains useful because a polynomial-factor improvement and a smaller exponential rate are different claims. Target-dependent pseudopolynomial algorithms are another comparison axis: even elementary <span class="math inline">\(O(nT)\)</span> dynamic programming can be preferable for small numerical <span class="math inline">\(T\)</span>; this is not polynomial in <span class="math inline">\(\log T\)</span>.</p>
+<h2 id="what-note-vii-establishes">What Note VII establishes</h2>
+<p>The implementation caps exceptions, table/history size, work and time. On exhaustion it may return <em>unresolved</em>, so bounded runtime does not make it a complete polynomial-time algorithm. A complete MITM fallback, preceded by a polynomially budgeted geometric attempt, would preserve <span class="math inline">\(O^*(2^{n/2})\)</span> worst-case time. This completion guarantee is a possible wrapper, not a new bound proved for the capped experimental portfolio.</p>
+<p>Note VII reports 453 to 469 completions on 576 fresh targets for core reuse versus root geometry. The later bounds-first refinement avoids 90 of 182 tables; its primary incremental completion comparison is only 953 versus 954, with interval <span class="math inline">\([0,3]\)</span>. These are paid-budget results, not an asymptotic improvement or a demonstrated speedup over the algorithms above. The research target is to enlarge the families where cheap discovery yields small <span class="math inline">\(k\)</span> and compact <span class="math inline">\(HW\)</span>, while preserving exact decisions and charging all acquisition costs. No new experiment is run for this companion.</p>
+<h2 id="references">References</h2>
+<ol>
+<li><div id="ref-hs">
+
+</div>
+<p>E. Horowitz and S. Sahni. Computing partitions with applications to the knapsack problem. <em>JACM</em> 21(2), 277–292, 1974. <a href="https://doi.org/10.1145/321812.321823">https://doi.org/10.1145/321812.321823</a>.</p></li>
+<li><div id="ref-cjrs">
+
+</div>
+<p>X. Chen, Y. Jin, T. Randolph and R. A. Servedio. Subset Sum in Time <span class="math inline">\(2^{n/2}/\operatorname{poly}(n)\)</span>. <em>APPROX/RANDOM</em>, 39:1–39:18, 2023. <a href="https://doi.org/10.4230/LIPIcs.APPROX/RANDOM.2023.39">https://doi.org/10.4230/LIPIcs.APPROX/RANDOM.2023.39</a>.</p></li>
+<li><div id="ref-oai">
+
+</div>
+<p>OpenAI. <em>Subset Sum in Time <span class="math inline">\(O(2^{0.49n})\)</span></em>. Preprint, October 4, 2026. <a href="https://github.com/openai/math/blob/main/preprints/Subset-Sum-in-Time-2-power-0-49n-October-4-2026/subset-sum.pdf">Manuscript and stated computational model</a>.</p></li>
+<li><div id="ref-vii">
+
+</div>
+<p>J. R. Landers. <em>Geometric Cores and Exceptions in Subset Sum</em>. Note VII, working draft, 2026. <a href="Geometric_Cores_and_Exceptions_in_Subset_Sum.pdf">Main note, proofs and frozen-study evidence</a>.</p></li>
+</ol>
+
+<footer>
+  <p>Part of the <a href="../../index.html">Certified Coverage research sequence</a>.</p>
+  <div class="link-row">
+    <a href="../01-certified-coverage/Certified_Coverage_of_Exponential_Search_Spaces.html">Note I: Framework</a>
+    <a href="../02-subset-sum-stress-test/Subset_Sum_as_a_Stress_Test.html">Note II: Exact-search stress test</a>
+    <a href="../03-probability-valued-subset-sum/Probability_Valued_Subset_Sum.html">Note III: Random-target probability</a>
+    <a href="../04-certified-approximation/Certified_Approximation_of_Subset_Sum.html">Note IV: Pairing in approximation</a>
+    <a href="../05-structural-distance/Structural_Distance_in_Subset_Sum.html">Note V: Structural distance (working draft)</a>
+    <a href="../06-learned-solvability/Predicting_Subset_Sum_Completion.html">Note VI: Learned completion</a>
+    <a href="Geometric_Cores_and_Exceptions_in_Subset_Sum.html">Note VII: Geometric core reuse (working draft)</a>
+    <a href="../../Structural_Geometry_Subset_Sum/README.md">Methods and data</a>
+  </div>
+</footer>
+</main>
+</body>
+</html>

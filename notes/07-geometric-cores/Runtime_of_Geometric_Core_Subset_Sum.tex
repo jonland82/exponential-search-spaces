@@ -1,0 +1,116 @@
+\documentclass[10pt,english]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern,amsmath,amssymb,booktabs,array}
+\usepackage[main=english]{babel}
+\usepackage[margin=0.72in]{geometry}
+\usepackage{xcolor}
+\usepackage[skins,breakable]{tcolorbox}
+\usepackage{titlesec,microtype,xurl,hyperref}
+\hypersetup{pdftitle={The Runtime of Geometric Core Subset Sum},pdfauthor={Jonathan R. Landers},hidelinks}
+\definecolor{paperink}{HTML}{26231F}
+\definecolor{paperaccent}{HTML}{6E5943}
+\definecolor{paperline}{HTML}{C8BCAD}
+\definecolor{paperboxbg}{HTML}{F7F3EC}
+\color{paperink}
+\titleformat{\section}{\normalfont\sffamily\large\bfseries}{}{0pt}{\color{paperaccent}\rule{2pt}{1.05em}\hspace{7pt}}
+\titlespacing*{\section}{0pt}{9pt}{4pt}
+\tcbset{accentbox/.style={enhanced,breakable,colback=paperboxbg,colframe=paperline,
+ boxrule=.45pt,arc=2mm,left=8pt,right=8pt,top=6pt,bottom=6pt}}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4pt plus 1pt minus 1pt}
+\setlength{\emergencystretch}{3em}
+\setlength{\abovedisplayskip}{6pt plus 1pt}
+\setlength{\belowdisplayskip}{6pt plus 1pt}
+\newcommand{\poly}{\operatorname{poly}}
+\title{\sffamily\bfseries The Runtime of Geometric Core Subset Sum}
+\author{Jonathan R. Landers}
+\date{October 28, 2026}
+\begin{document}
+\maketitle
+\vspace{-1.4em}
+\noindent\textcolor{paperaccent}{\footnotesize\textsc{Runtime companion to Note VII $\cdot$ Working draft}}
+
+\begin{tcolorbox}[accentbox]
+\textbf{Purpose.} Note VII~\cite{vii} gives an exact geometric route and fresh paid-completion gains. This companion explains its runtime: discover a narrow core, build one exact table, and enumerate the exceptional items. The gain depends on the discovered structure. It supplies no improved general worst-case subset-sum bound.
+\end{tcolorbox}
+
+\section{The parameters that control the work}
+After exact reductions, let $u_1,\ldots,u_n$ be positive integer weights, $T$ the target, and $L$ their total binary encoding length. Discover $u_i=Mp_i+r_i$, with $M\ge2$ and $p_i\ge0$, and split the indices into a core $C$ of size $m$ and exceptions $E$ of size $k$. Define
+$$
+R_-=\sum_{i\in C}\min(0,r_i),\quad R_+=\sum_{i\in C}\max(0,r_i),\quad
+Q=\min\left(\sum_{i\in C}p_i,\left\lfloor\frac{T-R_-}{M}\right\rfloor\right).
+$$
+For an eligible plan with $Q\ge0$, the exact core table has dimensions
+$$
+H=Q+1,\qquad W=R_+-R_-+1.
+$$
+The two coordinates are selected quotient sum and selected residual sum. For an exceptional subset $A$, query the shifted target $z_A=T-\sum_{i\in A}u_i$. A possible quotient must satisfy
+$$
+\max\left(0,\left\lceil\frac{z_A-R_+}{M}\right\rceil\right)
+\le q\le
+\min\left(Q,\left\lfloor\frac{z_A-R_-}{M}\right\rfloor\right).
+$$
+This interval contains at most $G=\min(H,\lfloor(W-1)/M\rfloor+1)$ candidates. Test the corresponding exact pair $(q,z_A-Mq)$; interval feasibility alone cannot prove YES. All $2^k$ exceptional choices share the same table.
+
+\section{One construction plus exceptional queries}
+Let $F$ pay reductions, acquisition and discovery; $B$ pay enumeration and bounds per assignment; $D$ pay one table construction; $P$ pay one point test; and $V$ pay reconstruction and verification. If $I$ indicates that any assignment survives the necessary bounds, then
+$$
+\boxed{T_{\rm route}\le F+2^kB+I D+2^kG P+V.}
+$$
+Bounds-first builds only upon the first surviving assignment. For the same plan and sufficient resources, the isolated saving over eager construction is exactly $(1-I)D$. If every assignment is excluded, it certifies NO without any table. Otherwise it still pays for one complete table, never one per assignment.
+
+With word width $\omega$, a conservative bitset estimate is $D=O((m+1)H(1+\lceil W/\omega\rceil))$ word operations, apart from scalar arithmetic. Python shifts used for point tests also have width-dependent cost; $P$ is not automatically constant. Prefix tables for witnesses occupy at most $(m+1)HW$ logical bits, plus row, pointer and interpreter overhead.
+
+In the bit-cost model, suppressing polynomial factors in $L$ with $O^*$ gives the convenient upper bounds
+$$
+T_{\rm route}=F+O^*(HW+2^kGW)
+\;\le\;F+O^*(2^kHW).
+$$
+The first expression exposes core reuse. The second is a looser shorthand, not a claim that the table is rebuilt $2^k$ times. Neither hides $H$, $W$ or $2^k$ as polynomial input costs.
+
+\newpage
+\section{When the bound gives an advantage}
+\textbf{Polynomial structured regime.} If discovery costs $\poly(L)$, $HW=\poly(L)$, and $k=O(\log L)$, the complete route takes polynomial bit time. Indeed $G\le H$ and $2^k=\poly(L)$ bound every term above. Small $k$ alone is insufficient: the numeric table dimensions can be exponential in binary input length. A useful core must also be found and checked within the discovery allowance. We do not prove this detector finds every affordable core.
+
+\textbf{Exponential-scale comparison.} The coarse bound places the route below a benchmark scale $2^{cn}$ whenever, for some fixed $\epsilon>0$,
+$$
+F=O^*(2^{(c-\epsilon)n}),\qquad
+k+\log_2(HW)\le(c-\epsilon)n.
+$$
+This is a sufficient condition, not a necessary one; the sharper bound above can do better. For the usual $n$-based comparison assume polynomial-bit inputs, so polynomial factors in $L$ are subexponential in $n$. Use $c=1/2$ for the classical scale, or $c=0.49$ for the recent preprint's claimed scale. These inequalities compare bounds, not measured speedups or hidden constants.
+
+\section{General algorithms and the scope of the comparison}
+The table compares classical algorithms; $n$ counts input integers. The cited randomized algorithms have bounded error, whereas our completed decisions are exact. $O^*$ suppresses polynomial encoding-length factors; ordinary $O$ in the cited results uses their stated RAM model.
+
+\begin{center}
+\small
+\begin{tabular}{@{}p{0.31\linewidth}p{0.27\linewidth}p{0.35\linewidth}@{}}
+\toprule
+Method & Time bound & Scope \\
+\midrule
+Horowitz--Sahni~\cite{hs} & $O^*(2^{n/2})$ & General, deterministic exact search. \\
+Chen et al.~\cite{cjrs} & $O(2^{n/2}n^{-\gamma})$ & Published randomized result; $\gamma>0.5023$, word/circuit RAM. \\
+October 2026 preprint~\cite{oai} & Claims $O(2^{0.49n})$ & General randomized decision; polynomial-bit inputs, stated word RAM. \\
+Our geometric route & $F+O^*(HW+2^kGW)$ & Exact when completed; depends on discovered core and exceptions. \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The October 4 preprint states success probability at least $2/3$ per input and its runtime cap on every random execution~\cite{oai}. It is a recent claim, not an algorithm implemented or independently validated in our experiments. The published comparison remains useful because a polynomial-factor improvement and a smaller exponential rate are different claims. Target-dependent pseudopolynomial algorithms are another comparison axis: even elementary $O(nT)$ dynamic programming can be preferable for small numerical $T$; this is not polynomial in $\log T$.
+
+\section{What Note VII establishes}
+The implementation caps exceptions, table/history size, work and time. On exhaustion it may return \emph{unresolved}, so bounded runtime does not make it a complete polynomial-time algorithm. A complete MITM fallback, preceded by a polynomially budgeted geometric attempt, would preserve $O^*(2^{n/2})$ worst-case time. This completion guarantee is a possible wrapper, not a new bound proved for the capped experimental portfolio.
+
+Note VII reports 453 to 469 completions on 576 fresh targets for core reuse versus root geometry. The later bounds-first refinement avoids 90 of 182 tables; its primary incremental completion comparison is only 953 versus 954, with interval $[0,3]$. These are paid-budget results, not an asymptotic improvement or a demonstrated speedup over the algorithms above. The research target is to enlarge the families where cheap discovery yields small $k$ and compact $HW$, while preserving exact decisions and charging all acquisition costs. No new experiment is run for this companion.
+
+\begingroup\footnotesize
+\begin{thebibliography}{9}
+\setlength{\itemsep}{1pt}\setlength{\parskip}{1pt}
+\bibitem{hs} E. Horowitz and S. Sahni. Computing partitions with applications to the knapsack problem. \emph{JACM} 21(2), 277--292, 1974. \url{https://doi.org/10.1145/321812.321823}.
+\bibitem{cjrs} X. Chen, Y. Jin, T. Randolph and R. A. Servedio. Subset Sum in Time $2^{n/2}/\poly(n)$. \emph{APPROX/RANDOM}, 39:1--39:18, 2023. \url{https://doi.org/10.4230/LIPIcs.APPROX/RANDOM.2023.39}.
+\bibitem{oai} OpenAI. \emph{Subset Sum in Time $O(2^{0.49n})$}. Preprint, October 4, 2026. \href{https://github.com/openai/math/blob/main/preprints/Subset-Sum-in-Time-2-power-0-49n-October-4-2026/subset-sum.pdf}{Manuscript and stated computational model}.
+\bibitem{vii} J. R. Landers. \emph{Geometric Cores and Exceptions in Subset Sum}. Note VII, working draft, 2026. \href{Geometric_Cores_and_Exceptions_in_Subset_Sum.pdf}{Main note, proofs and frozen-study evidence}.
+\end{thebibliography}
+\endgroup
+\end{document}

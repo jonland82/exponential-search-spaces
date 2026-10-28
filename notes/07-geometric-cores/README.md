@@ -7,6 +7,9 @@ under declared paid budgets.
 - [Read HTML](Geometric_Cores_and_Exceptions_in_Subset_Sum.html).
 - [Read PDF](Geometric_Cores_and_Exceptions_in_Subset_Sum.pdf).
 - [LaTeX manuscript](Geometric_Cores_and_Exceptions_in_Subset_Sum.tex).
+- Two-page runtime companion: [PDF](Runtime_of_Geometric_Core_Subset_Sum.pdf),
+  [HTML](Runtime_of_Geometric_Core_Subset_Sum.html),
+  [LaTeX source](Runtime_of_Geometric_Core_Subset_Sum.tex).
 - [Evidence manifest](paper_evidence.json) and [figure](geometric_gain.png).
 - [Exception-core findings](../../Structural_Geometry_Subset_Sum/EXCEPTION_FINDINGS.md).
 - [Bounds-first findings](../../Structural_Geometry_Subset_Sum/BOUNDS_FINDINGS.md).
@@ -59,3 +62,9 @@ table-build counts against raw saved traces, and regenerates values, tables,
 figure, PDF, HTML and the evidence manifest. It performs no training, solver
 reruns, new timings or new bootstrap. Full replay commands are in the study
 guides above. Build artifacts stay in `.build/latex/07-geometric-cores/`.
+
+The same command builds the two-page runtime companion. It derives explicit
+table/query costs, states sufficient structural regimes, and compares the
+general classical benchmarks (including the separately labeled October 2026
+preprint). It introduces no new experiment and is a supplement to Note VII,
+not an eighth numbered note.
