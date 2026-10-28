@@ -2,8 +2,8 @@
 
 Separate Paper VI follow-up; original studies and models remain preserved.
 
-- [Protocol](../../GEOMETRIC_PROTOCOL.md): fixed features, fitting, isolation and cost accounting.
-- [Findings](../../GEOMETRIC_FINDINGS.md): results and interpretation.
+- [Protocol](../../experiments/12_geometry/PROTOCOL.md): fixed features, fitting, isolation and cost accounting.
+- [Findings](../../experiments/12_geometry/FINDINGS.md): results and interpretation.
 - [Prediction report](PREDICTION_REPORT.md): fresh probability/accuracy comparison.
 - [Paid priority report](PRIORITY_REPORT.md): counter and live-time solver outcomes.
 - [Validation audit](VALIDATION.json): geometry/refits, independent truths, predictions and counter replays.
@@ -33,18 +33,18 @@ that time, so it intentionally creates a different fresh sample. Live timing
 will vary by machine; the existing deterministic counter traces are replayable.
 
 ```powershell
-python -m unittest discover -s Learned_Solvability_Subset_Sum -p "test_*.py" -v
-python Learned_Solvability_Subset_Sum/geometric_experiment.py freeze --output Learned_Solvability_Subset_Sum/results/new_geometric
-python Learned_Solvability_Subset_Sum/geometric_experiment.py generate --output Learned_Solvability_Subset_Sum/results/new_geometric
-python Learned_Solvability_Subset_Sum/geometric_experiment.py analyze --output Learned_Solvability_Subset_Sum/results/new_geometric
-python Learned_Solvability_Subset_Sum/geometric_experiment.py priorities --output Learned_Solvability_Subset_Sum/results/new_geometric
-python Learned_Solvability_Subset_Sum/audit_geometric.py Learned_Solvability_Subset_Sum/results/new_geometric
+python Learned_Solvability_Subset_Sum/experiments/run.py all tests
+python Learned_Solvability_Subset_Sum/experiments/run.py geometric freeze --output Learned_Solvability_Subset_Sum/results/new_geometric
+python Learned_Solvability_Subset_Sum/experiments/run.py geometric generate --output Learned_Solvability_Subset_Sum/results/new_geometric
+python Learned_Solvability_Subset_Sum/experiments/run.py geometric analyze --output Learned_Solvability_Subset_Sum/results/new_geometric
+python Learned_Solvability_Subset_Sum/experiments/run.py geometric priorities --output Learned_Solvability_Subset_Sum/results/new_geometric
+python Learned_Solvability_Subset_Sum/experiments/run.py geometric audit --output Learned_Solvability_Subset_Sum/results/new_geometric
 ```
 
 Read-only validation of this saved experiment:
 
 ```powershell
-python Learned_Solvability_Subset_Sum/audit_geometric.py Learned_Solvability_Subset_Sum/results/geometric_20261028
+python Learned_Solvability_Subset_Sum/experiments/run.py geometric audit --output Learned_Solvability_Subset_Sum/results/geometric_20261028
 ```
 
 This is a whole-input prioritization experiment. Its distance-rule control ranks

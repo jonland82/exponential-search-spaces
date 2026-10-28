@@ -92,7 +92,7 @@ $T\le F+2^dQ$ for extraction cost $F$ and a per-query bound $Q$.
 These use the **original input**, while structural features use its reduced
 kernel. Let $n=\lvert a\rvert$, $S=\sum a_i$, $D=\lvert\{a_i\}\rvert$,
 $\mu=S/n$, and $\sigma^2=n^{-1}\sum_i(a_i-\mu)^2$. With $L$ the existing
-[binary encoding-length proxy](../../../Learned_Solvability_Subset_Sum/features.py),
+[binary encoding-length proxy](../../../Learned_Solvability_Subset_Sum/code/features.py),
 the numerical vector is
 
 $$

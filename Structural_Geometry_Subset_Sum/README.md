@@ -26,6 +26,10 @@ Earlier packages, frozen studies, models, plots and manuscripts are preserved.
   build one exact core and query every bounded exceptional assignment.
 - [Exception-core findings](EXCEPTION_FINDINGS.md) and
   [saved exception-core experiment](results/04_exception_core_20261028/README.md).
+- [Bounds-first experiment](experiments/05_bounds_first/README.md):
+  test cheaper discovery and necessary bounds before building exact tables.
+- [Bounds-first findings](BOUNDS_FINDINGS.md) and
+  [saved bounds-first experiment](results/05_bounds_first_20261028/README.md).
 
 The first study is complete and validated. Root checks increase completions
 against the declared shared portfolio. A separately labeled post-hoc live/work
@@ -68,6 +72,9 @@ structures/exception_core.py     exact reusable table and exceptional queries
 exception_solver.py             matched root/exception portfolios
 exception_study.py              fresh evidence and retrospective repair checks
 experiments/04_exception_core/   protocol, overview and exactness argument
+bounds_solver.py                bounded discovery and bounds-first portfolios
+bounds_study.py                 fresh five-policy mechanism comparison
+experiments/05_bounds_first/     bounds-first protocol and mathematics
 tests/                           exactness, reconstruction and accounting
 results/01_large_base_20261028/   frozen evidence and measured outcomes
 ```

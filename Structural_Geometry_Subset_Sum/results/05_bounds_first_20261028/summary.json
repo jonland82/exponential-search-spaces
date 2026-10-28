@@ -1,0 +1,364 @@
+{
+  "cases": 1152,
+  "lists": 384,
+  "work": {
+    "root": {
+      "completed": 916,
+      "actual_work": 27779526,
+      "capped_cost": 28582458,
+      "discovery_work": 0,
+      "discovery_caps": 0,
+      "core_calls": 0,
+      "core_completed": 0,
+      "core_builds": 0,
+      "bounds_no": 0,
+      "point_queries": 0,
+      "max_history_bits": 46969650
+    },
+    "reuse": {
+      "completed": 953,
+      "actual_work": 25735033,
+      "capped_cost": 26463413,
+      "discovery_work": 875473,
+      "discovery_caps": 0,
+      "core_calls": 182,
+      "core_completed": 182,
+      "core_builds": 182,
+      "bounds_no": 0,
+      "point_queries": 100,
+      "max_history_bits": 57765150
+    },
+    "bounds_only": {
+      "completed": 933,
+      "actual_work": 26710068,
+      "capped_cost": 27494127,
+      "discovery_work": 249587,
+      "discovery_caps": 2,
+      "core_calls": 182,
+      "core_completed": 90,
+      "core_builds": 0,
+      "bounds_no": 90,
+      "point_queries": 0,
+      "max_history_bits": 46969650
+    },
+    "bounds_first": {
+      "completed": 954,
+      "actual_work": 25218397,
+      "capped_cost": 26002456,
+      "discovery_work": 249587,
+      "discovery_caps": 2,
+      "core_calls": 182,
+      "core_completed": 182,
+      "core_builds": 92,
+      "bounds_no": 90,
+      "point_queries": 100,
+      "max_history_bits": 57765150
+    },
+    "fast_eager": {
+      "completed": 954,
+      "actual_work": 25338116,
+      "capped_cost": 26122175,
+      "discovery_work": 249587,
+      "discovery_caps": 2,
+      "core_calls": 182,
+      "core_completed": 182,
+      "core_builds": 182,
+      "bounds_no": 0,
+      "point_queries": 100,
+      "max_history_bits": 57765150
+    }
+  },
+  "live": {
+    "root": {
+      "totals": [
+        836,
+        823,
+        836
+      ],
+      "median": 836,
+      "minimum": 823,
+      "maximum": 836,
+      "max_overshoot_seconds": 0.06142300008330494
+    },
+    "reuse": {
+      "totals": [
+        898,
+        884,
+        896
+      ],
+      "median": 896,
+      "minimum": 884,
+      "maximum": 898,
+      "max_overshoot_seconds": 0.05211479998659342
+    },
+    "bounds_only": {
+      "totals": [
+        862,
+        846,
+        862
+      ],
+      "median": 862,
+      "minimum": 846,
+      "maximum": 862,
+      "max_overshoot_seconds": 0.0014051000075414773
+    },
+    "bounds_first": {
+      "totals": [
+        897,
+        889,
+        897
+      ],
+      "median": 897,
+      "minimum": 889,
+      "maximum": 897,
+      "max_overshoot_seconds": 0.001812799968756735
+    },
+    "fast_eager": {
+      "totals": [
+        898,
+        884,
+        894
+      ],
+      "median": 894,
+      "minimum": 884,
+      "maximum": 898,
+      "max_overshoot_seconds": 0.001610000054351985
+    }
+  },
+  "families": {
+    "superincreasing": {
+      "root": 72,
+      "reuse": 72,
+      "bounds_only": 72,
+      "bounds_first": 72,
+      "fast_eager": 72
+    },
+    "coverage": {
+      "root": 72,
+      "reuse": 72,
+      "bounds_only": 72,
+      "bounds_first": 72,
+      "fast_eager": 72
+    },
+    "few_values": {
+      "root": 72,
+      "reuse": 72,
+      "bounds_only": 72,
+      "bounds_first": 72,
+      "fast_eager": 72
+    },
+    "small_support": {
+      "root": 72,
+      "reuse": 72,
+      "bounds_only": 72,
+      "bounds_first": 72,
+      "fast_eager": 72
+    },
+    "interval_union": {
+      "root": 72,
+      "reuse": 72,
+      "bounds_only": 72,
+      "bounds_first": 72,
+      "fast_eager": 72
+    },
+    "progression": {
+      "root": 57,
+      "reuse": 60,
+      "bounds_only": 59,
+      "bounds_first": 60,
+      "fast_eager": 60
+    },
+    "random_wide": {
+      "root": 24,
+      "reuse": 24,
+      "bounds_only": 24,
+      "bounds_first": 24,
+      "fast_eager": 24
+    },
+    "near_equal": {
+      "root": 56,
+      "reuse": 67,
+      "bounds_only": 64,
+      "bounds_first": 68,
+      "fast_eager": 68
+    },
+    "filtered_modular": {
+      "root": 38,
+      "reuse": 38,
+      "bounds_only": 38,
+      "bounds_first": 38,
+      "fast_eager": 38
+    },
+    "block_pairs": {
+      "root": 71,
+      "reuse": 71,
+      "bounds_only": 71,
+      "bounds_first": 71,
+      "fast_eager": 71
+    },
+    "two_scale": {
+      "root": 30,
+      "reuse": 30,
+      "bounds_only": 30,
+      "bounds_first": 30,
+      "fast_eager": 30
+    },
+    "two_progressions": {
+      "root": 26,
+      "reuse": 26,
+      "bounds_only": 26,
+      "bounds_first": 26,
+      "fast_eager": 26
+    },
+    "large_base": {
+      "root": 72,
+      "reuse": 72,
+      "bounds_only": 72,
+      "bounds_first": 72,
+      "fast_eager": 72
+    },
+    "large_base_one_outlier": {
+      "root": 70,
+      "reuse": 72,
+      "bounds_only": 69,
+      "bounds_first": 72,
+      "fast_eager": 72
+    },
+    "large_base_many_outliers": {
+      "root": 45,
+      "reuse": 66,
+      "bounds_only": 53,
+      "bounds_first": 66,
+      "fast_eager": 66
+    },
+    "wide_aggregate": {
+      "root": 67,
+      "reuse": 67,
+      "bounds_only": 67,
+      "bounds_first": 67,
+      "fast_eager": 67
+    }
+  },
+  "primary": {
+    "difference": 1,
+    "list_bootstrap_95": [
+      0.0,
+      3.0
+    ],
+    "first_only": 1,
+    "second_only": 0,
+    "lists": 384
+  },
+  "comparisons": {
+    "root": {
+      "completions": {
+        "difference": 38,
+        "list_bootstrap_95": [
+          20.0,
+          57.02500000000009
+        ],
+        "first_only": 39,
+        "second_only": 1,
+        "lists": 384
+      },
+      "capped_work_saved": {
+        "difference": 2580002,
+        "list_bootstrap_95": [
+          1539439.475,
+          3698673.95
+        ],
+        "first_only": 39,
+        "second_only": 1,
+        "lists": 384
+      }
+    },
+    "reuse": {
+      "completions": {
+        "difference": 1,
+        "list_bootstrap_95": [
+          0.0,
+          3.0
+        ],
+        "first_only": 1,
+        "second_only": 0,
+        "lists": 384
+      },
+      "capped_work_saved": {
+        "difference": 460957,
+        "list_bootstrap_95": [
+          371704.425,
+          566670.55
+        ],
+        "first_only": 1,
+        "second_only": 0,
+        "lists": 384
+      }
+    },
+    "bounds_only": {
+      "completions": {
+        "difference": 21,
+        "list_bootstrap_95": [
+          12.0,
+          31.0
+        ],
+        "first_only": 21,
+        "second_only": 0,
+        "lists": 384
+      },
+      "capped_work_saved": {
+        "difference": 1491671,
+        "list_bootstrap_95": [
+          982738.95,
+          2038007.325
+        ],
+        "first_only": 21,
+        "second_only": 0,
+        "lists": 384
+      }
+    },
+    "fast_eager": {
+      "completions": {
+        "difference": 0,
+        "list_bootstrap_95": [
+          0.0,
+          0.0
+        ],
+        "first_only": 0,
+        "second_only": 0,
+        "lists": 384
+      },
+      "capped_work_saved": {
+        "difference": 119719,
+        "list_bootstrap_95": [
+          47780.625,
+          219336.67500000002
+        ],
+        "first_only": 0,
+        "second_only": 0,
+        "lists": 384
+      }
+    }
+  },
+  "retrospective": {
+    "root": {
+      "cases": 3,
+      "completed": 3
+    },
+    "reuse": {
+      "cases": 3,
+      "completed": 0
+    },
+    "bounds_only": {
+      "cases": 3,
+      "completed": 3
+    },
+    "bounds_first": {
+      "cases": 3,
+      "completed": 3
+    },
+    "fast_eager": {
+      "cases": 3,
+      "completed": 3
+    }
+  }
+}

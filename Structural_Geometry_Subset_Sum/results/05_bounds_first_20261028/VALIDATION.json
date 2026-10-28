@@ -1,0 +1,11 @@
+{
+  "status": "passed",
+  "utc": "2026-10-28T19:16:08.953344+00:00",
+  "auditor_sha256": "61c6d05af65cf0137433c6e0d00eff04febf5e258f03eaa737817c04fef0f9b1",
+  "lists": 384,
+  "fresh_cases": 1152,
+  "fresh_counter_replays": 5760,
+  "live_runs": 17280,
+  "retrospective_replays": 15,
+  "checks": "source/input/artifact hashes; fresh independent truths; partition and projection arithmetic; independent complete bounds NO certificates; charged phases/caps; all deterministic counter and retrospective replays; live witnesses/deadlines; matched discovery plans; report reconstruction"
+}

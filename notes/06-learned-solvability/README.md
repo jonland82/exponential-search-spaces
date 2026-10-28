@@ -8,9 +8,9 @@ certified branch-pruning experiment. Both are preserved and reported separately.
 - [Read the PDF](Predicting_Subset_Sum_Completion.pdf).
 - [LaTeX source](Predicting_Subset_Sum_Completion.tex).
 - [Generated evidence manifest](paper_evidence.json).
-- [Scoped literature audit](../../Learned_Solvability_Subset_Sum/LITERATURE.md).
-- [Frozen findings](../../Learned_Solvability_Subset_Sum/PROSPECTIVE_FINDINGS.md).
-- [Branch-pruning findings](../../Learned_Solvability_Subset_Sum/BRANCH_FINDINGS.md).
+- [Scoped literature audit](../../Learned_Solvability_Subset_Sum/docs/LITERATURE.md).
+- [Frozen findings](../../Learned_Solvability_Subset_Sum/docs/PROSPECTIVE_FINDINGS.md).
+- [Branch-pruning findings](../../Learned_Solvability_Subset_Sum/docs/BRANCH_FINDINGS.md).
 
 Build the main paper with `python build_papers.py --paper 6`. The builder verifies
 frozen source/model/data hashes and generates measured values, tables and the
@@ -96,8 +96,8 @@ unfavorable. Some live-time benefit coexists with a work-counter failure.
 ## Current evidence and discussion
 
 The [experiment package](../../Learned_Solvability_Subset_Sum/README.md) contains
-code, tests, [theory](../../Learned_Solvability_Subset_Sum/THEORY.md),
-[findings](../../Learned_Solvability_Subset_Sum/FINDINGS.md), and
+code, tests, [theory](../../Learned_Solvability_Subset_Sum/docs/THEORY.md),
+[findings](../../Learned_Solvability_Subset_Sum/docs/FINDINGS.md), and
 [the pilot report](../../Learned_Solvability_Subset_Sum/results/pilot_20261025/REPORT.md).
 
 The first pilot has 162 lists, 486 targets and 1,944 portfolio runs. The accepted
@@ -105,22 +105,22 @@ development extension adds 324 lists, 1,296 targets and 6,480 exact-policy runs,
 target-aware kernels and an arithmetic-progression representation for feature 5.
 Every completed decision in both datasets agrees with an independent oracle.
 
-[Stage 6 findings](../../Learned_Solvability_Subset_Sum/DEVELOPMENT_FINDINGS.md)
+[Stage 6 findings](../../Learned_Solvability_Subset_Sum/docs/DEVELOPMENT_FINDINGS.md)
 show improvement from target awareness on the ordinary disjoint-list test, but
 no general five-feature advantage over conventional features. Hybrids show useful
 development results, while feature costs still reduce many tight-budget completions.
 The
-[extended theory](../../Learned_Solvability_Subset_Sum/ADVANCED_THEORY.md) and
+[extended theory](../../Learned_Solvability_Subset_Sum/docs/ADVANCED_THEORY.md) and
 [model reports](../../Learned_Solvability_Subset_Sum/results/development_20261025/ml/REPORT.md)
 retain definitions, guarantees, calibrated scores and evidence limits.
 
-The [fresh frozen study](../../Learned_Solvability_Subset_Sum/PROSPECTIVE_FINDINGS.md)
+The [fresh frozen study](../../Learned_Solvability_Subset_Sum/docs/PROSPECTIVE_FINDINGS.md)
 adds 144 base lists / 288 paired encodings / 1,152 cases and 672 practical pool
 runs. Combined logistic guidance gives a modest live-time completion benefit on
 these pools, but the primary probability comparison does not improve and the
 work-counter endpoint is unfavorable. The manuscript should preserve these mixed
 results and distinguish prediction, structural certificates and resource accounting.
-The [protocol](../../Learned_Solvability_Subset_Sum/PROSPECTIVE_PROTOCOL.md) and
+The [protocol](../../Learned_Solvability_Subset_Sum/docs/PROSPECTIVE_PROTOCOL.md) and
 [overview figure](../../Learned_Solvability_Subset_Sum/results/prospective_20261025/figures/overview.pdf)
 make the experiment reviewable alongside the manuscript.
 

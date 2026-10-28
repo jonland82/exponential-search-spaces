@@ -19,9 +19,9 @@ The sequence follows one question: when can useful structure account for enough 
 
 Read I, then II. Notes III and IV branch into random-target probability and fixed-target approximation. Note V returns to exact search: it proves a concrete tractable regime and measures the cost of trying to improve the discovered structure.
 
-[Note VI](notes/06-learned-solvability/README.md) combines five certified structural features with numerical summaries. Its [experiment package](Learned_Solvability_Subset_Sum/README.md) includes theory, a [prior-work audit](Learned_Solvability_Subset_Sum/LITERATURE.md), calibrated models and [mixed frozen-study findings](Learned_Solvability_Subset_Sum/PROSPECTIVE_FINDINGS.md). The primary probability comparison does not improve; a modest live-time policy gain coexists with an unfavorable work-counter endpoint.
+[Note VI](notes/06-learned-solvability/README.md) combines five certified structural features with numerical summaries. Its [experiment package](Learned_Solvability_Subset_Sum/README.md) includes theory, a [prior-work audit](Learned_Solvability_Subset_Sum/docs/LITERATURE.md), calibrated models and [mixed frozen-study findings](Learned_Solvability_Subset_Sum/docs/PROSPECTIVE_FINDINGS.md). The primary probability comparison does not improve; a modest live-time policy gain coexists with an unfavorable work-counter endpoint.
 
-A separate [branch-pruning follow-up](Learned_Solvability_Subset_Sum/BRANCH_FINDINGS.md)
+A separate [branch-pruning follow-up](Learned_Solvability_Subset_Sum/docs/BRANCH_FINDINGS.md)
 implements Note I's proposal--verification framework using exact easy-core queries.
 On 216 fresh cases, a simple distance rule completed 162 within 50 ms each,
 compared with 159 for the combined learned gate and 152 for DFS (median totals).
@@ -35,6 +35,7 @@ The transferred model has not demonstrated an advantage over the rule.
 - `Structural_Distance_Subset_Sum/` contains Note V's proofs, exact solvers, tests, literature audit, frozen study, and raw measurements.
 - `Learned_Solvability_Subset_Sum/` contains Note VI's certified features, theory, scoped literature audit, frozen models, exact evidence and prioritization traces.
 - `Structural_Geometry_Subset_Sum/` contains a separate literature-guided direction: exact geometric solving routes, classifier features and cost-aware gates. The [reusable exception-core experiment](Structural_Geometry_Subset_Sum/EXCEPTION_FINDINGS.md) improves fresh work-capped completions from 453 to 469 over matched root geometry, with full cost accounting and scoped claims.
+- Its [bounds-first follow-up](Structural_Geometry_Subset_Sum/BOUNDS_FINDINGS.md) tests 1,152 fresh targets: 954 versus 953 previous-reuse completions, with 1.74% lower capped work and 90 avoided tables; incremental completion and wall-clock gains remain unestablished.
 - `tools/` contains the note catalog, evidence-to-paper helpers, link checking, and website staging.
 - `index.html`, `paper.css`, and `fonts/` are the six-note website. Small root HTML redirects preserve earlier entrypoints.
 - `.build/` holds ignored LaTeX byproducts and optional staged website files.

@@ -7,7 +7,7 @@ by the independent distance-reconstruction helper. The resulting fresh-distance
 comparison correctly failed. The preceding independent centroid/model refits,
 source/input checks and oracle replay had passed.
 
-The corrected auditor is [audit_geometric.py](../../audit_geometric.py). Its
+The corrected auditor is [audit_geometric.py](../../experiments/12_geometry/code/audit_geometric.py). Its
 encoding loop uses `encoding_factor`, leaving the training scale vector intact.
 It adds its own SHA-256 to `VALIDATION.json`. Its source is preserved separately
 under `audit_sources/`. The initial auditor is retained byte-for-byte because it

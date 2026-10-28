@@ -11,13 +11,14 @@ import sys
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from tools.paper_catalog import PAPERS, directory
+from Learned_Solvability_Subset_Sum import resolve_source
 
 STUDY = ROOT / "Learned_Solvability_Subset_Sum/results/prospective_20261025"
 BRANCH = ROOT / "Learned_Solvability_Subset_Sum/results/branch_pruning_20261025"
 
 
 def sha(path):
-    return hashlib.sha256(path.read_bytes()).hexdigest()
+    return hashlib.sha256(resolve_source(path).read_bytes()).hexdigest()
 
 
 def read_rows(path):

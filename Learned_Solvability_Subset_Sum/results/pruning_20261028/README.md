@@ -3,8 +3,8 @@
 Separate follow-up to the 27-feature geometric study. All prior experiments,
 models, source snapshots, plots and manuscript artifacts remain preserved.
 
-- [Fixed protocol](../../PRUNING_PROTOCOL.md): selection, isolation and paid accounting.
-- [Findings](../../PRUNING_FINDINGS.md): interpretation and evidence limits.
+- [Fixed protocol](../../experiments/13_feature_pruning/PROTOCOL.md): selection, isolation and paid accounting.
+- [Findings](../../experiments/13_feature_pruning/FINDINGS.md): interpretation and evidence limits.
 - [Selection trace](selection.json): all elimination coefficients, rankings, names and dependencies.
 - [Feature schema](feature_schema.json): ordered inputs to each model.
 - [Prediction report](PREDICTION_REPORT.md): fresh probability/accuracy comparisons.
@@ -38,18 +38,18 @@ present then and intentionally generates another sample. Time measurements vary
 by machine; saved deterministic counter traces can be replayed.
 
 ```powershell
-python -m unittest discover -s Learned_Solvability_Subset_Sum -p "test_*.py" -v
-python Learned_Solvability_Subset_Sum/pruning_experiment.py freeze --output Learned_Solvability_Subset_Sum/results/new_pruning
-python Learned_Solvability_Subset_Sum/pruning_experiment.py generate --output Learned_Solvability_Subset_Sum/results/new_pruning
-python Learned_Solvability_Subset_Sum/pruning_experiment.py analyze --output Learned_Solvability_Subset_Sum/results/new_pruning
-python Learned_Solvability_Subset_Sum/pruning_experiment.py priorities --output Learned_Solvability_Subset_Sum/results/new_pruning
-python Learned_Solvability_Subset_Sum/audit_pruning.py Learned_Solvability_Subset_Sum/results/new_pruning
+python Learned_Solvability_Subset_Sum/experiments/run.py all tests
+python Learned_Solvability_Subset_Sum/experiments/run.py pruning freeze --output Learned_Solvability_Subset_Sum/results/new_pruning
+python Learned_Solvability_Subset_Sum/experiments/run.py pruning generate --output Learned_Solvability_Subset_Sum/results/new_pruning
+python Learned_Solvability_Subset_Sum/experiments/run.py pruning analyze --output Learned_Solvability_Subset_Sum/results/new_pruning
+python Learned_Solvability_Subset_Sum/experiments/run.py pruning priorities --output Learned_Solvability_Subset_Sum/results/new_pruning
+python Learned_Solvability_Subset_Sum/experiments/run.py pruning audit --output Learned_Solvability_Subset_Sum/results/new_pruning
 ```
 
 Validate this saved experiment:
 
 ```powershell
-python Learned_Solvability_Subset_Sum/audit_pruning.py Learned_Solvability_Subset_Sum/results/pruning_20261028
+python Learned_Solvability_Subset_Sum/experiments/run.py pruning audit --output Learned_Solvability_Subset_Sum/results/pruning_20261028
 ```
 
 The new batch is separate from both the earlier geometric sample and the

@@ -33,9 +33,20 @@ when changing evidence-handling or verification code. A check-only workflow is:
 git diff --check
 python tools/check_links.py
 python -m unittest discover -s Structural_Distance_Subset_Sum -p "test_*.py" -v
-python -m unittest discover -s Learned_Solvability_Subset_Sum -p "test_*.py" -v
+python Learned_Solvability_Subset_Sum/experiments/run.py all tests
 python -m unittest discover -s Structural_Geometry_Subset_Sum/tests -p "test_*.py" -v
 ```
+
+For the reorganized Paper VI geometry/pruning follow-ups, use their launcher
+to include local tests and resolve the original frozen source names:
+
+```powershell
+python Learned_Solvability_Subset_Sum/experiments/run.py all tests
+python Learned_Solvability_Subset_Sum/experiments/run.py all check
+```
+
+See the [Paper VI experiment guide](Learned_Solvability_Subset_Sum/experiments/README.md)
+for complete saved audits and commands for new runs.
 
 The learned/geometry checks use the existing NumPy, scikit-learn, joblib,
 threadpoolctl and plotting environment. Experiment READMEs document audit

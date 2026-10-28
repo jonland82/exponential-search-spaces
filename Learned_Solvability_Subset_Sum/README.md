@@ -5,14 +5,20 @@ Stage 10 certified branch-pruning results.** The six-note website links the pape
 and its supporting evidence.
 The original feasibility pilot and model-development results remain preserved.
 
+The recent classifier follow-ups are grouped under [experiments/](experiments/README.md):
+[Stage 12 geometry](experiments/12_geometry/README.md) and
+[Stage 13 feature pruning](experiments/13_feature_pruning/README.md), each with
+code, tests, protocol and findings together. Shared modules now live in `code/`; the compatibility entry points resolve
+original frozen names for downstream studies.
+
 **Stage 13 complete: training-only feature pruning.** A separate October 28 experiment
 selects nested top-five/top-ten subsets from the 27 candidates using recursive
 elimination on development training lists only. It freezes calibrated logistic
 models before another 144 fresh base lists / 1,152 paired-encoding cases.
-See the [protocol](PRUNING_PROTOCOL.md), [saved guide](results/pruning_20261028/README.md),
+See the [protocol](experiments/13_feature_pruning/PROTOCOL.md), [saved guide](results/pruning_20261028/README.md),
 [prediction report](results/pruning_20261028/PREDICTION_REPORT.md),
 [paid solver report](results/pruning_20261028/PRIORITY_REPORT.md) and
-[findings](PRUNING_FINDINGS.md). Original models and all earlier evidence are preserved.
+[findings](experiments/13_feature_pruning/FINDINGS.md). Original models and all earlier evidence are preserved.
 Top five improves the unscaled Brier point estimate (0.06808 versus baseline
 0.07414), with uncertainty spanning zero; top ten worsens it. Neither model
 establishes better paid solving. All 50 tests and the independent 576-pool audit pass.
@@ -21,11 +27,11 @@ establishes better paid solving. All 50 tests and the independent 576-pool audit
 October 28 experiment reruns calibrated logistic regression with 15 baseline,
 17 prototype, 25 interaction and 27 combined features. It uses training-only
 geometry, out-of-list training prototypes, and 144 fresh base lists / 1,152
-paired-encoding cases. See the [protocol](GEOMETRIC_PROTOCOL.md),
+paired-encoding cases. See the [protocol](experiments/12_geometry/PROTOCOL.md),
 [experiment guide](results/geometric_20261028/README.md),
 [prediction report](results/geometric_20261028/PREDICTION_REPORT.md),
 [paid solver report](results/geometric_20261028/PRIORITY_REPORT.md) and
-[findings](GEOMETRIC_FINDINGS.md). This tests whole-input completion prediction
+[findings](experiments/12_geometry/FINDINGS.md). This tests whole-input completion prediction
 and paid prioritization; it does not rerun the branch-checking experiment or
 replace the default model. Earlier frozen evidence and the manuscript are preserved.
 The combined features do not improve the primary Brier endpoint (0.08576 versus
@@ -35,10 +41,10 @@ All 43 tests and the independent 1,152-case / 576-pool audit pass.
 **Stage 11 complete: proximity to observed easy/hard inputs.** A separate model freeze
 tests empirical neighbor distances in the original 15-feature space on another
 144 base lists / 1,152 paired-encoding cases. Related targets never serve as
-their own training neighbors. See the [protocol](NEIGHBOR_PROTOCOL.md),
+their own training neighbors. See the [protocol](docs/NEIGHBOR_PROTOCOL.md),
 [prediction report](results/neighbors_20261025/PREDICTION_REPORT.md),
 [paid solver report](results/neighbors_20261025/PRIORITY_REPORT.md) and
-[findings](NEIGHBOR_FINDINGS.md). These follow-up results are separate from the
+[findings](docs/NEIGHBOR_FINDINGS.md). These follow-up results are separate from the
 current manuscript and preserve all earlier frozen evidence. Adding both
 distances catches more hard inputs but does not improve overall prediction or
 paid solver completions; the original model remains the default.
@@ -46,31 +52,31 @@ paid solver completions; the original model remains the default.
 **Stage 10 follow-up complete:** certified structural checks resolve search
 subtrees, but the transferred combined model does not beat a simple distance
 rule. At 50 ms, median completions were 152/216 for DFS, 159 for the combined
-gate and 162 for the rule. See [branch findings and discussion point](BRANCH_FINDINGS.md),
-[protocol](BRANCH_PROTOCOL.md), [soundness](BRANCH_THEORY.md) and
+gate and 162 for the rule. See [branch findings and discussion point](docs/BRANCH_FINDINGS.md),
+[protocol](docs/BRANCH_PROTOCOL.md), [soundness](docs/BRANCH_THEORY.md) and
 [saved report](results/branch_pruning_20261025/REPORT.md). This new exploratory
 batch leaves the original frozen study intact; its results are now included as
 a separate exploratory section in the paper.
 
 - [Paper VI guide and current status](../notes/06-learned-solvability/README.md).
 - [Read Paper VI in HTML](../notes/06-learned-solvability/Predicting_Subset_Sum_Completion.html).
-- [Feature definitions, proofs, exact queries, and limits](THEORY.md).
-- [Findings and decisions for discussion](FINDINGS.md).
+- [Feature definitions, proofs, exact queries, and limits](docs/THEORY.md).
+- [Findings and decisions for discussion](docs/FINDINGS.md).
 - [Pilot report](results/pilot_20261025/REPORT.md).
 - [Full summary](results/pilot_20261025/summary.json).
-- [Stage 6 findings and recommendations](DEVELOPMENT_FINDINGS.md).
-- [Progression and target-aware theory](ADVANCED_THEORY.md).
+- [Stage 6 findings and recommendations](docs/DEVELOPMENT_FINDINGS.md).
+- [Progression and target-aware theory](docs/ADVANCED_THEORY.md).
 - [Development model comparison](results/development_20261025/ml/REPORT.md).
 - [End-to-end completion prediction](results/development_20261025/end_to_end/REPORT.md).
-- [Frozen-study findings and manuscript recommendation](PROSPECTIVE_FINDINGS.md).
-- [Frozen study protocol](PROSPECTIVE_PROTOCOL.md).
+- [Frozen-study findings and manuscript recommendation](docs/PROSPECTIVE_FINDINGS.md).
+- [Frozen study protocol](docs/PROSPECTIVE_PROTOCOL.md).
 - [Fresh prediction report](results/prospective_20261025/PREDICTION_REPORT.md).
 - [Paid practical prioritization report](results/prospective_20261025/PRIORITY_REPORT.md).
 - [Standalone study overview](results/prospective_20261025/figures/overview.pdf).
 - [Interactive 3D input space with prediction and mistake overlays](visualizations/input_space_20261025/input_space.html), [static plot](visualizations/input_space_20261025/input_space.png) and [label/projection notes](visualizations/input_space_20261025/README.md).
 - [Paper VI PDF](../notes/06-learned-solvability/Predicting_Subset_Sum_Completion.pdf).
 - [LaTeX manuscript](../notes/06-learned-solvability/Predicting_Subset_Sum_Completion.tex).
-- [Scoped primary-source audit](LITERATURE.md).
+- [Scoped primary-source audit](docs/LITERATURE.md).
 - [Paper evidence manifest](../notes/06-learned-solvability/paper_evidence.json).
 
 ## Implemented
@@ -105,23 +111,23 @@ The development/frozen model comparisons and prospective tests additionally use
 `requirements-ml.txt`. Install those dependencies to run the full current suite.
 
 ```powershell
-python -m unittest discover -s Learned_Solvability_Subset_Sum -p "test_*.py" -v
-python Learned_Solvability_Subset_Sum/run_pilot.py --output Learned_Solvability_Subset_Sum/results/new_pilot
-python Learned_Solvability_Subset_Sum/validate_results.py Learned_Solvability_Subset_Sum/results/pilot_20261025
-python Learned_Solvability_Subset_Sum/run_development.py --output Learned_Solvability_Subset_Sum/results/new_development
-python Learned_Solvability_Subset_Sum/fit_development.py --data Learned_Solvability_Subset_Sum/results/new_development --output Learned_Solvability_Subset_Sum/results/new_development/ml
-python Learned_Solvability_Subset_Sum/fit_end_to_end.py --data Learned_Solvability_Subset_Sum/results/new_development --output Learned_Solvability_Subset_Sum/results/new_development/end_to_end
-python Learned_Solvability_Subset_Sum/validate_development.py Learned_Solvability_Subset_Sum/results/development_20261025
-python Learned_Solvability_Subset_Sum/prospective_study.py freeze --output Learned_Solvability_Subset_Sum/results/new_frozen_study
-python Learned_Solvability_Subset_Sum/prospective_study.py generate --output Learned_Solvability_Subset_Sum/results/new_frozen_study
-python Learned_Solvability_Subset_Sum/prospective_study.py analyze --output Learned_Solvability_Subset_Sum/results/new_frozen_study
-python Learned_Solvability_Subset_Sum/priority_experiment.py --output Learned_Solvability_Subset_Sum/results/new_frozen_study
-python Learned_Solvability_Subset_Sum/validate_prospective.py Learned_Solvability_Subset_Sum/results/prospective_20261025
-python Learned_Solvability_Subset_Sum/neighbor_experiment.py freeze --output Learned_Solvability_Subset_Sum/results/new_neighbor_study
-python Learned_Solvability_Subset_Sum/neighbor_experiment.py generate --output Learned_Solvability_Subset_Sum/results/new_neighbor_study
-python Learned_Solvability_Subset_Sum/neighbor_experiment.py analyze --output Learned_Solvability_Subset_Sum/results/new_neighbor_study
-python Learned_Solvability_Subset_Sum/neighbor_experiment.py priorities --output Learned_Solvability_Subset_Sum/results/new_neighbor_study
-python Learned_Solvability_Subset_Sum/validate_neighbors.py Learned_Solvability_Subset_Sum/results/new_neighbor_study
+python Learned_Solvability_Subset_Sum/experiments/run.py all tests
+python Learned_Solvability_Subset_Sum/run.py run_pilot --output Learned_Solvability_Subset_Sum/results/new_pilot
+python Learned_Solvability_Subset_Sum/run.py validate_results Learned_Solvability_Subset_Sum/results/pilot_20261025
+python Learned_Solvability_Subset_Sum/run.py run_development --output Learned_Solvability_Subset_Sum/results/new_development
+python Learned_Solvability_Subset_Sum/run.py fit_development --data Learned_Solvability_Subset_Sum/results/new_development --output Learned_Solvability_Subset_Sum/results/new_development/ml
+python Learned_Solvability_Subset_Sum/run.py fit_end_to_end --data Learned_Solvability_Subset_Sum/results/new_development --output Learned_Solvability_Subset_Sum/results/new_development/end_to_end
+python Learned_Solvability_Subset_Sum/run.py validate_development Learned_Solvability_Subset_Sum/results/development_20261025
+python Learned_Solvability_Subset_Sum/run.py prospective_study freeze --output Learned_Solvability_Subset_Sum/results/new_frozen_study
+python Learned_Solvability_Subset_Sum/run.py prospective_study generate --output Learned_Solvability_Subset_Sum/results/new_frozen_study
+python Learned_Solvability_Subset_Sum/run.py prospective_study analyze --output Learned_Solvability_Subset_Sum/results/new_frozen_study
+python Learned_Solvability_Subset_Sum/run.py priority_experiment --output Learned_Solvability_Subset_Sum/results/new_frozen_study
+python Learned_Solvability_Subset_Sum/run.py validate_prospective Learned_Solvability_Subset_Sum/results/prospective_20261025
+python Learned_Solvability_Subset_Sum/run.py neighbor_experiment freeze --output Learned_Solvability_Subset_Sum/results/new_neighbor_study
+python Learned_Solvability_Subset_Sum/run.py neighbor_experiment generate --output Learned_Solvability_Subset_Sum/results/new_neighbor_study
+python Learned_Solvability_Subset_Sum/run.py neighbor_experiment analyze --output Learned_Solvability_Subset_Sum/results/new_neighbor_study
+python Learned_Solvability_Subset_Sum/run.py neighbor_experiment priorities --output Learned_Solvability_Subset_Sum/results/new_neighbor_study
+python Learned_Solvability_Subset_Sum/run.py validate_neighbors Learned_Solvability_Subset_Sum/results/new_neighbor_study
 ```
 
 A pilot requires a new output directory. The manifest and source snapshots are
@@ -184,3 +190,22 @@ controls for its own task and finds no learned advantage over the distance rule.
 `python build_papers.py --paper 6` verifies saved evidence and generates tables,
 values, a paper-sized plot, the PDF and HTML without rerunning experiments.
 The six-note site includes this paper, its methods and its preserved evidence.
+
+## Folder guide
+
+- `code/`: shared features, solvers, training, validation and plotting scripts.
+- `tests/`: original shared test suites.
+- `docs/`: theory, literature, protocols and earlier findings.
+- `experiments/`: grouped geometry/pruning follow-ups and the full test/audit launcher.
+- `results/` and `visualizations/`: preserved measured evidence and figures.
+
+Run an older script through the package entry point, for example:
+
+```powershell
+python Learned_Solvability_Subset_Sum/run.py run_pilot --help
+python Learned_Solvability_Subset_Sum/experiments/run.py all tests
+```
+
+The small root `advanced_features.py` and `__init__.py` files preserve existing
+imports. Original source bytes are loaded from the locations in
+[the layout map](experiments/LAYOUT.json).
