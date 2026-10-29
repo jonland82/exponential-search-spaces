@@ -2,7 +2,7 @@
 
 **Connections to OpenAI's Subset-Sum Algorithms**
 
-Jonathan R. Landers · October 28, 2026 · Working draft
+Jonathan R. Landers · October 28, 2026
 
 [Read HTML](From_Choices_to_Sums.html) · [Four-page PDF](From_Choices_to_Sums.pdf) ·
 [LaTeX source](From_Choices_to_Sums.tex)

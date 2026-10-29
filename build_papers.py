@@ -37,8 +37,8 @@ CONNECTION_NOTE = dict(
     title="From Choices to Sums: Connections to OpenAI's Subset-Sum Algorithms",
     description="A four-page note connecting distinct sums, compatible representations and geometric core reuse to OpenAI's subset-sum manuscripts.",
     nav_label="OpenAI connections", data="OpenAI_Subset_Sum_Connections/README.md",
-    published=True, maintained_html=False, working_draft=True,
-    series_label="Expository research note &middot; Working draft",
+    published=True, maintained_html=False, working_draft=False,
+    series_label="",
     create_legacy_redirect=False, max_pages=4,
 )
 
@@ -161,10 +161,11 @@ def build_html(paper):
     home = relative(ROOT / "index.html", folder)
     css = relative(ROOT / "paper.css", folder)
     data = relative(ROOT / paper["data"], folder)
-    series_label = paper.get("series_label") or (
+    series_label = paper.get("series_label", (
         f'Companion note {paper["number"]} of {PAPERS[-1]["number"]}'
         + (" &middot; Working draft" if paper.get("working_draft") else "")
-    )
+    ))
+    series_heading = f'  <span class="series-label">{series_label}</span>' if series_label else ""
     content = f"""<!doctype html>
 <html lang="en">
 <head>
@@ -191,7 +192,7 @@ window.MathJax = {{
   <a href="{stem}.tex">LaTeX source</a>
 </nav>
 <header>
-  <span class="series-label">{series_label}</span>
+{series_heading}
   <h1>{title}</h1>
   <div class="byline">Jonathan R. Landers<br>October 2026</div>
 </header>

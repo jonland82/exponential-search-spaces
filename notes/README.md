@@ -20,7 +20,7 @@ Two unnumbered companions live in the corresponding note folders.
 ## Related exposition
 
 [From Choices to Sums: Connections to OpenAI's Subset-Sum Algorithms](../OpenAI_Subset_Sum_Connections/From_Choices_to_Sums.html)
-is a four-page working draft linking distinct support, compatible records,
+is a four-page note linking distinct support, compatible records,
 modular checksums and geometric reuse. [PDF](../OpenAI_Subset_Sum_Connections/From_Choices_to_Sums.pdf)
 and [source and rebuild guide](../OpenAI_Subset_Sum_Connections/README.md).
 Build it with `python build_papers.py --paper connections`.

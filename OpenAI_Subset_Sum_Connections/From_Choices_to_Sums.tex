@@ -30,134 +30,148 @@
 {\large\sffamily Connections to OpenAI's Subset-Sum Algorithms}\par
 \vspace{6pt}
 {\small Jonathan R. Landers \hfill October 28, 2026}\par
-{\footnotesize\textcolor{paperaccent}{\textsc{Expository research note $\cdot$ Working draft}}}
 
 \begin{tcolorbox}[accentbox]
-A list of $n$ numbers has $2^n$ subsets. Many subsets can ask the same
-question, and one mathematical object can answer many questions at once.
-Distinct sums and reusable representations connect this research sequence
-to OpenAI's recent subset-sum manuscripts. They reveal how the structure
-of a search determines the work needed to resolve it.
+A list of $n$ numbers has $2^n$ subsets. Different subsets can add to the same
+total. Recording each distinct total once can save repeated work, and a table
+of reachable sums can be built once and reused to check many target values.
+These two ways of saving work connect the repository's experiments to
+OpenAI's recent subset-sum manuscripts.
 \end{tcolorbox}
 
 \section{An exponential search with only two questions}
-Given positive integer weights $w_1,\ldots,w_n$ and a target $t$, subset sum
-asks whether some selection adds to $t$. Each listed item can be used once.
-Consider the weights $[2,5,6,11,23]$ and target $17$. Set aside $6$.
-The remaining weights $[2,5,11,23]$ are \emph{superincreasing}: each exceeds
-the sum of all its predecessors. Descending greedy choice decides membership
-in this core. Leaving $6$ out fails; taking it leaves $11$, which the core reaches.
-Two core queries resolve the original 32 choices.
+Subset sum asks whether a subset of positive integer weights $w_1,\ldots,w_n$
+adds to a nonnegative integer target $t$. Each item can be used once; equal
+values remain separate items.
 
-Note V~\cite{v} makes this construction systematic. Sorting and a greedy scan
-find a largest superincreasing core $C$ in $O(n\log(n+1))$ arithmetic and
-comparison operations. Let $E$ contain its $e$ exceptional items. Each subset
-of $E$ supplies a shifted target for $C$. Equal exceptional sums supply equal
-queries, so the relevant quantity is
+Set aside $6$ from $[2,5,6,11,23]$. The remaining \emph{core}, $[2,5,11,23]$,
+is \emph{superincreasing}: each weight exceeds the sum of its predecessors.
+Test a target by working downward, taking each weight that fits and subtracting
+it. Target $17$ fails without $6$; taking $6$ leaves $11$, which the core reaches.
+Two core tests resolve the original 32 choices.
+
+Note V~\cite{v} finds a largest such core by sorting and keeping weights that
+exceed the total already kept. This takes $O(n\log(n+1))$ arithmetic and
+comparison operations. Here $O(f)$ bounds growth by a constant multiple of
+$f$ for sufficiently large inputs.
+
+Let $C$ contain the core indices and $E$ the remaining indices, with $e=|E|$
+exceptions. For any index set $V$, $|V|$ counts its items and its distinct subset sums are
 \[
- \mathcal A(E)=\left\{\sum_{i\in A}w_i:A\subseteq E\right\},
- \qquad K=|\mathcal A(E)|.
+ \mathcal A(V)=\left\{\sum_{i\in A}w_i:A\subseteq V\right\}.
 \]
-This set of reachable sums is the \emph{support}. Build it by repeatedly
-merging a sorted list with a shifted copy, keeping one indexed witness per sum.
-Every intermediate support is contained
-in the final support: later items can always be left out. Construction takes
-$O(eK)$ operations; the $K$ greedy queries take $O(nK)$. For total binary
-input length $L$, the resulting bit-time bound is $\poly(L)K$.
+This set is the \emph{support}. Put $K=|\mathcal A(E)|$. Equal exceptional
+sums $s$ leave the same core target $t-s$. Build the support from $\{0\}$,
+merging the current sorted list with a copy increased by each next weight.
+Keep one \emph{witness} per sum: the indices of a subset producing it.
+Each intermediate list has at most $K$ entries, since later items can be
+omitted. Construction takes $O(eK)$ operations and core tests take $O(nK)$.
+
+Let $L$ be the total number of bits encoding the weights and target, and let
+$\poly(L)$ denote an unspecified polynomial in $L$. Including integer arithmetic gives
+a bit-operation bound of $\poly(L)K$.
 
 \section{A shared measure of compression}
-OpenAI's low-space manuscript~\cite{space} measures a block $V$ through its
+OpenAI's low-space manuscript~\cite{space} measures a block of indices $V$ through its
 \emph{deficiency},
 \[
  d(V)=|V|-\log_2|\mathcal A(V)|.
 \]
-Applying this definition to Note V rewrites its existing runtime bound as
+The logarithm is base two. Thus $K=2^{e-d(E)}$, and Note V's runtime $T_V$ satisfies
 \[
  \boxed{T_V\le\poly(L)\,2^{e-d(E)}.}
 \]
 The formula identifies two sources of savings: fewer exceptional items and
 more merging among their sums. Twelve equal positive exceptions have only
 $13$ sums, giving $d(E)=12-\log_2 13$. Their 4,096 selections require just
-13 core queries. The exponent counts the distinct questions still to answer.
+13 core tests. The exponent is the base-two logarithm of the number of
+distinct residual targets.
 
 \newpage
 \section{Few sums compress; many sums support filtering}
-The low-space manuscript uses deficiency to analyze two complementary
-randomized trials~\cite{space}. One compresses repeated sums in disjoint
-blocks and combines the resulting lists through sorted streams. The other
-uses blocks with many distinct sums to give a solution many decompositions,
-then filters them by requiring chosen remainders modulo integers.
-Each round runs both trials; their
-analysis uses the mean deficiency of a random block.
+The low-space manuscript runs two randomized trials~\cite{space}. One merges
+repeated sums in disjoint blocks and generates combined sums in sorted order.
+The other uses blocks with many distinct sums to give a solution many
+\emph{representations}: different splits into partial subsets. It filters
+records by chosen modular remainders; enough
+representations allow the solution to survive. The proof analyzes both trials
+using the average deficiency of a randomly chosen block.
 
-This complementary strategy belongs to a line of work developed by Austrin,
-Kaski, Koivisto and Nederlof~\cite{akkn}. It makes distinct-sum structure useful
-on both sides: concentrated sums favor compression, while abundant sums can
-sustain many representations through filtering. OpenAI's September manuscript
-states $\poly(n)2^{n/2}$ time and ordinary $O(2^{n/5})$ writable-word space
-for polynomial-bit inputs. Its guarantees include discovery, generation and
-storage costs, with one-sided error and success probability at least $2/3$
-on each solvable input~\cite{space}.
+These complementary uses of distinct sums follow earlier work by Austrin,
+Kaski, Koivisto and Nederlof~\cite{akkn}.
 
-The representations retain the information needed to combine them. A sum of
-$5$ could use the item $5$ or the items $2$ and $3$. To combine that record
-with the item $2$, we must know which indices it uses: only the first choice
-gives a valid subset of sum $7$. OpenAI's overlapping constructions therefore
-retain membership masks alongside weights. Note V combines disjoint index sets,
-so one witness per exceptional sum supplies all the information its core
-queries need. This gives a useful design rule: merge records when they have
-the same valid continuations.
+Let $b$ be the largest bit length of a weight or target.
+\emph{Polynomial-bit} means $b\le n^c$ for a fixed constant $c>0$.
+Using $O(n+b)$-bit machine words, the September manuscript states
+$\poly(n)2^{n/2}$ time and $O(2^{n/5})$ writable words of memory.
+Every YES answer is correct; each solvable input is accepted with probability
+at least $2/3$ over the algorithm's random choices~\cite{space}.
+
+Overlapping subsets need index checks. In $[2,3,5]$, a sum of $5$ can use
+$5$ or $2$ and $3$; only the first can combine with the item $2$ to give $7$.
+OpenAI retains \emph{membership masks}: bits recording which shared indices
+a partial subset uses. Note V's core and exceptions share no indices, so
+one witness per sum suffices. Merge records when later combinations treat
+them identically.
 
 \section{A checksum that recovers the exact target}
-The October manuscript~\cite{time} states a randomized worst-case bound of
-$O(2^{0.49n})$ word operations for each fixed polynomial bound on input bit
-length, with $O(n+b)$-bit words when the maximum input bit length is $b$.
-It gives correctness probability at least $2/3$ on each fixed input and caps
-time on every execution. The exponent improves Horowitz and Sahni's
-1974 meet-in-the-middle scale $2^{n/2}$: their exponential factors have ratio
-$2^{0.01n}$.
+The October manuscript~\cite{time} states $O(2^{0.49n})$ word operations for
+polynomial-bit inputs. This time bound holds on every execution, and each
+fixed input receives the correct answer with probability at least $2/3$.
+Classical \emph{meet-in-the-middle} splits the weights in half, lists each
+half's subset sums and searches for a pair adding to the target. Its
+$2^{n/2}$ exponential factor is larger than $2^{0.49n}$ by a factor of $2^{0.01n}$.
 
-A preliminary test handles small partial-sum supports. The remaining method
-isolates a solution using random tie-breaking weights. For transformed weights
-$c_i$, target $t'$ and prime $P$, let $c(I)=\sum_{i\in I}c_i$ and assign each
-subset a random complex phase $\chi(I)$ of absolute value one. Its organizing
-identity is
+A preliminary test handles small partial-sum supports. Random tie-breaking
+then produces transformed weights $c_i$ and targets $t'$; on a solvable input,
+with at least a fixed positive probability one target has exactly one solution.
+For an index subset $I$, let $c(I)=\sum_{i\in I}c_i$, and let $\chi(I)$ be
+its assigned random complex number of absolute value one, called a \emph{phase}.
+Choose a prime $P$. The notation $c(I)\equiv t'\pmod P$ means the two numbers
+have the same remainder on division by $P$. An \emph{alias} matches that
+remainder while having a different total. Summing over index subsets gives
 \[
  \underbrace{\sum_{c(I)=t'}\chi(I)}_{\text{exact target}}
  =\underbrace{\sum_{c(I)\equiv t'\!\!\pmod P}\chi(I)}_{\text{modular checksum}}
  -\underbrace{\sum_{\substack{c(I)\equiv t'\!\!\pmod P\\c(I)\ne t'}}\chi(I)}_{\text{aliases}}.
 \]
-A Fourier formula expresses the checksum as an average of products built
-from individual weights. Filters organize which terms to evaluate or sample;
-compatible representations recover the aliases. After subtraction, an empty
-target has value zero and an
-isolated solution has absolute value one. Absolute error below $1/4$ permits
-detection at threshold $1/2$. The method turns a large collection of subsets
-into an aggregate whose surviving value answers the exact question~\cite{time}.
+A Fourier formula rewrites the modular checksum as an average of products
+built from individual weights. Filters organize which terms to evaluate or
+sample, and compatible partial records recover the aliases. The difference
+is zero for an unreachable target and has absolute value one for a unique
+solution. Computing it to absolute error below $1/4$ lets the algorithm
+distinguish these cases by comparing its absolute value with $1/2$~\cite{time}.
 
 \newpage
 \section{A geometric representation that answers many targets}
-Note VII~\cite{vii} approaches aggregation through a discovered base $M\ge2$.
-After exact reductions, it writes the positive weights as
+Note VII~\cite{vii} builds a table of reachable points. After exact
+preprocessing, write the remaining instance as positive weights
+$u_1,\ldots,u_n$ and nonnegative target $T$; $L$ is its binary input length.
+Choose an integer base $M\ge2$ and write
 \[
  u_i=Mp_i+r_i,\qquad p_i\ge0,
 \]
-selects a core $C$ with a narrow residual range, and sets aside exceptions $E$.
-Each core subset becomes a point
+where $p_i$ is an integer quotient and $r_i$ is a \emph{residual}, a signed
+remainder. Select core indices $C$ whose residuals have a small total
+range, and put the remaining indices in $E$, with $e=|E|$.
+Let $x_i=1$ when core item $i$ is selected and $x_i=0$ otherwise. The selection
+has total quotient $q$ and residual sum $s$:
 \[
  (q,s)=\left(\sum_{i\in C}p_ix_i,\ \sum_{i\in C}r_ix_i\right).
 \]
-An exact dynamic program stores reachable points. For each exceptional
-assignment $A$, the target line is
+Starting at $(0,0)$, process each core item by keeping the current points and
+also adding copies shifted by $(p_i,r_i)$. Selecting an
+exceptional subset $A\subseteq E$ leaves the core target $z_A$, giving the line
 \[
  Mq+s=z_A,\qquad z_A=T-\sum_{i\in A}u_i.
 \]
-The geometry stays fixed as the line moves. With core $[101,203]$, exception
+The same reachable points serve every shifted target. With core $[101,203]$, exception
 $149$, base $M=100$ and target $250$, taking the exception shifts the line to
 $100q+s=101$. The reachable point $(1,1)$ supplies the core item $101$.
 The original solution is $149+101=250$.
 
-The shared table lies in a rectangle. Write
+Let $R_-$ and $R_+$ bound the residual sum of any core subset. The table has
+residual width $W$ and quotient height $H$, with largest stored quotient $Q$:
 \[
  \begin{gathered}
  R_-=\sum_{i\in C}\min(0,r_i),\quad
@@ -166,81 +180,77 @@ The shared table lies in a rectangle. Write
        \left\lfloor\frac{T-R_-}{M}\right\rfloor\right),\qquad H=Q+1.
  \end{gathered}
 \]
-For $Q\ge0$, these bounds cover every shifted solution: positive exceptional
-weights give $z_A\le T$, and $s\ge R_-$ bounds the required quotient. The
-nonnegative $p_i$ make the quotient cap safe during construction. A query
-tests at most $G$ points where its line crosses the rectangle, with $1\le G\le H$.
+Here $\lfloor y\rfloor$ means rounding $y$ down to an integer. Positive
+exceptional weights give $z_A\le T$, so every solution has $Mq=z_A-s\le T-R_-$.
+The nonnegative $p_i$ make it safe to discard points above $Q$ while building
+the table. Each candidate integer $q$ requires one test of $(q,z_A-Mq)$.
+Let $G$, with $1\le G\le H$, bound the number of such tests per target.
 
-Let $F$ pay reductions and discovery. The runtime companion~\cite{runtime}
-gives the conservative bit-time envelope
+Let $F$ be the bit-operation cost of preprocessing and discovering the base and core.
+The implementation stores each quotient row in a $W$-bit integer; a row
+lookup takes at most $O(W)$ bit operations. The runtime companion~\cite{runtime}
+therefore bounds the total runtime $T_{\rm geom}$ by
 \[
  T_{\rm geom}\le F+O^*(HW+2^eGW),
 \]
-where $O^*$ suppresses factors polynomial in $L$. The terms expose the benefit:
-one table construction serves all exceptional assignments. A table of $HW$
-positions can summarize exponentially many core subsets. Polynomial discovery,
-polynomial $HW$ and $e=O(\log L)$ give a polynomial regime.
-
-Note III~\cite{iii} supplies another view of aggregation. If $r(t)$ counts
-representations of a target by two half-sum sets, put
-\[
- B=\sum_{t\in D}r(t),\quad J=\sum_{t\in D}\binom{r(t)}2,
- \qquad \sum_{t\in D}r(t)^2=B+2J.
-\]
-For $B>0$, Cauchy--Schwarz gives at least $B^2/(B+2J)$ reachable targets in $D$.
-Multiplicities become a certificate about distinct outcomes. Across these
-constructions, counts, coordinates, masks and phases each preserve the
-information required by the question being asked.
+where $O^*$ hides factors polynomial in $L$. Construction costs $O^*(HW)$;
+testing the $2^e$ exceptional subsets costs $O^*(2^eGW)$.
+One table can represent exponentially many core subsets. If $F$ and $HW$
+grow polynomially in $L$, and $e=O(\log L)$, the total runtime is polynomial.
 
 \newpage
 \section{Combining the two structural savings}
-The distinct-sum and shared-table constructions fit together directly.
-First discover the geometric core. Then construct the $K=|\mathcal A(E)|$
-distinct exceptional sums, retaining a witness for each. Query the common
-table once per surviving shifted target. Equal sums have equal residual
-targets, and their witnesses lie entirely outside the core.
+Apply Note V's support construction to the geometric exceptions $E$, using
+the reduced weights $u_i$. Keep one witness per distinct sum and test each
+residual target against the shared table. Define the exceptional support
+$\mathcal A(E)$, its size $K$ and its deficiency $d(E)$ as before.
 
 \begin{tcolorbox}[accentbox]
 \textbf{Derived connection.} Combining Note V's support construction with
-Note VII's shared table gives an exact algorithm with the bit-time bound
+Note VII's shared table gives an exact algorithm whose runtime $T_{\rm combined}$ satisfies
 \[
  \boxed{T_{\rm combined}\le
  F+O^*\!\left(HW+2^{e-d(E)}(1+GW)\right).}
 \]
 The support construction costs $O^*(K)$; bounds and table queries cost
-$O^*(K(1+GW))$. One core table costs $O^*(HW)$. Prefix history and exceptional
-witnesses occupy $O^*(HW+K)$ bits.
+$O^*(K(1+GW))$: the $1$ pays for checking each target's bounds, and $GW$ pays
+for table tests. One core table costs $O^*(HW)$. Saving intermediate tables
+to reconstruct a core subset, together with exceptional witnesses, occupies
+$O^*(HW+K)$ bits.
 \end{tcolorbox}
 
-This derived algorithm combines three measurable opportunities: a small core
-table, few distinct exceptional sums and short line queries. For polynomial-bit
-inputs, its bound lies below the $2^{0.49n}$ scale when, for a fixed
-$\epsilon>0$, discovery takes $O^*(2^{(0.49-\epsilon)n})$ and
+For polynomial-bit inputs, choose a fixed exponent margin $0<\epsilon<0.49$.
+If $F$, $HW$ and $K(1+GW)$ are each $O^*(2^{(0.49-\epsilon)n})$, the combined
+runtime grows more slowly than $2^{0.49n}$. The fixed margin $\epsilon$ absorbs
+the polynomial factors hidden by $O^*$.
+
+Note III~\cite{iii} also uses repeated sums to count reachable targets. Split the
+weights into two disjoint groups with distinct-sum sets $S_1,S_2$. Fix a finite
+target set $D$ and let $r(t)=|\{(a,b)\in S_1\times S_2:a+b=t\}|$ count the
+sum pairs reaching $t$. Define
 \[
- \max\left\{\log_2(HW),\ e-d(E)+\log_2(1+GW)\right\}
- \le(0.49-\epsilon)n.
+ B=\sum_{t\in D}r(t),\qquad J=\sum_{t\in D}\binom{r(t)}2.
 \]
-The exponent margin absorbs polynomial encoding costs. This condition turns
-the connection into a concrete question about which input families offer
-cheaply discoverable compression and reuse.
+$B$ counts representations and $J$ counts unordered pairs of representations with the
+same target. If $N$ targets in $D$ are reachable, the identity
+$\sum_{t\in D}r(t)^2=B+2J$ and Cauchy--Schwarz give
+$B^2\le N(B+2J)$. Thus, for $B>0$, at least $B^2/(B+2J)$ distinct targets
+are reachable. Representation counts and their collisions together bound
+how much of the target set is covered.
 
-The repository's measurements show why the full cost matters. In Note V,
-two selectors reduced support on 18 of 54 structured lists, while their
-median total times were about nine times those of the simple core solver.
-In Note VII's first frozen study, reusable cores raised exact completions
-from 453 to 469 of 576 fresh targets under the same work allowance; the net
-gain had a whole-list-bootstrap 95\% interval of $[4,30]$. A later matched
-ablation avoided 90 of 182 table builds by testing necessary bounds first.
-These results locate useful savings in both representation and execution.
+The experiments charge for finding and using structure. In Note V, two
+procedures chose cores leaving fewer distinct sums on 18 of 54 structured
+lists; their median total times were about nine times the simple core
+solver's. In Note VII, reusable cores raised completed exact decisions from
+453 to 469 of 576 fresh constructed targets under the same work allowance.
+Resampling whole weight lists gave a 95\% bootstrap interval of $[4,30]$ for
+the net gain. A later comparison with discovery fixed avoided 90 of 182
+table builds by first rejecting shifted targets through numerical bounds.
 
-The connection is significant because it gives the research sequence a
-precise place in the mathematics of subset sum. Distinct support measures
-how many questions remain. Compatibility determines which records can be
-merged. Shared tables spread construction cost across queries. OpenAI's
-manuscripts put compression and filtered representations into worst-case
-algorithms; the repository makes structural savings explicit and measurable.
-The common research question is sharp: \emph{which information lets us resolve
-many choices together, and how cheaply can we obtain and use it?}
+OpenAI's worst-case bounds and the repository's structural algorithms both
+exploit repeated sums and carefully chosen records. Their costs lead to the question:
+\emph{how much subset search can a compact record replace, after paying to
+build and use that record?}
 
 \begingroup\footnotesize
 \begin{thebibliography}{9}
