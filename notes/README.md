@@ -17,6 +17,14 @@ Two unnumbered companions live in the corresponding note folders.
 - **[Why Unresolved Inputs Cluster: A Structural and Statistical Account](06-learned-solvability/Why_Unresolved_Inputs_Cluster.html)** (Note VI, three pages): sufficient structural routes and descriptive neighborhood enrichment. [PDF](06-learned-solvability/Why_Unresolved_Inputs_Cluster.pdf), [source](06-learned-solvability/Why_Unresolved_Inputs_Cluster.tex) and [reproduction guide](06-learned-solvability/README.md#companion-note-why-unresolved-inputs-cluster). Built with `python build_papers.py --paper 6`.
 - **[The Runtime of Geometric Core Subset Sum](07-geometric-cores/Runtime_of_Geometric_Core_Subset_Sum.html)** (Note VII, three-page working draft): table/query costs, polynomial structured regimes and comparisons with general algorithms. [PDF](07-geometric-cores/Runtime_of_Geometric_Core_Subset_Sum.pdf) and [source](07-geometric-cores/Runtime_of_Geometric_Core_Subset_Sum.tex). Built with `python build_papers.py --paper 7`.
 
+## Related exposition
+
+[From Choices to Sums: Connections to OpenAI's Subset-Sum Algorithms](../OpenAI_Subset_Sum_Connections/From_Choices_to_Sums.html)
+is a four-page working draft linking distinct support, compatible records,
+modular checksums and geometric reuse. [PDF](../OpenAI_Subset_Sum_Connections/From_Choices_to_Sums.pdf)
+and [source and rebuild guide](../OpenAI_Subset_Sum_Connections/README.md).
+Build it with `python build_papers.py --paper connections`.
+
 ## Evidence and builds
 
 Each folder owns its source and PDF. Shared methods and frozen raw evidence stay in the experiment packages, rather than being duplicated into the note folders.

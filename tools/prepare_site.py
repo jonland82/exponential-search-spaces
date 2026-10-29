@@ -36,7 +36,7 @@ def prepare(output):
         shutil.copy2(ROOT / name, output / name)
     for name in ("fonts", "tools", "subset-sum", "Subset_Sum_Refinement_Experiment",
                  "Structural_Distance_Subset_Sum", "Learned_Solvability_Subset_Sum",
-                 "Structural_Geometry_Subset_Sum"):
+                 "Structural_Geometry_Subset_Sum", "OpenAI_Subset_Sum_Connections"):
         shutil.copytree(
             ROOT / name, output / name,
             ignore=shutil.ignore_patterns("__pycache__", "*.pyc", "*.aux", "*.log", "*.out"),

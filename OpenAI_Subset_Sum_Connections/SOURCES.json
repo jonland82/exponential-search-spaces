@@ -1,0 +1,65 @@
+{
+  "review_date": "2026-10-28",
+  "repository_commit": "4e880b7698e24d8f5ec60347b1c46d847a78e6cd",
+  "local_sources": [
+    {
+      "path": "notes/01-certified-coverage/Certified_Coverage_of_Exponential_Search_Spaces.tex",
+      "sha256": "7c572f5f59887ab377d469f72e6b7d17ff44175ff456528367e9599243a641e3"
+    },
+    {
+      "path": "notes/03-probability-valued-subset-sum/Probability_Valued_Subset_Sum.tex",
+      "sha256": "08919ddbcb8d860176232c2fe5493365e44be2372d3fa6a7ad55ce812796ac89"
+    },
+    {
+      "path": "notes/05-structural-distance/Structural_Distance_in_Subset_Sum.tex",
+      "sha256": "7190da68ae37a0151c331afe27dfeeb8d83d10111a31cd12ae89d8a184fb8c7d"
+    },
+    {
+      "path": "notes/07-geometric-cores/Geometric_Cores_and_Exceptions_in_Subset_Sum.tex",
+      "sha256": "0ad2e3c31ac7bb4c1bd3e82da4d53b73785f7482ffa9556ae7fe4b56803db87f"
+    },
+    {
+      "path": "notes/07-geometric-cores/Runtime_of_Geometric_Core_Subset_Sum.tex",
+      "sha256": "041ead456337aaa9d26e32a6590462b547d52b2f0826f5506efdb0508850dda6"
+    },
+    {
+      "path": "Structural_Distance_Subset_Sum/structural_subset_sum.py",
+      "sha256": "2198fd70b6f33c764207a89d8f124b9982876fa96fe5e8900eb48f9a627478c2"
+    },
+    {
+      "path": "Structural_Geometry_Subset_Sum/EXCEPTION_FINDINGS.md",
+      "sha256": "bd759e668443294a7d9ef287308dda463c5fccc97fb6b2fe789e4b16c4895f8f"
+    },
+    {
+      "path": "Structural_Geometry_Subset_Sum/BOUNDS_FINDINGS.md",
+      "sha256": "9cf8c631c9ae00218e0643f5e91360be22ac275421492a5ab1c0bde82c304424"
+    }
+  ],
+  "openai_repository": "https://github.com/openai/math",
+  "openai_commit": "7ef5c0cc5ca4b0e072b7a050fca09ab24bc6fa3a",
+  "openai_sources": [
+    {
+      "path": "preprints/A-Low-Space-Algorithm-for-Worst-Case-Subset-Sum-September-26-2026/build/introduction.tex",
+      "url": "https://github.com/openai/math/blob/7ef5c0cc5ca4b0e072b7a050fca09ab24bc6fa3a/preprints/A-Low-Space-Algorithm-for-Worst-Case-Subset-Sum-September-26-2026/build/introduction.tex"
+    },
+    {
+      "path": "preprints/Subset-Sum-in-Time-2-power-0-49n-October-4-2026/build/sections/introduction.tex",
+      "url": "https://github.com/openai/math/blob/7ef5c0cc5ca4b0e072b7a050fca09ab24bc6fa3a/preprints/Subset-Sum-in-Time-2-power-0-49n-October-4-2026/build/sections/introduction.tex"
+    },
+    {
+      "path": "preprints/Subset-Sum-in-Time-2-power-0-49n-October-4-2026/build/sections/checksum.tex",
+      "url": "https://github.com/openai/math/blob/7ef5c0cc5ca4b0e072b7a050fca09ab24bc6fa3a/preprints/Subset-Sum-in-Time-2-power-0-49n-October-4-2026/build/sections/checksum.tex"
+    },
+    {
+      "path": "preprints/Subset-Sum-in-Time-2-power-0-49n-October-4-2026/build/sections/setup.tex",
+      "url": "https://github.com/openai/math/blob/7ef5c0cc5ca4b0e072b7a050fca09ab24bc6fa3a/preprints/Subset-Sum-in-Time-2-power-0-49n-October-4-2026/build/sections/setup.tex"
+    }
+  ],
+  "prior_work": [
+    {
+      "title": "Dense Subset Sum May Be the Hardest",
+      "url": "https://doi.org/10.4230/LIPIcs.STACS.2016.13"
+    }
+  ],
+  "derived_algorithm": "Distinct exceptional sums queried against one shared geometric core table; derived from the Note V and Note VII constructions."
+}

@@ -52,6 +52,8 @@ PAPERS = (
 
 
 def directory(paper):
+    if paper.get("source_dir"):
+        return ROOT / paper["source_dir"]
     return ROOT / "notes" / paper["folder"]
 
 

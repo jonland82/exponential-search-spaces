@@ -22,6 +22,12 @@ Read I, then II. Notes III and IV branch into random-target probability and fixe
 
 ## Short companions and latest results
 
+[**From Choices to Sums: Connections to OpenAI's Subset-Sum Algorithms**](OpenAI_Subset_Sum_Connections/From_Choices_to_Sums.html)
+is a four-page expository working draft on distinct sums, compatible
+representations and reusable geometric tables, including a derived combined
+runtime bound. [PDF](OpenAI_Subset_Sum_Connections/From_Choices_to_Sums.pdf),
+[source and rebuild](OpenAI_Subset_Sum_Connections/README.md).
+
 | Companion | Focus | Files |
 |---|---|---|
 | **Why Unresolved Inputs Cluster: A Structural and Statistical Account** (Note VI; three pages) | Several affordable solving routes and descriptive neighborhood enrichment; unresolved does not mean intrinsically hard. | [HTML](notes/06-learned-solvability/Why_Unresolved_Inputs_Cluster.html) / [PDF](notes/06-learned-solvability/Why_Unresolved_Inputs_Cluster.pdf) / [LaTeX](notes/06-learned-solvability/Why_Unresolved_Inputs_Cluster.tex) / [Evidence and rebuild](notes/06-learned-solvability/README.md#companion-note-why-unresolved-inputs-cluster) |
@@ -64,13 +70,14 @@ python build_papers.py
 python build_papers.py --paper 5
 python build_papers.py --paper 6
 python build_papers.py --paper 7
+python build_papers.py --paper connections
 python tools/note_vi_cluster_artifacts.py --pdf
 python build_papers.py --paper Probability_Valued_Subset_Sum
 python tools/check_links.py
 python -m unittest discover -s Structural_Distance_Subset_Sum -p "test_*.py" -v
 ```
 
-The builder accepts a note number or filename stem. By default it builds the seven numbered PDFs and both companions, and updates generated HTML for Notes II-VII and the companions; Note I's maintained HTML is preserved. Building Note VI includes its clustering companion, and building Note VII includes its runtime companion. Notes V and VII and the runtime companion retain visible working-draft labels. Use `--html-only` to refresh generated HTML without rebuilding PDFs, or `--pdf-only` for PDFs alone. Builds also synchronize the historical root PDF/TeX downloads from canonical sources. Generated Note III, V, VI and VII evidence artifacts come from preserved measurements with integrity checks. Note VI includes the original frozen study and the separate branch-pruning follow-up. No experiments or model fitting are rerun by these paper builds.
+The builder accepts a note number or filename stem. By default it builds the seven numbered PDFs, both companions and the OpenAI connections note, and updates their generated HTML; Note I's maintained HTML is preserved. Use `--paper connections` to build the four-page connections note alone. Building Note VI includes its clustering companion, and building Note VII includes its runtime companion. Notes V and VII, the runtime companion and the connections note retain visible working-draft labels. Use `--html-only` to refresh generated HTML without rebuilding PDFs, or `--pdf-only` for PDFs alone. Builds also synchronize the historical root PDF/TeX downloads from canonical sources. Generated Note III, V, VI and VII evidence artifacts come from preserved measurements with integrity checks. Note VI includes the original frozen study and the separate branch-pruning follow-up. No experiments or model fitting are rerun by these paper builds.
 
 See [Note V's findings](Structural_Distance_Subset_Sum/FINDINGS.md), [its full study report](Structural_Distance_Subset_Sum/results/prospective_20261024/REPORT.md), and [Note III's methods ledger](subset-sum/PROBABILITY_REFINEMENT.md) for the guarantees, results, and their limits.
 

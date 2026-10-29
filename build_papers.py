@@ -31,6 +31,16 @@ CLUSTER_COMPANION = dict(
     body_start="<p>The subset-sum plot", number_equations=True,
     create_legacy_redirect=False,
 )
+CONNECTION_NOTE = dict(
+    number="connections", folder="openai-connections",
+    source_dir="OpenAI_Subset_Sum_Connections", stem="From_Choices_to_Sums",
+    title="From Choices to Sums: Connections to OpenAI's Subset-Sum Algorithms",
+    description="A four-page note connecting distinct sums, compatible representations and geometric core reuse to OpenAI's subset-sum manuscripts.",
+    nav_label="OpenAI connections", data="OpenAI_Subset_Sum_Connections/README.md",
+    published=True, maintained_html=False, working_draft=True,
+    series_label="Expository research note &middot; Working draft",
+    create_legacy_redirect=False, max_pages=4,
+)
 
 
 def relative(target, base):
@@ -214,6 +224,7 @@ window.MathJax = {{
 
 def main():
     choices = [paper["stem"] for paper in PAPERS] + [str(i) for i in range(1, len(PAPERS) + 1)]
+    choices += [CONNECTION_NOTE["stem"], "connections"]
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--paper", choices=choices, help="Note number or filename stem; default: all catalog entries.")
     parser.add_argument("--pdf-only", action="store_true", help="Build PDFs without updating published HTML.")
@@ -231,6 +242,8 @@ def main():
             build_one(CLUSTER_COMPANION, args.pdf_only, args.html_only)
         if paper["number"] == "VII":
             build_one(RUNTIME_COMPANION, args.pdf_only, args.html_only)
+    if args.paper in (None, "connections", CONNECTION_NOTE["stem"]):
+        build_one(CONNECTION_NOTE, args.pdf_only, args.html_only)
     from tools.prepare_site import sync_downloads
     sync_downloads(ROOT, selected)
 

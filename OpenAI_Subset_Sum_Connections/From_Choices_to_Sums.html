@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="A four-page note connecting distinct sums, compatible representations and geometric core reuse to OpenAI&#x27;s subset-sum manuscripts.">
+<title>From Choices to Sums: Connections to OpenAI&#x27;s Subset-Sum Algorithms | Jonathan R. Landers</title>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']], tags: 'none' },
+  svg: { fontCache: 'global', scale: 0.98 },
+  options: { enableMenu: false }
+};
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<link rel="stylesheet" href="../paper.css">
+</head>
+<body>
+<main>
+<nav class="top-links" aria-label="Paper links">
+  <a href="../index.html">&larr; Series home</a>
+  <a href="https://github.com/jonland82/exponential-search-spaces">GitHub repository</a>
+  <a href="From_Choices_to_Sums.pdf">Download PDF</a>
+  <a href="From_Choices_to_Sums.tex">LaTeX source</a>
+</nav>
+<header>
+  <span class="series-label">Expository research note &middot; Working draft</span>
+  <h1>From Choices to Sums: Connections to OpenAI&#x27;s Subset-Sum Algorithms</h1>
+  <div class="byline">Jonathan R. Landers<br>October 2026</div>
+</header>
+<div class="abstract">
+<p>A list of <span class="math inline">\(n\)</span> numbers has <span class="math inline">\(2^n\)</span> subsets. Many subsets can ask the same question, and one mathematical object can answer many questions at once. Distinct sums and reusable representations connect this research sequence to OpenAI’s recent subset-sum manuscripts. They reveal how the structure of a search determines the work needed to resolve it.</p>
+</div>
+<h2 id="an-exponential-search-with-only-two-questions">An exponential search with only two questions</h2>
+<p>Given positive integer weights <span class="math inline">\(w_1,\ldots,w_n\)</span> and a target <span class="math inline">\(t\)</span>, subset sum asks whether some selection adds to <span class="math inline">\(t\)</span>. Each listed item can be used once. Consider the weights <span class="math inline">\([2,5,6,11,23]\)</span> and target <span class="math inline">\(17\)</span>. Set aside <span class="math inline">\(6\)</span>. The remaining weights <span class="math inline">\([2,5,11,23]\)</span> are <em>superincreasing</em>: each exceeds the sum of all its predecessors. Descending greedy choice decides membership in this core. Leaving <span class="math inline">\(6\)</span> out fails; taking it leaves <span class="math inline">\(11\)</span>, which the core reaches. Two core queries resolve the original 32 choices.</p>
+<p>Note V <a href="#ref-v">[1]</a> makes this construction systematic. Sorting and a greedy scan find a largest superincreasing core <span class="math inline">\(C\)</span> in <span class="math inline">\(O(n\log(n+1))\)</span> arithmetic and comparison operations. Let <span class="math inline">\(E\)</span> contain its <span class="math inline">\(e\)</span> exceptional items. Each subset of <span class="math inline">\(E\)</span> supplies a shifted target for <span class="math inline">\(C\)</span>. Equal exceptional sums supply equal queries, so the relevant quantity is <span class="math display">\[\mathcal A(E)=\left\{\sum_{i\in A}w_i:A\subseteq E\right\},
+ \qquad K=|\mathcal A(E)|.\]</span> This set of reachable sums is the <em>support</em>. Build it by repeatedly merging a sorted list with a shifted copy, keeping one indexed witness per sum. Every intermediate support is contained in the final support: later items can always be left out. Construction takes <span class="math inline">\(O(eK)\)</span> operations; the <span class="math inline">\(K\)</span> greedy queries take <span class="math inline">\(O(nK)\)</span>. For total binary input length <span class="math inline">\(L\)</span>, the resulting bit-time bound is <span class="math inline">\(\operatorname{poly}(L)K\)</span>.</p>
+<h2 id="a-shared-measure-of-compression">A shared measure of compression</h2>
+<p>OpenAI’s low-space manuscript <a href="#ref-space">[2]</a> measures a block <span class="math inline">\(V\)</span> through its <em>deficiency</em>, <span class="math display">\[d(V)=|V|-\log_2|\mathcal A(V)|.\]</span> Applying this definition to Note V rewrites its existing runtime bound as <span class="math display">\[\boxed{T_V\le\operatorname{poly}(L)\,2^{e-d(E)}.}\]</span> The formula identifies two sources of savings: fewer exceptional items and more merging among their sums. Twelve equal positive exceptions have only <span class="math inline">\(13\)</span> sums, giving <span class="math inline">\(d(E)=12-\log_2 13\)</span>. Their 4,096 selections require just 13 core queries. The exponent counts the distinct questions still to answer.</p>
+<h2 id="few-sums-compress-many-sums-support-filtering">Few sums compress; many sums support filtering</h2>
+<p>The low-space manuscript uses deficiency to analyze two complementary randomized trials <a href="#ref-space">[2]</a>. One compresses repeated sums in disjoint blocks and combines the resulting lists through sorted streams. The other uses blocks with many distinct sums to give a solution many decompositions, then filters them by requiring chosen remainders modulo integers. Each round runs both trials; their analysis uses the mean deficiency of a random block.</p>
+<p>This complementary strategy belongs to a line of work developed by Austrin, Kaski, Koivisto and Nederlof <a href="#ref-akkn">[3]</a>. It makes distinct-sum structure useful on both sides: concentrated sums favor compression, while abundant sums can sustain many representations through filtering. OpenAI’s September manuscript states <span class="math inline">\(\operatorname{poly}(n)2^{n/2}\)</span> time and ordinary <span class="math inline">\(O(2^{n/5})\)</span> writable-word space for polynomial-bit inputs. Its guarantees include discovery, generation and storage costs, with one-sided error and success probability at least <span class="math inline">\(2/3\)</span> on each solvable input <a href="#ref-space">[2]</a>.</p>
+<p>The representations retain the information needed to combine them. A sum of <span class="math inline">\(5\)</span> could use the item <span class="math inline">\(5\)</span> or the items <span class="math inline">\(2\)</span> and <span class="math inline">\(3\)</span>. To combine that record with the item <span class="math inline">\(2\)</span>, we must know which indices it uses: only the first choice gives a valid subset of sum <span class="math inline">\(7\)</span>. OpenAI’s overlapping constructions therefore retain membership masks alongside weights. Note V combines disjoint index sets, so one witness per exceptional sum supplies all the information its core queries need. This gives a useful design rule: merge records when they have the same valid continuations.</p>
+<h2 id="a-checksum-that-recovers-the-exact-target">A checksum that recovers the exact target</h2>
+<p>The October manuscript <a href="#ref-time">[4]</a> states a randomized worst-case bound of <span class="math inline">\(O(2^{0.49n})\)</span> word operations for each fixed polynomial bound on input bit length, with <span class="math inline">\(O(n+b)\)</span>-bit words when the maximum input bit length is <span class="math inline">\(b\)</span>. It gives correctness probability at least <span class="math inline">\(2/3\)</span> on each fixed input and caps time on every execution. The exponent improves Horowitz and Sahni’s 1974 meet-in-the-middle scale <span class="math inline">\(2^{n/2}\)</span>: their exponential factors have ratio <span class="math inline">\(2^{0.01n}\)</span>.</p>
+<p>A preliminary test handles small partial-sum supports. The remaining method isolates a solution using random tie-breaking weights. For transformed weights <span class="math inline">\(c_i\)</span>, target <span class="math inline">\(t&#39;\)</span> and prime <span class="math inline">\(P\)</span>, let <span class="math inline">\(c(I)=\sum_{i\in I}c_i\)</span> and assign each subset a random complex phase <span class="math inline">\(\chi(I)\)</span> of absolute value one. Its organizing identity is <span class="math display">\[\underbrace{\sum_{c(I)=t&#39;}\chi(I)}_{\text{exact target}}
+ =\underbrace{\sum_{c(I)\equiv t&#39;\!\!\pmod P}\chi(I)}_{\text{modular checksum}}
+ -\underbrace{\sum_{\substack{c(I)\equiv t&#39;\!\!\pmod P\\c(I)\ne t&#39;}}\chi(I)}_{\text{aliases}}.\]</span> A Fourier formula expresses the checksum as an average of products built from individual weights. Filters organize which terms to evaluate or sample; compatible representations recover the aliases. After subtraction, an empty target has value zero and an isolated solution has absolute value one. Absolute error below <span class="math inline">\(1/4\)</span> permits detection at threshold <span class="math inline">\(1/2\)</span>. The method turns a large collection of subsets into an aggregate whose surviving value answers the exact question <a href="#ref-time">[4]</a>.</p>
+<h2 id="a-geometric-representation-that-answers-many-targets">A geometric representation that answers many targets</h2>
+<p>Note VII <a href="#ref-vii">[5]</a> approaches aggregation through a discovered base <span class="math inline">\(M\ge2\)</span>. After exact reductions, it writes the positive weights as <span class="math display">\[u_i=Mp_i+r_i,\qquad p_i\ge0,\]</span> selects a core <span class="math inline">\(C\)</span> with a narrow residual range, and sets aside exceptions <span class="math inline">\(E\)</span>. Each core subset becomes a point <span class="math display">\[(q,s)=\left(\sum_{i\in C}p_ix_i,\ \sum_{i\in C}r_ix_i\right).\]</span> An exact dynamic program stores reachable points. For each exceptional assignment <span class="math inline">\(A\)</span>, the target line is <span class="math display">\[Mq+s=z_A,\qquad z_A=T-\sum_{i\in A}u_i.\]</span> The geometry stays fixed as the line moves. With core <span class="math inline">\([101,203]\)</span>, exception <span class="math inline">\(149\)</span>, base <span class="math inline">\(M=100\)</span> and target <span class="math inline">\(250\)</span>, taking the exception shifts the line to <span class="math inline">\(100q+s=101\)</span>. The reachable point <span class="math inline">\((1,1)\)</span> supplies the core item <span class="math inline">\(101\)</span>. The original solution is <span class="math inline">\(149+101=250\)</span>.</p>
+<p>The shared table lies in a rectangle. Write <span class="math display">\[\begin{gathered}
+ R_-=\sum_{i\in C}\min(0,r_i),\quad
+ R_+=\sum_{i\in C}\max(0,r_i),\quad W=R_+-R_-+1,\\
+ Q=\min\left(\sum_{i\in C}p_i,
+       \left\lfloor\frac{T-R_-}{M}\right\rfloor\right),\qquad H=Q+1.
+ \end{gathered}\]</span> For <span class="math inline">\(Q\ge0\)</span>, these bounds cover every shifted solution: positive exceptional weights give <span class="math inline">\(z_A\le T\)</span>, and <span class="math inline">\(s\ge R_-\)</span> bounds the required quotient. The nonnegative <span class="math inline">\(p_i\)</span> make the quotient cap safe during construction. A query tests at most <span class="math inline">\(G\)</span> points where its line crosses the rectangle, with <span class="math inline">\(1\le G\le H\)</span>.</p>
+<p>Let <span class="math inline">\(F\)</span> pay reductions and discovery. The runtime companion <a href="#ref-runtime">[6]</a> gives the conservative bit-time envelope <span class="math display">\[T_{\rm geom}\le F+O^*(HW+2^eGW),\]</span> where <span class="math inline">\(O^*\)</span> suppresses factors polynomial in <span class="math inline">\(L\)</span>. The terms expose the benefit: one table construction serves all exceptional assignments. A table of <span class="math inline">\(HW\)</span> positions can summarize exponentially many core subsets. Polynomial discovery, polynomial <span class="math inline">\(HW\)</span> and <span class="math inline">\(e=O(\log L)\)</span> give a polynomial regime.</p>
+<p>Note III <a href="#ref-iii">[7]</a> supplies another view of aggregation. If <span class="math inline">\(r(t)\)</span> counts representations of a target by two half-sum sets, put <span class="math display">\[B=\sum_{t\in D}r(t),\quad J=\sum_{t\in D}\binom{r(t)}2,
+ \qquad \sum_{t\in D}r(t)^2=B+2J.\]</span> For <span class="math inline">\(B&gt;0\)</span>, Cauchy–Schwarz gives at least <span class="math inline">\(B^2/(B+2J)\)</span> reachable targets in <span class="math inline">\(D\)</span>. Multiplicities become a certificate about distinct outcomes. Across these constructions, counts, coordinates, masks and phases each preserve the information required by the question being asked.</p>
+<h2 id="combining-the-two-structural-savings">Combining the two structural savings</h2>
+<p>The distinct-sum and shared-table constructions fit together directly. First discover the geometric core. Then construct the <span class="math inline">\(K=|\mathcal A(E)|\)</span> distinct exceptional sums, retaining a witness for each. Query the common table once per surviving shifted target. Equal sums have equal residual targets, and their witnesses lie entirely outside the core.</p>
+<div class="keyeq">
+<p><strong>Derived connection.</strong> Combining Note V’s support construction with Note VII’s shared table gives an exact algorithm with the bit-time bound <span class="math display">\[\boxed{T_{\rm combined}\le
+ F+O^*\!\left(HW+2^{e-d(E)}(1+GW)\right).}\]</span> The support construction costs <span class="math inline">\(O^*(K)\)</span>; bounds and table queries cost <span class="math inline">\(O^*(K(1+GW))\)</span>. One core table costs <span class="math inline">\(O^*(HW)\)</span>. Prefix history and exceptional witnesses occupy <span class="math inline">\(O^*(HW+K)\)</span> bits.</p>
+</div>
+<p>This derived algorithm combines three measurable opportunities: a small core table, few distinct exceptional sums and short line queries. For polynomial-bit inputs, its bound lies below the <span class="math inline">\(2^{0.49n}\)</span> scale when, for a fixed <span class="math inline">\(\epsilon&gt;0\)</span>, discovery takes <span class="math inline">\(O^*(2^{(0.49-\epsilon)n})\)</span> and <span class="math display">\[\max\left\{\log_2(HW),\ e-d(E)+\log_2(1+GW)\right\}
+ \le(0.49-\epsilon)n.\]</span> The exponent margin absorbs polynomial encoding costs. This condition turns the connection into a concrete question about which input families offer cheaply discoverable compression and reuse.</p>
+<p>The repository’s measurements show why the full cost matters. In Note V, two selectors reduced support on 18 of 54 structured lists, while their median total times were about nine times those of the simple core solver. In Note VII’s first frozen study, reusable cores raised exact completions from 453 to 469 of 576 fresh targets under the same work allowance; the net gain had a whole-list-bootstrap 95% interval of <span class="math inline">\([4,30]\)</span>. A later matched ablation avoided 90 of 182 table builds by testing necessary bounds first. These results locate useful savings in both representation and execution.</p>
+<p>The connection is significant because it gives the research sequence a precise place in the mathematics of subset sum. Distinct support measures how many questions remain. Compatibility determines which records can be merged. Shared tables spread construction cost across queries. OpenAI’s manuscripts put compression and filtered representations into worst-case algorithms; the repository makes structural savings explicit and measurable. The common research question is sharp: <em>which information lets us resolve many choices together, and how cheaply can we obtain and use it?</em></p>
+<h2 id="references">References</h2>
+<ol>
+<li><div id="ref-v">
+
+</div>
+<p>J. R. Landers. <a href="../notes/05-structural-distance/Structural_Distance_in_Subset_Sum.pdf"><em>How Far from Easy? Structural Distance in Subset Sum</em></a>. Note V, working draft, 2026.</p></li>
+<li><div id="ref-space">
+
+</div>
+<p>OpenAI. <a href="https://github.com/openai/math/blob/7ef5c0cc5ca4b0e072b7a050fca09ab24bc6fa3a/preprints/A-Low-Space-Algorithm-for-Worst-Case-Subset-Sum-September-26-2026/paper.pdf"><em>A Low-Space Algorithm for Worst-Case Subset Sum</em></a>. Preprint, September 26, 2026.</p></li>
+<li><div id="ref-akkn">
+
+</div>
+<p>P. Austrin, P. Kaski, M. Koivisto and J. Nederlof. <a href="https://doi.org/10.4230/LIPIcs.STACS.2016.13">Dense Subset Sum May Be the Hardest</a>. <em>STACS</em>, 13:1–13:14, 2016.</p></li>
+<li><div id="ref-time">
+
+</div>
+<p>OpenAI. <a href="https://github.com/openai/math/blob/7ef5c0cc5ca4b0e072b7a050fca09ab24bc6fa3a/preprints/Subset-Sum-in-Time-2-power-0-49n-October-4-2026/subset-sum.pdf"><em>Subset Sum in Time <span class="math inline">\(O(2^{0.49n})\)</span></em></a>. Preprint, October 4, 2026.</p></li>
+<li><div id="ref-vii">
+
+</div>
+<p>J. R. Landers. <a href="../notes/07-geometric-cores/Geometric_Cores_and_Exceptions_in_Subset_Sum.pdf"><em>Geometric Cores and Exceptions in Subset Sum</em></a>. Note VII, working draft, 2026.</p></li>
+<li><div id="ref-runtime">
+
+</div>
+<p>J. R. Landers. <a href="../notes/07-geometric-cores/Runtime_of_Geometric_Core_Subset_Sum.pdf"><em>The Runtime of Geometric Core Subset Sum</em></a>. Runtime companion to Note VII, working draft, 2026.</p></li>
+<li><div id="ref-iii">
+
+</div>
+<p>J. R. Landers. <a href="../notes/03-probability-valued-subset-sum/Probability_Valued_Subset_Sum.pdf"><em>Probability-Valued Subset Sum: Certified Bounds and Learned Guidance</em></a>. Note III, 2026.</p></li>
+</ol>
+
+<footer>
+  <p>Part of the <a href="../index.html">Certified Coverage research sequence</a>.</p>
+  <div class="link-row">
+    <a href="../notes/01-certified-coverage/Certified_Coverage_of_Exponential_Search_Spaces.html">Note I: Framework</a>
+    <a href="../notes/02-subset-sum-stress-test/Subset_Sum_as_a_Stress_Test.html">Note II: Exact-search stress test</a>
+    <a href="../notes/03-probability-valued-subset-sum/Probability_Valued_Subset_Sum.html">Note III: Random-target probability</a>
+    <a href="../notes/04-certified-approximation/Certified_Approximation_of_Subset_Sum.html">Note IV: Pairing in approximation</a>
+    <a href="../notes/05-structural-distance/Structural_Distance_in_Subset_Sum.html">Note V: Structural distance (working draft)</a>
+    <a href="../notes/06-learned-solvability/Predicting_Subset_Sum_Completion.html">Note VI: Learned completion</a>
+    <a href="../notes/07-geometric-cores/Geometric_Cores_and_Exceptions_in_Subset_Sum.html">Note VII: Geometric core reuse (working draft)</a>
+    <a href="README.md">Methods and data</a>
+  </div>
+</footer>
+</main>
+</body>
+</html>

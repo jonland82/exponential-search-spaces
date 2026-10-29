@@ -63,6 +63,10 @@ companions: clustering beside Note VI (HTML/PDF/source), and runtime beside Note
 not increase the numbered-note count. Retain visible draft labels and distinguish
 fresh comparisons, retrospective diagnostics and conditional runtime claims.
 
+The separate four-page connections note lives in `OpenAI_Subset_Sum_Connections/`
+and builds with `python build_papers.py --paper connections`. Its HTML and PDF
+share one LaTeX source, and its source ledger records fixed upstream revisions.
+
 `python build_papers.py --paper 6` builds Note VI and its clustering companion;
 `python build_papers.py --paper 7` builds Note VII and its runtime companion.
 Both companions have HTML/PDF/source. Builds synchronize root PDF/TeX compatibility
