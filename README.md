@@ -2,9 +2,9 @@
 
 Jonathan R. Landers | September-October 2026
 
-[Live research site](https://jonland82.github.io/exponential-search-spaces/) | [Latest papers](https://jonland82.github.io/exponential-search-spaces/#latest) | [All seven notes and two companions](notes/README.md)
+[Live research site](https://jonland82.github.io/exponential-search-spaces/) | [Latest papers](https://jonland82.github.io/exponential-search-spaces/#latest) | [Seven notes and two companions](notes/README.md) | [From Choices to Sums](OpenAI_Subset_Sum_Connections/From_Choices_to_Sums.html)
 
-The sequence follows one question: when can useful structure account for enough of an exponential search that only manageable work remains? This checkout contains HTML/PDF versions of all seven notes and both short companions. Notes V, VII and the runtime companion are labeled as working drafts. **`master` is the single branch for the research, GitHub's default view and the live Pages site.**
+The sequence follows one question: when can useful structure account for enough of an exponential search that only manageable work remains? This checkout contains HTML/PDF versions of all seven notes, both short companions, and the separate connections paper *From Choices to Sums*. Notes V, VII and the runtime companion are labeled as working drafts.
 
 ## Notes
 
@@ -20,18 +20,20 @@ The sequence follows one question: when can useful structure account for enough 
 
 Read I, then II. Notes III and IV branch into random-target probability and fixed-target approximation. Note V returns to exact search: it proves a concrete tractable regime and measures the cost of trying to improve the discovered structure.
 
-## Short companions and latest results
-
-[**From Choices to Sums: Connections to OpenAI's Subset-Sum Algorithms**](OpenAI_Subset_Sum_Connections/From_Choices_to_Sums.html)
-is a four-page expository note on distinct sums, compatible
-representations and reusable geometric tables, including a derived combined
-runtime bound. [PDF](OpenAI_Subset_Sum_Connections/From_Choices_to_Sums.pdf),
-[source and rebuild](OpenAI_Subset_Sum_Connections/README.md).
+## Short companions
 
 | Companion | Focus | Files |
 |---|---|---|
 | **Why Unresolved Inputs Cluster: A Structural and Statistical Account** (Note VI; three pages) | Several affordable solving routes and descriptive neighborhood enrichment; unresolved does not mean intrinsically hard. | [HTML](notes/06-learned-solvability/Why_Unresolved_Inputs_Cluster.html) / [PDF](notes/06-learned-solvability/Why_Unresolved_Inputs_Cluster.pdf) / [LaTeX](notes/06-learned-solvability/Why_Unresolved_Inputs_Cluster.tex) / [Evidence and rebuild](notes/06-learned-solvability/README.md#companion-note-why-unresolved-inputs-cluster) |
 | **The Runtime of Geometric Core Subset Sum** (Note VII; three-page working draft) | One construction plus exceptional queries, memory costs, sufficient tractable regimes and general-algorithm comparisons. | [HTML](notes/07-geometric-cores/Runtime_of_Geometric_Core_Subset_Sum.html) / [PDF](notes/07-geometric-cores/Runtime_of_Geometric_Core_Subset_Sum.pdf) / [LaTeX](notes/07-geometric-cores/Runtime_of_Geometric_Core_Subset_Sum.tex) |
+
+## Related exposition
+
+| Paper | Focus | Files |
+|---|---|---|
+| **From Choices to Sums: Connections to OpenAI's Subset-Sum Algorithms** (four pages) | Distinct exceptional sums, compatible representations, modular checksums and reusable geometric tables; derives a combined runtime bound from existing constructions. | [HTML](OpenAI_Subset_Sum_Connections/From_Choices_to_Sums.html) / [PDF](OpenAI_Subset_Sum_Connections/From_Choices_to_Sums.pdf) / [LaTeX](OpenAI_Subset_Sum_Connections/From_Choices_to_Sums.tex) / [Sources and rebuild](OpenAI_Subset_Sum_Connections/README.md) |
+
+## Latest results
 
 [Note VII](notes/07-geometric-cores/README.md) supplies an exact geometric solving route: reuse one core table across exceptional assignments. Its first fresh study improves work-capped completions from 453 to 469 of 576 targets over matched root geometry. A second fresh study finds 954 versus root's 916 of 1,152 targets. The final bounds-first refinement mainly saves construction: 90 avoided tables and 1.74% lower capped work; its primary incremental completion comparison is only 953 versus 954, with interval [0,3]. Neither study establishes a new general worst-case bound. The companions explain existing evidence and run no new experiments.
 
@@ -45,7 +47,8 @@ The transferred model has not demonstrated an advantage over the rule.
 
 ## Repository layout
 
-- `notes/01-...` through `notes/07-...` contain each note's source, PDF, and local guide. The two companions live alongside Notes VI and VII. The home index links all seven notes and both supplements.
+- `notes/01-...` through `notes/07-...` contain each note's source, PDF, and local guide. The two companions live alongside Notes VI and VII. The home index links all seven notes, both companions and the connections paper.
+- `OpenAI_Subset_Sum_Connections/` contains *From Choices to Sums*, its HTML/PDF/LaTeX files, source ledger and rebuild guide.
 - `subset-sum/` contains the original experiments and publication artifacts for Notes II-IV.
 - `Subset_Sum_Refinement_Experiment/` preserves Note III's statistical and deterministic follow-ups, including frozen evidence and reruns.
 - `Structural_Distance_Subset_Sum/` contains Note V's proofs, exact solvers, tests, literature audit, frozen study, and raw measurements.
@@ -81,17 +84,15 @@ The builder accepts a note number or filename stem. By default it builds the sev
 
 See [Note V's findings](Structural_Distance_Subset_Sum/FINDINGS.md), [its full study report](Structural_Distance_Subset_Sum/results/prospective_20261024/REPORT.md), and [Note III's methods ledger](subset-sum/PROBABILITY_REFINEMENT.md) for the guarantees, results, and their limits.
 
-## Website compatibility
-
-GitHub's default branch and GitHub Pages both use **`master`**. Pages serves its repository root, so a push to `master` publishes the committed site after GitHub's build completes. There is no separate publication branch. The former `main` release commits are retained in `master`'s merged history; all current research and site files live together.
+## Site review
 
 To review a copy of the committed site before pushing, choose a new output directory:
 
 ```powershell
-python tools/prepare_site.py --output .build/site-review-20261028
-python tools/check_links.py --site .build/site-review-20261028
+python tools/prepare_site.py --output .build/site-review-20261029
+python tools/check_links.py --site .build/site-review-20261029
 ```
 
-The review copy contains all seven canonical note folders, both companions, supporting evidence packages, Markdown guides, figures and TeX inputs. Historical root HTML, PDF and LaTeX URLs remain available; companions use canonical URLs inside their note folders. Working-draft labels are preserved. This optional staging step checks the site; publishing uses a normal push to `master`.
+The review copy contains all seven canonical note folders, both companions, the connections paper, supporting evidence packages, Markdown guides, figures and TeX inputs. Historical root HTML, PDF and LaTeX URLs remain available; companions use canonical URLs inside their note folders. Working-draft labels are preserved.
 
 These notes establish model criteria and results on specified synthetic families. They do not claim a new general worst-case subset-sum bound.

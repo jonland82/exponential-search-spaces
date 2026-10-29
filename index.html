@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Seven research notes and two companions by Jonathan R. Landers: certified coverage, subset-sum experiments, learned completion, exact geometric core reuse, unresolved-input clustering, and runtime analysis.">
+<meta name="description" content="Seven research notes, two companions, and From Choices to Sums by Jonathan R. Landers: certified coverage, subset-sum experiments, learned completion, geometric reuse, and connections to OpenAI's subset-sum algorithms.">
 <title>Certified Coverage: A Research Sequence</title>
 <script>
 window.MathJax = {
@@ -22,10 +22,11 @@ window.MathJax = {
   <a href="README.md">Research and experiment guide</a>
   <a href="#latest">Latest papers</a>
   <a href="#companions">Companion notes</a>
+  <a href="#connections">Related exposition</a>
 </nav>
 
 <header>
-  <span class="series-label">Seven research notes and two companions</span>
+  <span class="series-label">Seven research notes, two companions, and a connections paper</span>
   <h1>Certified Coverage of Exponential Search Spaces</h1>
   <div class="byline">Jonathan R. Landers · September–October 2026</div>
   <p class="deck">From certified coverage to structural distance, learned search guidance and exact core reuse: measuring what exact structure saves and what discovering it costs.</p>
@@ -51,7 +52,7 @@ window.MathJax = {
   <p><strong>Reading order:</strong> <a href="notes/01-certified-coverage/Certified_Coverage_of_Exponential_Search_Spaces.html">I: Framework</a> → <a href="notes/02-subset-sum-stress-test/Subset_Sum_as_a_Stress_Test.html">II: Exact-search test</a> → <a href="notes/03-probability-valued-subset-sum/Probability_Valued_Subset_Sum.html">III: Random-target probability</a> → <a href="notes/04-certified-approximation/Certified_Approximation_of_Subset_Sum.html">IV: Pairing in approximation</a>. Notes III and IV branch from II; either can be read independently after the framework and exact-search test.</p>
 
   <p>Continue with <a href="notes/05-structural-distance/Structural_Distance_in_Subset_Sum.html">V: Structural distance (working draft)</a> and <a href="notes/06-learned-solvability/Predicting_Subset_Sum_Completion.html">VI: Learned completion and certified pruning</a>. These return to exact solving: discover easy cores, predict budgeted completion, then test whether structural checks improve search within Note I's framework. <a href="notes/07-geometric-cores/Geometric_Cores_and_Exceptions_in_Subset_Sum.html">VII: Geometric core reuse (working draft)</a> develops an exact route that improves paid completion on fresh constructed inputs.</p>
-  <p>Two <a href="#companions">short companions</a> explain why unresolved inputs cluster and when the geometric runtime bound improves on general search. Notes V, VII and the runtime companion retain their working-draft labels.</p>
+  <p>Two <a href="#companions">short companions</a> explain why unresolved inputs cluster and when the geometric runtime bound improves on general search. <a href="#connections">From Choices to Sums</a> connects the series to OpenAI's subset-sum algorithms. Notes V, VII and the runtime companion retain their working-draft labels.</p>
 
   <article class="series-card">
     <span class="series-label">Note I · The framework</span>
@@ -195,6 +196,21 @@ window.MathJax = {
       <a href="notes/07-geometric-cores/Runtime_of_Geometric_Core_Subset_Sum.pdf">PDF</a>
       <a href="notes/07-geometric-cores/Runtime_of_Geometric_Core_Subset_Sum.tex">LaTeX</a>
       <a href="notes/07-geometric-cores/README.md">Methods and rebuild guide</a>
+    </div>
+  </article>
+</section>
+
+<section aria-labelledby="connections">
+  <h2 id="connections">Related exposition</h2>
+  <article class="series-card supplemental-card">
+    <span class="series-label">Connections paper &middot; Four pages &middot; October 28, 2026</span>
+    <h3><a href="OpenAI_Subset_Sum_Connections/From_Choices_to_Sums.html">From Choices to Sums: Connections to OpenAI's Subset-Sum Algorithms</a></h3>
+    <p>Explains how distinct exceptional sums compress repeated choices, how compatible records and modular checksums support filtering, and how one geometric core table can answer many targets. It derives a combined runtime bound from existing constructions and discusses saved results from Notes V and VII.</p>
+    <div class="link-row">
+      <a href="OpenAI_Subset_Sum_Connections/From_Choices_to_Sums.html">Read HTML</a>
+      <a href="OpenAI_Subset_Sum_Connections/From_Choices_to_Sums.pdf">PDF</a>
+      <a href="OpenAI_Subset_Sum_Connections/From_Choices_to_Sums.tex">LaTeX</a>
+      <a href="OpenAI_Subset_Sum_Connections/README.md">Sources and rebuild guide</a>
     </div>
   </article>
 </section>
