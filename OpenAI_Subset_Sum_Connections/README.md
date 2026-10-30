@@ -30,6 +30,28 @@ existing support and table constructions. The empirical paragraphs report
 the saved Note V and VII studies. The original
 [connections handoff](SUBSET_SUM_OPENAI_CONNECTIONS.md) supplies a longer reading map.
 
+## Four-page runtime note
+
+[Why Subset-Sum Runtimes Form Several Bands (PDF)](Runtime_Distribution_from_Structural_Routes.pdf)
+has [editable LaTeX source](Runtime_Distribution_from_Structural_Routes.tex).
+It connects the saved 576-input runtime histogram to the reference portfolio's
+exit routes, Notes I/V--VII's structural cost bounds, and the two pinned OpenAI
+subset-sum manuscripts. It derives a route-mixture identity, a discrete
+distribution from distinct-sum counts under a cost model, and the extra
+assumption needed for a lognormal mixture. The route counts tabulate saved runs;
+the [embedded vector histogram](Runtime_Distribution_Histogram.pdf) locates
+exact classes, saved ML flags, and separate historical hard NO cases. The note
+also includes the saved [completion-time histogram](../Learned_Solvability_Subset_Sum/visualizations/runtime_histogram_20261030/subset_sum_completion_time_histogram.pdf)
+and a [no-fit smooth route-mixture sketch](../Learned_Solvability_Subset_Sum/visualizations/runtime_histogram_20261030/subset_sum_analytical_completion_sketch.pdf).
+It explains the persistent narrow spikes and gaps as a question for new-list
+tests, while distinguishing completed times from unresolved stopping times.
+The note introduces no new solver measurements or model fits. From the
+repository root, rebuild the figures with
+`python tools/plot_runtime_note_figure.py`,
+`python tools/plot_subset_sum_completion_times.py`, and
+`python tools/plot_analytical_completion_sketch.py`; then build the note with
+two `pdflatex` passes on the TeX file.
+
 ## Rebuild
 
 From the repository root:
