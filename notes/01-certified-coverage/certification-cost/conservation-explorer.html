@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Coverage conservation explorer</title>
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']], tags: 'none' },
+      svg: { fontCache: 'global', scale: 0.98 },
+      options: { enableMenu: false }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  <style>
+    :root {
+      color-scheme: light;
+      --paper: #fbfaf7;
+      --ink: #26231f;
+      --muted: #675f56;
+      --line: #d8d0c4;
+      --covered: #245f72;
+      --remaining: #bb6638;
+      --cost: #7863a2;
+      --total: #253e67;
+      --panel: #fffefa;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font: 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif;
+    }
+    main { max-width: 1120px; margin: auto; padding: 38px 22px 60px; }
+    a { color: var(--covered); }
+    .eyebrow { color: var(--muted); font-size: .79rem; font-weight: 750; letter-spacing: .11em; text-transform: uppercase; }
+    h1 { margin: 5px 0 8px; font-family: Georgia, serif; font-size: clamp(2rem, 4vw, 3.2rem); line-height: 1.1; }
+    .intro { max-width: 72ch; margin: 0 0 24px; color: var(--muted); }
+    .layout { display: grid; grid-template-columns: minmax(240px, 310px) minmax(0, 1fr); gap: 18px; align-items: start; }
+    .panel, .chart-card, .equations {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      box-shadow: 0 7px 25px rgba(48, 39, 30, .045);
+    }
+    .panel { padding: 22px; }
+    h2 { margin: 0 0 16px; font-size: 1.05rem; }
+    .control { margin-bottom: 24px; }
+    .control:last-of-type { margin-bottom: 12px; }
+    .control-head { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+    label { font-weight: 650; }
+    output { font-variant-numeric: tabular-nums; font-weight: 750; }
+    input[type="range"] { width: 100%; margin: 12px 0 4px; accent-color: var(--covered); cursor: pointer; }
+    .range-ends { display: flex; justify-content: space-between; color: var(--muted); font-size: .8rem; }
+    .hint { margin: 8px 0 0; color: var(--muted); font-size: .86rem; }
+    .chart-card { padding: 20px 18px 16px; min-width: 0; }
+    .chart-head { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 5px 18px; align-items: baseline; }
+    .chart-head h2 { margin: 0; }
+    .chart-head p { margin: 0; color: var(--muted); font-size: .84rem; }
+    #plot { width: 100%; height: auto; display: block; overflow: visible; }
+    .legend { display: flex; flex-wrap: wrap; gap: 6px 17px; margin: 0 8px; font-size: .88rem; }
+    .legend-item { white-space: nowrap; }
+    .swatch { display: inline-block; width: 12px; height: 12px; margin-right: 6px; border-radius: 3px; vertical-align: -1px; background: var(--swatch); }
+    .framework { margin-top: 20px; padding: 17px 8px 2px; border-top: 1px solid var(--line); }
+    .framework h3 { margin: 0 0 8px; font-size: 1rem; }
+    .framework .formula { overflow-x: auto; padding: 2px 0; }
+    .framework .formula mjx-container[display="true"] { margin: .65em 0 !important; }
+    .framework p { margin: 11px 0 0; color: var(--muted); font-size: .88rem; }
+    .equations { margin-top: 18px; padding: 21px 22px; }
+    .equation { font-family: Georgia, serif; font-size: clamp(1.2rem, 2vw, 1.55rem); font-variant-numeric: tabular-nums; }
+    .equation + .equation { margin-top: 7px; }
+    .stack { display: flex; width: 100%; height: 27px; margin: 17px 0 8px; border-radius: 8px; overflow: hidden; background: #e8e2d9; }
+    .stack > div { transition: width .12s ease; }
+    #coveredBar { background: var(--covered); }
+    #remainingBar { background: var(--remaining); }
+    .bar-labels { display: flex; justify-content: space-between; gap: 16px; color: var(--muted); font-size: .88rem; }
+    .reading { border-top: 1px solid var(--line); margin-top: 18px; padding-top: 14px; color: var(--muted); }
+    .scope { max-width: 85ch; margin: 24px 0 0; color: var(--muted); font-size: .89rem; }
+    @media (max-width: 740px) { .layout { grid-template-columns: 1fr; } main { padding-top: 25px; } }
+  </style>
+</head>
+<body>
+<main>
+  <a href="README.md">← Back to the note</a>
+  <p class="eyebrow">Interactive model · independent hidden outcomes</p>
+  <h1>Coverage conservation</h1>
+  <p class="intro">Move coverage from explicit search to certification. The candidate total stays fixed: <strong>N = C + R</strong>. In the restricted oracle model, certifying C candidates costs at least C probes, so shifting them cannot lower total work below N.</p>
+
+  <div class="layout">
+    <section class="panel" aria-label="Plot controls">
+      <h2>Change the model</h2>
+      <div class="control">
+        <div class="control-head"><label for="nInput">Binary choices n</label><output id="nOutput" for="nInput">8</output></div>
+        <input id="nInput" type="range" min="4" max="10" value="8">
+        <div class="range-ends"><span>4</span><span>10</span></div>
+        <p class="hint">This sets N = 2<sup>n</sup> candidates.</p>
+      </div>
+      <div class="control">
+        <div class="control-head"><label for="cInput">Covered candidates C</label><output id="cOutput" for="cInput">64</output></div>
+        <input id="cInput" type="range" min="0" max="256" value="64">
+        <div class="range-ends"><span>0</span><span id="cMax">256</span></div>
+        <p class="hint">Move right: coverage rises; residual search R falls one-for-one.</p>
+      </div>
+      <div class="control">
+        <div class="control-head"><label for="costInput">Certification cost per covered candidate</label><output id="costOutput" for="costInput">1.00×</output></div>
+        <input id="costInput" type="range" min="1" max="2" step="0.05" value="1">
+        <div class="range-ends"><span>1× (minimum)</span><span>2×</span></div>
+        <p class="hint">Illustrative cost schedule H = λC, with λ ≥ 1. Changing λ tilts the cost and total-work lines.</p>
+      </div>
+    </section>
+
+    <section class="chart-card" aria-label="Cost curves">
+      <div class="chart-head"><h2>How the curves move</h2><p>Horizontal: C &nbsp;·&nbsp; Vertical: candidates or work units</p></div>
+      <svg id="plot" viewBox="0 0 840 415" role="img" aria-label="Coverage, remaining search, certification cost, and total work as coverage varies"></svg>
+      <div class="legend" aria-label="Plot legend">
+        <span class="legend-item" style="--swatch:var(--covered)"><span class="swatch"></span>C · covered</span>
+        <span class="legend-item" style="--swatch:var(--remaining)"><span class="swatch"></span>R · remaining</span>
+        <span class="legend-item" style="--swatch:var(--cost)"><span class="swatch"></span>H · certification cost</span>
+        <span class="legend-item" style="--swatch:var(--total)"><span class="swatch"></span>T · total work</span>
+      </div>
+      <div class="framework">
+        <h3>Equations behind the curves</h3>
+        <div class="formula">\[N=2^n=C+R,\qquad R=N-C.\]</div>
+        <div class="formula">\[H=\lambda C,\quad \lambda\ge1,\qquad T=H+R=N+(\lambda-1)C\ge N.\]</div>
+        <p>Here \(n\) counts binary choices; \(N\) counts candidate assignments; \(C\) counts candidates certified collectively; \(R\) counts candidates searched explicitly; \(\lambda\) is work per covered candidate in the plotted schedule; \(H\) is certification work; and \(T\) is total work. Net saving is \(S=N-T=C-H=(1-\lambda)C\le0\) in this restricted model.</p>
+      </div>
+    </section>
+  </div>
+
+  <section class="equations" aria-live="polite" aria-label="Current values">
+    <div id="identity" class="equation">N = C + R = 256 = 64 + 192</div>
+    <div id="totalIdentity" class="equation">T = H + R = 64 + 192 = 256</div>
+    <div class="stack" role="img" aria-label="Covered and remaining candidates sum to the total">
+      <div id="coveredBar" style="width:25%"></div><div id="remainingBar" style="width:75%"></div>
+    </div>
+    <div class="bar-labels"><span id="coveredLabel">C = 64 covered</span><span id="remainingLabel">R = 192 remaining</span></div>
+    <div id="reading" class="reading">At the minimum certification cost, T stays at N while coverage shifts from R to C.</div>
+  </section>
+
+  <p class="scope">This visualizes a restricted oracle model where candidate outcomes are independent and accessible only through individual probes. Subset-sum assignments have shared arithmetic structure, so this plot does not establish a subset-sum lower bound.</p>
+</main>
+<script>
+(() => {
+  const nInput = document.getElementById('nInput');
+  const cInput = document.getElementById('cInput');
+  const costInput = document.getElementById('costInput');
+  const plot = document.getElementById('plot');
+  const ns = 'http://www.w3.org/2000/svg';
+  const colors = { C: '#245f72', R: '#bb6638', H: '#7863a2', T: '#253e67' };
+  const fmt = new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 });
+  const make = (tag, attrs, value) => {
+    const el = document.createElementNS(ns, tag);
+    for (const [key, val] of Object.entries(attrs)) el.setAttribute(key, String(val));
+    if (value !== undefined) el.textContent = value;
+    return el;
+  };
+  const draw = (N, C, lambda) => {
+    const left = 68, right = 814, top = 31, bottom = 357;
+    const maxY = 2 * N;
+    const X = value => left + (value / N) * (right - left);
+    const Y = value => bottom - (value / maxY) * (bottom - top);
+    const parts = [];
+    for (let i = 0; i <= 4; i++) {
+      const yVal = maxY * i / 4;
+      const xVal = N * i / 4;
+      parts.push(make('line', { x1: left, x2: right, y1: Y(yVal), y2: Y(yVal), stroke: '#e4ddd3', 'stroke-width': 1 }));
+      parts.push(make('text', { x: left - 12, y: Y(yVal) + 5, 'text-anchor': 'end', fill: '#675f56', 'font-size': 13 }, fmt.format(yVal)));
+      parts.push(make('line', { x1: X(xVal), x2: X(xVal), y1: top, y2: bottom, stroke: '#eee9e1', 'stroke-width': 1 }));
+      parts.push(make('text', { x: X(xVal), y: bottom + 25, 'text-anchor': 'middle', fill: '#675f56', 'font-size': 13 }, fmt.format(xVal)));
+    }
+    parts.push(make('line', { x1: left, x2: right, y1: Y(N), y2: Y(N), stroke: '#aaa39a', 'stroke-width': 1.5, 'stroke-dasharray': '3 5' }));
+    parts.push(make('text', { x: right - 4, y: Y(N) - 8, 'text-anchor': 'end', fill: '#675f56', 'font-size': 13 }, 'N = ' + fmt.format(N)));
+    const series = [
+      { key: 'C', fn: x => x },
+      { key: 'R', fn: x => N - x },
+      { key: 'H', fn: x => lambda * x, dash: '8 7' },
+      { key: 'T', fn: x => N + (lambda - 1) * x }
+    ];
+    for (const line of series) {
+      parts.push(make('path', {
+        d: `M ${X(0)} ${Y(line.fn(0))} L ${X(N)} ${Y(line.fn(N))}`,
+        fill: 'none', stroke: colors[line.key], 'stroke-width': 3.5,
+        ...(line.dash ? { 'stroke-dasharray': line.dash } : {})
+      }));
+    }
+    parts.push(make('line', { x1: X(C), x2: X(C), y1: top, y2: bottom, stroke: '#524b43', 'stroke-width': 1.5, 'stroke-dasharray': '4 5' }));
+    for (const line of series) {
+      parts.push(make('circle', { cx: X(C), cy: Y(line.fn(C)), r: 6, fill: colors[line.key], stroke: '#fffefa', 'stroke-width': 2 }));
+    }
+    parts.push(make('text', { x: (left + right) / 2, y: 410, 'text-anchor': 'middle', fill: '#675f56', 'font-size': 14 }, 'Covered candidates C'));
+    plot.replaceChildren(...parts);
+    plot.setAttribute('aria-label', `At C ${C} of ${N}: remaining search ${N-C}, certification cost ${fmt.format(lambda*C)}, and total work ${fmt.format(N+(lambda-1)*C)}. Curves show values across all coverage levels.`);
+  };
+  const update = () => {
+    const n = Number(nInput.value);
+    const N = 2 ** n;
+    cInput.max = String(N);
+    const C = Math.min(Number(cInput.value), N);
+    const R = N - C;
+    const lambda = Number(costInput.value);
+    const H = lambda * C;
+    const T = H + R;
+    document.getElementById('nOutput').textContent = String(n);
+    document.getElementById('cOutput').textContent = fmt.format(C);
+    document.getElementById('costOutput').textContent = lambda.toFixed(2) + '×';
+    document.getElementById('cMax').textContent = fmt.format(N);
+    document.getElementById('identity').textContent = `N = C + R = ${fmt.format(N)} = ${fmt.format(C)} + ${fmt.format(R)}`;
+    document.getElementById('totalIdentity').textContent = `T = H + R = ${fmt.format(H)} + ${fmt.format(R)} = ${fmt.format(T)}`;
+    document.getElementById('coveredBar').style.width = `${100 * C / N}%`;
+    document.getElementById('remainingBar').style.width = `${100 * R / N}%`;
+    document.querySelector('.stack').setAttribute('aria-label', `${C} covered plus ${R} remaining equals ${N} candidates`);
+    document.getElementById('coveredLabel').textContent = `C = ${fmt.format(C)} covered`;
+    document.getElementById('remainingLabel').textContent = `R = ${fmt.format(R)} remaining`;
+    document.getElementById('reading').textContent = lambda === 1
+      ? 'At the minimum certification cost, T stays at N while coverage shifts from R to C. The C and H curves coincide.'
+      : `Certification costs ${lambda.toFixed(2)} per covered candidate, so moving coverage to C raises total work above N by ${fmt.format(T - N)} units.`;
+    draw(N, C, lambda);
+  };
+  nInput.addEventListener('input', () => {
+    const oldN = Number(cInput.max);
+    const fraction = Number(cInput.value) / oldN;
+    cInput.value = String(Math.round(fraction * 2 ** Number(nInput.value)));
+    update();
+  });
+  cInput.addEventListener('input', update);
+  costInput.addEventListener('input', update);
+  update();
+})();
+</script>
+</body>
+</html>

@@ -35,6 +35,8 @@ Read I, then II. Notes III and IV branch into random-target probability and fixe
 
 ## Latest results
 
+An exploratory Markdown draft, [The Cost of Avoiding Search: A Conditional Coverage Law](notes/01-certified-coverage/certification-cost/README.md), assumes a positive exponential cost floor with an unknown exponent and develops a sufficient coverage-cost mechanism. Local gains and faster exponential algorithms can coexist with that hypothetical floor.
+
 [Note VII](notes/07-geometric-cores/README.md) supplies an exact geometric solving route: reuse one core table across exceptional assignments. Its first fresh study improves work-capped completions from 453 to 469 of 576 targets over matched root geometry. A second fresh study finds 954 versus root's 916 of 1,152 targets. The final bounds-first refinement mainly saves construction: 90 avoided tables and 1.74% lower capped work; its primary incremental completion comparison is only 953 versus 954, with interval [0,3]. Neither study establishes a new general worst-case bound. The companions explain existing evidence and run no new experiments.
 
 [Note VI](notes/06-learned-solvability/README.md) combines five certified structural features with numerical summaries. Its [experiment package](Learned_Solvability_Subset_Sum/README.md) includes theory, a [prior-work audit](Learned_Solvability_Subset_Sum/docs/LITERATURE.md), calibrated models and [mixed frozen-study findings](Learned_Solvability_Subset_Sum/docs/PROSPECTIVE_FINDINGS.md). The primary probability comparison does not improve; a modest live-time policy gain coexists with an unfavorable work-counter endpoint.

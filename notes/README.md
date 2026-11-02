@@ -27,6 +27,8 @@ Build it with `python build_papers.py --paper connections`.
 
 ## Evidence and builds
 
+An exploratory Markdown follow-up to Note I, [The Cost of Avoiding Search: A Conditional Coverage Law](01-certified-coverage/certification-cost/README.md), assumes an unknown positive exponential cost floor and develops a sufficient coverage-cost mechanism, allowing local gains and improvements in the global exponent. It is an unnumbered research draft, separate from the seven papers and two built companions.
+
 Each folder owns its source and PDF. Shared methods and frozen raw evidence stay in the experiment packages, rather than being duplicated into the note folders.
 
 The Note VI build verifies both experiments' model/source/data hashes before generating tables, values and the figure. The paper retains the primary unfavorable result, modest live-pool gain, work-counter failure and scoped prior-work audit. Its new pruning section finds 159/216 live completions for combined ML guidance, 152 for DFS and 162 for a simple distance rule; the transferred model adds no demonstrated advantage over that rule.
