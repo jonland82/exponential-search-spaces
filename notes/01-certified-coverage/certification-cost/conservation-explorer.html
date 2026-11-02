@@ -38,7 +38,7 @@
     h1 { margin: 5px 0 8px; font-family: Georgia, serif; font-size: clamp(2rem, 4vw, 3.2rem); line-height: 1.1; }
     .intro { max-width: 72ch; margin: 0 0 24px; color: var(--muted); }
     .layout { display: grid; grid-template-columns: minmax(240px, 310px) minmax(0, 1fr); gap: 18px; align-items: start; }
-    .panel, .chart-card, .equations {
+    .panel, .chart-card, .equations, .histogram-card, .curiosity {
       background: var(--panel);
       border: 1px solid var(--line);
       border-radius: 15px;
@@ -58,7 +58,7 @@
     .chart-head { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 5px 18px; align-items: baseline; }
     .chart-head h2 { margin: 0; }
     .chart-head p { margin: 0; color: var(--muted); font-size: .84rem; }
-    #plot { width: 100%; height: auto; display: block; overflow: visible; }
+    #plot, #sizeHistogram { width: 100%; height: auto; display: block; overflow: visible; }
     .legend { display: flex; flex-wrap: wrap; gap: 6px 17px; margin: 0 8px; font-size: .88rem; }
     .legend-item { white-space: nowrap; }
     .swatch { display: inline-block; width: 12px; height: 12px; margin-right: 6px; border-radius: 3px; vertical-align: -1px; background: var(--swatch); }
@@ -68,6 +68,18 @@
     .framework .formula mjx-container[display="true"] { margin: .65em 0 !important; }
     .framework p { margin: 11px 0 0; color: var(--muted); font-size: .88rem; }
     .equations { margin-top: 18px; padding: 21px 22px; }
+    .histogram-card { margin-top: 18px; padding: 21px 22px; }
+    .histogram-card h2 { margin-bottom: 5px; }
+    .histogram-card p { margin: 0; color: var(--muted); font-size: .9rem; }
+    .histogram-card #histogramTotal { margin-top: 5px; font-weight: 650; color: var(--ink); }
+    .curiosity { margin-top: 18px; padding: 21px 22px; }
+    .curiosity h2 { margin-bottom: 5px; }
+    .curiosity h3 { margin: 0 0 4px; font-size: .95rem; }
+    .curiosity p { margin: 0; color: var(--muted); font-size: .9rem; }
+    .curiosity-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; margin: 17px 0; }
+    .curiosity-grid > div { min-width: 0; padding: 15px; border: 1px solid var(--line); border-radius: 10px; }
+    .curiosity .formula { overflow-x: auto; font-size: .88rem; }
+    .curiosity .formula mjx-container[display="true"] { margin: .6em 0 !important; }
     .equation { font-family: Georgia, serif; font-size: clamp(1.2rem, 2vw, 1.55rem); font-variant-numeric: tabular-nums; }
     .equation + .equation { margin-top: 7px; }
     .stack { display: flex; width: 100%; height: 27px; margin: 17px 0 8px; border-radius: 8px; overflow: hidden; background: #e8e2d9; }
@@ -77,7 +89,7 @@
     .bar-labels { display: flex; justify-content: space-between; gap: 16px; color: var(--muted); font-size: .88rem; }
     .reading { border-top: 1px solid var(--line); margin-top: 18px; padding-top: 14px; color: var(--muted); }
     .scope { max-width: 85ch; margin: 24px 0 0; color: var(--muted); font-size: .89rem; }
-    @media (max-width: 740px) { .layout { grid-template-columns: 1fr; } main { padding-top: 25px; } }
+    @media (max-width: 740px) { .layout, .curiosity-grid { grid-template-columns: 1fr; } main { padding-top: 25px; } }
   </style>
 </head>
 <body>
@@ -138,7 +150,32 @@
     <div id="reading" class="reading">At the minimum certification cost, T stays at N while coverage shifts from R to C.</div>
   </section>
 
+  <section class="histogram-card" aria-label="Subset counts by size">
+    <h2>How many subsets have each size?</h2>
+    <p>For \(n\) indexed items, the number of size-\(k\) subsets is \(\binom{n}{k}\). Each bar counts one subset size \(k\).</p>
+    <svg id="sizeHistogram" viewBox="0 0 840 390" role="img" aria-label="Histogram of subset counts by size"></svg>
+    <p id="histogramTotal" aria-live="polite">The bars add to 256 = 2⁸ subsets.</p>
+  </section>
+
   <p class="scope">This visualizes a restricted oracle model where candidate outcomes are independent and accessible only through individual probes. Subset-sum assignments have shared arithmetic structure, so this plot does not establish a subset-sum lower bound.</p>
+
+  <section class="curiosity" aria-label="Interesting math curiosity">
+    <h2>Interesting Math Curiosity</h2>
+    <p>Each histogram bar has width 1, so its total area counts all \(2^n\) subsets. A Gaussian can have that same area while approximating the bar heights for large \(n\).</p>
+    <div class="curiosity-grid">
+      <div>
+        <h3>Exact histogram area</h3>
+        <p>Let \(h_n(x)=\binom{n}{\lfloor x\rfloor}\) for \(0\le x&lt;n+1\).</p>
+        <div class="formula">\[\int_0^{n+1}h_n(x)\,dx=\sum_{k=0}^{n}\binom{n}{k}=2^n.\]</div>
+      </div>
+      <div>
+        <h3>Gaussian area</h3>
+        <p>Use mean \(n/2\) and standard deviation \(\sigma=\sqrt n/2\).</p>
+        <div class="formula">\[\int_{-\infty}^{\infty}\frac{2^n}{\sigma\sqrt{2\pi}}e^{-(x-n/2)^2/(2\sigma^2)}\,dx=2^n.\]</div>
+      </div>
+    </div>
+    <p>The bar area is an exact count. The Gaussian has the same area by normalization; its shape is an approximation, not an exact match to each bar.</p>
+  </section>
 </main>
 <script>
 (() => {
@@ -146,6 +183,7 @@
   const cInput = document.getElementById('cInput');
   const costInput = document.getElementById('costInput');
   const plot = document.getElementById('plot');
+  const sizeHistogram = document.getElementById('sizeHistogram');
   const ns = 'http://www.w3.org/2000/svg';
   const colors = { C: '#245f72', R: '#bb6638', H: '#7863a2', T: '#253e67' };
   const fmt = new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 });
@@ -192,6 +230,36 @@
     plot.replaceChildren(...parts);
     plot.setAttribute('aria-label', `At C ${C} of ${N}: remaining search ${N-C}, certification cost ${fmt.format(lambda*C)}, and total work ${fmt.format(N+(lambda-1)*C)}. Curves show values across all coverage levels.`);
   };
+  const drawHistogram = n => {
+    const counts = [1];
+    for (let k = 1; k <= n; k++) counts.push(Math.round(counts[k - 1] * (n - k + 1) / k));
+    const maximum = Math.max(...counts);
+    const step = [1, 2, 5, 10, 20, 50, 100, 200].find(value => value >= maximum / 4);
+    const upper = Math.ceil((maximum + step / 2) / step) * step;
+    const left = 82, right = 818, top = 42, bottom = 310;
+    const width = (right - left) / (n + 1);
+    const Y = value => bottom - value / upper * (bottom - top);
+    const parts = [];
+    for (let count = 0; count <= upper; count += step) {
+      const y = Y(count);
+      parts.push(make('line', { x1: left, x2: right, y1: y, y2: y, stroke: '#e4ddd3', 'stroke-width': 1 }));
+      parts.push(make('text', { x: left - 12, y: y + 5, 'text-anchor': 'end', fill: '#675f56', 'font-size': 13 }, fmt.format(count)));
+    }
+    counts.forEach((count, k) => {
+      const center = left + (k + .5) * width;
+      const barWidth = width * .66;
+      const y = Y(count);
+      parts.push(make('rect', { x: center - barWidth / 2, y, width: barWidth, height: bottom - y, rx: 3, fill: colors.C }));
+      parts.push(make('text', { x: center, y: y - 8, 'text-anchor': 'middle', fill: '#26231f', 'font-size': 13, 'font-weight': 650 }, fmt.format(count)));
+      parts.push(make('text', { x: center, y: bottom + 25, 'text-anchor': 'middle', fill: '#675f56', 'font-size': 13 }, String(k)));
+    });
+    parts.push(make('text', { x: (left + right) / 2, y: 375, 'text-anchor': 'middle', fill: '#675f56', 'font-size': 14 }, 'Subset size k'));
+    parts.push(make('text', { x: 20, y: 180, transform: 'rotate(-90 20 180)', 'text-anchor': 'middle', fill: '#675f56', 'font-size': 14 }, 'Number of subsets'));
+    sizeHistogram.replaceChildren(...parts);
+    sizeHistogram.setAttribute('aria-label', `For ${n} items, subset sizes 0 through ${n} have counts ${counts.join(', ')}; total ${2 ** n}.`);
+    const exponent = String(n).split('').map(digit => '⁰¹²³⁴⁵⁶⁷⁸⁹'[Number(digit)]).join('');
+    document.getElementById('histogramTotal').textContent = `The bars add to ${fmt.format(2 ** n)} = 2${exponent} subsets.`;
+  };
   const update = () => {
     const n = Number(nInput.value);
     const N = 2 ** n;
@@ -216,6 +284,7 @@
       ? 'At the minimum certification cost, T stays at N while coverage shifts from R to C. The C and H curves coincide.'
       : `Certification costs ${lambda.toFixed(2)} per covered candidate, so moving coverage to C raises total work above N by ${fmt.format(T - N)} units.`;
     draw(N, C, lambda);
+    drawHistogram(n);
   };
   nInput.addEventListener('input', () => {
     const oldN = Number(cInput.max);
