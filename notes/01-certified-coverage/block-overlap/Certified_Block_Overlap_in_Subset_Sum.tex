@@ -37,13 +37,14 @@
 \textcolor{rulecolor}{\rule{\linewidth}{.6pt}}
 
 \textbf{Abstract.}
-Subset sum can admit a short exact search even when all $2^n$ sums are
-distinct. We divide sorted positive weights into small blocks and list each
+With $n$ input weights, subset sum can admit a short exact search even when
+all $2^n$ sums are distinct. We divide sorted positive weights into small blocks and list each
 block's distinct sums. An interval test bounds the choices that survive in
 each block; their product bounds the search tree. A dynamic program minimizes
 this product over contiguous partitions with at most $b$ items per block.
 Writing the optimum as $K_b$ and binary input length as $L$, finding the
-partition and solving the instance take $\poly(L)(2^b+K_b)$ bit operations.
+partition and solving the instance take $\poly(L)(2^b+K_b)$ bit operations,
+where $\poly(L)$ is a polynomial factor in $L$.
 We prove the bound, give a robust family with $K_3=1$, and verify the
 implementation exhaustively on small inputs.
 
@@ -72,21 +73,25 @@ easily checked condition that makes a particular input easy.
 
 Let $a=(a_1,\ldots,a_n)\in\mathbb Z_{>0}^n$, $t\in\mathbb Z$, and
 $[n]=\{1,\ldots,n\}$. The required output is an index set $U\subseteq[n]$
-such that $\sum_{i\in U}a_i=t$, or a correct NO answer.
+such that $\sum_{i\in U}a_i=t$, or a correct NO answer. Such a set $U$ is a
+\emph{witness}.
 Equal values remain distinct indexed items; the empty selection is allowed.
 Let $L$ be the binary encoding length of $(a,t)$, including delimiters.
-Then $n=O(L)$, and sums and witness masks have $O(L)$ bits.
+Then $n=O(L)$, and sums and witness masks (one bit per original item)
+have $O(L)$ bits. All logarithms are base two.
 The notation $\poly(L)$ hides a uniform polynomial, with no extra
-exponential parameter. Numeric magnitude is different: Bringmann's randomized
+exponential parameter. Numeric magnitude is different: for $t\ge0$, Bringmann's randomized
 $\widetilde O(n+t)$ algorithm~\cite{pseudo} is near-linear
 pseudopolynomial time, not polynomial time in the binary length of $t$.
 The tilde suppresses logarithmic factors.
 
 \section{Local sums and the interval test}
 Sort the items as $w_1\le\cdots\le w_n$, breaking ties by original index and
-retaining that index map. Fix $1\le b\le n$ and cuts
+retaining that index map. Choose an integer block-size limit $1\le b\le n$.
+Partition the indices into $m$ nonempty blocks using integer cuts
 $0=v_0<v_1<\cdots<v_m=n$, with $v_j-v_{j-1}\le b$.
-The $j$th block is $B_j=\{v_{j-1}+1,\ldots,v_j\}$. Define
+The $j$th block is $B_j=\{v_{j-1}+1,\ldots,v_j\}$.
+Define its distinct-sum set $S_j$ and the total weight $P_j$ of all lower blocks:
 \begin{equation}\label{eq:local}
  S_j=\left\{\sum_{i\in U}w_i:U\subseteq B_j\right\},
  \qquad P_j=\sum_{i=1}^{v_{j-1}}w_i.
@@ -115,13 +120,14 @@ blocks are disjoint.
 \end{proof}
 
 The interval $[s,s+P_j]$ contains every residual target that could use local
-sum $s$. Its overlap with other such intervals measures possible branching:
+sum $s$. Write $\mathcal B=(B_1,\ldots,B_m)$ for the partition.
+Its maximum local overlaps $\kappa_j$ and their product $K(\mathcal B)$ are
 \begin{equation}\label{eq:overlap}
  \kappa_j=\max_{z\in\mathbb Z}|S_j\cap[z-P_j,z]|,
  \qquad K(\mathcal B)=\prod_{j=1}^m\kappa_j,
  \qquad 1\le\kappa_j\le |S_j|\le2^b .
 \end{equation}
-Here $\mathcal B=(B_1,\ldots,B_m)$ is the partition.
+When the partition is fixed, we abbreviate $K(\mathcal B)$ as $K$.
 Intervals are closed: sums exactly $P_j$ apart can both qualify.
 Figure~\ref{fig:intervals} makes this endpoint issue visible.
 
@@ -129,7 +135,8 @@ Figure~\ref{fig:intervals} makes this endpoint issue visible.
 \centering
 \includegraphics[width=.97\linewidth]{block_overlap_geometry.pdf}
 \caption{\textbf{Overlap is a branching certificate.}
-Segments show $[s,s+P]$ for the local sums of $(20,30,40)$.
+Segments show $[s,s+P]$ for the local sums of $(20,30,40)$;
+$P$ and $\kappa$ denote this block's lower total and maximum overlap.
 Orange marks the choices that contain the indicated residual.
 For $P=9$, at most one choice survives. For $P=10$, residual $40$
 lies at the shared endpoints for $s=30$ and $s=40$, so $\kappa=2$.
@@ -138,19 +145,22 @@ The original example uses $P=9$; the right panel varies the lower total.}
 \end{figure}
 
 \section{Bounding the search tree}
-Search blocks in descending order. At block $j$, use two binary searches
+Search blocks in descending order; depth counts processed blocks, starting at zero.
+At block $j$, use two binary searches
 to locate $S_j\cap[r-P_j,r]$, then recurse on each qualifying sum $s$
 with residual $r-s$. At depth $m$, accept precisely residual zero.
 Reject $t\notin[0,\sum_iw_i]$ immediately.
 
 \begin{theorem}[Fixed-partition search]\label{thm:search}
-The algorithm is exact. Its complete search tree has at most
+The algorithm is exact. Let $N(\mathcal B,t)$ count the nodes in its
+complete search tree for target $t$. Then
 \begin{equation}\label{eq:tree}
  N(\mathcal B,t)\le
  1+\sum_{\ell=1}^m\prod_{h=m-\ell+1}^m\kappa_h
- \le(m+1)K(\mathcal B)
+ \le(m+1)K(\mathcal B).
 \end{equation}
-nodes and at most $K(\mathcal B)$ complete paths. After construction of the
+There are at most $K(\mathcal B)$ complete paths, each choosing one sum per block.
+After construction of the
 local dictionaries, its bit cost is at most $\poly(L)K(\mathcal B)$.
 An early YES may stop sooner.
 \end{theorem}
@@ -179,9 +189,11 @@ A small product helps only if its partition is cheap to find.
 For a contiguous block, the lower total depends only on its starting
 position. It stays fixed as earlier cuts change, giving a dynamic program.
 
-Put $H_v=\sum_{i=1}^vw_i$, with $H_0=0$. For $1\le u\le v\le n$ and
+Let $H_v=\sum_{i=1}^vw_i$, with $H_0=0$, be the prefix totals.
+For $1\le u\le v\le n$ and
 $v-u+1\le b$, let $S_{u,v}$ be the distinct sums of $w_u,\ldots,w_v$ and
-define $\kappa(u,v)=\max_z|S_{u,v}\cap[z-H_{u-1},z]|$.
+define $\kappa(u,v)=\max_{z\in\mathbb Z}|S_{u,v}\cap[z-H_{u-1},z]|$.
+Let $D(v)$ be the minimum overlap product over permitted partitions of the first $v$ items.
 The exact integer recurrence
 \begin{equation}\label{eq:dp}
  D(0)=1,\qquad
@@ -193,9 +205,10 @@ stores a minimizing predecessor for each $v$.
 \begin{theorem}[Optimal contiguous discovery and total cost]\label{thm:paid}
 The recurrence finds
 $K_b=\min_{\mathcal B}K(\mathcal B)$ over all contiguous sorted partitions
-whose blocks contain at most $b$ items. For that discovered partition,
-sorting, dictionary construction, optimization, reconstruction, and exact
-solution together satisfy
+whose blocks contain at most $b$ items.
+For the returned partition of $m$ blocks, let $T(a,t;b)$ be the total bit-operation count and
+$\mathrm{Space}(a,t;b)$ the peak workspace in bits.
+Including sorting, construction, optimization, reconstruction, and search,
 \begin{equation}\label{eq:paid}
  \boxed{\quad T(a,t;b)\le\poly(L)(2^b+K_b),\qquad
              \mathrm{Space}(a,t;b)\le\poly(L)2^b.\quad}
@@ -215,8 +228,10 @@ and retaining a witness. List sizes are at most $2^h$ after $h$ items;
 the total merge work is $O(\sum_{h=1}^{\ell}2^h)=O(2^\ell)$
 arithmetic/comparison operations.
 
-For sorted values $s_1<\cdots<s_q$, a sliding window moves its left
-endpoint forward until $s_{\rm right}-s_{\rm left}\le H_{u-1}$.
+List a candidate support as $s_1<\cdots<s_q$, with $q=|S_{u,v}|$.
+A sliding window moves its left
+endpoint forward until $s_{\rm right}-s_{\rm left}\le H_{u-1}$,
+where \emph{left} and \emph{right} index the window endpoints.
 The largest window equals $\kappa(u,v)$: any nonempty eligible interval
 can move its right endpoint to its largest contained support value
 without losing a contained value. Each endpoint moves at most $q$ times,
@@ -266,8 +281,9 @@ Theorem~\ref{thm:paid} on accepted inputs.
 
 Other algorithms exploit different structure. Bringmann and
 Wellnitz~\cite{dense} study dense inputs, with algorithms and conditional
-lower bounds. Randolph and W\k{e}grzycki~\cite{doubling} use the additive
-doubling $|A+A|/|A|$ of an integer set $A$.
+lower bounds. For a nonempty integer set $A$, its \emph{sumset} is
+$A+A=\{x+y:x,y\in A\}$.
+Randolph and W\k{e}grzycki~\cite{doubling} use its additive doubling $|A+A|/|A|$.
 Our $\kappa_j$ instead counts local choices compatible with a lower total.
 
 Increasing $b$ cannot increase $K_b$: every earlier partition remains
@@ -279,14 +295,16 @@ such as OpenAI's low-space preprint~\cite{space}, which uses a different
 randomized construction and word model.
 
 \section{Many distinct sums, one search path}
-For $j=0,\ldots,m-1$, take the sorted triples
+For an integer $m\ge1$, take $m$ sorted triples. For $j=0,\ldots,m-1$,
+assign the following weights to block $B_{j+1}$:
 \begin{equation}\label{eq:family}
- B_{j+1}=\{2\cdot10^j,3\cdot10^j,4\cdot10^j\},\quad n=3m,
+ \{w_i:i\in B_{j+1}\}=10^j\{2,3,4\},\quad n=3m,
  \qquad
  S_{j+1}=10^j\{0,2,3,4,5,6,7,9\}.
 \end{equation}
+Multiplication by $10^j$ scales each element of the displayed sets.
 The total below block $j+1$ is
-$P_{j+1}=9\sum_{h<j}10^h=10^j-1$.
+$P_{j+1}=9\sum_{h=0}^{j-1}10^h=10^j-1$.
 Every gap between its consecutive support values is at least $10^j$,
 strictly exceeding $P_{j+1}$. Hence every $\kappa_j=1$ and $K_3=1$.
 The search visits at most $m+1$ nodes for any target.
@@ -297,7 +315,8 @@ therefore all distinct. Only $8m$ local records are retained for the
 triple partition. Because $b=3$, discovery is polynomial, too:
 the algorithm never builds the global support.
 
-This family is not itemwise superincreasing: $4\cdot10^j<
+A sequence is \emph{superincreasing} if each weight exceeds the sum of
+all earlier weights. This family fails that condition: $4\cdot10^j<
 2\cdot10^j+3\cdot10^j$. The maximum-core greedy scan used in the
 core-and-exceptions approach~\cite{core} keeps the first two items of each
 triple and rejects the third. Indeed, before each triple its retained total
@@ -307,10 +326,11 @@ enumeration bound is exponential. This compares sufficient bounds, not
 lower bounds against other algorithms.
 
 \begin{proposition}[Irregular scales and perturbations]\label{prop:robust}
-Replace the triples by
+For blocks $j=1,\ldots,m$, replace the weights in $B_j$ by
 $\{2M_j+e_{j,2},3M_j+e_{j,3},4M_j+e_{j,4}\}$, where
-$M_j,E_j\in\mathbb Z_{\ge0}$, $|e_{j,h}|\le E_j$, and $P_j$ is the
-actual total of preceding triples. If
+$M_j,E_j\in\mathbb Z_{\ge0}$ are a scale and an error bound.
+The integer errors $e_{j,h}$ satisfy $|e_{j,h}|\le E_j$ for
+$h\in\{2,3,4\}$; $P_j$ is the actual total of preceding triples. If
 \begin{equation}\label{eq:robust}
  M_j-3E_j>P_j\qquad\text{for every }j,
 \end{equation}
@@ -384,7 +404,7 @@ plots and numerical macros, records \texttt{paper\_evidence.json}, and
 enforces six pages. It preserves the original verification record.
 
 \textbf{Relation to distribution shaping.}
-For a fixed partition, $\log_2K=\sum_j\log_2\kappa_j$.
+For a fixed partition, $\log_2K=\sum_{j=1}^m\log_2\kappa_j$.
 This sum could motivate a statistical model across random inputs,
 but does not itself imply a lognormal law. That requires assumptions on
 the input distribution and the terms' dependence.
@@ -392,13 +412,13 @@ Changing an axis leaves the computation unchanged; the saving comes
 from bounded overlap.
 
 \textbf{Prior work and limits.}
-Singleton blocks with $w_j>P_j$ recover the classical superincreasing
+Singleton blocks $B_j=\{j\}$ with $w_j>P_j$ recover the classical superincreasing
 case. Earlier ordered-sum constructions already combine distinct
 subset sums with efficient knapsack decision~\cite{ordered}; that report's
 abstract establishes precedent, not equivalence with this overlap bound.
 We give a costed proof and checked implementation.
 Novelty assessment, comparative timings, and partitions beyond contiguous
-sorted blocks remain open. Small $K_b$ guarantees an efficient route;
+sorted blocks remain open. Small $2^b+K_b$ guarantees an efficient route;
 large $K_b$ does not prove hardness.
 
 \begin{thebibliography}{10}

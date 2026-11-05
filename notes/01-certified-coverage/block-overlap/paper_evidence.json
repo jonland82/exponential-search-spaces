@@ -6,7 +6,7 @@
     "validation.json": "f6b54ec04b7039e63649215cefdffd8d7d315ff2ad5eacfd586ee6f3b0951fbc",
     "build_note.py": "3e5f676da594ebf95869d59a9b858cfae735543ac5e7d90c2e116b00599d48dc",
     "references.json": "9523999919d53c0d0f8eb2221e538fe9d1058014a1785b49fffe7f2738a4722f",
-    "Certified_Block_Overlap_in_Subset_Sum.tex": "b60730c3d6b3a81947baad47abbcca21eecfad9cb86b3901b7a34dda54d3cbea"
+    "Certified_Block_Overlap_in_Subset_Sum.tex": "cc08f26dfd6fc9524452443e9c813a122cd95708ddc8131da040ddf2504c0754"
   },
   "artifact_sha256": {
     "block_overlap_geometry.pdf": "6a155ad625fa107d391c6f749dd120d57b654c778ba7b770d77bd27a1c82ebc3",
