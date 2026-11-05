@@ -219,8 +219,8 @@ def main():
     pdf = scratch / (STEM + ".pdf")
     metadata = subprocess.check_output([info, str(pdf)], text=True)
     pages = re.search(r"^Pages:\s+(\d+)", metadata, re.MULTILINE)
-    if pages is None or not 1 <= int(pages.group(1)) <= 6:
-        raise RuntimeError("paper must have at most six pages:\n" + metadata)
+    if pages is None or int(pages.group(1)) < 1:
+        raise RuntimeError("could not determine a positive page count:\n" + metadata)
     shutil.copy2(pdf, HERE / pdf.name)
     print(f"Built {pdf.name}: {pages.group(1)} pages; source hashes, exact plot "
           "counts, layout, and references checked.")

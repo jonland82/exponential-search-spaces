@@ -4,7 +4,7 @@
 [LaTeX source](Certified_Block_Overlap_in_Subset_Sum.tex) |
 [Paper evidence and plot data](paper_evidence.json)
 
-The six-page working draft, *Certified Block Overlap in Subset Sum*, develops
+The working draft, *Certified Block Overlap in Subset Sum*, develops
 the argument below as a standalone graduate-level paper: interval geometry,
 the search theorem, optimal contiguous discovery, separated and perturbed
 families, and verification. Two reproducible plots explain the interval test
@@ -346,7 +346,7 @@ Requires Matplotlib, `pdflatex`, and `pdfinfo`. The builder checks the original
 source hashes in `validation.json`, regenerates the two vector plots and
 `paper_values.tex`, checks that all ten bibliography entries are cited and
 match `references.json`, compiles the LaTeX twice, rejects overfull boxes and
-unresolved references, and enforces at most six naturally flowing pages.
+unresolved references, and lets pagination flow naturally without a page limit.
 LaTeX scratch stays under `.build/latex/block-overlap/`.
 
 [paper_evidence.json](paper_evidence.json) records source/artifact SHA-256

@@ -90,8 +90,8 @@ The difficulty-buckets note has a separate evidence-checking builder at
 flows naturally, with an upper page-count check rather than forced section
 breaks. The block-overlap paper likewise has an evidence-checking builder at
 `notes/01-certified-coverage/block-overlap/build_note.py`; it regenerates
-structural illustrations, preserves the original checks, and enforces at
-most six pages. The connections guide documents the separate runtime-bands build.
+structural illustrations, preserves the original checks, and allows natural
+pagination without a page limit. The connections guide documents the separate runtime-bands build.
 The conservation manuscript currently has PDF only: preserve it as supplied
 and do not advertise unavailable source or HTML formats.
 For navigation-only changes, link checking and a staged-site check are sufficient;
