@@ -2,8 +2,8 @@
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{lmodern,amsmath,amssymb,amsthm,graphicx,booktabs,microtype}
-\usepackage[margin=.72in]{geometry}
-\usepackage{xcolor,titlesec,enumitem,xurl,hyperref}
+\usepackage[top=.72in,bottom=.72in,left=1in,right=1in]{geometry}
+\usepackage{xcolor,titlesec,enumitem,xurl,hyperref,placeins}
 \definecolor{ink}{HTML}{202C30}
 \definecolor{accent}{HTML}{285A52}
 \definecolor{rulecolor}{HTML}{D9E0DA}
@@ -34,64 +34,55 @@
 {\large\sffamily Small local dictionaries, bounded search, paid discovery}\par
 \vspace{5pt}
 {\small Jonathan R. Landers \hfill November 2026}\par
-{\color{accent}\small\textsc{Standalone research paper $\cdot$ Working draft}}\par
 \textcolor{rulecolor}{\rule{\linewidth}{.6pt}}
 
 \textbf{Abstract.}
-An input can have exponentially many distinct subset sums and still admit a
-short exact search. We partition sorted positive weights into small blocks,
-represent each block by its distinct sums, and bound how many local choices
-can remain compatible with any target. The product of these overlap bounds
-controls the entire search tree. A dynamic program finds the minimum product
-over contiguous partitions with at most $b$ items per block. If $L$ is binary
-input length and $K_b$ is that optimum, discovery and exact solving together
-take $\poly(L)(2^b+K_b)$ bit operations. A separated family has $2^n$ distinct
-global sums but $K_3=1$; a perturbation condition preserves this property.
-Full proofs, a reference algorithm, exhaustive finite checks, and two
-reproducible illustrations make the guarantee explicit. These are
-structured-input upper bounds, with no claim of general runtime superiority
-or established literature novelty.
+Subset sum can admit a short exact search even when all $2^n$ sums are
+distinct. We divide sorted positive weights into small blocks and list each
+block's distinct sums. An interval test bounds the choices that survive in
+each block; their product bounds the search tree. A dynamic program minimizes
+this product over contiguous partitions with at most $b$ items per block.
+Writing the optimum as $K_b$ and binary input length as $L$, finding the
+partition and solving the instance take $\poly(L)(2^b+K_b)$ bit operations.
+We prove the bound, give a robust family with $K_3=1$, and verify the
+implementation exhaustively on small inputs.
 
-\section{The opportunity: distinguish local choices, not all global sums}
+\section{Why local separation helps}
 Subset sum asks whether some selection of positive integer weights totals a
-specified integer target. There are $2^n$ selections, but their number alone
-does not determine the computation needed to answer the question. Repeated
-sums can be merged; more subtly, sums can remain distinct while their
-\emph{separation} makes almost every choice impossible.
+specified integer target. Merging repeated sums is one shortcut.
+We study another: \emph{separation} between local sums can rule out most
+choices, even when all global sums differ.
 
 Consider the blocks $(2,3,4)$ and $(20,30,40)$. The lower block totals $9$.
-For target $37$, the higher block must contribute between $28$ and $37$;
-its only sum there is $30$. The remaining question is whether the lower
-block reaches $7$. For target $38$, the same higher choice survives, but
-the remainder $8$ is unreachable. The interval test therefore excludes
-whole groups safely, while a surviving interval still requires exact search.
-We turn this example into a target-uniform bound and charge the work needed
-to discover a useful partition.
+To reach $37$, the higher block must contribute between $28$ and $37$.
+Only $30$ fits, leaving $7$, which the lower block can reach.
+For target $38$, the same choice leaves $8$, which it cannot reach.
+The interval test rules out whole groups, but a surviving choice still
+needs an exact check. We bound this search for every target and include
+the cost of finding the partition.
 
-The classical meet-in-the-middle algorithm of Horowitz and Sahni~\cite{hs}
+The meet-in-the-middle algorithm of Horowitz and Sahni~\cite{hs}
 uses $O^*(2^{n/2})$ time; Schroeppel and Shamir~\cite{ss} retain that time
 with $O^*(2^{n/4})$ space. Here $O^*$ suppresses factors polynomial in
 encoded input length. Ordered-sum constructions~\cite{ordered} already show
-that distinct sums can coexist with efficient decision. Recent worst-case
-work, including Li and Ye's partial-match approach~\cite{partial}, improves
-on the classical $1/2$ exponent by testing compatibility of partial representations.
-Our question is complementary: can a readily discovered local structure
-certify a short deterministic search on a particular input?
+that distinct sums can coexist with efficient decision.
+Li and Ye~\cite{partial} improve on the classical $1/2$ exponent using
+compatibility tests on partial representations. We instead seek an
+easily checked condition that makes a particular input easy.
 
 Let $a=(a_1,\ldots,a_n)\in\mathbb Z_{>0}^n$, $t\in\mathbb Z$, and
 $[n]=\{1,\ldots,n\}$. The required output is an index set $U\subseteq[n]$
 such that $\sum_{i\in U}a_i=t$, or a correct NO answer.
 Equal values remain distinct indexed items; the empty selection is allowed.
-Let $L$ be the length of a standard explicit binary encoding of $(a,t)$,
-including delimiters. Thus $n=O(L)$, and all partial sums and witness masks
-have $O(L)$ bits. Throughout, $\poly(L)$ denotes a uniform polynomial bound;
-it hides no additional exponential parameter.
-Numeric magnitude is a different parameter: Bringmann's randomized
+Let $L$ be the binary encoding length of $(a,t)$, including delimiters.
+Then $n=O(L)$, and sums and witness masks have $O(L)$ bits.
+The notation $\poly(L)$ hides a uniform polynomial, with no extra
+exponential parameter. Numeric magnitude is different: Bringmann's randomized
 $\widetilde O(n+t)$ algorithm~\cite{pseudo} is near-linear
 pseudopolynomial time, not polynomial time in the binary length of $t$.
 The tilde suppresses logarithmic factors.
 
-\section{Local dictionaries and the exact interval test}
+\section{Local sums and the interval test}
 Sort the items as $w_1\le\cdots\le w_n$, breaking ties by original index and
 retaining that index map. Fix $1\le b\le n$ and cuts
 $0=v_0<v_1<\cdots<v_m=n$, with $v_j-v_{j-1}\le b$.
@@ -104,12 +95,11 @@ Store the sorted distinct values in $S_j$, keeping one original-index witness
 per value. If higher blocks leave residual target $r$, a completion using
 $s\in S_j$ needs a lower contribution $r-s\in[0,P_j]$.
 
-Support compression is an established algorithmic resource. Bringmann,
-Fischer, and Nakos~\cite{support} compute the full truncated support in
-randomized time $\widetilde O(|\mathcal S_{\le t}|\sqrt n)$, where
-$\mathcal S_{\le t}$ comprises all attainable sums at most a nonnegative
-target $t$. Here we construct only local supports; the separated family
-below avoids enumerating its exponentially large global support.
+A set of attainable sums is also called a \emph{support}. Bringmann,
+Fischer, and Nakos~\cite{support} compute the support $\mathcal S_{\le t}$
+of all attainable sums up to a nonnegative target $t$ in randomized time
+$\widetilde O(|\mathcal S_{\le t}|\sqrt n)$. We build only small local
+supports, avoiding the full set in the family below.
 
 \begin{lemma}[Sound exclusion and merging]\label{lem:exact}
 Only sums $s\in S_j\cap[r-P_j,r]$ can occur in a completion.
@@ -139,17 +129,15 @@ Figure~\ref{fig:intervals} makes this endpoint issue visible.
 \centering
 \includegraphics[width=.97\linewidth]{block_overlap_geometry.pdf}
 \caption{\textbf{Overlap is a branching certificate.}
-Each segment is $[s,s+P]$ for the local sums of $(20,30,40)$;
-orange segments contain the residual target marked by the vertical line
-and hollow diamonds. With $P=9$, at most
-one segment covers any target. With $P=10$, adjacent segments share an
-endpoint: residual $40$ admits both $s=30$ and $s=40$, so $\kappa=2$.
-The second panel varies the lower total to illustrate the closed-interval
-rule; it is not the original two-block input.}
+Segments show $[s,s+P]$ for the local sums of $(20,30,40)$.
+Orange marks the choices that contain the indicated residual.
+For $P=9$, at most one choice survives. For $P=10$, residual $40$
+lies at the shared endpoints for $s=30$ and $s=40$, so $\kappa=2$.
+The original example uses $P=9$; the right panel varies the lower total.}
 \label{fig:intervals}
 \end{figure}
 
-\section{The overlap product bounds the entire search}
+\section{Bounding the search tree}
 Search blocks in descending order. At block $j$, use two binary searches
 to locate $S_j\cap[r-P_j,r]$, then recurse on each qualifying sum $s$
 with residual $r-s$. At depth $m$, accept precisely residual zero.
@@ -183,14 +171,13 @@ bits. Witness assembly and its final weighted-sum check are polynomial.
 All these charges fit the stated bit bound.
 \end{proof}
 
-No independence of pruning fractions is assumed. The bound includes failed
-branches, and holds for every target, including NO instances. It need not
-preserve the number of solutions: equal-sum witnesses have been merged.
+The bound includes failed branches and NO instances; it uses no independence
+assumption. Merging equal-sum witnesses preserves existence, not solution counts.
 
-\section{Finding the best permitted partition, and paying for it}
-A small product would be of little use if finding its partition required
-exhaustive search over all cuts. The key observation is that the lower total
-for a candidate block depends only on where that block begins.
+\section{Finding and building the partition}
+A small product helps only if its partition is cheap to find.
+For a contiguous block, the lower total depends only on its starting
+position. It stays fixed as earlier cuts change, giving a dynamic program.
 
 Put $H_v=\sum_{i=1}^vw_i$, with $H_0=0$. For $1\le u\le v\le n$ and
 $v-u+1\le b$, let $S_{u,v}$ be the distinct sums of $w_u,\ldots,w_v$ and
@@ -213,8 +200,7 @@ solution together satisfy
  \boxed{\quad T(a,t;b)\le\poly(L)(2^b+K_b),\qquad
              \mathrm{Space}(a,t;b)\le\poly(L)2^b.\quad}
 \end{equation}
-The optimum concerns this partition family and this product bound,
-not minimum actual runtime among all subset-sum algorithms.
+Optimality refers to this partition family and product bound.
 \end{theorem}
 \begin{proof}
 Every partition of the first $v$ items has a last block $[u,v]$.
@@ -278,25 +264,21 @@ Compare the computed integer $K_b$ with the threshold and apply
 Theorem~\ref{thm:paid} on accepted inputs.
 \end{proof}
 
-Other tractable regimes use different structure: Bringmann and
-Wellnitz~\cite{dense} give algorithms and conditional lower bounds in a dense
-numeric regime, while Randolph and W\k{e}grzycki~\cite{doubling} obtain
-algorithms parameterized by additive doubling $|A+A|/|A|$ of an integer
-set $A$. Our $\kappa_j$ instead measures separation relative to the
-lower total. These guarantees require their respective hypotheses;
-none identifies a large overlap product as an intrinsic hardness certificate.
+Other algorithms exploit different structure. Bringmann and
+Wellnitz~\cite{dense} study dense inputs, with algorithms and conditional
+lower bounds. Randolph and W\k{e}grzycki~\cite{doubling} use the additive
+doubling $|A+A|/|A|$ of an integer set $A$.
+Our $\kappa_j$ instead counts local choices compatible with a lower total.
 
-The two costs remain distinct. Increasing $b$ cannot increase $K_b$,
-because it permits every earlier partition; nevertheless, constructing
-larger blocks can cost more. In particular, $b=n$ always permits $K_b=1$,
-since the single block has lower total zero. Its dictionary can still
-require $2^n$ records. A small search tree alone is not a small total cost.
-This distinction between stored dictionaries and generated search also
-motivates worst-case time--space algorithms, including OpenAI's low-space
-preprint~\cite{space}. Its randomized construction and specified word
-model are separate from the deterministic, input-structural bound here.
+Increasing $b$ cannot increase $K_b$: every earlier partition remains
+available. But larger blocks can cost more to build. At $b=n$, a single
+block gives $K_b=1$, yet its support may contain $2^n$ records.
+This is why the bound charges $2^b$ separately.
+Stored dictionaries and generated sums also drive time--space methods
+such as OpenAI's low-space preprint~\cite{space}, which uses a different
+randomized construction and word model.
 
-\section{Exponentially many distinct sums, only one surviving path}
+\section{Many distinct sums, one search path}
 For $j=0,\ldots,m-1$, take the sorted triples
 \begin{equation}\label{eq:family}
  B_{j+1}=\{2\cdot10^j,3\cdot10^j,4\cdot10^j\},\quad n=3m,
@@ -352,22 +334,20 @@ impossible. Apply Theorem~\ref{thm:paid}.
 \centering
 \includegraphics[width=.97\linewidth]{block_overlap_scaling.pdf}
 \caption{\textbf{The separated family, with discovery visible.}
-For $m\in\{1,2,4,8,16,32,64,100\}$, panel A compares the proved global
-support size with the retained local dictionaries; the vertical coordinate
-is explicitly a base-two logarithm. Panel B shows separate exact counters
-from the reference implementation with $b=3$. Support candidates include
-discovery and rebuilding the chosen lists; the YES target has every decimal
-digit equal to $7$. Counters are neither uniform bit operations nor timings,
-and are not added together.}
+With $b=3$ and $m\in\{1,2,4,8,16,32,64,100\}$, panel A compares global
+and stored local support sizes on a base-two logarithmic scale.
+Panel B separates construction counters from search nodes for the
+all-$7$ YES target. Support candidates include discovery and rebuilding.
+These counters are neither timings nor uniform bit operations; they
+are not added together.}
 \label{fig:scaling}
 \end{figure}
 
-\section{Verification, interpretation, and scope}
-The standard-library reference solver uses exact integers, witnessed sorted
-merges, a sliding-window overlap calculation, and iterative depth-first
-search. Its separate checker enumerates subsets directly and independently
-enumerates every admissible cut set on the exhaustive small domain.
-The preserved record reports:
+\FloatBarrier
+\section{Verification and scope}
+The standard-library solver uses exact integers and returns original indices.
+An independent checker enumerates subsets and all admissible cut sets on
+small inputs. The saved record reports:
 \begin{center}
 \begin{tabular}{lr}
 \toprule
@@ -392,37 +372,34 @@ For the \LargeItems-item example, the NO target is
 $8\cdot10^{\LargeBlocks-1}$; the global count $2^{\LargeItems}$ follows
 from the proof, not exhaustive enumeration. Global support distinctness is
 also checked directly on the first one, two, and three triples.
-These finite checks supplement the proofs; Figure~\ref{fig:scaling} adds
-deterministic structural illustrations rather than empirical speedup evidence.
+These are correctness checks, not timing benchmarks.
 
-The companion source directory contains \texttt{solver.py},
-\texttt{verify.py}, and the original \texttt{validation.json}, which records
-SHA-256 hashes of those sources. From the repository root, run
+The source directory contains \texttt{solver.py}, \texttt{verify.py},
+and \texttt{validation.json}, which records their SHA-256 hashes.
+From the repository root, run
 \texttt{python} \path{notes/01-certified-coverage/block-overlap/verify.py} to
 repeat the checks, or run the same directory's \texttt{build\_note.py} to
-rebuild this paper. The builder checks those hashes, regenerates both plots
-and evidence-linked numerical macros, writes \texttt{paper\_evidence.json},
-and enforces the six-page limit. Original evidence is preserved.
+rebuild the paper. The builder checks hashes and citations, regenerates
+plots and numerical macros, records \texttt{paper\_evidence.json}, and
+enforces six pages. It preserves the original verification record.
 
 \textbf{Relation to distribution shaping.}
-For a fixed partition, $\log_2K=\sum_j\log_2\kappa_j$ is an additive
-description of a multiplicative search bound. Across a specified random
-input population, this could motivate a statistical model, but no
-independence, limit theorem, or lognormal law follows from the algebra.
-Changing an axis cannot change the interval tests or their costs.
-The exact advantage established here is a discoverable representation
-with bounded overlap, not a selected density.
+For a fixed partition, $\log_2K=\sum_j\log_2\kappa_j$.
+This sum could motivate a statistical model across random inputs,
+but does not itself imply a lognormal law. That requires assumptions on
+the input distribution and the terms' dependence.
+Changing an axis leaves the computation unchanged; the saving comes
+from bounded overlap.
 
 \textbf{Prior work and limits.}
 Singleton blocks with $w_j>P_j$ recover the classical superincreasing
 case. Earlier ordered-sum constructions already combine distinct
 subset sums with efficient knapsack decision~\cite{ordered}; that report's
-abstract establishes relevant precedent, not equivalence with the present
-overlap-product bound. The contribution here is the self-contained,
-costed derivation and checked reference implementation. A full novelty
-audit, a comparative timing study, and stronger partitions beyond contiguous
-sorted blocks remain open. Large $K_b$ establishes no hardness lower bound;
-small $K_b$ gives a sufficient guarantee for this exact algorithm.
+abstract establishes precedent, not equivalence with this overlap bound.
+We give a costed proof and checked implementation.
+Novelty assessment, comparative timings, and partitions beyond contiguous
+sorted blocks remain open. Small $K_b$ guarantees an efficient route;
+large $K_b$ does not prove hardness.
 
 \begin{thebibliography}{10}
 \small
