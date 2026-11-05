@@ -174,10 +174,20 @@ def write_values(report):
 
 def main():
     report = load_validation()
+    source = (HERE / (STEM + ".tex")).read_text(encoding="utf-8")
+    references = json.loads((HERE / "references.json").read_text(encoding="utf-8"))
+    bibliography = re.findall(r"\\bibitem\{([^}]+)\}", source)
+    cited = {key.strip() for group in re.findall(r"\\cite\{([^}]+)\}", source)
+             for key in group.split(",")}
+    recorded = [reference["key"] for reference in references["references"]]
+    if (len(bibliography) != 10 or len(set(bibliography)) != 10
+            or bibliography != recorded or cited != set(bibliography)):
+        raise RuntimeError("expected ten distinct references, all cited and recorded")
     rows = structural_counts(report)
     geometry = make_figures(rows)
     write_values(report)
-    inputs = ("solver.py", "verify.py", "validation.json", "build_note.py", STEM + ".tex")
+    inputs = ("solver.py", "verify.py", "validation.json", "build_note.py",
+              "references.json", STEM + ".tex")
     outputs = (*FIGURES, "paper_values.tex")
     evidence = dict(
         kind="paper illustrations and deterministic structural counts; no timing measurements",

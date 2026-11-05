@@ -68,6 +68,16 @@ whole groups safely, while a surviving interval still requires exact search.
 We turn this example into a target-uniform bound and charge the work needed
 to discover a useful partition.
 
+The classical meet-in-the-middle algorithm of Horowitz and Sahni~\cite{hs}
+uses $O^*(2^{n/2})$ time; Schroeppel and Shamir~\cite{ss} retain that time
+with $O^*(2^{n/4})$ space. Here $O^*$ suppresses factors polynomial in
+encoded input length. Ordered-sum constructions~\cite{ordered} already show
+that distinct sums can coexist with efficient decision. Recent worst-case
+work, including Li and Ye's partial-match approach~\cite{partial}, improves
+on the classical $1/2$ exponent by testing compatibility of partial representations.
+Our question is complementary: can a readily discovered local structure
+certify a short deterministic search on a particular input?
+
 Let $a=(a_1,\ldots,a_n)\in\mathbb Z_{>0}^n$, $t\in\mathbb Z$, and
 $[n]=\{1,\ldots,n\}$. The required output is an index set $U\subseteq[n]$
 such that $\sum_{i\in U}a_i=t$, or a correct NO answer.
@@ -76,6 +86,10 @@ Let $L$ be the length of a standard explicit binary encoding of $(a,t)$,
 including delimiters. Thus $n=O(L)$, and all partial sums and witness masks
 have $O(L)$ bits. Throughout, $\poly(L)$ denotes a uniform polynomial bound;
 it hides no additional exponential parameter.
+Numeric magnitude is a different parameter: Bringmann's randomized
+$\widetilde O(n+t)$ algorithm~\cite{pseudo} is near-linear
+pseudopolynomial time, not polynomial time in the binary length of $t$.
+The tilde suppresses logarithmic factors.
 
 \section{Local dictionaries and the exact interval test}
 Sort the items as $w_1\le\cdots\le w_n$, breaking ties by original index and
@@ -89,6 +103,13 @@ The $j$th block is $B_j=\{v_{j-1}+1,\ldots,v_j\}$. Define
 Store the sorted distinct values in $S_j$, keeping one original-index witness
 per value. If higher blocks leave residual target $r$, a completion using
 $s\in S_j$ needs a lower contribution $r-s\in[0,P_j]$.
+
+Support compression is an established algorithmic resource. Bringmann,
+Fischer, and Nakos~\cite{support} compute the full truncated support in
+randomized time $\widetilde O(|\mathcal S_{\le t}|\sqrt n)$, where
+$\mathcal S_{\le t}$ comprises all attainable sums at most a nonnegative
+target $t$. Here we construct only local supports; the separated family
+below avoids enumerating its exponentially large global support.
 
 \begin{lemma}[Sound exclusion and merging]\label{lem:exact}
 Only sums $s\in S_j\cap[r-P_j,r]$ can occur in a completion.
@@ -114,7 +135,7 @@ Here $\mathcal B=(B_1,\ldots,B_m)$ is the partition.
 Intervals are closed: sums exactly $P_j$ apart can both qualify.
 Figure~\ref{fig:intervals} makes this endpoint issue visible.
 
-\begin{figure}[tbp]
+\begin{figure}[htbp]
 \centering
 \includegraphics[width=.97\linewidth]{block_overlap_geometry.pdf}
 \caption{\textbf{Overlap is a branching certificate.}
@@ -257,11 +278,23 @@ Compare the computed integer $K_b$ with the threshold and apply
 Theorem~\ref{thm:paid} on accepted inputs.
 \end{proof}
 
+Other tractable regimes use different structure: Bringmann and
+Wellnitz~\cite{dense} give algorithms and conditional lower bounds in a dense
+numeric regime, while Randolph and W\k{e}grzycki~\cite{doubling} obtain
+algorithms parameterized by additive doubling $|A+A|/|A|$ of an integer
+set $A$. Our $\kappa_j$ instead measures separation relative to the
+lower total. These guarantees require their respective hypotheses;
+none identifies a large overlap product as an intrinsic hardness certificate.
+
 The two costs remain distinct. Increasing $b$ cannot increase $K_b$,
 because it permits every earlier partition; nevertheless, constructing
 larger blocks can cost more. In particular, $b=n$ always permits $K_b=1$,
 since the single block has lower total zero. Its dictionary can still
 require $2^n$ records. A small search tree alone is not a small total cost.
+This distinction between stored dictionaries and generated search also
+motivates worst-case time--space algorithms, including OpenAI's low-space
+preprint~\cite{space}. Its randomized construction and specified word
+model are separate from the deterministic, input-structural bound here.
 
 \section{Exponentially many distinct sums, only one surviving path}
 For $j=0,\ldots,m-1$, take the sorted triples
@@ -381,8 +414,8 @@ The exact advantage established here is a discoverable representation
 with bounded overlap, not a selected density.
 
 \textbf{Prior work and limits.}
-Singleton separated blocks recover the classical superincreasing
-case~\cite{sage}. Earlier ordered-sum constructions already combine distinct
+Singleton blocks with $w_j>P_j$ recover the classical superincreasing
+case. Earlier ordered-sum constructions already combine distinct
 subset sums with efficient knapsack decision~\cite{ordered}; that report's
 abstract establishes relevant precedent, not equivalence with the present
 overlap-product bound. The contribution here is the self-contained,
@@ -391,18 +424,50 @@ audit, a comparative timing study, and stronger partitions beyond contiguous
 sorted blocks remain open. Large $K_b$ establishes no hardness lower bound;
 small $K_b$ gives a sufficient guarantee for this exact algorithm.
 
-\begin{thebibliography}{3}
+\begin{thebibliography}{10}
 \small
-\bibitem{core} J. R. Landers.
-\emph{How Far from Easy? Structural Distance in Subset Sum}.
-Working draft, 2026. Repository Note V,
-\href{https://github.com/jonland82/exponential-search-spaces/tree/master/notes/05-structural-distance}{source and evidence}.
-\bibitem{sage} SageMath.
-\emph{Knapsack Problems: Super-increasing Sequences}.
-\href{https://doc.sagemath.org/html/en/reference/numerical/sage/numerical/knapsack.html}{Reference documentation}.
+\setlength{\itemsep}{2pt}
+\setlength{\parskip}{0pt}
+\bibitem{hs} E. Horowitz and S. Sahni.
+\emph{Computing Partitions with Applications to the Knapsack Problem}.
+Journal of the ACM 21(2), 277--292, 1974.
+\href{https://doi.org/10.1145/321812.321823}{doi:10.1145/321812.321823}.
+\bibitem{ss} R. Schroeppel and A. Shamir.
+\emph{A $T=O(2^{n/2})$, $S=O(2^{n/4})$ Algorithm for Certain NP-Complete Problems}.
+SIAM Journal on Computing 10(3), 456--464, 1981.
+\href{https://doi.org/10.1137/0210033}{doi:10.1137/0210033}.
 \bibitem{ordered} M. D. Atkinson, A. Negro, and N. Santoro.
 \emph{Sums of Lexicographically Ordered Sets}.
 Carleton University Technical Report TR-100, May 1987.
 \href{https://carleton.ca/scs/research/scs-technical-reports/technical-reports-1987/tr-100-sums-of-lexicographically-ordered-sets/}{Institutional abstract}.
+\bibitem{partial} B. Li and L. Ye.
+\emph{Subset Sum via Partial Match}.
+Preprint, version 2, November 2, 2026.
+\href{https://arxiv.org/abs/2610.10446v2}{arXiv:2610.10446v2}.
+\bibitem{pseudo} K. Bringmann.
+\emph{A Near-Linear Pseudopolynomial Time Algorithm for Subset Sum}.
+SODA, 2017.
+\href{https://arxiv.org/abs/1610.04712v2}{arXiv:1610.04712v2}.
+\bibitem{support} K. Bringmann, N. Fischer, and V. Nakos.
+\emph{Beating Bellman's Algorithm for Subset Sum}.
+SODA, 2025.
+\href{https://arxiv.org/abs/2410.21942v1}{arXiv:2410.21942v1}.
+\bibitem{dense} K. Bringmann and P. Wellnitz.
+\emph{On Near-Linear-Time Algorithms for Dense Subset Sum}.
+SODA, 2021.
+\href{https://arxiv.org/abs/2010.09096}{arXiv:2010.09096}.
+\bibitem{doubling} T. Randolph and K. W\k{e}grzycki.
+\emph{Parameterized Algorithms on Integer Sets with Small Doubling:
+Integer Programming, Subset Sum and $k$-SUM}.
+ESA, 96:1--96:19, 2024.
+\href{https://doi.org/10.4230/LIPIcs.ESA.2024.96}{doi:10.4230/LIPIcs.ESA.2024.96}.
+\bibitem{space} OpenAI.
+\emph{A Low-Space Algorithm for Worst-Case Subset Sum}.
+Preprint dated September 26, 2026;
+\href{https://github.com/openai/math/blob/7ef5c0cc5ca4b0e072b7a050fca09ab24bc6fa3a/preprints/A-Low-Space-Algorithm-for-Worst-Case-Subset-Sum-September-26-2026/paper.pdf}{fixed repository version}.
+\bibitem{core} J. R. Landers.
+\emph{How Far from Easy? Structural Distance in Subset Sum}.
+Working draft, 2026. Repository Note V,
+\href{https://github.com/jonland82/exponential-search-spaces/tree/master/notes/05-structural-distance}{source and evidence}.
 \end{thebibliography}
 \end{document}

@@ -1,0 +1,106 @@
+{
+  "review_date": "2026-11-04",
+  "scope": "Ten selected references supporting narrative comparisons; not an exhaustive novelty audit. Preprints and repository drafts are identified explicitly.",
+  "references": [
+    {
+      "key": "hs",
+      "authors": ["Ellis Horowitz", "Sartaj Sahni"],
+      "title": "Computing Partitions with Applications to the Knapsack Problem",
+      "year": 1974,
+      "venue": "Journal of the ACM 21(2), 277-292",
+      "url": "https://doi.org/10.1145/321812.321823",
+      "reviewed_source": "https://www.cise.ufl.edu/~sahni/papers/computingPartitions.pdf",
+      "role": "Foundational meet-in-the-middle time bound; an author-hosted copy supplies primary evidence."
+    },
+    {
+      "key": "ss",
+      "authors": ["Richard Schroeppel", "Adi Shamir"],
+      "title": "A T=O(2^{n/2}), S=O(2^{n/4}) Algorithm for Certain NP-Complete Problems",
+      "year": 1981,
+      "venue": "SIAM Journal on Computing 10(3), 456-464",
+      "url": "https://doi.org/10.1137/0210033",
+      "reviewed_source": "https://epubs.siam.org/doi/10.1137/0210033",
+      "role": "Foundational time-space tradeoff; publisher abstract and bibliographic record."
+    },
+    {
+      "key": "ordered",
+      "authors": ["M. D. Atkinson", "A. Negro", "N. Santoro"],
+      "title": "Sums of Lexicographically Ordered Sets",
+      "year": 1987,
+      "venue": "Carleton University Technical Report TR-100",
+      "url": "https://carleton.ca/scs/research/scs-technical-reports/technical-reports-1987/tr-100-sums-of-lexicographically-ordered-sets/",
+      "reviewed_source": "https://carleton.ca/scs/research/scs-technical-reports/technical-reports-1987/tr-100-sums-of-lexicographically-ordered-sets/",
+      "role": "The institutional abstract establishes ordered distinct sums with efficient decision; no equivalence to the overlap-product theorem is asserted."
+    },
+    {
+      "key": "partial",
+      "authors": ["Baitian Li", "Lixi Ye"],
+      "title": "Subset Sum via Partial Match",
+      "year": 2026,
+      "venue": "arXiv preprint, version 2, November 2, 2026",
+      "url": "https://arxiv.org/abs/2610.10446v2",
+      "reviewed_source": "https://arxiv.org/html/2610.10446v2",
+      "role": "Recent randomized worst-case improvement via compatibility testing; distinct from the deterministic structural guarantee."
+    },
+    {
+      "key": "pseudo",
+      "authors": ["Karl Bringmann"],
+      "title": "A Near-Linear Pseudopolynomial Time Algorithm for Subset Sum",
+      "year": 2017,
+      "venue": "SODA",
+      "url": "https://arxiv.org/abs/1610.04712v2",
+      "reviewed_source": "https://arxiv.org/abs/1610.04712",
+      "role": "Near-linear randomized pseudopolynomial time illustrates the distinction between target magnitude and binary encoding length."
+    },
+    {
+      "key": "support",
+      "authors": ["Karl Bringmann", "Nick Fischer", "Vasileios Nakos"],
+      "title": "Beating Bellman's Algorithm for Subset Sum",
+      "year": 2025,
+      "venue": "SODA; preprint first submitted October 29, 2024",
+      "url": "https://arxiv.org/abs/2410.21942v1",
+      "reviewed_source": "https://arxiv.org/html/2410.21942v1",
+      "role": "Theorem 1.1 computes truncated support in randomized time soft-O(output size times sqrt(n)); contrasts global output sensitivity with small local dictionaries."
+    },
+    {
+      "key": "dense",
+      "authors": ["Karl Bringmann", "Philip Wellnitz"],
+      "title": "On Near-Linear-Time Algorithms for Dense Subset Sum",
+      "year": 2021,
+      "venue": "SODA",
+      "url": "https://arxiv.org/abs/2010.09096",
+      "reviewed_source": "https://arxiv.org/abs/2010.09096",
+      "role": "Dense-regime algorithms and conditional lower bounds; not a characterization by the overlap product."
+    },
+    {
+      "key": "doubling",
+      "authors": ["Tim Randolph", "Karol Węgrzycki"],
+      "title": "Parameterized Algorithms on Integer Sets with Small Doubling: Integer Programming, Subset Sum and k-SUM",
+      "year": 2024,
+      "venue": "ESA, 96:1-96:19",
+      "url": "https://doi.org/10.4230/LIPIcs.ESA.2024.96",
+      "reviewed_source": "https://drops.dagstuhl.de/entities/document/10.4230/LIPIcs.ESA.2024.96",
+      "role": "Algorithms parameterized by additive doubling; the polynomial exponent can depend on that parameter, unlike a generic fixed-exponent FPT claim."
+    },
+    {
+      "key": "space",
+      "authors": ["OpenAI"],
+      "title": "A Low-Space Algorithm for Worst-Case Subset Sum",
+      "year": 2026,
+      "venue": "Preprint dated September 26, 2026; repository release October 6, 2026",
+      "url": "https://github.com/openai/math/blob/7ef5c0cc5ca4b0e072b7a050fca09ab24bc6fa3a/preprints/A-Low-Space-Algorithm-for-Worst-Case-Subset-Sum-September-26-2026/paper.pdf",
+      "reviewed_source": "https://raw.githubusercontent.com/openai/math/7ef5c0cc5ca4b0e072b7a050fca09ab24bc6fa3a/preprints/A-Low-Space-Algorithm-for-Worst-Case-Subset-Sum-September-26-2026/build/introduction.tex",
+      "role": "Recent worst-case time-space work with an explicit word model and randomized construction; cited for comparison, not as a proof of the block-overlap result."
+    },
+    {
+      "key": "core",
+      "authors": ["Jonathan R. Landers"],
+      "title": "How Far from Easy? Structural Distance in Subset Sum",
+      "year": 2026,
+      "venue": "Repository Note V, working draft",
+      "url": "https://github.com/jonland82/exponential-search-spaces/tree/master/notes/05-structural-distance",
+      "reviewed_source": "notes/05-structural-distance/Structural_Distance_in_Subset_Sum.tex",
+      "role": "Repository maximum-superincreasing-core construction and exception-count bound, used for the explicit decimal-family comparison."
+    }
+  ]
+}

@@ -4,8 +4,9 @@
     "solver.py": "b94ca1d230c4f5e54b4c7bb04d366c92034a6262b61ed3a0d032d505c3c8637e",
     "verify.py": "c769422fba440d719a99cff2565348ea8f23d16e3b41899243713c94488fddb8",
     "validation.json": "f6b54ec04b7039e63649215cefdffd8d7d315ff2ad5eacfd586ee6f3b0951fbc",
-    "build_note.py": "d1737bc2a3d2784fdd804344ba5e92ba6bc20d7ab3ff9cebed291fa25893990e",
-    "Certified_Block_Overlap_in_Subset_Sum.tex": "5e316da7c407e4769ba3354f03f5f482163d57cf853d25fa13a3a500688f10a8"
+    "build_note.py": "3e5f676da594ebf95869d59a9b858cfae735543ac5e7d90c2e116b00599d48dc",
+    "references.json": "9523999919d53c0d0f8eb2221e538fe9d1058014a1785b49fffe7f2738a4722f",
+    "Certified_Block_Overlap_in_Subset_Sum.tex": "af7bfbf936d384affb91a29b928f6babbe03c1492ab616ae48ebd069df79b04a"
   },
   "artifact_sha256": {
     "block_overlap_geometry.pdf": "6a155ad625fa107d391c6f749dd120d57b654c778ba7b770d77bd27a1c82ebc3",

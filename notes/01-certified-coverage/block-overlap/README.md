@@ -4,7 +4,7 @@
 [LaTeX source](Certified_Block_Overlap_in_Subset_Sum.tex) |
 [Paper evidence and plot data](paper_evidence.json)
 
-The five-page working draft, *Certified Block Overlap in Subset Sum*, develops
+The six-page working draft, *Certified Block Overlap in Subset Sum*, develops
 the argument below as a standalone graduate-level paper: interval geometry,
 the search theorem, optimal contiguous discovery, separated and perturbed
 families, and verification. Two reproducible plots explain the interval test
@@ -304,6 +304,16 @@ polynomial time on every subset-sum input.
 The combination above is a self-contained elementary derivation. A complete
 novelty audit and comparative performance study remain outside this proof.
 
+The standalone paper integrates **ten references** into the narrative,
+covering foundational meet-in-the-middle and time-space results, ordered
+distinct sums, pseudopolynomial and output-sensitive algorithms, dense
+instances, small additive doubling, and recent worst-case methods. The
+selection includes SODA 2025 work and Li and Ye's partial-match preprint
+revised November 2, 2026. [references.json](references.json) records primary
+sources, reviewed versions, and the specific relationship to this paper;
+preprints and repository drafts remain explicitly identified. This is a
+selected related-work discussion, not an exhaustive novelty audit.
+
 ## 8. Reproduce the finite correctness checks
 
 From the repository root:
@@ -334,7 +344,8 @@ python notes/01-certified-coverage/block-overlap/build_note.py
 
 Requires Matplotlib, `pdflatex`, and `pdfinfo`. The builder checks the original
 source hashes in `validation.json`, regenerates the two vector plots and
-`paper_values.tex`, compiles the LaTeX twice, rejects overfull boxes and
+`paper_values.tex`, checks that all ten bibliography entries are cited and
+match `references.json`, compiles the LaTeX twice, rejects overfull boxes and
 unresolved references, and enforces at most six naturally flowing pages.
 LaTeX scratch stays under `.build/latex/block-overlap/`.
 
