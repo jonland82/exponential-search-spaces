@@ -1,0 +1,60 @@
+{
+  "status": "passed",
+  "kind": "proof checks and synthetic known-population demonstration",
+  "exact_binomial_tail_checks": 1020,
+  "enumerated_null_rejection_bounds": 240,
+  "target_quantile_inverse_checks": 1998,
+  "exact_subset_sum_router_checks": 4914,
+  "routing_labels_tested": [
+    "easy",
+    "hard",
+    "unresolved"
+  ],
+  "exact_routes_tested": [
+    "certified_block_search",
+    "exact_range",
+    "meet_in_middle"
+  ],
+  "synthetic_demo": {
+    "seed": 20261104,
+    "population_size": 101,
+    "training": 400,
+    "reference": 1600,
+    "calibration": 2000,
+    "certified_buckets": [
+      {
+        "bucket": 0,
+        "label": "easy",
+        "true_population_mass": 0.28465346534653463,
+        "true_hard_fraction": 0.0,
+        "calibration_count": 589
+      },
+      {
+        "bucket": 1,
+        "label": "easy",
+        "true_population_mass": 0.2995049504950495,
+        "true_hard_fraction": 0.0,
+        "calibration_count": 578
+      },
+      {
+        "bucket": 2,
+        "label": "hard",
+        "true_population_mass": 0.20503300330033003,
+        "true_hard_fraction": 0.9517102615694165,
+        "calibration_count": 399
+      },
+      {
+        "bucket": 3,
+        "label": "hard",
+        "true_population_mass": 0.21080858085808582,
+        "true_hard_fraction": 1.0,
+        "calibration_count": 434
+      }
+    ],
+    "interpretation": "synthetic cost labels; no measured solver speedup"
+  },
+  "source_sha256": {
+    "algorithm.py": "b19e61d85d319b68bb4a2abff203abaf1b00c3bba7ebfc8f17204445a90fadb2",
+    "verify.py": "e696a9fb9063940903ea65f92f01f54034b75e95dd514026a8a123f651124d6e"
+  }
+}

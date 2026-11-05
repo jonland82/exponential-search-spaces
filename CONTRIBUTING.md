@@ -57,11 +57,21 @@ part of the intended change.
 ## Documentation and paper releases
 
 Keep the home `index.html`, root `README.md`, `notes/README.md` and affected note
-and experiment guides consistent. There are seven numbered notes and two short
-companions: clustering beside Note VI (HTML/PDF/source), and runtime beside Note VII
-(HTML/PDF/source, working draft). Supplements keep their parent folder and do
-not increase the numbered-note count. Retain visible draft labels and distinguish
-fresh comparisons, retrospective diagnostics and conditional runtime claims.
+and experiment guides consistent. The library currently has thirteen distinct
+PDF papers: seven numbered notes and six companions or standalone papers. The
+clustering and geometric runtime companions live beside Notes VI and VII;
+the two connections/runtime-band expositions live in `OpenAI_Subset_Sum_Connections/`;
+the conservation PDF has its own unnumbered note folder; and difficulty buckets
+live under Note I. Supplements do not change the numbered-note count. Retain
+draft labels and distinguish fresh comparisons, retrospective diagnostics,
+synthetic verification, and conditional runtime claims.
+
+`tools/paper_catalog.py` owns numbered and supplemental paper metadata.
+`tools/render_home.py` owns the thematic home-page layout and reading path;
+run it to regenerate `index.html` after editing its template or catalog.
+The link checker requires every catalog PDF in both the home page and the
+Markdown inventory, and checks each format declared available. Home-only CSS
+is scoped under `.research-home` so paper pages retain their typography.
 
 The separate four-page connections note lives in `OpenAI_Subset_Sum_Connections/`
 and builds with `python build_papers.py --paper connections`. Its HTML and PDF
@@ -71,6 +81,12 @@ share one LaTeX source, and its source ledger records fixed upstream revisions.
 `python build_papers.py --paper 7` builds Note VII and its runtime companion.
 Both companions have HTML/PDF/source. Builds synchronize root PDF/TeX compatibility
 downloads; edit the canonical manuscripts in `notes/`, not those generated copies.
+The difficulty-buckets note has a separate evidence-checking builder at
+`notes/01-certified-coverage/distribution-shaping/build_note.py`; its pagination
+flows naturally, with an upper page-count check rather than forced section
+breaks. The connections guide documents the separate runtime-bands build.
+The conservation manuscript currently has PDF only: preserve it as supplied
+and do not advertise unavailable source or HTML formats.
 For navigation-only changes, link checking and a staged-site check are sufficient;
 there is no need to rerun experiments or rewrite manuscript PDFs. Dated protocols,
 reports, transcripts and source snapshots document their historical state, so
@@ -83,6 +99,8 @@ python tools/prepare_site.py --output .build/site-review-20261028
 python tools/check_links.py --site .build/site-review-20261028
 ```
 
+Staging includes every note directory, including unnumbered manuscripts, and
+all thirteen catalog PDFs. Use a fresh output directory for every review.
 Staging is an optional local check; the committed root on `master` is the live site.
 
 ## Branches and commits

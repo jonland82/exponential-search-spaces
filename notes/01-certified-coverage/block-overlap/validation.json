@@ -1,0 +1,24 @@
+{
+  "status": "passed",
+  "kind": "finite correctness checks; no timing or empirical speedup claims",
+  "exhaustive_domain": "all sorted multisets of 0..6 items with values 1..5",
+  "exhaustive_inputs": 462,
+  "partition_optimality_checks": 1386,
+  "random_inputs": 120,
+  "random_seed": 20261104,
+  "target_checks": 37055,
+  "large_constructed_family": {
+    "items": 300,
+    "blocks": 100,
+    "distinct_subset_sums_by_proof": "2037035976334486086268445688409378161051468393665936250636140449354381299763336706183397376",
+    "overlap_product": 1,
+    "discovery_intervals_checked": 897,
+    "support_candidates_constructed_including_reconstruction": 7966,
+    "yes_search_nodes": 101,
+    "no_search_nodes": 1
+  },
+  "source_sha256": {
+    "solver.py": "b94ca1d230c4f5e54b4c7bb04d366c92034a6262b61ed3a0d032d505c3c8637e",
+    "verify.py": "c769422fba440d719a99cff2565348ea8f23d16e3b41899243713c94488fddb8"
+  }
+}

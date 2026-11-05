@@ -1,0 +1,278 @@
+\documentclass[10pt,letterpaper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern,amsmath,amssymb,amsthm,booktabs,array}
+\usepackage[margin=0.72in]{geometry}
+\usepackage{xcolor,titlesec,microtype,xurl,hyperref}
+\hypersetup{pdftitle={Distribution-Shaped Difficulty Buckets},pdfauthor={Jonathan R. Landers},hidelinks}
+\definecolor{ink}{HTML}{26231F}
+\definecolor{accent}{HTML}{6E5943}
+\color{ink}
+\titleformat{\section}{\normalfont\sffamily\large\bfseries}{}{0pt}{\color{accent}\rule{2pt}{1em}\hspace{7pt}}
+\titlespacing*{\section}{0pt}{8pt}{4pt}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3pt plus 1pt}
+\raggedbottom
+\setlength{\emergencystretch}{2em}
+\setlength{\abovedisplayskip}{5pt plus 1pt}
+\setlength{\belowdisplayskip}{5pt plus 1pt}
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\newcommand{\Prb}{\mathbb P}
+\newcommand{\E}{\mathbb E}
+\newcommand{\ind}{\mathbf1}
+\newcommand{\poly}{\operatorname{poly}}
+\newcommand{\sigmoid}{\operatorname{sigmoid}}
+\newcommand{\clip}{\operatorname{clip}}
+% Evidence values are checked against validation.json by build_note.py.
+\newcommand{\TailChecks}{1020}
+\newcommand{\NullChecks}{240}
+\newcommand{\QuantileChecks}{1998}
+\newcommand{\RouterChecks}{4914}
+\newcommand{\TrainCount}{400}
+\newcommand{\ReferenceCount}{1600}
+\newcommand{\CalibrationCount}{2000}
+\newcommand{\MassZero}{28.47}
+\newcommand{\MassOne}{29.95}
+\newcommand{\MassTwo}{20.50}
+\newcommand{\MassThree}{21.08}
+\newcommand{\PurityZero}{0.00}
+\newcommand{\PurityOne}{0.00}
+\newcommand{\PurityTwo}{95.17}
+\newcommand{\PurityThree}{100.00}
+\newcommand{\CountZero}{589}
+\newcommand{\CountOne}{578}
+\newcommand{\CountTwo}{399}
+\newcommand{\CountThree}{434}
+\begin{document}
+{\LARGE\sffamily\bfseries Distribution-Shaped Difficulty Buckets}\par
+\vspace{3pt}
+{\large\sffamily Chosen geometry, independently checked computational meaning}\par
+\vspace{5pt}
+{\small Jonathan R. Landers \hfill November 4, 2026}\par
+{\color{accent}\small\textsc{Standalone research note $\cdot$ Working draft}}
+
+\section{The question and the object being represented}
+Can we choose a distribution in which large groups of computationally expensive problems occupy recognizable regions? Yes, provided we separate three tasks: learn a cost-related score from features, give that score a chosen shape, and independently check what the resulting regions mean. The results below give an exact shape construction, a finite-reference error bound, and simultaneous guarantees on bucket size and difficulty. They do not assume that changing coordinates creates information about computational cost.
+
+A draw $X\sim D$ is a whole problem instance. For subset sum, $X=(w,t)$ consists of positive integer weights and a target, rather than one subset of a fixed list. Fix a complete solver $A$, its cost unit, and a budget $B\ge0$. Write
+\begin{equation}\label{eq:label}
+ C_A(X)\ge0,\qquad H(X)=\ind\{C_A(X)>B\}.
+\end{equation}
+Here ``hard'' means exceeding this solver's budget. It says neither that the subset-sum answer is NO nor that every algorithm needs that much work. A budgeted run can establish the label without observing eventual completion, if exceeding the declared budget is observed exactly. A different stopping rule defines a different label.
+
+Extract affordable features $\phi(X)\in\mathbb R^d$ and learn a score $S=s_\theta(\phi(X))\in[0,1]$. Runtime prediction from instance features is established methodology~\cite{hutter}. A concrete learner standardizes coordinates using training means $\bar\phi_j$ and standard deviations $r_j$, replacing zero deviations by one, and uses
+\begin{align}
+ \widetilde\phi(x)&=\left(1,\frac{\phi_1(x)-\bar\phi_1}{r_1},\ldots,
+                              \frac{\phi_d(x)-\bar\phi_d}{r_d}\right),\nonumber\\[-2pt]
+ s_\theta(\phi(x))&=\sigmoid(\theta^\top\widetilde\phi(x)),\qquad
+ \sigmoid(a)=(1+e^{-a})^{-1},\label{eq:score}\\
+ \mathcal L(\theta)&=-\frac{\sum_i v_i[H_i\log S_i+(1-H_i)\log(1-S_i)]}{\sum_i v_i}.
+ \label{eq:loss}
+\end{align}
+The weights $v_i$ are one, or clipped observed costs when expensive training cases deserve more emphasis. Fixed-step updates use $\nabla\mathcal L=(\sum_i v_i)^{-1}\sum_i v_i(S_i-H_i)\widetilde\phi(X_i)$. Numerical logits are capped in the implementation. None of the guarantees requires the fitted score to optimize this loss or to be an accurate probability estimate.
+
+Use three independent data roles. \emph{Training} fits the score and standardization. An independent \emph{reference} sample estimates score ranks. Independent \emph{calibration} observations test the frozen regions. Fix a threshold $\tau\in(0,1)$ and set $G=\ind\{S\ge\tau\}$. This is a predicted group, not the observed label $H$. The predictor, reference transform, bucket boundaries, confidence levels, and cost definition are fixed before calibration. Repeated targets or scaled copies of one list must not be treated as independent calibration observations without an additional argument.
+
+\section{Give the representation a chosen distribution}
+For each positive-probability group $g\in\{0,1\}$, let $F_g$ be the CDF of $S$ conditional on $G=g$. Choose a continuous target CDF $Q_g$, strictly increasing on an interval $I_g$, with the two intervals disjoint and ordered. With $V\sim\operatorname{Unif}[0,1)$ independent of the instance and label, define
+\begin{equation}\label{eq:transport}
+ U=F_g(S^-)+V\{F_g(S)-F_g(S^-)\},\qquad Z=Q_g^{-1}(U).
+\end{equation}
+The randomization spreads tied scores across their CDF jump. It supplies positions within a tied group, rather than new evidence about difficulty.
+
+A useful choice is a truncated lognormal component on $(\ell_g,u_g)$, with $0<\ell_g<u_g$ and $\sigma_g>0$. If $\Phi$ is the standard normal CDF, put
+\begin{align}
+ a_g&=\Phi((\log\ell_g-\mu_g)/\sigma_g),\quad
+ b_g=\Phi((\log u_g-\mu_g)/\sigma_g),\nonumber\\
+ Q_g(z)&=\frac{\Phi((\log z-\mu_g)/\sigma_g)-a_g}{b_g-a_g},\quad \ell_g<z<u_g,
+ \label{eq:lognormal}\\
+ Q_g^{-1}(u)&=\exp\{\mu_g+\sigma_g\Phi^{-1}(a_g+u(b_g-a_g))\}.\nonumber
+\end{align}
+Extend the CDF by zero and one outside its interval. A narrow component for the higher-score group creates a compact visible region; calibration will determine whether it actually contains expensive cases.
+
+\begin{theorem}[Chosen shape]\label{thm:shape}
+Conditional on $G=g$, $U$ is uniform and $Z$ has CDF $Q_g$. Unconditionally the CDF is $\pi_0Q_0+\pi_1Q_1$, where $\pi_g=\Prb(G=g)$.
+\end{theorem}
+\begin{proof}
+For a uniform $W$, the generalized inverse $F_g^{-1}(W)$ has CDF $F_g$. Given an atom $s$ of this inverse, $W$ is uniform on $[F_g(s^-),F_g(s)]$; off the atoms, $W=F_g(F_g^{-1}(W))$ almost surely. Thus~\eqref{eq:transport} has the same rank distribution as $W$. For $z\in I_g$, $\Prb(Z\le z\mid G=g)=\Prb(U\le Q_g(z)\mid G=g)=Q_g(z)$. Conditioning on the two groups gives the mixture.
+\end{proof}
+
+The mixture weights are fixed by the source population. Changing them would require resampling or reweighting that population. Choosing a density can change concentration and location, while preserving how much population mass belongs to each predicted group.
+
+In practice replace $F_g$ by its empirical CDF $\widehat F_g$ from $m_g$ reference scores. Form $\widehat U$ by the same jump formula and use $\widehat Z=Q_g^{-1}(\clip(\widehat U,c,1-c))$, where $0<c<1/2$ avoids numerical endpoints.
+\begin{theorem}[Finite-reference shape error]\label{thm:reference}
+If $\|\widehat F_g-F_g\|_\infty\le\eta_g$, then
+\begin{equation}\label{eq:cdferror}
+ \sup_z|\Prb(\widehat Z\le z\mid G=g,\text{reference})-Q_g(z)|\le\eta_g+c.
+\end{equation}
+For $\delta_s\in(0,1)$ and nonempty reference groups, the bounds hold simultaneously with probability at least $1-\delta_s$ when
+\[
+\eta_g=\min\{1,\sqrt{\log(4/\delta_s)/(2m_g)}\}.
+\]
+\end{theorem}
+\begin{proof}
+The CDF error also bounds left-limit error. Couple true and estimated ranks using the same $(S,V)$. Their difference is a convex combination of these errors, so $|\widehat U-U|\le\eta_g$. Clipping adds at most $c$. A variable within $e$ of a uniform variable has CDF between $\max(0,u-e)$ and $\min(1,u+e)$; apply this with $e=\eta_g+c$ and then the increasing inverse $Q_g^{-1}$. Conditional on $m_g$, reference scores in group $g$ are i.i.d. from $F_g$. The DKW--Massart bound~\cite{massart} is $\Prb(\|\widehat F_g-F_g\|_\infty>\eta)\le2e^{-2m_g\eta^2}$. Allocate $\delta_s/2$ to each group. When the displayed square root exceeds one, the deterministic CDF bound one suffices.
+\end{proof}
+An empty reference group is left unrepresented. The next guarantee applies directly to the implemented frozen buckets, even when the estimated shape is imperfect.
+
+\section{Certify that identifiable buckets are large and hard}
+Divide the clipped reference-rank interval into $J$ fixed bins, $[j/J,(j+1)/J)$ for $j=0,\ldots,J-1$, closing the last endpoint. The predicted group and bin index give $b=gJ+j$, defining $M=2J$ disjoint buckets $\mathcal B_b$ in the joint space of $(X,V)$. Their images under $Q_g^{-1}$ are known coordinate intervals, so membership is readily identified. Use $c<J^{-1}/2$; the implementation uses $c=10^{-9}/J$. Unrepresented groups have no assignment.
+
+For a fresh draw write
+\begin{equation}
+ \rho_b=\Prb(\mathcal B_b),\qquad
+ p_b=\Prb(H=1\mid\mathcal B_b)\quad(\rho_b>0).
+\end{equation}
+Here $\rho_b$ measures bucket size and $p_b$ measures its hard-case purity. Fix permitted impurity $\epsilon\in(0,1/2)$, minimum mass $\gamma\in(0,1)$, and failure probability $\delta\in(0,1)$. On $N$ independent calibration observations, let $n_b$ count membership and $k_b$ count hard members. Set
+\begin{equation}\label{eq:tail}
+ \alpha=\frac{\delta}{3M},\qquad
+ T(n,k,p)=\sum_{i=k}^n {n\choose i}p^i(1-p)^{n-i},
+\end{equation}
+with $T=1$ for $k\le0$ and $T=0$ for $k>n$. Run these three tests for every bucket:
+\begin{center}
+\begin{tabular}{@{}ll@{}}
+\toprule
+Claim & Test required to pass\\
+\midrule
+Hard purity $p_b\ge1-\epsilon$ & $n_b>0$, $T(n_b,k_b,1-\epsilon)\le\alpha$\\
+Easy purity $1-p_b\ge1-\epsilon$ & $n_b>0$, $T(n_b,n_b-k_b,1-\epsilon)\le\alpha$\\
+Mass $\rho_b\ge\gamma$ & $T(N,n_b,\gamma)\le\alpha$\\
+\bottomrule
+\end{tabular}
+\end{center}
+Label a bucket hard only when its hard and mass tests pass, easy only when its easy and mass tests pass, and unresolved otherwise. Since $\epsilon<1/2$ and $\alpha<1/2$, both purity tests cannot pass: at least one tests a count no larger than $n_b/2$ under success probability $1-\epsilon>1/2$, giving an upper tail at least $1/2$.
+
+\begin{theorem}[Simultaneously reliable large buckets]\label{thm:buckets}
+Conditional on any frozen training/reference result, with probability at least $1-\delta$ over calibration observations and ties, every reported hard bucket has $(\rho_b,p_b)\in[\gamma,1]\times[1-\epsilon,1]$, and every reported easy bucket has $\rho_b\ge\gamma$ and $p_b\le\epsilon$.
+\end{theorem}
+\begin{proof}
+Fix a bucket. Conditional on $n_b$, its hard count has distribution $\operatorname{Bin}(n_b,p_b)$. For any $p_b\le p_0$, the rejecting counts satisfying $T(n_b,k_b,p_0)\le\alpha$ form an upper tail whose probability under $p_0$ is at most $\alpha$. Couple Bernoulli trials with common uniforms: decreasing the success probability cannot increase this rejection probability. Hence
+\[
+ \Prb\{T(n_b,k_b,p_0)\le\alpha\mid n_b\}\le\alpha\quad(p_b\le p_0).
+\]
+Average over $n_b$ and use $p_0=1-\epsilon$ to bound a false hard claim. Apply the same argument to easy counts for a false easy claim. Also $n_b\sim\operatorname{Bin}(N,\rho_b)$, so the same tail argument bounds a false mass claim at threshold $\gamma$. For a zero-mass bucket, $n_b=0$ almost surely and no claim passes. There are $3M$ tests. A union bound limits the probability of any erroneous certification to $3M\alpha=\delta$. The tests need not be independent. This is classical exact-binomial inversion~\cite{clopper} with simultaneous error accounting.
+\end{proof}
+
+Any post-calibration union of $q$ reported hard buckets has mass at least $q\gamma$ and hard purity at least $1-\epsilon$ on this same event: disjoint masses add and conditional purity is their mass-weighted average. Thus one may select a large identified region after seeing the results, provided the candidate buckets were fixed beforehand. Shape and bucket guarantees hold together with probability at least $1-\delta_s-\delta$ by a further union bound.
+
+With defaults $\gamma=0.05$, $\epsilon=0.1$, and $\delta=0.05$, every reported hard bucket contains at least 5\% of the population and at least 90\% hard cases, at simultaneous confidence 95\%. This is a population statement for fresh draws; it is not certainty about an individual case. Calibration is allowed to report no qualifying bucket.
+
+\section{When a hard bucket will be found}
+Validity does not ensure coverage. A useful positive result needs a region that is genuinely large and pure. The following gives an explicit sufficient sample size, conditional on the learned representation having that signal.
+
+\begin{theorem}[Availability under positive margins]\label{thm:availability}
+Suppose a fixed frozen bucket satisfies $\rho_b\ge\gamma+\Delta_\rho$ and $p_b\ge1-\epsilon+\Delta_p$, with $\Delta_\rho,\Delta_p>0$. For $\beta\in(0,1)$ let $L_0=\max\{\log(1/\alpha),\log(2/\beta)\}$. If
+\begin{equation}\label{eq:samplesize}
+ N\ge2L_0\max\left\{\Delta_\rho^{-2},\ (\gamma\Delta_p^2)^{-1}\right\},
+\end{equation}
+the calibration algorithm reports that bucket hard with probability at least $1-\beta$.
+\end{theorem}
+\begin{proof}
+Hoeffding's bound~\cite{hoeffding} gives
+\[
+ \Prb\{n_b/N<\gamma+\Delta_\rho/2\}\le e^{-N\Delta_\rho^2/2}.
+\]
+Off this event, $n_b\ge N\gamma$. Moreover the mass-test upper tail, computed under success probability $\gamma$, is at most $e^{-N\Delta_\rho^2/2}\le\alpha$ by~\eqref{eq:samplesize}. Conditional on any such $n_b$, another application of Hoeffding gives
+\[
+ \Prb\{k_b/n_b<1-\epsilon+\Delta_p/2\mid n_b\}
+ \le e^{-n_b\Delta_p^2/2}\le e^{-N\gamma\Delta_p^2/2}.
+\]
+Off this second event, the hard-test upper tail under $1-\epsilon$ is at most $e^{-N\gamma\Delta_p^2/2}\le\alpha$. The sample-size condition also bounds each adverse event by $\beta/2$. Both required tests therefore pass with probability at least $1-\beta$.
+\end{proof}
+The same argument applies to easy buckets after exchanging labels. For simultaneous availability of up to $M$ qualifying buckets, replace $\log(2/\beta)$ by $\log(2M/\beta)$. The bound is conservative: the exact tests may accept with fewer observations. Positive margins are properties of the frozen representation and population, not consequences of fitting a lognormal curve.
+
+\begin{corollary}[Aggregate work in a reported region]\label{cor:work}
+On the event in Theorem~\ref{thm:buckets}, a union $\mathcal U$ of $q$ reported hard buckets satisfies
+\begin{equation}
+ \E[C_A(X)\ind_{\mathcal U}]\ge B(1-\epsilon)\Prb(\mathcal U)
+                                    \ge B(1-\epsilon)q\gamma.
+\end{equation}
+\end{corollary}
+\begin{proof}
+Pointwise, $C_A(X)\ind_{\mathcal U}\ge B\ind_{\mathcal U\cap\{H=1\}}$. Integrate and use the union's mass and purity bounds.
+\end{proof}
+This identifies a region with a guaranteed minimum share of expensive cases and a lower bound on aggregate work. To claim it contains most total work, one also needs information about costs outside the region.
+
+\begin{proposition}[What feature information and shaping permit]\label{prop:limits}
+If $H$ is independent of $\phi(X)$, with $\Prb(H=1)=p$, then every positive-mass region constructed from those features and independent randomization has hard purity $p$. With predictor, reference ranks, and bins fixed, changing the increasing target quantiles changes coordinates but preserves membership and purity.
+\end{proposition}
+\begin{proof}
+Condition on the frozen training/reference result. Independence of $H$ from $\phi(X)$ and independent $V$ implies independence from every measurable function of $(\phi(X),V)$. This proves the first statement. For the second, group and rank-bin membership are determined before applying $Q_g^{-1}$. Replacing that increasing map moves the same members into a different coordinate interval.
+\end{proof}
+Consequently the feature score supplies the cost information, the selected density supplies the layout, and calibration establishes which visible regions have reliable computational meaning. A dense region alone is not a hardness certificate.
+
+\section{A complete algorithm and an exact subset-sum application}
+The offline algorithm fits~\eqref{eq:score}, estimates reference ranks, freezes its $M$ buckets, and runs all tests in~\eqref{eq:tail}. Online it extracts features, computes $(G,\widehat U,\widehat Z)$, and returns the fixed bucket's hard, easy, or unresolved label. Shape parameters, thresholds, and model choices cannot be retuned using the same calibration labels without accounting for the extra choices. Abstention on unsupported regions is part of the algorithm, as in selective prediction~\cite{selective}.
+
+The reference implementation uses 12 affordable subset-sum features: item count, binary encoding length, maximum weight bit length, log normalized total, target fraction, target distance from the range boundary, duplicate rate, greedy superincreasing-core exception rate, log gcd, target/gcd mismatch, target/range mismatch, and normalized maximum weight gap. A sort and linear scans give polynomial bit cost in input length $L$. These features are not asserted to completely describe runtime.
+
+An easy-labeled case proposes exact search through blocks of at most three consecutive sorted weights. Hard-labeled and unresolved cases propose meet in the middle. To make this application standalone, the required block bound is derived next.
+
+Let the sorted blocks be $B_1,\ldots,B_m$. For each block let $S_j$ be its distinct subset sums, retaining one indexed witness per sum, and let $P_j$ be the sum of all smaller-block weights. Define
+\begin{equation}\label{eq:overlap}
+ \kappa_j=\max_r|S_j\cap[r-P_j,r]|,\qquad K=\prod_{j=1}^m\kappa_j.
+\end{equation}
+At a descending search node with residual target $r$, a block sum $s$ is feasible only if $0\le r-s\le P_j$. This excludes all sums outside the displayed interval. Equal block sums leave the same residual and unprocessed items, so one representative suffices. Recursing on eligible sums is therefore exact by induction on remaining blocks. Level sizes are bounded by $1,\kappa_m,\kappa_m\kappa_{m-1},\ldots,K$, totaling at most $(m+1)K$ nodes.
+
+The partition can also be found cheaply. For every consecutive interval $[u,v]$ of length at most $b$, construct its at most $2^b$ sums by sorted-list translation and merging. Its lower completion range is $\sum_{i<u}w_i$, independent of previous cuts. A sliding window gives its exact overlap $\kappa(u,v)$. The recurrence
+\begin{equation}
+ D(0)=1,\qquad D(v)=\min_{\max(1,v-b+1)\le u\le v}D(u-1)\kappa(u,v)
+\end{equation}
+finds the smallest product $K_b=D(n)$ among permitted partitions: remove the last block and apply induction. There are at most $nb$ candidate intervals; each costs $O(2^b)$ arithmetic operations. Sums, witness masks, and products have polynomial bit length. Including discovery, reconstruction, and search gives $\poly(L)(2^b+K_b)$ time.
+
+\begin{theorem}[Exact router with a general fallback]\label{thm:router}
+On an easy-labeled case build the $b=3$ representation, using it only if $K_3\le2^{\lceil n/2\rceil}$; otherwise fall back to meet in the middle. Use that fallback directly for other labels. Reject targets outside $[0,\sum_iw_i]$ exactly and verify YES witnesses. Every completed answer is exact, with online time
+$\poly(L,R)(1+2^{\lceil n/2\rceil})$, where $R$ is model size.
+\end{theorem}
+\begin{proof}
+Predictions select a complete exact route; they never exclude candidate solutions. The preceding block bound and guard give the claimed exponential scale for that route. In the fallback, build both half-support lists and scan sorted pairs for the target. Each list has at most $2^{\lceil n/2\rceil}$ entries, and equal sums can retain one witness. This is complete exact matching at the stated bit cost. Feature extraction, inference, and fingerprint checking are polynomial in $L,R$.
+\end{proof}
+For $I$ gradient iterations, score fitting costs $O(IN_{\rm tr}d)$ arithmetic operations; reference scoring/sorting costs $O(N_{\rm ref}d+N_{\rm ref}\log(N_{\rm ref}+1))$. Calibration uses $O(MN)$ big-integer steps for rational binomial tails, with $O(N\ell+N)$-bit integers when threshold encodings have length $\ell$. Obtaining solver-cost labels is an additional offline expense. General fallback memory remains exponential. No runtime improvement follows solely from a bucket-purity guarantee.
+
+\section{Verified results and their interpretation}
+The accompanying software uses exact rational confidence tests, frozen representation/calibration fingerprints, and original-index witness checks. Floating-point scores and inverse CDFs define the implemented buckets to which the binomial guarantee applies; the ideal CDF results concern real arithmetic. Seeded ties are pseudorandom, while the probability model assumes independent uniforms.
+
+Verification includes \TailChecks\ binomial tails against direct summation, \NullChecks\ enumerated null rejection bounds, \QuantileChecks\ quantile/CDF inverse checks, and \RouterChecks\ router answers against exhaustive subset enumeration. Additional checks cover ties, empty regions, censoring, serialization, fingerprints, and all routing labels. These supplement the proofs, without benchmarking solver performance.
+
+A demonstration uses the uniform population $x\in\{0,0.01,\ldots,1\}$, feature $\phi(x)=x$, and deliberately constructed costs
+\begin{equation}
+ C(x)=\begin{cases}1,&x<0.60,\\100,&x\ge0.60,\end{cases}
+ \qquad B=10.
+\end{equation}
+Training, reference, and calibration independently sample this population with replacement, using \TrainCount, \ReferenceCount, and \CalibrationCount\ observations. The data-draw seed is 20261104; calibration ties use seed 20261105. With $J=2$, the component choices $(\mu,\sigma,\ell,u)$ are $(-1,0.35,0.05,1)$ and $(1.6,0.2,2,12)$. Thus $M=4$ and $\alpha=0.05/12=1/240$.
+
+\begin{center}
+\begin{tabular}{@{}clrrr@{}}
+\toprule
+Bucket & Reported label & Calibration count & True mass (\%) & True hard fraction (\%)\\
+\midrule
+0 & Easy & \CountZero & \MassZero & \PurityZero\\
+1 & Easy & \CountOne & \MassOne & \PurityOne\\
+2 & Hard & \CountTwo & \MassTwo & \PurityTwo\\
+3 & Hard & \CountThree & \MassThree & \PurityThree\\
+\bottomrule
+\end{tabular}
+\end{center}
+The true entries are computed from the known population by exact integration over randomized ties. In particular, for a source score with reference jump $[l/r,h/r]$, its probability of falling in a rank bin is the overlap length divided by $(h-l)/r$; if $h=l$, its rank is a point. Summing these probabilities, and their hard-labeled counterparts, over the 101 equally likely source points yields bucket masses and conditional purities.
+
+Both hard buckets exceed 5\% mass and 90\% purity; their union contains about 41.58\% of this synthetic population. Real subset-sum coverage and paid solver improvements require evaluation on a separate untouched test population.
+
+The construction combines classical rank transforms, runtime models, and finite-sample inference. Its novelty remains unestablished; useful coverage requires the feature signal and calibration conditions proved above.
+
+\vspace{2pt}
+{\small\textbf{Reproduction.} Run \texttt{python} on \path{notes/01-certified-coverage/distribution-shaping/verify.py}. Accompanying \texttt{algorithm.py} and \texttt{validation.json} supply the method and saved checks. The paper build verifies source hashes and table values without rerunning experiments.}
+
+\begingroup\footnotesize
+\begin{thebibliography}{5}
+\setlength{\itemsep}{1pt}\setlength{\parskip}{0pt}
+\bibitem{hutter} F. Hutter, L. Xu, H. H. Hoos, and K. Leyton-Brown.
+Algorithm runtime prediction: Methods \& evaluation. \emph{Artificial Intelligence} 206, 79--111, 2014. \url{https://arxiv.org/abs/1211.0906}.
+\bibitem{massart} P. Massart. The tight constant in the Dvoretzky--Kiefer--Wolfowitz inequality. \emph{Annals of Probability} 18(3), 1269--1283, 1990. \url{https://doi.org/10.1214/aop/1176990746}.
+\bibitem{clopper} C. J. Clopper and E. S. Pearson. The use of confidence or fiducial limits illustrated in the case of the binomial. \emph{Biometrika} 26(4), 404--413, 1934. \url{https://doi.org/10.1093/biomet/26.4.404}.
+\bibitem{hoeffding} W. Hoeffding. Probability inequalities for sums of bounded random variables. \emph{JASA} 58(301), 13--30, 1963. \url{https://doi.org/10.1080/01621459.1963.10500830}.
+\bibitem{selective} A. Gangrade, A. Kag, and V. Saligrama. Selective classification via one-sided prediction. \emph{AISTATS}, PMLR 130, 2179--2187, 2021. \url{https://proceedings.mlr.press/v130/gangrade21a.html}.
+\end{thebibliography}
+\endgroup
+\end{document}

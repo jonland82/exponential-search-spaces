@@ -9,7 +9,8 @@ from urllib.parse import unquote, urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
-from tools.paper_catalog import PAPERS, artifact
+from tools.paper_catalog import ALL_PAPERS, PAPERS, artifact, paper_id
+from tools.render_home import render
 
 ARCHIVE_PARTS = {"sources", "upstream", "reruns", ".git", ".build", "__pycache__"}
 
@@ -19,10 +20,13 @@ class Links(HTMLParser):
         super().__init__()
         self.links = []
         self.ids = set()
+        self.paper_ids = []
 
     def handle_starttag(self, tag, attrs):
         attrs = dict(attrs)
         self.ids.update([attrs["id"]] if "id" in attrs else [])
+        if "data-paper-id" in attrs:
+            self.paper_ids.append(attrs["data-paper-id"])
         for key in ("href", "src"):
             if key in attrs:
                 self.links.append(attrs[key])
@@ -70,8 +74,32 @@ def check(root, site=False):
                 if unquote(parsed.fragment) not in parser.ids:
                     failures.append(f"{path.relative_to(root)}: missing fragment {link}")
     home = (root / "index.html").read_text(encoding="utf-8")
-    if home.count('class="series-card"') != len(PAPERS):
-        failures.append(f"index.html: expected exactly {len(PAPERS)} note cards")
+    if home != render():
+        failures.append("index.html: catalog/template changed; run python tools/render_home.py")
+    home_links = Links()
+    home_links.feed(home)
+    expected_ids = sorted(paper_id(paper) for paper in ALL_PAPERS)
+    if sorted(home_links.paper_ids) != expected_ids:
+        failures.append(f"index.html: expected one catalog entry per paper: {', '.join(expected_ids)}")
+    inventory = root / "notes/README.md"
+    inventory_targets = {
+        (inventory.parent / urlsplit(link).path).resolve()
+        for link in local_links(inventory)
+        if not urlsplit(link).scheme and not urlsplit(link).netloc
+    }
+    home_targets = {(root / urlsplit(link).path).resolve() for link in home_links.links
+                    if not urlsplit(link).scheme and not urlsplit(link).netloc}
+    for paper in ALL_PAPERS:
+        relative = artifact(paper, ".pdf").relative_to(ROOT)
+        target = (root / relative).resolve()
+        if target not in home_targets:
+            failures.append(f"index.html: missing paper PDF: {relative.as_posix()}")
+        if target not in inventory_targets:
+            failures.append(f"notes/README.md: missing paper PDF: {relative.as_posix()}")
+        for extension in paper.get("formats", (".html", ".pdf", ".tex")):
+            asset = root / artifact(paper, extension).relative_to(ROOT)
+            if not asset.is_file():
+                failures.append(f"missing research paper asset: {asset.relative_to(root)}")
     for path in [root / "index.html", *root.glob("*.html"), *root.glob("notes/*/*.html")]:
         text = path.read_text(encoding="utf-8")
         parser = Links()
@@ -103,7 +131,8 @@ def check(root, site=False):
         print("\n".join(failures))
         raise SystemExit(f"{len(failures)} broken or forbidden links")
     html_count = sum(1 for _ in root.glob("notes/*/*.html"))
-    print(f"Checked {count} active local links/assets; {len(PAPERS)} numbered notes, "
+    print(f"Checked {count} active local links/assets; {len(ALL_PAPERS)} research papers "
+          f"({len(PAPERS)} numbered), "
           f"{html_count} HTML papers including companions; draft status respected.")
 
 

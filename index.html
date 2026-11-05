@@ -1,269 +1,180 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Seven research notes, two companions, and From Choices to Sums by Jonathan R. Landers: certified coverage, subset-sum experiments, learned completion, geometric reuse, and connections to OpenAI's subset-sum algorithms.">
-<title>Certified Coverage: A Research Sequence</title>
-<script>
-window.MathJax = {
-  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']], tags: 'none' },
-  svg: { fontCache: 'global', scale: 0.98 },
-  options: { enableMenu: false }
-};
-</script>
-<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
-<link rel="stylesheet" href="paper.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="13 research papers by Jonathan R. Landers on the cost of representing exponential search: exact structure, subset-sum experiments, solver prediction, runtime distributions, and certified difficulty buckets.">
+  <meta name="theme-color" content="#f7f8f5">
+  <title>Certified Coverage of Exponential Search Spaces — Jonathan R. Landers</title>
+  <link rel="stylesheet" href="paper.css">
 </head>
-<body>
-<main>
-<nav class="top-links" aria-label="Site links">
-  <a href="https://github.com/jonland82/exponential-search-spaces">View the GitHub repository</a>
-  <a href="README.md">Research and experiment guide</a>
-  <a href="#latest">Latest papers</a>
-  <a href="#companions">Companion notes</a>
-  <a href="#connections">Related exposition</a>
-</nav>
-
-<header>
-  <span class="series-label">Seven research notes, two companions, and a connections paper</span>
-  <h1>Certified Coverage of Exponential Search Spaces</h1>
-  <div class="byline">Jonathan R. Landers · September–October 2026</div>
-  <p class="deck">From certified coverage to structural distance, learned search guidance and exact core reuse: measuring what exact structure saves and what discovering it costs.</p>
-</header>
-
-<section aria-labelledby="latest">
-  <h2 id="latest">Latest papers</h2>
-  <p class="small">October 2026 additions &middot; Available in HTML and PDF.</p>
-  <ul class="paper-list">
-    <li><strong><a href="OpenAI_Subset_Sum_Connections/From_Choices_to_Sums.html">From Choices to Sums: Connections to OpenAI's Subset-Sum Algorithms</a></strong> &mdash; four-page exposition connecting distinct sums, compatible representations and geometric reuse. October 28. <a href="OpenAI_Subset_Sum_Connections/From_Choices_to_Sums.pdf">PDF</a>.</li>
-    <li><strong><a href="notes/07-geometric-cores/Geometric_Cores_and_Exceptions_in_Subset_Sum.html">VII. Geometric Cores and Exceptions in Subset Sum</a></strong> &mdash; exact core reuse and fresh paid-completion results. Working draft, October 28. <a href="notes/07-geometric-cores/Geometric_Cores_and_Exceptions_in_Subset_Sum.pdf">PDF</a>.</li>
-    <li><strong><a href="notes/07-geometric-cores/Runtime_of_Geometric_Core_Subset_Sum.html">The Runtime of Geometric Core Subset Sum</a></strong> &mdash; three-page companion covering runtime bounds and general-algorithm comparisons. Working draft, October 28. <a href="notes/07-geometric-cores/Runtime_of_Geometric_Core_Subset_Sum.pdf">PDF</a>.</li>
-    <li><strong><a href="notes/06-learned-solvability/Why_Unresolved_Inputs_Cluster.html">Why Unresolved Inputs Cluster: A Structural and Statistical Account</a></strong> &mdash; three-page companion on the observed input-space geometry, October 26. <a href="notes/06-learned-solvability/Why_Unresolved_Inputs_Cluster.pdf">PDF</a>.</li>
-  </ul>
-</section>
-
-<div class="abstract">
-  <p><span class="lead">The question.</span> A search over \(n\) binary choices has \(2^n\) candidate states. Can exact summaries or certified exclusions account for enough of them that the remaining search is small? Can we obtain those summaries cheaply enough to help?</p>
-</div>
-
-<section aria-labelledby="arc">
-  <h2 id="arc">The narrative arc</h2>
-  <p><strong>Reading order:</strong> <a href="notes/01-certified-coverage/Certified_Coverage_of_Exponential_Search_Spaces.html">I: Framework</a> → <a href="notes/02-subset-sum-stress-test/Subset_Sum_as_a_Stress_Test.html">II: Exact-search test</a> → <a href="notes/03-probability-valued-subset-sum/Probability_Valued_Subset_Sum.html">III: Random-target probability</a> → <a href="notes/04-certified-approximation/Certified_Approximation_of_Subset_Sum.html">IV: Pairing in approximation</a>. Notes III and IV branch from II; either can be read independently after the framework and exact-search test.</p>
-
-  <p>Continue with <a href="notes/05-structural-distance/Structural_Distance_in_Subset_Sum.html">V: Structural distance (working draft)</a> and <a href="notes/06-learned-solvability/Predicting_Subset_Sum_Completion.html">VI: Learned completion and certified pruning</a>. These return to exact solving: discover easy cores, predict budgeted completion, then test whether structural checks improve search within Note I's framework. <a href="notes/07-geometric-cores/Geometric_Cores_and_Exceptions_in_Subset_Sum.html">VII: Geometric core reuse (working draft)</a> develops an exact route that improves paid completion on fresh constructed inputs.</p>
-  <p>Two <a href="#companions">short companions</a> explain why unresolved inputs cluster and when the geometric runtime bound improves on general search. <a href="#connections">From Choices to Sums</a> connects the series to OpenAI's subset-sum algorithms. Notes V, VII and the runtime companion retain their working-draft labels.</p>
-
-  <article class="series-card">
-    <span class="series-label">Note I · The framework</span>
-    <h3><a href="notes/01-certified-coverage/Certified_Coverage_of_Exponential_Search_Spaces.html">Certified Coverage of Exponential Search Spaces</a></h3>
-    <p>Formalizes structural representation, learned proposals with exact verification, and paired summaries. The decisive quantity is the uncovered residual, with all discovery and certification costs included.</p>
-    <div class="math">\[
-      r(n)=2^n-C(n).
-    \]</div>
-    <p class="meta">\(C(n)\) is certified coverage; \(r(n)\) counts states left for explicit search.</p>
-    <div class="link-row">
-      <a href="notes/01-certified-coverage/Certified_Coverage_of_Exponential_Search_Spaces.html">Read HTML</a>
-      <a href="notes/01-certified-coverage/Certified_Coverage_of_Exponential_Search_Spaces.pdf">PDF</a>
-      <a href="notes/01-certified-coverage/Certified_Coverage_of_Exponential_Search_Spaces.tex">LaTeX</a>
+<body class="research-home">
+<a class="skip-link" href="#content">Skip to content</a>
+<main id="content">
+  <nav class="home-nav" aria-label="Main navigation">
+    <a class="home-brand" href="index.html">J. R. Landers <span>/ Research</span></a>
+    <div class="home-nav-links"><a href="#arc">Reading guide</a><a href="#papers">Papers</a><a href="#reproduce">Reproducibility</a><a href="https://github.com/jonland82/exponential-search-spaces">GitHub <span aria-hidden="true">↗</span></a></div>
+  </nav>
+  <header class="home-hero">
+    <div>
+      <p class="eyebrow">Algorithms · Structure · Computational cost</p>
+      <h1>Certified Coverage of Exponential Search Spaces</h1>
+      <p class="hero-question">When does finding structure make search cheaper?</p>
+      <p class="deck">A research program on representations that handle many candidates together—and on identifying the expensive work that remains. Subset sum provides the common test case.</p>
+      <div class="hero-actions"><a class="primary-link" href="#arc">Follow the research story <span aria-hidden="true">↓</span></a><a href="#papers">Browse all 13 papers</a></div>
+      <p class="hero-meta">Jonathan R. Landers <span aria-hidden="true">·</span> September–November 2026</p>
     </div>
-  </article>
-
-  <article class="series-card">
-    <span class="series-label">Note II · The stress test</span>
-    <h3><a href="notes/02-subset-sum-stress-test/Subset_Sum_as_a_Stress_Test.html">Subset Sum as a Stress Test for Certified Coverage</a></h3>
-    <p>Implements exact pairing and sound pruning on subset sum. In the tested hard no-solution cases, pairing adds cost over meet-in-the-middle; a learned classifier ranks cases but cannot certify a NO.</p>
-    <div class="math">\[
-      \Sigma(A\cup B)=\Sigma(A)+\Sigma(B).
-    \]</div>
-    <p class="meta">For disjoint item groups \(A,B\), \(\Sigma(A)\) lists attainable sums; \(+\) combines sums from each group.</p>
-    <div class="link-row">
-      <a href="notes/02-subset-sum-stress-test/Subset_Sum_as_a_Stress_Test.html">Read HTML</a>
-      <a href="notes/02-subset-sum-stress-test/Subset_Sum_as_a_Stress_Test.pdf">PDF</a>
-      <a href="notes/02-subset-sum-stress-test/Subset_Sum_as_a_Stress_Test.tex">LaTeX</a>
-      <a href="subset-sum/README.md">Methods and data</a>
+    <aside class="latest-panel" aria-labelledby="latest">
+      <p class="eyebrow" id="latest">Recent additions</p>
+      <a href="notes/01-certified-coverage/distribution-shaping/Distribution_Shaped_Difficulty_Buckets.pdf"><span class="latest-label">Chosen geometry · Working draft</span><strong>Distribution-Shaped Difficulty Buckets</strong><span>Shapes a feature representation and independently checks which regions are large and expensive.</span></a>
+      <a href="notes/conservation-of-computational-work/conservation_of_search_work.pdf"><span class="latest-label">Cost accounting · PDF note</span><strong>A Conservation Law for Search Work</strong><span>Connects structural work, residual search, and explicitly assumed lower bounds.</span></a>
+      <a href="OpenAI_Subset_Sum_Connections/Runtime_Distribution_from_Structural_Routes.pdf"><span class="latest-label">Runtime distributions</span><strong>Why Subset-Sum Runtimes Form Several Bands</strong><span>Explains runtime patterns through an exact solver portfolio's exit routes.</span></a>
+    </aside>
+  </header>
+  <section class="reading-guide" aria-labelledby="arc">
+    <div class="section-heading"><p class="eyebrow">A reading path</p><h2 id="arc">From saving work to mapping difficulty</h2><p>The note numbers record the sequence of development. This route follows the questions that connect the results.</p></div>
+    <ol class="arc-grid">
+      <li><a href="#accounting"><span class="arc-step">01</span><h3>Account for the shortcut</h3><p>Pay for discovering and using structure, as well as the search left over.</p></a></li>
+      <li><a href="#experiments"><span class="arc-step">02</span><h3>Test whether it pays</h3><p>Separate fewer candidates from a real reduction in total computation.</p></a></li>
+      <li><a href="#structure"><span class="arc-step">03</span><h3>Find exact structure</h3><p>Use tractable cores, distinct sums, and reusable tables to resolve groups.</p></a></li>
+      <li><a href="#prediction"><span class="arc-step">04</span><h3>Predict before solving</h3><p>Distinguish target reachability from completion within a solver budget.</p></a></li>
+      <li><a href="#patterns"><span class="arc-step">05</span><h3>Explain the landscape</h3><p>Relate unresolved clusters and runtime bands to available solving routes.</p></a></li>
+      <li><a href="#shaping"><span class="arc-step">06</span><h3>Make difficulty identifiable</h3><p>Choose a representation&#x27;s shape, then check what its visible regions mean.</p></a></li>
+    </ol>
+  </section>
+  <section class="paper-library" aria-labelledby="papers">
+    <div class="section-heading library-heading"><div><p class="eyebrow">Research library</p><h2 id="papers">13 papers, organized by question</h2></div><a href="notes/README.md">Full inventory and build guides <span aria-hidden="true">↗</span></a></div>
+    <p class="library-intro" id="companions">Seven numbered notes and six companions or standalone papers. Working drafts are marked; links show the formats available in this repository.</p>
+    <section class="theme-group" aria-labelledby="accounting">
+      <div class="theme-heading"><span class="theme-number">01</span><div><h3 id="accounting">What does a shortcut actually cost?</h3><p>The framework begins with an accounting rule. Lower-bound claims then require explicit computational assumptions.</p></div></div>
+      <div class="paper-grid">
+        <article class="paper-entry" data-paper-id="note-i">
+          <p class="paper-kicker">Note I</p>
+          <h4><a href="notes/01-certified-coverage/Certified_Coverage_of_Exponential_Search_Spaces.html">Certified Coverage of Exponential Search Spaces</a></h4>
+          <p>Accounts for collectively represented or excluded candidates, residual search, and the full cost of acquiring and checking structure.</p>
+          <div class="link-row"><a href="notes/01-certified-coverage/Certified_Coverage_of_Exponential_Search_Spaces.html">HTML</a> <a href="notes/01-certified-coverage/Certified_Coverage_of_Exponential_Search_Spaces.pdf">PDF</a> <a href="notes/01-certified-coverage/Certified_Coverage_of_Exponential_Search_Spaces.tex">LaTeX</a> <a href="notes/01-certified-coverage/README.md">Guide and evidence</a></div>
+        </article>
+        <article class="paper-entry" data-paper-id="conservation">
+          <p class="paper-kicker">Standalone note · PDF available</p>
+          <h4><a href="notes/conservation-of-computational-work/conservation_of_search_work.pdf">A Conservation Law for Search Work</a></h4>
+          <p>Discovery/search tradeoffs, model-specific lower bounds, and pruning break-even costs.</p>
+          <div class="link-row"><a href="notes/conservation-of-computational-work/conservation_of_search_work.pdf">PDF</a> <a href="notes/conservation-of-computational-work/README.md">Guide and evidence</a></div>
+        </article>
+      </div>
+    </section>
+    <section class="theme-group" aria-labelledby="experiments">
+      <div class="theme-heading"><span class="theme-number">02</span><div><h3 id="experiments">Does grouping candidates earn its overhead?</h3><p>Controlled experiments keep negative results visible: a smaller represented search need not finish faster.</p></div></div>
+      <div class="paper-grid">
+        <article class="paper-entry" data-paper-id="note-ii">
+          <p class="paper-kicker">Note II</p>
+          <h4><a href="notes/02-subset-sum-stress-test/Subset_Sum_as_a_Stress_Test.html">Subset Sum as a Stress Test for Certified Coverage</a></h4>
+          <p>Tests exact pairing and learned proposals. Pairing adds overhead on the constructed hard NO cases; predictions still require verification.</p>
+          <div class="link-row"><a href="notes/02-subset-sum-stress-test/Subset_Sum_as_a_Stress_Test.html">HTML</a> <a href="notes/02-subset-sum-stress-test/Subset_Sum_as_a_Stress_Test.pdf">PDF</a> <a href="notes/02-subset-sum-stress-test/Subset_Sum_as_a_Stress_Test.tex">LaTeX</a> <a href="subset-sum/README.md">Guide and evidence</a></div>
+        </article>
+        <article class="paper-entry" data-paper-id="note-iv">
+          <p class="paper-kicker">Note IV</p>
+          <h4><a href="notes/04-certified-approximation/Certified_Approximation_of_Subset_Sum.html">Does Pairing Add Value to Certified Approximation? A Subset-Sum Experiment</a></h4>
+          <p>Compares paired and sequential summaries under a common accuracy rule, finding no consistent extra timing benefit from pairing.</p>
+          <div class="link-row"><a href="notes/04-certified-approximation/Certified_Approximation_of_Subset_Sum.html">HTML</a> <a href="notes/04-certified-approximation/Certified_Approximation_of_Subset_Sum.pdf">PDF</a> <a href="notes/04-certified-approximation/Certified_Approximation_of_Subset_Sum.tex">LaTeX</a> <a href="subset-sum/APPROXIMATION_RESULTS.md">Guide and evidence</a></div>
+        </article>
+      </div>
+    </section>
+    <section class="theme-group" aria-labelledby="structure">
+      <div class="theme-heading"><span class="theme-number">03</span><div><h3 id="structure">Which representations give exact savings?</h3><p>Tractable cores and reusable summaries replace repeated individual work, with construction and query costs made explicit.</p></div></div>
+      <div class="paper-grid">
+        <article class="paper-entry" data-paper-id="note-v">
+          <p class="paper-kicker">Note V · <span class="draft-tag">Working draft</span></p>
+          <h4><a href="notes/05-structural-distance/Structural_Distance_in_Subset_Sum.html">How Far from Easy? Structural Distance in Subset Sum</a></h4>
+          <p>Finds maximum superincreasing cores and bounds residual work by exceptions or distinct sums. Core selection must repay its discovery cost.</p>
+          <div class="link-row"><a href="notes/05-structural-distance/Structural_Distance_in_Subset_Sum.html">HTML</a> <a href="notes/05-structural-distance/Structural_Distance_in_Subset_Sum.pdf">PDF</a> <a href="notes/05-structural-distance/Structural_Distance_in_Subset_Sum.tex">LaTeX</a> <a href="Structural_Distance_Subset_Sum/FINDINGS.md">Guide and evidence</a></div>
+        </article>
+        <article class="paper-entry" data-paper-id="note-vii">
+          <p class="paper-kicker">Note VII · <span class="draft-tag">Working draft</span></p>
+          <h4><a href="notes/07-geometric-cores/Geometric_Cores_and_Exceptions_in_Subset_Sum.html">Geometric Cores and Exceptions in Subset Sum</a></h4>
+          <p>Reuses an exact quotient–remainder table across exceptional assignments. Fresh constructed-input studies charge the full route cost.</p>
+          <div class="link-row"><a href="notes/07-geometric-cores/Geometric_Cores_and_Exceptions_in_Subset_Sum.html">HTML</a> <a href="notes/07-geometric-cores/Geometric_Cores_and_Exceptions_in_Subset_Sum.pdf">PDF</a> <a href="notes/07-geometric-cores/Geometric_Cores_and_Exceptions_in_Subset_Sum.tex">LaTeX</a> <a href="Structural_Geometry_Subset_Sum/README.md">Guide and evidence</a></div>
+        </article>
+        <article class="paper-entry" data-paper-id="geometric-runtime">
+          <p class="paper-kicker">Companion to Note VII · <span class="draft-tag">Working draft</span></p>
+          <h4><a href="notes/07-geometric-cores/Runtime_of_Geometric_Core_Subset_Sum.html">The Runtime of Geometric Core Subset Sum</a></h4>
+          <p>Construction, query, and memory costs for exact geometric reuse.</p>
+          <div class="link-row"><a href="notes/07-geometric-cores/Runtime_of_Geometric_Core_Subset_Sum.html">HTML</a> <a href="notes/07-geometric-cores/Runtime_of_Geometric_Core_Subset_Sum.pdf">PDF</a> <a href="notes/07-geometric-cores/Runtime_of_Geometric_Core_Subset_Sum.tex">LaTeX</a> <a href="notes/07-geometric-cores/README.md">Guide and evidence</a></div>
+        </article>
+        <article class="paper-entry" data-paper-id="connections" id="connections">
+          <p class="paper-kicker">Connections paper</p>
+          <h4><a href="OpenAI_Subset_Sum_Connections/From_Choices_to_Sums.html">From Choices to Sums: Connections to OpenAI&#x27;s Subset-Sum Algorithms</a></h4>
+          <p>Distinct sums, compatible records, modular filtering, and shared core tables.</p>
+          <div class="link-row"><a href="OpenAI_Subset_Sum_Connections/From_Choices_to_Sums.html">HTML</a> <a href="OpenAI_Subset_Sum_Connections/From_Choices_to_Sums.pdf">PDF</a> <a href="OpenAI_Subset_Sum_Connections/From_Choices_to_Sums.tex">LaTeX</a> <a href="OpenAI_Subset_Sum_Connections/README.md">Guide and evidence</a></div>
+        </article>
+      </div>
+    </section>
+    <section class="theme-group" aria-labelledby="prediction">
+      <div class="theme-heading"><span class="theme-number">04</span><div><h3 id="prediction">What can we predict before solving?</h3><p>Reachability under a target distribution and completion under a solver budget are different probabilistic questions.</p></div></div>
+      <div class="paper-grid">
+        <article class="paper-entry" data-paper-id="note-iii">
+          <p class="paper-kicker">Note III</p>
+          <h4><a href="notes/03-probability-valued-subset-sum/Probability_Valued_Subset_Sum.html">Probability-Valued Subset Sum: Certified Bounds and Learned Guidance</a></h4>
+          <p>Bounds random-target reachability with range and collision certificates, then tests calibrated tightening and its transfer limits.</p>
+          <div class="link-row"><a href="notes/03-probability-valued-subset-sum/Probability_Valued_Subset_Sum.html">HTML</a> <a href="notes/03-probability-valued-subset-sum/Probability_Valued_Subset_Sum.pdf">PDF</a> <a href="notes/03-probability-valued-subset-sum/Probability_Valued_Subset_Sum.tex">LaTeX</a> <a href="subset-sum/PROBABILITY_REFINEMENT.md">Guide and evidence</a></div>
+        </article>
+        <article class="paper-entry" data-paper-id="note-vi">
+          <p class="paper-kicker">Note VI</p>
+          <h4><a href="notes/06-learned-solvability/Predicting_Subset_Sum_Completion.html">Predicting Subset-Sum Completion: The Value and Cost of Structural Features</a></h4>
+          <p>Tests structural features for completion prediction, paid prioritization, and certified branch checks, retaining mixed results and acquisition costs.</p>
+          <div class="link-row"><a href="notes/06-learned-solvability/Predicting_Subset_Sum_Completion.html">HTML</a> <a href="notes/06-learned-solvability/Predicting_Subset_Sum_Completion.pdf">PDF</a> <a href="notes/06-learned-solvability/Predicting_Subset_Sum_Completion.tex">LaTeX</a> <a href="Learned_Solvability_Subset_Sum/README.md">Guide and evidence</a></div>
+        </article>
+      </div>
+    </section>
+    <section class="theme-group" aria-labelledby="patterns">
+      <div class="theme-heading"><span class="theme-number">05</span><div><h3 id="patterns">Why do difficulty and runtime form patterns?</h3><p>The observed landscape reflects the inputs, available representations, and the policy that chooses among solving routes.</p></div></div>
+      <div class="paper-grid">
+        <article class="paper-entry" data-paper-id="clusters">
+          <p class="paper-kicker">Companion to Note VI</p>
+          <h4><a href="notes/06-learned-solvability/Why_Unresolved_Inputs_Cluster.html">Why Unresolved Inputs Cluster: A Structural and Statistical Account</a></h4>
+          <p>Solver routes and descriptive clustering of unresolved inputs.</p>
+          <div class="link-row"><a href="notes/06-learned-solvability/Why_Unresolved_Inputs_Cluster.html">HTML</a> <a href="notes/06-learned-solvability/Why_Unresolved_Inputs_Cluster.pdf">PDF</a> <a href="notes/06-learned-solvability/Why_Unresolved_Inputs_Cluster.tex">LaTeX</a> <a href="notes/06-learned-solvability/README.md">Guide and evidence</a></div>
+        </article>
+        <article class="paper-entry" data-paper-id="runtime-bands">
+          <p class="paper-kicker">Standalone note</p>
+          <h4><a href="OpenAI_Subset_Sum_Connections/Runtime_Distribution_from_Structural_Routes.pdf">Why Subset-Sum Runtimes Form Several Bands</a></h4>
+          <p>Runtime distributions as mixtures of solver routes and structural cost scales.</p>
+          <div class="link-row"><a href="OpenAI_Subset_Sum_Connections/Runtime_Distribution_from_Structural_Routes.pdf">PDF</a> <a href="OpenAI_Subset_Sum_Connections/Runtime_Distribution_from_Structural_Routes.tex">LaTeX</a> <a href="OpenAI_Subset_Sum_Connections/README.md">Guide and evidence</a></div>
+        </article>
+      </div>
+    </section>
+    <section class="theme-group" aria-labelledby="shaping">
+      <div class="theme-heading"><span class="theme-number">06</span><div><h3 id="shaping">Can we make expensive regions easier to identify?</h3><p>Use learned cost information to build a chosen geometry, then independently establish which regions have reliable meaning.</p></div></div>
+      <div class="paper-grid">
+        <article class="paper-entry paper-featured" data-paper-id="difficulty-buckets">
+          <p class="paper-kicker">Standalone note · <span class="draft-tag">Working draft</span></p>
+          <h4><a href="notes/01-certified-coverage/distribution-shaping/Distribution_Shaped_Difficulty_Buckets.pdf">Distribution-Shaped Difficulty Buckets</a></h4>
+          <p>Chosen representation shapes and independently certified bucket mass and difficulty.</p>
+          <div class="link-row"><a href="notes/01-certified-coverage/distribution-shaping/Distribution_Shaped_Difficulty_Buckets.pdf">PDF</a> <a href="notes/01-certified-coverage/distribution-shaping/Distribution_Shaped_Difficulty_Buckets.tex">LaTeX</a> <a href="notes/01-certified-coverage/distribution-shaping/README.md">Guide and evidence</a></div>
+        </article>
+      </div>
+    </section>
+  </section>
+  <section class="research-drafts" aria-labelledby="drafts">
+    <div class="section-heading"><p class="eyebrow">Alongside the papers</p><h2 id="drafts">Theory and algorithm drafts</h2></div>
+    <div class="draft-grid">
+      <article><h3><a href="notes/01-certified-coverage/block-overlap/README.md">Certified pruning from overlap between block sums</a></h3><p>Exact block summaries and a paid bound on construction and surviving search. Includes proofs, code, and finite checks; a Markdown draft.</p></article>
+      <article id="certification-cost"><h3><a href="notes/01-certified-coverage/certification-cost/README.md">The Cost of Avoiding Search: A Conditional Coverage Law</a></h3><p>An exploratory cost-law draft under an assumed positive exponential floor. Its general lower-bound premise remains unproved.</p></article>
     </div>
-  </article>
-
-  <article class="series-card">
-    <span class="series-label">Note III · Random-target probability</span>
-    <h3><a href="notes/03-probability-valued-subset-sum/Probability_Valued_Subset_Sum.html">Probability-Valued Subset Sum: Certified Bounds and Learned Guidance</a></h3>
-    <p>Draw a target by a specified rule and ask how likely it is to be reachable. Range and collision certificates provably tighten the probability bounds. A fresh multi-size benchmark finds modest range tightening and little extra benefit from the tested collision refinements. Calibrated learning narrows much more on matched data, but fails size transfer.</p>
-    <div class="math">\[
-      \mu(L)\le q_\mu(w)\le\mu(U).
-    \]</div>
-    <p class="meta">\(q_\mu(w)\) is reachability probability for weights \(w\) under target distribution \(\mu\). Witnessed targets \(L\) and a sound superset \(U\) bound it.</p>
-    <div class="link-row">
-      <a href="notes/03-probability-valued-subset-sum/Probability_Valued_Subset_Sum.html">Read HTML</a>
-      <a href="notes/03-probability-valued-subset-sum/Probability_Valued_Subset_Sum.pdf">PDF</a>
-      <a href="notes/03-probability-valued-subset-sum/Probability_Valued_Subset_Sum.tex">LaTeX</a>
-      <a href="subset-sum/PROBABILITY_EXTENSION.md">Methods and data</a>
-      <a href="subset-sum/PROBABILITY_REFINEMENT.md">Refinement theory and benchmarks</a>
+  </section>
+  <section class="evidence-section" aria-labelledby="language">
+    <span id="formalism"></span>
+    <div class="section-heading"><p class="eyebrow">How to assess the results</p><h2 id="language">Proofs, measurements, and scope</h2></div>
+    <div class="evidence-grid">
+      <div><h3>Exact savings need exact structure</h3><p>Core and block theorems give sufficient tractable regimes. They do not establish that every subset-sum input has a cheap representation.</p></div>
+      <div><h3>Measured gains include acquisition costs</h3><p>Geometric reuse improves work-capped completions from 453 to 469 on 576 fresh constructed targets. Later refinements mainly save construction; the reported comparisons remain separate.</p></div>
+      <div><h3>Prediction carries a different guarantee</h3><p>Bucket mass and purity are population statements for a fixed solver and budget. The new demonstration uses synthetic costs; a fresh paid subset-sum evaluation remains open.</p></div>
     </div>
-  </article>
-
-  <article class="series-card">
-    <span class="series-label">Note IV · A controlled negative result</span>
-    <h3><a href="notes/04-certified-approximation/Certified_Approximation_of_Subset_Sum.html">Does Pairing Add Value to Certified Approximation? A Subset-Sum Experiment</a></h3>
-    <p>If we only need to get close to the target, and know how close, can our framework avoid much of the exponential search? Approximation supplies a precise accuracy guarantee. The controlled experiment asks what pairing adds: it finds no consistent additional timing benefit over the same additive rule used sequentially in the key comparison, with one additional input completed within the state cap.</p>
-    <div class="math">\[
-      \begin{gathered}
-        \ell\le d^*(w,t)\le u,\\
-        u-\ell\le\eta.
-      \end{gathered}
-    \]</div>
-    <p class="meta">\(\ell,u\) bound the best possible distance \(d^*(w,t)\) from a subset sum of weights \(w\) to target \(t\); \(\eta\) is the allowed gap.</p>
-    <div class="link-row">
-      <a href="notes/04-certified-approximation/Certified_Approximation_of_Subset_Sum.html">Read HTML</a>
-      <a href="notes/04-certified-approximation/Certified_Approximation_of_Subset_Sum.pdf">PDF</a>
-      <a href="notes/04-certified-approximation/Certified_Approximation_of_Subset_Sum.tex">LaTeX</a>
-      <a href="subset-sum/APPROXIMATION_SPEC.md">Specification</a>
-      <a href="subset-sum/APPROXIMATION_RESULTS.md">Experiments and data</a>
-    </div>
-  </article>
-  <article class="series-card">
-    <span class="series-label">Note V &middot; Structural distance &middot; Working draft</span>
-    <h3><a href="notes/05-structural-distance/Structural_Distance_in_Subset_Sum.html">How Far from Easy? Structural Distance in Subset Sum</a></h3>
-    <p>Finds a largest superincreasing core and searches only its exceptions. Logarithmically many exceptions give a sufficient polynomial regime. More elaborate core selectors reduce residual support on some constructed lists, but their discovery costs outweigh the query savings in the experiment.</p>
-    <div class="math">\[
-      T(x)\le F(L)+2^k\bigl(Q(L)+\operatorname{poly}(L)\bigr).
-    \]</div>
-    <p class="meta">\(k\) is the number of exceptions; \(F\) discovers the core and \(Q\) answers an exact core query. Working draft, available in HTML/PDF with source.</p>
-    <div class="link-row">
-      <a href="notes/05-structural-distance/Structural_Distance_in_Subset_Sum.html">Read HTML draft</a>
-      <a href="notes/05-structural-distance/Structural_Distance_in_Subset_Sum.pdf">PDF</a>
-      <a href="notes/05-structural-distance/Structural_Distance_in_Subset_Sum.tex">LaTeX</a>
-      <a href="Structural_Distance_Subset_Sum/FINDINGS.md">Experiments and data</a>
-    </div>
-  </article>
-
-  <article class="series-card">
-    <span class="series-label">Note VI &middot; Prediction and verified search</span>
-    <h3><a href="notes/06-learned-solvability/Predicting_Subset_Sum_Completion.html">Predicting Subset-Sum Completion: The Value and Cost of Structural Features</a></h3>
-    <p>Combines five distances to easy cases with ten standard features to predict whether an exact solver finishes within a budget. The primary prediction comparison does not improve. A separate branch experiment tries exact structural checks inside the search tree: at 50 ms each, ordinary search solves 152 of 216 fresh cases, combined ML guidance 159, and a simple distance rule 162.</p>
-    <div class="math">\[
-      \widehat p(x)\approx\Pr(\text{exact completion within budget}\mid\phi(x)).
-    \]</div>
-    <p class="meta">Predictions choose checks; exact certificates resolve branches. All feature, prediction and checking costs are paid. Counts are median totals over three timing repeats.</p>
-    <div class="link-row">
-      <a href="notes/06-learned-solvability/Predicting_Subset_Sum_Completion.html">Read HTML</a>
-      <a href="notes/06-learned-solvability/Predicting_Subset_Sum_Completion.pdf">PDF</a>
-      <a href="notes/06-learned-solvability/Predicting_Subset_Sum_Completion.tex">LaTeX</a>
-      <a href="Learned_Solvability_Subset_Sum/README.md">Methods and data</a>
-      <a href="Learned_Solvability_Subset_Sum/docs/BRANCH_FINDINGS.md">Pruning findings</a>
-      <a href="notes/06-learned-solvability/Why_Unresolved_Inputs_Cluster.html">Clustering companion</a>
-    </div>
-  </article>
-
-  <article class="series-card">
-    <span class="series-label">Note VII &middot; Exact geometric reuse &middot; Working draft</span>
-    <h3><a href="notes/07-geometric-cores/Geometric_Cores_and_Exceptions_in_Subset_Sum.html">Geometric Cores and Exceptions in Subset Sum</a></h3>
-    <p>Finds a narrow geometric core, enumerates a few exceptions, and reuses one exact table. Fresh work-capped completions improve from 453 to 469 of 576 targets over matched root geometry. A second fresh study obtains 954 versus root's 916 of 1,152 targets. Its final bounds-first refinement mainly saves work: 90 avoided tables and 1.74% lower capped cost, with no clear incremental runtime gain.</p>
-    <div class="math">\[
-      C\le F+2^k B+I D+N_Q Q_{\mathrm{pt}}+V.
-    \]</div>
-    <p class="meta">Discovery, bounds, conditional table construction, exact queries and verification are paid. The two studies retain separate primary comparisons and scoped claims.</p>
-    <div class="link-row">
-      <a href="notes/07-geometric-cores/Geometric_Cores_and_Exceptions_in_Subset_Sum.html">Read HTML draft</a>
-      <a href="notes/07-geometric-cores/Geometric_Cores_and_Exceptions_in_Subset_Sum.pdf">PDF</a>
-      <a href="notes/07-geometric-cores/Geometric_Cores_and_Exceptions_in_Subset_Sum.tex">LaTeX</a>
-      <a href="Structural_Geometry_Subset_Sum/README.md">Methods and data</a>
-      <a href="notes/07-geometric-cores/Runtime_of_Geometric_Core_Subset_Sum.html">Runtime companion</a>
-    </div>
-  </article>
-</section>
-
-<section aria-labelledby="companions">
-  <h2 id="companions">Short companion notes</h2>
-  <p>These focused supplements belong to Notes VI and VII; they do not add new numbered notes or new experiments.</p>
-  <article class="series-card supplemental-card">
-    <span class="series-label">Companion to Note VI &middot; Three pages &middot; October 26, 2026</span>
-    <h3><a href="notes/06-learned-solvability/Why_Unresolved_Inputs_Cluster.html">Why Unresolved Inputs Cluster: A Structural and Statistical Account</a></h3>
-    <p>Connects several affordable exact-solving routes with the observed geography of portfolio failures. On the reused sample, 80.27% of neighbors of unresolved inputs are also unresolved, versus 25.35% overall. The note distinguishes this descriptive enrichment from intrinsic computational hardness.</p>
-    <div class="link-row">
-      <a href="notes/06-learned-solvability/Why_Unresolved_Inputs_Cluster.html">Read HTML</a>
-      <a href="notes/06-learned-solvability/Why_Unresolved_Inputs_Cluster.pdf">PDF</a>
-      <a href="notes/06-learned-solvability/Why_Unresolved_Inputs_Cluster.tex">LaTeX</a>
-      <a href="notes/06-learned-solvability/README.md#companion-note-why-unresolved-inputs-cluster">Evidence and rebuild guide</a>
-    </div>
-  </article>
-  <article class="series-card supplemental-card">
-    <span class="series-label">Companion to Note VII &middot; Three pages &middot; Working draft &middot; October 28, 2026</span>
-    <h3><a href="notes/07-geometric-cores/Runtime_of_Geometric_Core_Subset_Sum.html">The Runtime of Geometric Core Subset Sum</a></h3>
-    <p>Defines the subset-sum problem and geometric route, translates Note I's generic equations into concrete construction and query costs, and compares general classical algorithms. It separates original-state coverage from block queries and states sufficient polynomial-time regimes. The opportunity depends on few exceptions and a compact discovered core; there is no new general worst-case bound.</p>
-    <div class="link-row">
-      <a href="notes/07-geometric-cores/Runtime_of_Geometric_Core_Subset_Sum.html">Read HTML draft</a>
-      <a href="notes/07-geometric-cores/Runtime_of_Geometric_Core_Subset_Sum.pdf">PDF</a>
-      <a href="notes/07-geometric-cores/Runtime_of_Geometric_Core_Subset_Sum.tex">LaTeX</a>
-      <a href="notes/07-geometric-cores/README.md">Methods and rebuild guide</a>
-    </div>
-  </article>
-</section>
-
-<section aria-labelledby="connections">
-  <h2 id="connections">Related exposition</h2>
-  <article class="series-card supplemental-card">
-    <span class="series-label">Connections paper &middot; Four pages &middot; October 28, 2026</span>
-    <h3><a href="OpenAI_Subset_Sum_Connections/From_Choices_to_Sums.html">From Choices to Sums: Connections to OpenAI's Subset-Sum Algorithms</a></h3>
-    <p>Explains how distinct exceptional sums compress repeated choices, how compatible records and modular checksums support filtering, and how one geometric core table can answer many targets. It derives a combined runtime bound from existing constructions and discusses saved results from Notes V and VII.</p>
-    <div class="link-row">
-      <a href="OpenAI_Subset_Sum_Connections/From_Choices_to_Sums.html">Read HTML</a>
-      <a href="OpenAI_Subset_Sum_Connections/From_Choices_to_Sums.pdf">PDF</a>
-      <a href="OpenAI_Subset_Sum_Connections/From_Choices_to_Sums.tex">LaTeX</a>
-      <a href="OpenAI_Subset_Sum_Connections/README.md">Sources and rebuild guide</a>
-    </div>
-  </article>
-</section>
-
-<section aria-labelledby="certification-cost">
-  <h2 id="certification-cost">Exploratory research draft</h2>
-  <p><a href="notes/01-certified-coverage/certification-cost/README.md">The Cost of Avoiding Search: A Conditional Coverage Law</a> assumes a positive exponential cost floor with an unknown exponent and develops a sufficient coverage-cost mechanism. This unnumbered Markdown draft allows local savings and faster exponential algorithms above that hypothetical floor. November 1, 2026.</p>
-</section>
-
-<section aria-labelledby="formalism">
-  <h2 id="formalism">The key formalism</h2>
-  <p>In Note I, \(n\) is the number of binary choices and \(C(n)\) counts states handled by exact representation or certified exclusion. The residual \(r(n)\) must still be searched explicitly. Let \(T(n)\) be the modeled runtime; coverage overhead includes the work of discovering, representing, and certifying covered states:</p>
-  <div class="keyeq"><span class="math display">\[
-  r(n)=2^n-C(n),\qquad
-  T(n)=\text{coverage overhead}+r(n).
-  \]</span></div>
-  <p>Within this model, polynomial overhead leads to polynomial runtime exactly when the residual is polynomially bounded. Covering a large fixed percentage of \(2^n\) states is not enough.</p>
-  <p>Note III changes the outcome being measured. Fix a list of weights \(w=(w_1,\ldots,w_n)\), and let \(A(w)\) be its set of attainable subset sums. Draw a target \(T\) from a specified distribution \(\mu\). Let \(L\) contain witnessed reachable targets and \(U\) every target not soundly excluded. For any target set \(B\), let \(\mu(B)\) mean the probability that \(T\in B\):</p>
-  <div class="keyeq"><span class="math display">\[
-  q_\mu(w)=\Pr_{T\sim\mu}\!\bigl[T\in A(w)\bigr],
-  \qquad
-  \mu(L)\le q_\mu(w)\le\mu(U).
-  \]</span></div>
-  <p>The bounds hold for a particular weight list; their width measures how much remains unresolved about the random-target question.</p>
-  <p>Note IV fixes the target and measures the minimum attainable distance instead. An actual subset supplies the upper bound; an error-aware summary supplies a lower bound:</p>
-  <div class="keyeq"><span class="math display">\[
-  d^*(w,t)=\min_{x\in\{0,1\}^n}\left|\sum_i x_iw_i-t\right|,
-  \qquad \ell\le d^*(w,t)\le u,\quad u-\ell\le\eta.
-  \]</span></div>
-  <p>The tolerance \(\eta\) permits nearby partial sums to share a representative while retaining a deterministic guarantee. The experiments compare the total work needed to reach the same tolerance.</p>
-  <p>Note VII reuses one exact geometric core table across exceptional assignments. The runtime companion gives a conservative bit-cost bound:</p>
-  <div class="keyeq"><span class="math display">\[
-    T_{\mathrm{route}}=F+O^*(HW+2^kGW).
-  \]</span></div>
-  <p>Here \(F\) pays discovery, \(k\) counts exceptions, \(H\times W\) is the core table, and \(G\le H\) bounds candidate queries per assignment. The notation \(O^*\) suppresses polynomial factors in binary input length. Polynomial discovery and table size, with logarithmically many exceptions, suffice for polynomial time on that structured family; no such guarantee holds for arbitrary inputs.</p>
-</section>
-
-<section aria-labelledby="language">
-  <h2 id="language">What the results say</h2>
-  <div class="note">
-    <p><strong>Exact core reuse improves paid completion on fresh constructed inputs.</strong> Note VII's original route gains 16 completions over matched root geometry, with a whole-list-bootstrap 95% interval approximately [4,30]. Its later bounds-first refinement avoids 90 of 182 tables, but the primary incremental completion difference is only +1 with interval [0,3], and no clear additional wall-clock gain. These comparisons support a scoped practical improvement.</p>
-    <p><strong>Easy structure can certify whole branches.</strong> Note VI's follow-up implements Note I's proposal and verification framework. Structural checks improve the observed number of exact completions over DFS, but the transferred ML gate does not beat a simple distance rule. The paired uncertainty intervals span zero; these are results on a constructed test set.</p>
-    <p><strong>Better structure must pay for discovery.</strong> Note V's selectors reduce residual support on 18 of 54 structured lists, yet neither is faster on their 162 targets. Note VI likewise finds that fewer search nodes can coexist with more computation spent acquiring features.</p>
-    <p><strong>Representation must earn its cost.</strong> The paired subset-sum solver was slower than meet-in-the-middle on all 18 constructed hard no-solution cases tested.</p>
-    <p><strong>Prediction helps choose work.</strong> The classifier's held-out area under the receiver operating characteristic curve (AUC), a ranking measure, was 0.866, close to a simple density model's 0.864. Two of its 43 most confident NO proposals were actually YES, so exact elimination still needs a verifier.</p>
-    <p><strong>Probability bounds can be tightened with certificates.</strong> On 160 fresh lists of 12–22 weights, range counting removes 14.15% of interval width on average, and tested collision/residue refinements raise this to 14.19%; every deterministic interval contains the truth. Separately, calibrated learning removes 76.96% on matched data with 97.5% coverage, but coverage falls to 88.75% on larger lists. Exact bitset computation often finishes faster.</p>
-    <p><strong>The negative finding identifies what earns credit.</strong> With the common greedy search disabled, 32 items, and tolerance 0.01% of total weight, pairing is faster on 7 of 15 inputs that both it and sequential additive trimming certify. The median sequential/paired time ratio is 0.993. Pairing certifies all 16 inputs within the per-summary state cap; the sequential method certifies 15. This is a scoped negative timing result, with a resource-limit advantage retained.</p>
-  </div>
-</section>
-
-<footer>
-  <p>Jonathan R. Landers · <a href="https://github.com/jonland82/exponential-search-spaces">Source and reproducible experiments on GitHub</a></p>
-</footer>
+  </section>
+  <section class="reproduce-panel" aria-labelledby="reproduce">
+    <div><p class="eyebrow">Reproducibility</p><h2 id="reproduce">Follow the evidence behind each claim</h2><p>Sources, saved inputs, protocols, measurements, and build instructions are linked from the individual guides. Historical experiments retain their original source and result hashes.</p></div>
+    <div class="reproduce-links"><a href="README.md">Repository guide <span aria-hidden="true">↗</span></a><a href="CONTRIBUTING.md">Build and preservation rules <span aria-hidden="true">↗</span></a><a href="notes/README.md">Complete paper inventory <span aria-hidden="true">↗</span></a></div>
+  </section>
+  <footer class="home-footer"><p>Jonathan R. Landers <span aria-hidden="true">·</span> Research archive, 2026</p><p><a href="https://github.com/jonland82/exponential-search-spaces">Repository</a> <span aria-hidden="true">·</span> Updated November 4, 2026</p></footer>
 </main>
 </body>
 </html>

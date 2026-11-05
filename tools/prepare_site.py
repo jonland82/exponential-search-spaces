@@ -9,7 +9,7 @@ import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
-from tools.paper_catalog import PAPERS, artifact, directory
+from tools.paper_catalog import ALL_PAPERS, PAPERS, artifact, directory
 
 
 def sync_downloads(output, papers=PAPERS):
@@ -43,10 +43,13 @@ def prepare(output):
         )
     (output / "notes").mkdir(exist_ok=True)
     shutil.copy2(ROOT / "notes/README.md", output / "notes/README.md")
+    # Include unnumbered note folders too, including PDF-only manuscripts.
+    for source in (ROOT / "notes").iterdir():
+        if source.is_dir():
+            shutil.copytree(source, output / "notes" / source.name,
+                            ignore=shutil.ignore_patterns("__pycache__", "*.pyc", "*.aux", "*.log", "*.out", "*.synctex.gz"))
     for paper in PAPERS:
         destination = output / "notes" / paper["folder"]
-        shutil.copytree(directory(paper), destination,
-                        ignore=shutil.ignore_patterns("*.aux", "*.log", "*.out", "*.synctex.gz"))
         if not paper["published"]:
             assert not (destination / (paper["stem"] + ".html")).exists()
             continue
@@ -57,7 +60,8 @@ def prepare(output):
         if not paper["published"]:
             assert not (output / "notes" / paper["folder"] / (paper["stem"] + ".html")).exists()
     html_count = sum(1 for _ in output.glob("notes/*/*.html"))
-    print(f"Prepared {len(PAPERS)} numbered notes, {html_count} HTML papers including companions, downloads and evidence at {output}")
+    print(f"Prepared {len(ALL_PAPERS)} research papers ({len(PAPERS)} numbered), "
+          f"{html_count} HTML papers under notes/, downloads and evidence at {output}")
 
 
 if __name__ == "__main__":

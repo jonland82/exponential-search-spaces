@@ -15,6 +15,11 @@ exceptional sums with the shared table and gives an explicit runtime bound.
 The exposition uses the repository's saved results on support selection,
 exact completion and avoided table construction.
 
+This folder contains two papers in the [thirteen-paper research library](../notes/README.md).
+*From Choices to Sums* belongs with the exact structural representations;
+the runtime-bands note below belongs with the explanations of the observed
+difficulty landscape. Both are referenced on the thematic [home page](../index.html).
+
 ## Sources
 
 The repository material was read at commit
@@ -51,6 +56,22 @@ repository root, rebuild the figures with
 `python tools/plot_subset_sum_completion_times.py`, and
 `python tools/plot_analytical_completion_sketch.py`; then build the note with
 two `pdflatex` passes on the TeX file.
+
+To rebuild the runtime-bands PDF without writing LaTeX scratch into the source
+folder, run from the repository root after generating any required figures:
+
+```powershell
+New-Item -ItemType Directory -Force .build/latex/runtime-bands | Out-Null
+Push-Location OpenAI_Subset_Sum_Connections
+pdflatex -interaction=nonstopmode -halt-on-error -output-directory=../.build/latex/runtime-bands Runtime_Distribution_from_Structural_Routes.tex
+pdflatex -interaction=nonstopmode -halt-on-error -output-directory=../.build/latex/runtime-bands Runtime_Distribution_from_Structural_Routes.tex
+Copy-Item ../.build/latex/runtime-bands/Runtime_Distribution_from_Structural_Routes.pdf Runtime_Distribution_from_Structural_Routes.pdf
+Pop-Location
+```
+
+This is separate from the `--paper connections` target below, which rebuilds
+*From Choices to Sums*. No HTML edition of the runtime-bands note is currently
+supplied. Both PDF/source pairs are included in staging and catalog checks.
 
 ## Rebuild
 
