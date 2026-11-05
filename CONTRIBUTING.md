@@ -87,8 +87,8 @@ Both companions have HTML/PDF/source. Builds synchronize root PDF/TeX compatibil
 downloads; edit the canonical manuscripts in `notes/`, not those generated copies.
 The difficulty-buckets note has a separate evidence-checking builder at
 `notes/01-certified-coverage/distribution-shaping/build_note.py`; its pagination
-flows naturally, with an upper page-count check rather than forced section
-breaks. The block-overlap paper likewise has an evidence-checking builder at
+flows naturally, without a page limit or forced section breaks.
+The block-overlap paper likewise has an evidence-checking builder at
 `notes/01-certified-coverage/block-overlap/build_note.py`; it regenerates
 structural illustrations, preserves the original checks, and allows natural
 pagination without a page limit. The connections guide documents the separate runtime-bands build.

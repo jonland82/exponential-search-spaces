@@ -452,8 +452,8 @@ python notes/01-certified-coverage/distribution-shaping/build_note.py
 ```
 
 This checks the saved verification-source hashes and every reported table
-value, compiles the self-contained LaTeX source twice, and checks references,
-overflow warnings, and a maximum length of six pages. Sections flow naturally;
+value, compiles the self-contained LaTeX source twice, and checks references
+and overflow warnings without a page limit. Sections flow naturally;
 there are no forced section page breaks. It requires `pdflatex` and `pdfinfo`.
 Build scratch stays under `.build/latex/distribution-shaped-difficulty/`.
 The build neither runs experiments nor overwrites the verification record.
