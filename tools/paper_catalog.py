@@ -86,6 +86,81 @@ SUPPLEMENTS = (
 )
 ALL_PAPERS = PAPERS + SUPPLEMENTS
 
+# Homepage highlights, transcribed from each manuscript. Captions retain the
+# assumptions that distinguish models, exact algorithms and population claims.
+KEY_EQUATIONS = {
+    "note-i": (
+        (r"r(n)=2^n-C(n)",
+         r"Certified coverage \(C(n)\) leaves \(r(n)\) original candidates for explicit search."),
+        (r"\begin{aligned}T(n)={}&P(n)+Q_{\mathrm{pair}}(n)\\&+r(n)+\rho(n,k(n))\end{aligned}",
+         r"The model charges discovery \(P\), pairing \(Q_{\mathrm{pair}}\), residual search \(r\), and representation cost \(\rho\)."),
+    ),
+    "note-ii": (
+        (r"\Sigma(A\cup B)=\Sigma(A)+\Sigma(B)",
+         r"For disjoint item blocks, combining their attainable-sum sets is exact; constructing and querying those summaries still costs work."),
+    ),
+    "note-iii": (
+        (r"q_\mu(w)=\sum_{t\in\mathcal A(w)\cap D}\mu(t)",
+         r"Reachability probability is the mass of attainable targets under the specified target distribution \(\mu\)."),
+        (r"\mu(L)\le q_\mu(w)\le\mu(U)",
+         r"Witnessed targets \(L\) and the outer set \(U\) left by sound exclusions give deterministic probability bounds."),
+    ),
+    "note-iv": (
+        (r"\begin{gathered}\ell\le d^*(w,t)\le u=|z-t|\\u-\ell\le\eta\end{gathered}",
+         r"A witnessed sum \(z\) and certified lower bound \(\ell\) locate the optimal distance \(d^*\) within tolerance \(\eta\)."),
+    ),
+    "note-v": (
+        (r"T=O\!\left(n\log(n+1)+(n+1)2^{k(w)}\right)",
+         r"With \(k(w)\) exceptions to a largest superincreasing core, discovery and exact enumeration take this many arithmetic/comparison operations."),
+        (r"M(E)=|\mathcal A(E)|\le 2^{k(w)}",
+         r"Merging equal exceptional sums reduces core queries to the \(M(E)\) distinct residual targets."),
+    ),
+    "note-vi": (
+        (r"Y_B(x)=\mathbf1\!\left\{\substack{A(x)\text{ finishes exactly}\\\text{within its caps and }B(L_x)}\right\}",
+         r"The label records exact completion within the fixed solver's resource allowance, whether the answer is YES or NO."),
+        (r"\Pr_{X\sim\mathcal D}\!\left(Y_B(X)=1\mid\phi(X)=\phi(x)\right)",
+         r"Features \(\phi(x)\) predict completion probability under input distribution \(\mathcal D\); their acquisition cost must also be paid."),
+    ),
+    "note-vii": (
+        (r"\begin{aligned}S_0&=\{(0,0)\},\\S_j&=S_{j-1}\cup\bigl(S_{j-1}+(p_j,r_j)\bigr)\end{aligned}",
+         r"Each core weight \(u_j=Mp_j+r_j\) updates the exact quotient–residual table, restricted to the proven safe bounds."),
+        (r"Mq+s=T-\sum_{i\in A}u_i",
+         r"Every exceptional selection \(A\) leaves a shifted target answered by the same core table."),
+    ),
+    "conservation": (
+        (r"D_A(x_A)\ge\bigl[L(n)-S_A(x_A)\bigr]_+",
+         r"On an algorithm's hard input \(x_A\), a proven worst-case lower bound \(L(n)\) limits how little discovery \(D_A\) can accompany search \(S_A\)."),
+        (r"T_{\mathrm{prune}}<T_{\mathrm{base}}\iff bC>D",
+         r"When each remaining check still costs \(b\), eliminating \(C\) candidates pays only if the saved work exceeds pruning cost \(D\)."),
+    ),
+    "clusters": (
+        (r"\Pr(H'=1\mid H=1)=p+\frac{\operatorname{Var}(q(Z))}{p}",
+         r"For conditionally independent failure labels sharing features \(Z\), varying local failure probability \(q(Z)\) creates enrichment above the overall rate \(p>0\)."),
+    ),
+    "geometric-runtime": (
+        (r"\begin{aligned}T_{\mathrm{route}}&\le F+2^eB+ID+N_QQ_{\mathrm{pt}}+V,\\N_Q&\le 2^eG\end{aligned}",
+         r"Pay discovery \(F\), per-assignment bounds \(B\), one table \(D\) when needed (\(I=1\)), at most \(G\) point tests per assignment, and verification \(V\)."),
+        (r"T_{\mathrm{eager}}-T_{\mathrm{lazy}}=(1-I)D\ge0",
+         r"For the same plan with sufficient resources, bounds-first construction saves the entire table cost when every assignment is rejected."),
+    ),
+    "connections": (
+        (r"d(E)=e-\log_2|\mathcal A(E)|",
+         r"Deficiency measures how much the distinct-sum support compresses the \(2^e\) selections of \(e\) exceptional items."),
+        (r"T_V\le\operatorname{poly}(L)\,2^{e-d(E)}",
+         r"With an exactly queryable superincreasing core, Note V's bit-cost bound depends on distinct exceptional sums and encoded input length \(L\)."),
+    ),
+    "runtime-bands": (
+        (r"\begin{aligned}\Pr(Y\in A)&=\sum_{r\in\mathcal R}\pi_r\Pr(Y\in A\mid R=r)\\\pi_r&=\Pr(R=r)\end{aligned}",
+         r"Elapsed time \(Y\) is an exact mixture over exit routes \(R\), including unresolved stops, whose eventual completion times remain unknown."),
+    ),
+    "difficulty-buckets": (
+        (r"\begin{aligned}U&=F_g(S^-)+V\bigl[F_g(S)-F_g(S^-)\bigr],\\Z&=Q_g^{-1}(U)\end{aligned}",
+         r"Within predicted group \(g\), randomized score ranks \(U\) map to a chosen CDF \(Q_g\), including truncated lognormal shapes."),
+        (r"\Pr_{\mathrm{cal}}\!\left\{\begin{gathered}\forall b\in\widehat{\mathcal H}:\\\rho_b\ge\gamma,\quad p_b\ge1-\epsilon\end{gathered}\right\}\ge1-\delta",
+         r"With training and reference fixed, independent calibration certifies mass \(\rho_b\) and hard-case purity \(p_b\) simultaneously for every reported hard bucket \(b\in\widehat{\mathcal H}\)."),
+    ),
+}
+
 
 def paper_id(paper):
     return "note-" + paper["number"].lower() if "number" in paper else paper["key"]

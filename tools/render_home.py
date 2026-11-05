@@ -6,7 +6,16 @@ import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
-from tools.paper_catalog import ALL_PAPERS, artifact, paper_id
+from tools.paper_catalog import ALL_PAPERS, KEY_EQUATIONS, artifact, paper_id
+
+MATHJAX = r'''  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']], tags: 'none' },
+      svg: { fontCache: 'global' },
+      options: { enableMenu: false }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>'''
 
 THEMES = (
     ("accounting", "Account for the shortcut", "Pay for discovering and using structure, as well as the search left over.",
@@ -60,16 +69,30 @@ def card(paper):
     links.append(f'<a href="{escape(guide)}">Guide and evidence</a>')
     alias = ' id="connections"' if key == "connections" else ""
     featured = " paper-featured" if key == "difficulty-buckets" else ""
+    highlights = "\n".join(
+        f'''            <figure class="equation-highlight">
+              <div class="equation-math">\\[{escape(latex)}\\]</div>
+              <figcaption>{escape(caption)}</figcaption>
+            </figure>'''
+        for latex, caption in KEY_EQUATIONS[key]
+    )
     return f'''        <article class="paper-entry{featured}" data-paper-id="{key}"{alias}>
           <p class="paper-kicker">{kicker}</p>
           <h4><a href="{relative_asset(paper, primary)}">{escape(paper['title'])}</a></h4>
           <p>{escape(paper['description'])}</p>
+          <div class="paper-equations" aria-label="Key equations">
+{highlights}
+          </div>
           <div class="link-row">{' '.join(links)}</div>
         </article>'''
 
 
 def render():
     papers = {paper_id(p): p for p in ALL_PAPERS}
+    if set(KEY_EQUATIONS) != set(papers) or any(
+        not 1 <= len(equations) <= 2 for equations in KEY_EQUATIONS.values()
+    ):
+        raise ValueError("every paper must have one or two key equations")
     ordered = [key for theme in THEMES for key in theme[5]]
     if len(ordered) != len(set(ordered)) or set(ordered) != set(papers):
         raise ValueError("reading themes must include every paper exactly once")
@@ -92,6 +115,7 @@ def render():
   <meta name="theme-color" content="#f7f8f5">
   <title>Certified Coverage of Exponential Search Spaces — Jonathan R. Landers</title>
   <link rel="stylesheet" href="paper.css">
+{MATHJAX}
 </head>
 <body class="research-home">
 <a class="skip-link" href="#content">Skip to content</a>

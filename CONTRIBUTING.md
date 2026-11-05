@@ -67,11 +67,15 @@ draft labels and distinguish fresh comparisons, retrospective diagnostics,
 synthetic verification, and conditional runtime claims.
 
 `tools/paper_catalog.py` owns numbered and supplemental paper metadata.
+Its `KEY_EQUATIONS` entries give each paper one or two manuscript-based
+equations with concise captions that preserve the relevant assumptions.
 `tools/render_home.py` owns the thematic home-page layout and reading path;
 run it to regenerate `index.html` after editing its template or catalog.
 The link checker requires every catalog PDF in both the home page and the
 Markdown inventory, and checks each format declared available. Home-only CSS
 is scoped under `.research-home` so paper pages retain their typography.
+The homepage renders its equation highlights with MathJax; review them at
+desktop and mobile widths after changing the mathematics or card styles.
 
 The separate four-page connections note lives in `OpenAI_Subset_Sum_Connections/`
 and builds with `python build_papers.py --paper connections`. Its HTML and PDF
