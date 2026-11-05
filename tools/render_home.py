@@ -132,7 +132,7 @@ def render():
 <a class="skip-link" href="#content">Skip to content</a>
 <main id="content">
   <nav class="home-nav" aria-label="Main navigation">
-    <a class="home-brand" href="index.html">J. R. Landers <span>/ Research</span></a>
+    <a class="home-brand" href="index.html">{COMPASS_ICON}<span class="brand-name">J. R. Landers <span class="brand-section">/ Research</span></span></a>
     <div class="home-nav-links"><a href="#arc">Reading guide</a><a href="#papers">Papers</a><a href="#reproduce">Reproducibility</a><a href="https://github.com/jonland82/exponential-search-spaces">GitHub <span aria-hidden="true">↗</span></a></div>
   </nav>
   <header class="home-hero">
