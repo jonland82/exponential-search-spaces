@@ -54,6 +54,12 @@ PAPERS = (
 # or the existing main-paper build targets. Formats describe assets actually
 # present in this checkout; the conservation manuscript currently has PDF only.
 SUPPLEMENTS = (
+    dict(key="block-overlap", kind="Standalone paper",
+         source_dir="notes/01-certified-coverage/block-overlap",
+         stem="Certified_Block_Overlap_in_Subset_Sum",
+         title="Certified Block Overlap in Subset Sum",
+         description="Bounds exact search by local overlap products and finds the best permitted contiguous blocks, with discovery costs included.",
+         formats=(".pdf", ".tex"), working_draft=True),
     dict(key="conservation", kind="Standalone note", source_dir="notes/conservation-of-computational-work",
          stem="conservation_of_search_work", title="A Conservation Law for Search Work",
          description="Discovery/search tradeoffs, model-specific lower bounds, and pruning break-even costs.",
@@ -89,6 +95,12 @@ ALL_PAPERS = PAPERS + SUPPLEMENTS
 # Homepage highlights, transcribed from each manuscript. Captions retain the
 # assumptions that distinguish models, exact algorithms and population claims.
 KEY_EQUATIONS = {
+    "block-overlap": (
+        (r"\begin{gathered}\kappa_j=\max_z|S_j\cap[z-P_j,z]|\\K=\prod_j\kappa_j\end{gathered}",
+         r"Each local overlap \(\kappa_j\) bounds surviving choices; their product \(K\) bounds complete search paths."),
+        (r"T\le\operatorname{poly}(L)(2^b+K_b)",
+         r"With at most \(b\) items per block, both discovery and exact search are paid; \(K_b\) is the optimal contiguous-partition product."),
+    ),
     "note-i": (
         (r"r(n)=2^n-C(n)",
          r"Certified coverage \(C(n)\) leaves \(r(n)\) original candidates for explicit search."),

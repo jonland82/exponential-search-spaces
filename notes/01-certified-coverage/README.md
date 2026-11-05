@@ -8,7 +8,9 @@ From the repository root, rebuild with `python build_papers.py --paper 1`. LaTeX
 
 Exploratory follow-up: [The Cost of Avoiding Search: A Conditional Coverage Law](certification-cost/README.md), a Markdown research draft on global certification costs and conditional exponential lower bounds.
 
-Two additional research drafts provide [exact block-overlap pruning](block-overlap/README.md) and [distribution-shaped difficulty buckets](distribution-shaping/README.md). The latter proves chosen-shape transport and simultaneous statistical bucket guarantees, and includes a learned representation plus an exact subset-sum router.
+Two additional standalone working drafts develop [exact block-overlap pruning](block-overlap/README.md) and [distribution-shaped difficulty buckets](distribution-shaping/README.md). The latter proves chosen-shape transport and simultaneous statistical bucket guarantees, and includes a learned representation plus an exact subset-sum router.
+
+The five-page block-overlap paper has a standalone [PDF](block-overlap/Certified_Block_Overlap_in_Subset_Sum.pdf) and [LaTeX source](block-overlap/Certified_Block_Overlap_in_Subset_Sum.tex), with full proofs, verification, and two reproducible plots. Its bound includes both discovering the optimal permitted partition and exact search; the original Markdown derivation and code remain available.
 
 The distribution-shaped construction also has a standalone [PDF](distribution-shaping/Distribution_Shaped_Difficulty_Buckets.pdf) and [LaTeX source](distribution-shaping/Distribution_Shaped_Difficulty_Buckets.tex), including full proofs and saved synthetic verification results. The PDF uses natural pagination.
 

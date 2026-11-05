@@ -1,8 +1,8 @@
-# Research library: thirteen PDF papers
+# Research library: fourteen PDF papers
 
-The library contains **seven numbered notes and six companions or standalone papers**. Note numbers record development order. The reading path below follows the argument: account for a shortcut, test it, find exact structure, predict completion, explain the landscape, and make expensive regions identifiable. The [home page](../index.html) follows the same arc.
+The library contains **seven numbered notes and seven companions or standalone papers**. Note numbers record development order. The reading path below follows the argument: account for a shortcut, test it, find exact structure, predict completion, explain the landscape, and make expensive regions identifiable. The [home page](../index.html) follows the same arc.
 
-All thirteen papers have PDFs. Links below distinguish available HTML/LaTeX sources from the PDF-only conservation manuscript. Notes V and VII, the geometric runtime companion, and the difficulty-buckets note are working drafts. Repository availability does not imply external peer review.
+All fourteen papers have PDFs. Links below distinguish available HTML/LaTeX sources from the PDF-only conservation manuscript. Notes V and VII, the geometric runtime companion, the block-overlap paper, and the difficulty-buckets note are working drafts. Repository availability does not imply external peer review.
 
 ## Account for the shortcut
 
@@ -23,6 +23,7 @@ The experiments separate fewer represented candidates from lower total computati
 Easy cores, distinct sums, and reusable tables can replace repeated individual work. Their construction and query costs determine when this is worthwhile.
 
 - **[How Far from Easy? Structural Distance in Subset Sum — PDF](05-structural-distance/Structural_Distance_in_Subset_Sum.pdf)** (Note V; working draft): maximum superincreasing cores, exceptional items, distinct residual sums, and the cost of selecting a core. [HTML](05-structural-distance/Structural_Distance_in_Subset_Sum.html), [LaTeX](05-structural-distance/Structural_Distance_in_Subset_Sum.tex), [guide](05-structural-distance/README.md).
+- **[Certified Block Overlap in Subset Sum — PDF](01-certified-coverage/block-overlap/Certified_Block_Overlap_in_Subset_Sum.pdf)** (standalone working draft): exact interval pruning, an optimal contiguous-partition dynamic program, paid bit-cost and space bounds, robust separated families, finite verification, and two reproducible plots. [LaTeX](01-certified-coverage/block-overlap/Certified_Block_Overlap_in_Subset_Sum.tex), [proofs, code and build guide](01-certified-coverage/block-overlap/README.md). Five pages.
 - **[Geometric Cores and Exceptions in Subset Sum — PDF](07-geometric-cores/Geometric_Cores_and_Exceptions_in_Subset_Sum.pdf)** (Note VII; working draft): one quotient–remainder core table reused across exceptional assignments, with fresh paid-completion studies. [HTML](07-geometric-cores/Geometric_Cores_and_Exceptions_in_Subset_Sum.html), [LaTeX](07-geometric-cores/Geometric_Cores_and_Exceptions_in_Subset_Sum.tex), [guide](07-geometric-cores/README.md).
 - **[The Runtime of Geometric Core Subset Sum — PDF](07-geometric-cores/Runtime_of_Geometric_Core_Subset_Sum.pdf)** (companion to VII; working draft): construction, query and memory bounds; sufficient structured regimes; comparisons with general algorithms. [HTML](07-geometric-cores/Runtime_of_Geometric_Core_Subset_Sum.html), [LaTeX](07-geometric-cores/Runtime_of_Geometric_Core_Subset_Sum.tex). Three pages.
 - **[From Choices to Sums: Connections to OpenAI's Subset-Sum Algorithms — PDF](../OpenAI_Subset_Sum_Connections/From_Choices_to_Sums.pdf)**: distinct-sum compression, compatible records, modular checksums, and shared geometric tables. [HTML](../OpenAI_Subset_Sum_Connections/From_Choices_to_Sums.html), [LaTeX](../OpenAI_Subset_Sum_Connections/From_Choices_to_Sums.tex), [sources and guide](../OpenAI_Subset_Sum_Connections/README.md). Four pages.
@@ -47,21 +48,21 @@ A chosen distribution supplies a layout. Feature information and independent cal
 
 - **[Distribution-Shaped Difficulty Buckets — PDF](01-certified-coverage/distribution-shaping/Distribution_Shaped_Difficulty_Buckets.pdf)** (standalone working draft): chosen-shape transport, simultaneous bucket mass/purity guarantees, sample-size conditions for availability, and an exact solver router. [LaTeX](01-certified-coverage/distribution-shaping/Distribution_Shaped_Difficulty_Buckets.tex), [full theory, algorithm and guide](01-certified-coverage/distribution-shaping/README.md). The verification example uses synthetic known costs; practical subset-sum coverage and speedups remain to be measured.
 
-## Related Markdown drafts
+## Related Markdown draft
 
-- [Certified pruning from overlap between block sums](01-certified-coverage/block-overlap/README.md): an exact structured-family bound including discovery, with reference code and finite checks. Its block mechanism is also derived in the buckets paper's solver application.
 - [The Cost of Avoiding Search: A Conditional Coverage Law](01-certified-coverage/certification-cost/README.md): an exploratory draft assuming an unknown positive exponential floor. Its general premise remains unproved. It is distinct from the conservation PDF above.
 
-These two drafts do not add separate PDF papers to the count.
+The conditional-cost draft has no separate PDF. The block-overlap derivation now has its own standalone paper, listed above.
 
 ## Evidence and builds
 
 The numbered papers' canonical sources live in their note folders. Shared methods, dated protocols, model files, source snapshots, and measurements remain in the original experiment packages. Existing experiments are preserved; paper builds use their saved evidence.
 
 - `python build_papers.py` builds the seven numbered notes, two companions, and *From Choices to Sums*. Individual targets accept a number or filename stem; `--paper 6` and `--paper 7` include their companions.
+- `python notes/01-certified-coverage/block-overlap/build_note.py` checks the preserved source hashes, regenerates exact structural plots and numerical macros, and builds the block-overlap paper with a six-page upper limit. It preserves the original solver, checker, and validation record.
 - `python notes/01-certified-coverage/distribution-shaping/build_note.py` checks source hashes and reported values, then builds the buckets paper with natural pagination and no forced section page breaks.
 - The [connections guide](../OpenAI_Subset_Sum_Connections/README.md) documents the separate runtime-bands LaTeX build. The conservation PDF is preserved as supplied; its source is absent.
-- `python tools/render_home.py` regenerates the thematic home page from the complete catalog. `python tools/check_links.py` checks links, all thirteen catalog PDFs, available formats, inventory coverage, and draft status.
+- `python tools/render_home.py` regenerates the thematic home page from the complete catalog. `python tools/check_links.py` checks links, all fourteen catalog PDFs, available formats, inventory coverage, and draft status.
 - `python tools/prepare_site.py --output .build/site-review-new` stages every note folder, all paper PDFs, source formats, and supporting evidence into a fresh directory. Check it with `python tools/check_links.py --site .build/site-review-new`.
 
 See the [repository guide](../README.md) for current findings and the [contribution rules](../CONTRIBUTING.md) for builds, evidence preservation, and publishing.

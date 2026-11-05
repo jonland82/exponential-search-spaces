@@ -2,20 +2,20 @@
 
 Jonathan R. Landers | September-November 2026
 
-[Live research site](https://jonland82.github.io/exponential-search-spaces/) | [Reading guide](https://jonland82.github.io/exponential-search-spaces/#arc) | [All 13 papers](notes/README.md) | [Build and preservation rules](CONTRIBUTING.md)
+[Live research site](https://jonland82.github.io/exponential-search-spaces/) | [Reading guide](https://jonland82.github.io/exponential-search-spaces/#arc) | [All 14 papers](notes/README.md) | [Build and preservation rules](CONTRIBUTING.md)
 
-The research follows one question: when does finding structure make search cheaper? It develops representations that handle many candidates together, then asks how to identify expensive work before solving. The library contains **13 distinct PDF papers: seven numbered notes and six companions or standalone papers**. Note numbers record development order; the reading path below follows the argument. Notes V, VII, the geometric runtime companion, and the difficulty-buckets note retain their working-draft labels.
+The research follows one question: when does finding structure make search cheaper? It develops representations that handle many candidates together, then asks how to identify expensive work before solving. The library contains **14 distinct PDF papers: seven numbered notes and seven companions or standalone papers**. Note numbers record development order; the reading path below follows the argument. Notes V, VII, the geometric runtime companion, the block-overlap paper, and the difficulty-buckets note retain their working-draft labels.
 
 ## Reading the research
 
 1. **Account for the shortcut.** *Certified Coverage* pays for collective representation and residual search. *A Conservation Law for Search Work* makes the assumptions behind discovery/search tradeoffs and lower bounds explicit.
 2. **Test whether grouping pays.** The exact-search stress test and approximation experiment separate fewer represented candidates from lower total computation, retaining their negative results.
-3. **Find exact structure.** Structural distance separates easy cores from exceptions; geometric reuse shares a table across queries. The runtime companion charges construction, queries, and memory. *From Choices to Sums* connects these mechanisms to distinct-sum compression and modular representations.
+3. **Find exact structure.** Structural distance separates easy cores from exceptions; block overlap bounds local branching and optimizes the partition; geometric reuse shares a table across queries. The runtime companion charges construction, queries, and memory. *From Choices to Sums* connects these mechanisms to distinct-sum compression and modular representations.
 4. **Predict before solving.** Random-target reachability and budgeted solver completion are different questions. The probability-valued and learned-completion notes study their certificates, predictions, and acquisition costs.
 5. **Explain the landscape.** The clustering and runtime-bands notes relate observed patterns to available solving routes, rather than treating unresolved cases as intrinsically hard.
 6. **Make difficulty identifiable.** *Distribution-Shaped Difficulty Buckets* learns a feature score, chooses its representation's shape, and independently certifies which visible regions are large and expensive for a fixed solver and budget.
 
-The [paper inventory](notes/README.md) links every PDF in this thematic order. Two additional Markdown drafts cover [exact block-overlap pruning](notes/01-certified-coverage/block-overlap/README.md) and [a conditional coverage-cost law](notes/01-certified-coverage/certification-cost/README.md).
+The [paper inventory](notes/README.md) links every PDF in this thematic order. The [block-overlap paper](notes/01-certified-coverage/block-overlap/Certified_Block_Overlap_in_Subset_Sum.pdf) develops an exact search bound with paid discovery. A separate [conditional coverage-cost law](notes/01-certified-coverage/certification-cost/README.md) remains a Markdown draft.
 
 ## Notes
 
@@ -42,6 +42,7 @@ These numbered notes remain the original sequence. The reading path above connec
 
 | Paper | Focus | Files |
 |---|---|---|
+| **Certified Block Overlap in Subset Sum** (five-page working draft) | Local overlap products bound exact search; a dynamic program optimizes contiguous blocks with discovery costs included. Full proofs, verification, and two plots. | [PDF](notes/01-certified-coverage/block-overlap/Certified_Block_Overlap_in_Subset_Sum.pdf) / [LaTeX](notes/01-certified-coverage/block-overlap/Certified_Block_Overlap_in_Subset_Sum.tex) / [Proofs, code and rebuild](notes/01-certified-coverage/block-overlap/README.md) |
 | **From Choices to Sums: Connections to OpenAI's Subset-Sum Algorithms** (four pages) | Distinct exceptional sums, compatible representations, modular checksums and reusable geometric tables; derives a combined runtime bound from existing constructions. | [HTML](OpenAI_Subset_Sum_Connections/From_Choices_to_Sums.html) / [PDF](OpenAI_Subset_Sum_Connections/From_Choices_to_Sums.pdf) / [LaTeX](OpenAI_Subset_Sum_Connections/From_Choices_to_Sums.tex) / [Sources and rebuild](OpenAI_Subset_Sum_Connections/README.md) |
 | **Why Subset-Sum Runtimes Form Several Bands** (four pages) | Solver-route mixtures, structural cost scales, and the extra assumptions behind lognormal sketches. | [PDF](OpenAI_Subset_Sum_Connections/Runtime_Distribution_from_Structural_Routes.pdf) / [LaTeX](OpenAI_Subset_Sum_Connections/Runtime_Distribution_from_Structural_Routes.tex) / [Guide](OpenAI_Subset_Sum_Connections/README.md) |
 | **A Conservation Law for Search Work** (four pages) | Structural/search accounting, model-specific and SETH-conditional lower bounds, and pruning break-even costs. | [PDF](notes/conservation-of-computational-work/conservation_of_search_work.pdf) / [Guide](notes/conservation-of-computational-work/README.md); source not included in this checkout |
@@ -51,7 +52,7 @@ These numbered notes remain the original sequence. The reading path above connec
 
 An exploratory Markdown draft, [The Cost of Avoiding Search: A Conditional Coverage Law](notes/01-certified-coverage/certification-cost/README.md), assumes a positive exponential cost floor with an unknown exponent and develops a sufficient coverage-cost mechanism. Local gains and faster exponential algorithms can coexist with that hypothetical floor.
 
-The separate [conservation PDF](notes/conservation-of-computational-work/conservation_of_search_work.pdf) distinguishes accounting identities from proven model-specific and conditional lower bounds. The new [difficulty-buckets note](notes/01-certified-coverage/distribution-shaping/README.md) proves selected-shape transport and simultaneous population mass/purity guarantees for fixed buckets. Its demonstrated coverage uses synthetic known costs; a paid subset-sum performance evaluation remains open. The [block-overlap draft](notes/01-certified-coverage/block-overlap/README.md) proves an exact structured-family search bound with discovery costs included.
+The separate [conservation PDF](notes/conservation-of-computational-work/conservation_of_search_work.pdf) distinguishes accounting identities from proven model-specific and conditional lower bounds. The new [difficulty-buckets note](notes/01-certified-coverage/distribution-shaping/README.md) proves selected-shape transport and simultaneous population mass/purity guarantees for fixed buckets. Its demonstrated coverage uses synthetic known costs; a paid subset-sum performance evaluation remains open. The five-page [block-overlap paper](notes/01-certified-coverage/block-overlap/Certified_Block_Overlap_in_Subset_Sum.pdf) proves an exact search bound with optimal contiguous-partition discovery included; its two reproducible plots distinguish local interval geometry, global support size, and paid structural counters. Its 37,055 finite decision/witness comparisons are correctness evidence, not timing benchmarks.
 
 [Note VII](notes/07-geometric-cores/README.md) supplies an exact geometric solving route: reuse one core table across exceptional assignments. Its first fresh study improves work-capped completions from 453 to 469 of 576 targets over matched root geometry. A second fresh study finds 954 versus root's 916 of 1,152 targets. The final bounds-first refinement mainly saves construction: 90 avoided tables and 1.74% lower capped work; its primary incremental completion comparison is only 953 versus 954, with interval [0,3]. Neither study establishes a new general worst-case bound. The companions explain existing evidence and run no new experiments.
 
@@ -94,6 +95,7 @@ python build_papers.py --paper 6
 python build_papers.py --paper 7
 python build_papers.py --paper connections
 python notes/01-certified-coverage/distribution-shaping/build_note.py
+python notes/01-certified-coverage/block-overlap/build_note.py
 python tools/render_home.py
 python tools/note_vi_cluster_artifacts.py --pdf
 python build_papers.py --paper Probability_Valued_Subset_Sum
@@ -103,7 +105,7 @@ python -m unittest discover -s Structural_Distance_Subset_Sum -p "test_*.py" -v
 
 The builder accepts a note number or filename stem. By default it builds the seven numbered PDFs, both companions and the OpenAI connections note, and updates their generated HTML; Note I's maintained HTML is preserved. Use `--paper connections` to build the four-page connections note alone. Building Note VI includes its clustering companion, and building Note VII includes its runtime companion. Notes V and VII and the runtime companion retain visible working-draft labels. Use `--html-only` to refresh generated HTML without rebuilding PDFs, or `--pdf-only` for PDFs alone. Builds also synchronize the historical root PDF/TeX downloads from canonical sources. Generated Note III, V, VI and VII evidence artifacts come from preserved measurements with integrity checks. Note VI includes the original frozen study and the separate branch-pruning follow-up. No experiments or model fitting are rerun by these paper builds.
 
-The main builder covers ten of the thirteen PDFs. The buckets note has its own evidence-checking builder shown above, with natural pagination. The runtime-bands note uses the [separate two-pass LaTeX workflow](OpenAI_Subset_Sum_Connections/README.md). The conservation PDF is preserved as supplied because its LaTeX source is absent. These three standalone papers are nevertheless included in the catalog, home page, and staged site.
+The main builder covers ten of the fourteen PDFs. The buckets and block-overlap papers have their own evidence-checking builders shown above, with natural pagination and a six-page upper limit. The runtime-bands note uses the [separate two-pass LaTeX workflow](OpenAI_Subset_Sum_Connections/README.md). The conservation PDF is preserved as supplied because its LaTeX source is absent. These four standalone papers are nevertheless included in the catalog, home page, and staged site.
 
 See [Note V's findings](Structural_Distance_Subset_Sum/FINDINGS.md), [its full study report](Structural_Distance_Subset_Sum/results/prospective_20261024/REPORT.md), and [Note III's methods ledger](subset-sum/PROBABILITY_REFINEMENT.md) for the guarantees, results, and their limits.
 
@@ -116,6 +118,6 @@ python tools/prepare_site.py --output .build/site-review-20261029
 python tools/check_links.py --site .build/site-review-20261029
 ```
 
-The review copy contains all thirteen paper PDFs, every note folder including the unnumbered conservation folder, supporting evidence packages, guides, and available sources. Historical root HTML, PDF and LaTeX URLs remain available. Link checks require every catalog paper in both the home page and the Markdown inventory, and verify all declared formats. Working-draft labels are preserved.
+The review copy contains all fourteen paper PDFs, every note folder including the unnumbered conservation folder, supporting evidence packages, guides, and available sources. Historical root HTML, PDF and LaTeX URLs remain available. Link checks require every catalog paper in both the home page and the Markdown inventory, and verify all declared formats. Working-draft labels are preserved.
 
 These notes establish model criteria and results on specified synthetic families. They do not claim a new general worst-case subset-sum bound.

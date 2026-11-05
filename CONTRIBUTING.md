@@ -57,13 +57,13 @@ part of the intended change.
 ## Documentation and paper releases
 
 Keep the home `index.html`, root `README.md`, `notes/README.md` and affected note
-and experiment guides consistent. The library currently has thirteen distinct
-PDF papers: seven numbered notes and six companions or standalone papers. The
+and experiment guides consistent. The library currently has fourteen distinct
+PDF papers: seven numbered notes and seven companions or standalone papers. The
 clustering and geometric runtime companions live beside Notes VI and VII;
 the two connections/runtime-band expositions live in `OpenAI_Subset_Sum_Connections/`;
 the conservation PDF has its own unnumbered note folder; and difficulty buckets
-live under Note I. Supplements do not change the numbered-note count. Retain
-draft labels and distinguish fresh comparisons, retrospective diagnostics,
+and block overlap live under Note I. Supplements do not change the numbered-note
+count. Retain draft labels and distinguish fresh comparisons, retrospective diagnostics,
 synthetic verification, and conditional runtime claims.
 
 `tools/paper_catalog.py` owns numbered and supplemental paper metadata.
@@ -88,7 +88,10 @@ downloads; edit the canonical manuscripts in `notes/`, not those generated copie
 The difficulty-buckets note has a separate evidence-checking builder at
 `notes/01-certified-coverage/distribution-shaping/build_note.py`; its pagination
 flows naturally, with an upper page-count check rather than forced section
-breaks. The connections guide documents the separate runtime-bands build.
+breaks. The block-overlap paper likewise has an evidence-checking builder at
+`notes/01-certified-coverage/block-overlap/build_note.py`; it regenerates
+structural illustrations, preserves the original checks, and enforces at
+most six pages. The connections guide documents the separate runtime-bands build.
 The conservation manuscript currently has PDF only: preserve it as supplied
 and do not advertise unavailable source or HTML formats.
 For navigation-only changes, link checking and a staged-site check are sufficient;
@@ -104,7 +107,7 @@ python tools/check_links.py --site .build/site-review-20261028
 ```
 
 Staging includes every note directory, including unnumbered manuscripts, and
-all thirteen catalog PDFs. Use a fresh output directory for every review.
+all fourteen catalog PDFs. Use a fresh output directory for every review.
 Staging is an optional local check; the committed root on `master` is the live site.
 
 ## Branches and commits

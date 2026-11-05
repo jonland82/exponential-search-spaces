@@ -1,0 +1,408 @@
+\documentclass[10pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern,amsmath,amssymb,amsthm,graphicx,booktabs,microtype}
+\usepackage[margin=.72in]{geometry}
+\usepackage{xcolor,titlesec,enumitem,xurl,hyperref}
+\definecolor{ink}{HTML}{202C30}
+\definecolor{accent}{HTML}{285A52}
+\definecolor{rulecolor}{HTML}{D9E0DA}
+\color{ink}
+\hypersetup{pdftitle={Certified Block Overlap in Subset Sum},
+  pdfauthor={Jonathan R. Landers},hidelinks}
+\titleformat{\section}{\normalfont\sffamily\large\bfseries\color{accent}}{\thesection}{.65em}{}
+\titlespacing*{\section}{0pt}{10pt plus 2pt}{5pt}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3pt plus .5pt}
+\setlength{\emergencystretch}{2em}
+\setlength{\abovedisplayskip}{6pt plus 1pt}
+\setlength{\belowdisplayskip}{6pt plus 1pt}
+\setlength{\textfloatsep}{11pt plus 2pt minus 2pt}
+\setlist[enumerate]{leftmargin=*,itemsep=1pt,topsep=3pt}
+\raggedbottom
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\newcommand{\poly}{\operatorname{poly}}
+\newcommand{\supp}{\mathcal S}
+\input{paper_values.tex}
+
+\begin{document}
+{\LARGE\sffamily\bfseries Certified Block Overlap in Subset Sum}\par
+\vspace{3pt}
+{\large\sffamily Small local dictionaries, bounded search, paid discovery}\par
+\vspace{5pt}
+{\small Jonathan R. Landers \hfill November 2026}\par
+{\color{accent}\small\textsc{Standalone research paper $\cdot$ Working draft}}\par
+\textcolor{rulecolor}{\rule{\linewidth}{.6pt}}
+
+\textbf{Abstract.}
+An input can have exponentially many distinct subset sums and still admit a
+short exact search. We partition sorted positive weights into small blocks,
+represent each block by its distinct sums, and bound how many local choices
+can remain compatible with any target. The product of these overlap bounds
+controls the entire search tree. A dynamic program finds the minimum product
+over contiguous partitions with at most $b$ items per block. If $L$ is binary
+input length and $K_b$ is that optimum, discovery and exact solving together
+take $\poly(L)(2^b+K_b)$ bit operations. A separated family has $2^n$ distinct
+global sums but $K_3=1$; a perturbation condition preserves this property.
+Full proofs, a reference algorithm, exhaustive finite checks, and two
+reproducible illustrations make the guarantee explicit. These are
+structured-input upper bounds, with no claim of general runtime superiority
+or established literature novelty.
+
+\section{The opportunity: distinguish local choices, not all global sums}
+Subset sum asks whether some selection of positive integer weights totals a
+specified integer target. There are $2^n$ selections, but their number alone
+does not determine the computation needed to answer the question. Repeated
+sums can be merged; more subtly, sums can remain distinct while their
+\emph{separation} makes almost every choice impossible.
+
+Consider the blocks $(2,3,4)$ and $(20,30,40)$. The lower block totals $9$.
+For target $37$, the higher block must contribute between $28$ and $37$;
+its only sum there is $30$. The remaining question is whether the lower
+block reaches $7$. For target $38$, the same higher choice survives, but
+the remainder $8$ is unreachable. The interval test therefore excludes
+whole groups safely, while a surviving interval still requires exact search.
+We turn this example into a target-uniform bound and charge the work needed
+to discover a useful partition.
+
+Let $a=(a_1,\ldots,a_n)\in\mathbb Z_{>0}^n$, $t\in\mathbb Z$, and
+$[n]=\{1,\ldots,n\}$. The required output is an index set $U\subseteq[n]$
+such that $\sum_{i\in U}a_i=t$, or a correct NO answer.
+Equal values remain distinct indexed items; the empty selection is allowed.
+Let $L$ be the length of a standard explicit binary encoding of $(a,t)$,
+including delimiters. Thus $n=O(L)$, and all partial sums and witness masks
+have $O(L)$ bits. Throughout, $\poly(L)$ denotes a uniform polynomial bound;
+it hides no additional exponential parameter.
+
+\section{Local dictionaries and the exact interval test}
+Sort the items as $w_1\le\cdots\le w_n$, breaking ties by original index and
+retaining that index map. Fix $1\le b\le n$ and cuts
+$0=v_0<v_1<\cdots<v_m=n$, with $v_j-v_{j-1}\le b$.
+The $j$th block is $B_j=\{v_{j-1}+1,\ldots,v_j\}$. Define
+\begin{equation}\label{eq:local}
+ S_j=\left\{\sum_{i\in U}w_i:U\subseteq B_j\right\},
+ \qquad P_j=\sum_{i=1}^{v_{j-1}}w_i.
+\end{equation}
+Store the sorted distinct values in $S_j$, keeping one original-index witness
+per value. If higher blocks leave residual target $r$, a completion using
+$s\in S_j$ needs a lower contribution $r-s\in[0,P_j]$.
+
+\begin{lemma}[Sound exclusion and merging]\label{lem:exact}
+Only sums $s\in S_j\cap[r-P_j,r]$ can occur in a completion.
+Keeping one witness per distinct block sum preserves existence and recovery
+of one full witness.
+\end{lemma}
+\begin{proof}
+Every lower selection has sum $u$ with $0\le u\le P_j$; $s+u=r$ implies
+$r-P_j\le s\le r$. Conversely, two selections within $B_j$ with equal sum
+leave the same residual and the same unprocessed blocks. Substituting one
+for the other preserves a solution and cannot reuse an index, because
+blocks are disjoint.
+\end{proof}
+
+The interval $[s,s+P_j]$ contains every residual target that could use local
+sum $s$. Its overlap with other such intervals measures possible branching:
+\begin{equation}\label{eq:overlap}
+ \kappa_j=\max_{z\in\mathbb Z}|S_j\cap[z-P_j,z]|,
+ \qquad K(\mathcal B)=\prod_{j=1}^m\kappa_j,
+ \qquad 1\le\kappa_j\le |S_j|\le2^b .
+\end{equation}
+Here $\mathcal B=(B_1,\ldots,B_m)$ is the partition.
+Intervals are closed: sums exactly $P_j$ apart can both qualify.
+Figure~\ref{fig:intervals} makes this endpoint issue visible.
+
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=.97\linewidth]{block_overlap_geometry.pdf}
+\caption{\textbf{Overlap is a branching certificate.}
+Each segment is $[s,s+P]$ for the local sums of $(20,30,40)$;
+orange segments contain the residual target marked by the vertical line
+and hollow diamonds. With $P=9$, at most
+one segment covers any target. With $P=10$, adjacent segments share an
+endpoint: residual $40$ admits both $s=30$ and $s=40$, so $\kappa=2$.
+The second panel varies the lower total to illustrate the closed-interval
+rule; it is not the original two-block input.}
+\label{fig:intervals}
+\end{figure}
+
+\section{The overlap product bounds the entire search}
+Search blocks in descending order. At block $j$, use two binary searches
+to locate $S_j\cap[r-P_j,r]$, then recurse on each qualifying sum $s$
+with residual $r-s$. At depth $m$, accept precisely residual zero.
+Reject $t\notin[0,\sum_iw_i]$ immediately.
+
+\begin{theorem}[Fixed-partition search]\label{thm:search}
+The algorithm is exact. Its complete search tree has at most
+\begin{equation}\label{eq:tree}
+ N(\mathcal B,t)\le
+ 1+\sum_{\ell=1}^m\prod_{h=m-\ell+1}^m\kappa_h
+ \le(m+1)K(\mathcal B)
+\end{equation}
+nodes and at most $K(\mathcal B)$ complete paths. After construction of the
+local dictionaries, its bit cost is at most $\poly(L)K(\mathcal B)$.
+An early YES may stop sooner.
+\end{theorem}
+\begin{proof}
+Induct on the number of remaining blocks. With no blocks, precisely residual
+zero is attainable. Lemma~\ref{lem:exact} discards no solution and justifies
+the stored representative for every surviving local sum. Applying the
+induction hypothesis to these children proves both YES and NO correctness.
+
+At depth $\ell$, each preceding node has at most $\kappa_{m-\ell+1}$
+children, independently of its residual. Multiplying these deterministic
+upper bounds and summing levels gives the first inequality in
+\eqref{eq:tree}. Since every $\kappa_h\ge1$, every partial product is at
+most $K(\mathcal B)$, proving the second. Binary searches take
+$O(\log(|S_j|+1))=O(b+1)$ comparisons per internal node.
+Charge each generated child once; sums, residuals, and masks have $O(L)$
+bits. Witness assembly and its final weighted-sum check are polynomial.
+All these charges fit the stated bit bound.
+\end{proof}
+
+No independence of pruning fractions is assumed. The bound includes failed
+branches, and holds for every target, including NO instances. It need not
+preserve the number of solutions: equal-sum witnesses have been merged.
+
+\section{Finding the best permitted partition, and paying for it}
+A small product would be of little use if finding its partition required
+exhaustive search over all cuts. The key observation is that the lower total
+for a candidate block depends only on where that block begins.
+
+Put $H_v=\sum_{i=1}^vw_i$, with $H_0=0$. For $1\le u\le v\le n$ and
+$v-u+1\le b$, let $S_{u,v}$ be the distinct sums of $w_u,\ldots,w_v$ and
+define $\kappa(u,v)=\max_z|S_{u,v}\cap[z-H_{u-1},z]|$.
+The exact integer recurrence
+\begin{equation}\label{eq:dp}
+ D(0)=1,\qquad
+ D(v)=\min_{\max(1,v-b+1)\le u\le v}
+          D(u-1)\kappa(u,v),\qquad K_b=D(n)
+\end{equation}
+stores a minimizing predecessor for each $v$.
+
+\begin{theorem}[Optimal contiguous discovery and total cost]\label{thm:paid}
+The recurrence finds
+$K_b=\min_{\mathcal B}K(\mathcal B)$ over all contiguous sorted partitions
+whose blocks contain at most $b$ items. For that discovered partition,
+sorting, dictionary construction, optimization, reconstruction, and exact
+solution together satisfy
+\begin{equation}\label{eq:paid}
+ \boxed{\quad T(a,t;b)\le\poly(L)(2^b+K_b),\qquad
+             \mathrm{Space}(a,t;b)\le\poly(L)2^b.\quad}
+\end{equation}
+The optimum concerns this partition family and this product bound,
+not minimum actual runtime among all subset-sum algorithms.
+\end{theorem}
+\begin{proof}
+Every partition of the first $v$ items has a last block $[u,v]$.
+Its final factor $\kappa(u,v)$ uses $H_{u-1}$, regardless of earlier cuts.
+Replacing the preceding partition by an optimum cannot increase the
+product. Induction proves \eqref{eq:dp} and predecessor reconstruction.
+
+There are at most $nb$ candidate blocks. For a block of length $\ell$,
+start with $(0,\varnothing)$ and repeatedly merge the current sorted
+sum list with its translate by the next weight, coalescing equal sums
+and retaining a witness. List sizes are at most $2^h$ after $h$ items;
+the total merge work is $O(\sum_{h=1}^{\ell}2^h)=O(2^\ell)$
+arithmetic/comparison operations.
+
+For sorted values $s_1<\cdots<s_q$, a sliding window moves its left
+endpoint forward until $s_{\rm right}-s_{\rm left}\le H_{u-1}$.
+The largest window equals $\kappa(u,v)$: any nonempty eligible interval
+can move its right endpoint to its largest contained support value
+without losing a contained value. Each endpoint moves at most $q$ times,
+so scoring takes $O(q)$ comparisons.
+
+Thus discovery costs $O(n\log(n+1)+nb2^b)$ operations.
+Discard a candidate list after scoring, store its score, and rebuild only
+the chosen block lists, adding $O(n2^b)$ operations. Each DP candidate
+product is at most $2^v$, so it uses at most $n+1$ bits.
+All other represented integers and witnesses also have polynomial bit length.
+Theorem~\ref{thm:search} then gives \eqref{eq:paid}.
+More explicitly, schoolbook integer arithmetic permits the conservative bound
+\[
+ O\!\left(L^2\left[n\log(n+1)+nb2^b+(m+1)(b+1)K_b\right]\right).
+\]
+
+Store $O(nb)$ scores, predecessors, one temporary candidate list, and the
+chosen lists, which have at most $m2^b$ records. Depth-first search keeps
+one path and pending siblings: at most $1+m(2^b-1)$ pending nodes.
+Each record uses polynomially many bits, proving the space bound.
+\end{proof}
+
+\textbf{Reference algorithm.}
+\begin{enumerate}
+\item Sort with original indices; compute prefix totals $H_v$.
+\item Construct and score every candidate block of length at most $b$.
+\item Evaluate \eqref{eq:dp} using exact integer products; reconstruct its cuts
+and rebuild their witnessed dictionaries.
+\item Search downward using Lemma~\ref{lem:exact}; verify any recovered witness
+against the original input. Exhausting every surviving branch certifies NO.
+\end{enumerate}
+For $n=0$, take the empty partition and $K_b=1$: only $t=0$ is reachable.
+
+\begin{corollary}[An efficiently recognizable tractable class]\label{cor:poly}
+Fix integers $c\ge1$ and $d\ge0$. For nonempty inputs choose
+$b=\min\{n,\max\{1,\lfloor c\log_2(L+1)\rfloor\}\}$.
+The class $K_b\le(L+1)^d$ is recognizable and solvable in polynomial
+bit time, without a supplied partition.
+\end{corollary}
+\begin{proof}
+Discovery is polynomial because $2^b$ is polynomial in $L$;
+$\lfloor c\log_2(L+1)\rfloor$ is computable as the bit length of
+$(L+1)^c$ minus one.
+Compare the computed integer $K_b$ with the threshold and apply
+Theorem~\ref{thm:paid} on accepted inputs.
+\end{proof}
+
+The two costs remain distinct. Increasing $b$ cannot increase $K_b$,
+because it permits every earlier partition; nevertheless, constructing
+larger blocks can cost more. In particular, $b=n$ always permits $K_b=1$,
+since the single block has lower total zero. Its dictionary can still
+require $2^n$ records. A small search tree alone is not a small total cost.
+
+\section{Exponentially many distinct sums, only one surviving path}
+For $j=0,\ldots,m-1$, take the sorted triples
+\begin{equation}\label{eq:family}
+ B_{j+1}=\{2\cdot10^j,3\cdot10^j,4\cdot10^j\},\quad n=3m,
+ \qquad
+ S_{j+1}=10^j\{0,2,3,4,5,6,7,9\}.
+\end{equation}
+The total below block $j+1$ is
+$P_{j+1}=9\sum_{h<j}10^h=10^j-1$.
+Every gap between its consecutive support values is at least $10^j$,
+strictly exceeding $P_{j+1}$. Hence every $\kappa_j=1$ and $K_3=1$.
+The search visits at most $m+1$ nodes for any target.
+
+Each triple's eight selections produce eight different decimal digits,
+and no digit carries into the next block. The $8^m=2^n$ global sums are
+therefore all distinct. Only $8m$ local records are retained for the
+triple partition. Because $b=3$, discovery is polynomial, too:
+the algorithm never builds the global support.
+
+This family is not itemwise superincreasing: $4\cdot10^j<
+2\cdot10^j+3\cdot10^j$. The maximum-core greedy scan used in the
+core-and-exceptions approach~\cite{core} keeps the first two items of each
+triple and rejects the third. Indeed, before each triple its retained total
+is $5(10^j-1)/9<10^j$; the first two items exceed the preceding retained
+total, while the third does not. That route leaves $m$ exceptions and its
+enumeration bound is exponential. This compares sufficient bounds, not
+lower bounds against other algorithms.
+
+\begin{proposition}[Irregular scales and perturbations]\label{prop:robust}
+Replace the triples by
+$\{2M_j+e_{j,2},3M_j+e_{j,3},4M_j+e_{j,4}\}$, where
+$M_j,E_j\in\mathbb Z_{\ge0}$, $|e_{j,h}|\le E_j$, and $P_j$ is the
+actual total of preceding triples. If
+\begin{equation}\label{eq:robust}
+ M_j-3E_j>P_j\qquad\text{for every }j,
+\end{equation}
+the triples form a contiguous sorted partition with $\kappa_j=1$,
+all $2^{3m}$ global sums are distinct, and $b=3$ gives polynomial bit time.
+\end{proposition}
+\begin{proof}
+An unperturbed difference between two distinct local subset sums has
+absolute value at least $M_j$. Each of the three errors appears in their
+difference with coefficient in $\{-1,0,1\}$, changing it by at most $3E_j$.
+Thus every local difference remains larger than $P_j$.
+Condition \eqref{eq:robust} also ensures positive weights, increasing order
+within each triple, and a new smallest weight exceeding the earlier total.
+The triples are therefore permitted sorted blocks with unit overlap.
+For two different global selections, their highest differing block contributes
+a difference larger than the total of all lower blocks; cancellation is
+impossible. Apply Theorem~\ref{thm:paid}.
+\end{proof}
+
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=.97\linewidth]{block_overlap_scaling.pdf}
+\caption{\textbf{The separated family, with discovery visible.}
+For $m\in\{1,2,4,8,16,32,64,100\}$, panel A compares the proved global
+support size with the retained local dictionaries; the vertical coordinate
+is explicitly a base-two logarithm. Panel B shows separate exact counters
+from the reference implementation with $b=3$. Support candidates include
+discovery and rebuilding the chosen lists; the YES target has every decimal
+digit equal to $7$. Counters are neither uniform bit operations nor timings,
+and are not added together.}
+\label{fig:scaling}
+\end{figure}
+
+\section{Verification, interpretation, and scope}
+The standard-library reference solver uses exact integers, witnessed sorted
+merges, a sliding-window overlap calculation, and iterative depth-first
+search. Its separate checker enumerates subsets directly and independently
+enumerates every admissible cut set on the exhaustive small domain.
+The preserved record reports:
+\begin{center}
+\begin{tabular}{lr}
+\toprule
+Check or constructed-example counter & Count\\
+\midrule
+All sorted multisets of $0$--$6$ items from $\{1,\ldots,5\}$ & \ExhaustiveInputs\\
+Partition-optimality checks, $b\in\{1,2,3\}$ & \PartitionChecks\\
+Additional seeded random inputs, at most $12$ items & \RandomInputs\\
+Decision/witness comparisons against exhaustive subsets & \TargetChecks\\
+\midrule
+Candidate blocks scored, $n=\LargeItems$, $b=3$ & \LargeIntervals\\
+Support candidates, including reconstruction & \LargeCandidates\\
+Search nodes: all-$7$ YES target / leading-$8$ NO target & \LargeYesNodes{} / \LargeNoNodes\\
+\bottomrule
+\end{tabular}
+\end{center}
+Each tested target checks the decision, the original-index witness when
+present, and \eqref{eq:tree}'s $(m+1)K$ envelope.
+Boundary checks cover closed endpoints, duplicate weights, empty inputs,
+and invalid weights. The seed for the random inputs is $20261104$.
+For the \LargeItems-item example, the NO target is
+$8\cdot10^{\LargeBlocks-1}$; the global count $2^{\LargeItems}$ follows
+from the proof, not exhaustive enumeration. Global support distinctness is
+also checked directly on the first one, two, and three triples.
+These finite checks supplement the proofs; Figure~\ref{fig:scaling} adds
+deterministic structural illustrations rather than empirical speedup evidence.
+
+The companion source directory contains \texttt{solver.py},
+\texttt{verify.py}, and the original \texttt{validation.json}, which records
+SHA-256 hashes of those sources. From the repository root, run
+\texttt{python} \path{notes/01-certified-coverage/block-overlap/verify.py} to
+repeat the checks, or run the same directory's \texttt{build\_note.py} to
+rebuild this paper. The builder checks those hashes, regenerates both plots
+and evidence-linked numerical macros, writes \texttt{paper\_evidence.json},
+and enforces the six-page limit. Original evidence is preserved.
+
+\textbf{Relation to distribution shaping.}
+For a fixed partition, $\log_2K=\sum_j\log_2\kappa_j$ is an additive
+description of a multiplicative search bound. Across a specified random
+input population, this could motivate a statistical model, but no
+independence, limit theorem, or lognormal law follows from the algebra.
+Changing an axis cannot change the interval tests or their costs.
+The exact advantage established here is a discoverable representation
+with bounded overlap, not a selected density.
+
+\textbf{Prior work and limits.}
+Singleton separated blocks recover the classical superincreasing
+case~\cite{sage}. Earlier ordered-sum constructions already combine distinct
+subset sums with efficient knapsack decision~\cite{ordered}; that report's
+abstract establishes relevant precedent, not equivalence with the present
+overlap-product bound. The contribution here is the self-contained,
+costed derivation and checked reference implementation. A full novelty
+audit, a comparative timing study, and stronger partitions beyond contiguous
+sorted blocks remain open. Large $K_b$ establishes no hardness lower bound;
+small $K_b$ gives a sufficient guarantee for this exact algorithm.
+
+\begin{thebibliography}{3}
+\small
+\bibitem{core} J. R. Landers.
+\emph{How Far from Easy? Structural Distance in Subset Sum}.
+Working draft, 2026. Repository Note V,
+\href{https://github.com/jonland82/exponential-search-spaces/tree/master/notes/05-structural-distance}{source and evidence}.
+\bibitem{sage} SageMath.
+\emph{Knapsack Problems: Super-increasing Sequences}.
+\href{https://doc.sagemath.org/html/en/reference/numerical/sage/numerical/knapsack.html}{Reference documentation}.
+\bibitem{ordered} M. D. Atkinson, A. Negro, and N. Santoro.
+\emph{Sums of Lexicographically Ordered Sets}.
+Carleton University Technical Report TR-100, May 1987.
+\href{https://carleton.ca/scs/research/scs-technical-reports/technical-reports-1987/tr-100-sums-of-lexicographically-ordered-sets/}{Institutional abstract}.
+\end{thebibliography}
+\end{document}

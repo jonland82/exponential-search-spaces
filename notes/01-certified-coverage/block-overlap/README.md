@@ -1,5 +1,15 @@
 # Certified pruning from overlap between block sums
 
+[Standalone paper: PDF](Certified_Block_Overlap_in_Subset_Sum.pdf) |
+[LaTeX source](Certified_Block_Overlap_in_Subset_Sum.tex) |
+[Paper evidence and plot data](paper_evidence.json)
+
+The five-page working draft, *Certified Block Overlap in Subset Sum*, develops
+the argument below as a standalone graduate-level paper: interval geometry,
+the search theorem, optimal contiguous discovery, separated and perturbed
+families, and verification. Two reproducible plots explain the interval test
+and contrast global support size with local dictionaries and paid counters.
+
 Research draft, November 4, 2026. This note gives a constructive sufficient
 condition for polynomial-time exact subset sum, including discovery costs.
 The proofs are elementary; literature novelty is not established. It does not
@@ -160,7 +170,7 @@ one path and its pending siblings, with at most 1+m(2^b-1) pending nodes;
 each record has polynomial bit length. The score table and one temporary
 candidate list obey the same conservative space bound. QED.
 
-**Corollary 1 (efficiently recognizable tractable class).** Fix constants c,d.
+**Corollary 1 (efficiently recognizable tractable class).** Fix integers c>=1,d>=0.
 Use b=min(n,max(1,floor(c log_2(L+1)))). Inputs for which K_b <= (L+1)^d can
 be recognized and solved in polynomial bit time, for every target. Recognition
 includes computing K_b and the partition. No partition or modulus is supplied
@@ -313,3 +323,27 @@ endpoints, duplicate weights, empty inputs, shuffled inputs, and large binary
 weights. The large constructed example is validated using its proved digit
 structure; its 2^300 subsets are not enumerated. These are finite correctness
 checks accompanying the proof, not timing evidence or a replacement for it.
+
+## 9. Build the standalone paper and plots
+
+From the repository root:
+
+```powershell
+python notes/01-certified-coverage/block-overlap/build_note.py
+```
+
+Requires Matplotlib, `pdflatex`, and `pdfinfo`. The builder checks the original
+source hashes in `validation.json`, regenerates the two vector plots and
+`paper_values.tex`, compiles the LaTeX twice, rejects overfull boxes and
+unresolved references, and enforces at most six naturally flowing pages.
+LaTeX scratch stays under `.build/latex/block-overlap/`.
+
+[paper_evidence.json](paper_evidence.json) records source/artifact SHA-256
+hashes, exact plot inputs, and structural counts for 1, 2, 4, 8, 16, 32, 64,
+and 100 decimal triples. The 100-triple row is checked against the preserved
+verification record. Plot counts distinguish candidate blocks, processed
+support records including reconstruction, retained dictionaries, and visited
+search nodes; these are separate counters, not uniform bit operations or
+timing measurements. Global support sizes use the proved digit construction.
+The original solver, checker, and verification record are never rewritten
+by the paper builder.

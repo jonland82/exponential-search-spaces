@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="description" content="13 research papers by Jonathan R. Landers on the cost of representing exponential search: exact structure, subset-sum experiments, solver prediction, runtime distributions, and certified difficulty buckets.">
+  <meta name="description" content="14 research papers by Jonathan R. Landers on the cost of representing exponential search: exact structure, subset-sum experiments, solver prediction, runtime distributions, and certified difficulty buckets.">
   <meta name="theme-color" content="#f7f8f5">
   <title>Certified Coverage of Exponential Search Spaces — Jonathan R. Landers</title>
   <link rel="stylesheet" href="paper.css">
@@ -29,14 +29,14 @@
       <h1>Certified Coverage of Exponential Search Spaces</h1>
       <p class="hero-question">When does finding structure make search cheaper?</p>
       <p class="deck">A research program on representations that handle many candidates together—and on identifying the expensive work that remains. Subset sum provides the common test case.</p>
-      <div class="hero-actions"><a class="primary-link" href="#arc">Follow the research story <span aria-hidden="true">↓</span></a><a href="#papers">Browse all 13 papers</a></div>
+      <div class="hero-actions"><a class="primary-link" href="#arc">Follow the research story <span aria-hidden="true">↓</span></a><a href="#papers">Browse all 14 papers</a></div>
       <p class="hero-meta">Jonathan R. Landers <span aria-hidden="true">·</span> September–November 2026</p>
     </div>
     <aside class="latest-panel" aria-labelledby="latest">
       <p class="eyebrow" id="latest">Recent additions</p>
+      <a href="notes/01-certified-coverage/block-overlap/Certified_Block_Overlap_in_Subset_Sum.pdf"><span class="latest-label">Exact structure · Working draft</span><strong>Certified Block Overlap in Subset Sum</strong><span>Small local dictionaries, a bounded exact search, and a paid algorithm for finding the partition.</span></a>
       <a href="notes/01-certified-coverage/distribution-shaping/Distribution_Shaped_Difficulty_Buckets.pdf"><span class="latest-label">Chosen geometry · Working draft</span><strong>Distribution-Shaped Difficulty Buckets</strong><span>Shapes a feature representation and independently checks which regions are large and expensive.</span></a>
       <a href="notes/conservation-of-computational-work/conservation_of_search_work.pdf"><span class="latest-label">Cost accounting · PDF note</span><strong>A Conservation Law for Search Work</strong><span>Connects structural work, residual search, and explicitly assumed lower bounds.</span></a>
-      <a href="OpenAI_Subset_Sum_Connections/Runtime_Distribution_from_Structural_Routes.pdf"><span class="latest-label">Runtime distributions</span><strong>Why Subset-Sum Runtimes Form Several Bands</strong><span>Explains runtime patterns through an exact solver portfolio's exit routes.</span></a>
     </aside>
   </header>
   <section class="reading-guide" aria-labelledby="arc">
@@ -51,8 +51,8 @@
     </ol>
   </section>
   <section class="paper-library" aria-labelledby="papers">
-    <div class="section-heading library-heading"><div><p class="eyebrow">Research library</p><h2 id="papers">13 papers, organized by question</h2></div><a href="notes/README.md">Full inventory and build guides <span aria-hidden="true">↗</span></a></div>
-    <p class="library-intro" id="companions">Seven numbered notes and six companions or standalone papers. Working drafts are marked; links show the formats available in this repository.</p>
+    <div class="section-heading library-heading"><div><p class="eyebrow">Research library</p><h2 id="papers">14 papers, organized by question</h2></div><a href="notes/README.md">Full inventory and build guides <span aria-hidden="true">↗</span></a></div>
+    <p class="library-intro" id="companions">7 numbered notes and 7 companions or standalone papers. Working drafts are marked; links show the formats available in this repository.</p>
     <section class="theme-group" aria-labelledby="accounting">
       <div class="theme-heading"><span class="theme-number">01</span><div><h3 id="accounting">What does a shortcut actually cost?</h3><p>The framework begins with an accounting rule. Lower-bound claims then require explicit computational assumptions.</p></div></div>
       <div class="paper-grid">
@@ -137,6 +137,22 @@
             </figure>
           </div>
           <div class="link-row"><a href="notes/05-structural-distance/Structural_Distance_in_Subset_Sum.html">HTML</a> <a href="notes/05-structural-distance/Structural_Distance_in_Subset_Sum.pdf">PDF</a> <a href="notes/05-structural-distance/Structural_Distance_in_Subset_Sum.tex">LaTeX</a> <a href="Structural_Distance_Subset_Sum/FINDINGS.md">Guide and evidence</a></div>
+        </article>
+        <article class="paper-entry" data-paper-id="block-overlap">
+          <p class="paper-kicker">Standalone paper · <span class="draft-tag">Working draft</span></p>
+          <h4><a href="notes/01-certified-coverage/block-overlap/Certified_Block_Overlap_in_Subset_Sum.pdf">Certified Block Overlap in Subset Sum</a></h4>
+          <p>Bounds exact search by local overlap products and finds the best permitted contiguous blocks, with discovery costs included.</p>
+          <div class="paper-equations" aria-label="Key equations">
+            <figure class="equation-highlight">
+              <div class="equation-math">\[\begin{gathered}\kappa_j=\max_z|S_j\cap[z-P_j,z]|\\K=\prod_j\kappa_j\end{gathered}\]</div>
+              <figcaption>Each local overlap \(\kappa_j\) bounds surviving choices; their product \(K\) bounds complete search paths.</figcaption>
+            </figure>
+            <figure class="equation-highlight">
+              <div class="equation-math">\[T\le\operatorname{poly}(L)(2^b+K_b)\]</div>
+              <figcaption>With at most \(b\) items per block, both discovery and exact search are paid; \(K_b\) is the optimal contiguous-partition product.</figcaption>
+            </figure>
+          </div>
+          <div class="link-row"><a href="notes/01-certified-coverage/block-overlap/Certified_Block_Overlap_in_Subset_Sum.pdf">PDF</a> <a href="notes/01-certified-coverage/block-overlap/Certified_Block_Overlap_in_Subset_Sum.tex">LaTeX</a> <a href="notes/01-certified-coverage/block-overlap/README.md">Guide and evidence</a></div>
         </article>
         <article class="paper-entry" data-paper-id="note-vii">
           <p class="paper-kicker">Note VII · <span class="draft-tag">Working draft</span></p>
@@ -277,9 +293,9 @@
     </section>
   </section>
   <section class="research-drafts" aria-labelledby="drafts">
-    <div class="section-heading"><p class="eyebrow">Alongside the papers</p><h2 id="drafts">Theory and algorithm drafts</h2></div>
+    <div class="section-heading"><p class="eyebrow">Alongside the papers</p><h2 id="drafts">Supporting theory and algorithms</h2></div>
     <div class="draft-grid">
-      <article><h3><a href="notes/01-certified-coverage/block-overlap/README.md">Certified pruning from overlap between block sums</a></h3><p>Exact block summaries and a paid bound on construction and surviving search. Includes proofs, code, and finite checks; a Markdown draft.</p></article>
+      <article><h3><a href="notes/01-certified-coverage/block-overlap/README.md">Block-overlap proofs and reference solver</a></h3><p>The full Markdown derivation and reproducible code behind the standalone paper, including exhaustive verification and figure-building instructions.</p></article>
       <article id="certification-cost"><h3><a href="notes/01-certified-coverage/certification-cost/README.md">The Cost of Avoiding Search: A Conditional Coverage Law</a></h3><p>An exploratory cost-law draft under an assumed positive exponential floor. Its general lower-bound premise remains unproved.</p></article>
     </div>
   </section>

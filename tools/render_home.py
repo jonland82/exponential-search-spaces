@@ -26,7 +26,7 @@ THEMES = (
      ("note-ii", "note-iv")),
     ("structure", "Find exact structure", "Use tractable cores, distinct sums, and reusable tables to resolve groups.",
      "Which representations give exact savings?", "Tractable cores and reusable summaries replace repeated individual work, with construction and query costs made explicit.",
-     ("note-v", "note-vii", "geometric-runtime", "connections")),
+     ("note-v", "block-overlap", "note-vii", "geometric-runtime", "connections")),
     ("prediction", "Predict before solving", "Distinguish target reachability from completion within a solver budget.",
      "What can we predict before solving?", "Reachability under a target distribution and completion under a solver budget are different probabilistic questions.",
      ("note-iii", "note-vi")),
@@ -39,6 +39,7 @@ THEMES = (
 )
 
 GUIDES = {
+    "block-overlap": "notes/01-certified-coverage/block-overlap/README.md",
     "conservation": "notes/conservation-of-computational-work/README.md",
     "clusters": "notes/06-learned-solvability/README.md",
     "geometric-runtime": "notes/07-geometric-cores/README.md",
@@ -135,9 +136,9 @@ def render():
     </div>
     <aside class="latest-panel" aria-labelledby="latest">
       <p class="eyebrow" id="latest">Recent additions</p>
+      <a href="{relative_asset(papers['block-overlap'], '.pdf')}"><span class="latest-label">Exact structure · Working draft</span><strong>Certified Block Overlap in Subset Sum</strong><span>Small local dictionaries, a bounded exact search, and a paid algorithm for finding the partition.</span></a>
       <a href="{relative_asset(papers['difficulty-buckets'], '.pdf')}"><span class="latest-label">Chosen geometry · Working draft</span><strong>Distribution-Shaped Difficulty Buckets</strong><span>Shapes a feature representation and independently checks which regions are large and expensive.</span></a>
       <a href="{relative_asset(papers['conservation'], '.pdf')}"><span class="latest-label">Cost accounting · PDF note</span><strong>A Conservation Law for Search Work</strong><span>Connects structural work, residual search, and explicitly assumed lower bounds.</span></a>
-      <a href="{relative_asset(papers['runtime-bands'], '.pdf')}"><span class="latest-label">Runtime distributions</span><strong>Why Subset-Sum Runtimes Form Several Bands</strong><span>Explains runtime patterns through an exact solver portfolio's exit routes.</span></a>
     </aside>
   </header>
   <section class="reading-guide" aria-labelledby="arc">
@@ -148,13 +149,13 @@ def render():
   </section>
   <section class="paper-library" aria-labelledby="papers">
     <div class="section-heading library-heading"><div><p class="eyebrow">Research library</p><h2 id="papers">{count} papers, organized by question</h2></div><a href="notes/README.md">Full inventory and build guides <span aria-hidden="true">↗</span></a></div>
-    <p class="library-intro" id="companions">Seven numbered notes and six companions or standalone papers. Working drafts are marked; links show the formats available in this repository.</p>
+    <p class="library-intro" id="companions">{sum('number' in p for p in ALL_PAPERS)} numbered notes and {sum('number' not in p for p in ALL_PAPERS)} companions or standalone papers. Working drafts are marked; links show the formats available in this repository.</p>
 {chr(10).join(groups)}
   </section>
   <section class="research-drafts" aria-labelledby="drafts">
-    <div class="section-heading"><p class="eyebrow">Alongside the papers</p><h2 id="drafts">Theory and algorithm drafts</h2></div>
+    <div class="section-heading"><p class="eyebrow">Alongside the papers</p><h2 id="drafts">Supporting theory and algorithms</h2></div>
     <div class="draft-grid">
-      <article><h3><a href="notes/01-certified-coverage/block-overlap/README.md">Certified pruning from overlap between block sums</a></h3><p>Exact block summaries and a paid bound on construction and surviving search. Includes proofs, code, and finite checks; a Markdown draft.</p></article>
+      <article><h3><a href="notes/01-certified-coverage/block-overlap/README.md">Block-overlap proofs and reference solver</a></h3><p>The full Markdown derivation and reproducible code behind the standalone paper, including exhaustive verification and figure-building instructions.</p></article>
       <article id="certification-cost"><h3><a href="notes/01-certified-coverage/certification-cost/README.md">The Cost of Avoiding Search: A Conditional Coverage Law</a></h3><p>An exploratory cost-law draft under an assumed positive exponential floor. Its general lower-bound premise remains unproved.</p></article>
     </div>
   </section>

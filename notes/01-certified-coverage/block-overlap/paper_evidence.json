@@ -1,0 +1,171 @@
+{
+  "kind": "paper illustrations and deterministic structural counts; no timing measurements",
+  "source_sha256": {
+    "solver.py": "b94ca1d230c4f5e54b4c7bb04d366c92034a6262b61ed3a0d032d505c3c8637e",
+    "verify.py": "c769422fba440d719a99cff2565348ea8f23d16e3b41899243713c94488fddb8",
+    "validation.json": "f6b54ec04b7039e63649215cefdffd8d7d315ff2ad5eacfd586ee6f3b0951fbc",
+    "build_note.py": "a1ce9d555e5edbfe54c9822cdb56ced28db4e975db505b59d94012cebb4107c4",
+    "Certified_Block_Overlap_in_Subset_Sum.tex": "5e316da7c407e4769ba3354f03f5f482163d57cf853d25fa13a3a500688f10a8"
+  },
+  "artifact_sha256": {
+    "block_overlap_geometry.pdf": "6a155ad625fa107d391c6f749dd120d57b654c778ba7b770d77bd27a1c82ebc3",
+    "block_overlap_scaling.pdf": "7e6241d22621a0b032d23d1a677bc8f3e9dc6032f555e433d33c094f5c5709a5",
+    "paper_values.tex": "10fa7a57f8d3822ea559359528b9d59a1cb3ea9ca99b936cf578d6cf42e1e844"
+  },
+  "geometry": [
+    {
+      "support": [
+        0,
+        20,
+        30,
+        40,
+        50,
+        60,
+        70,
+        90
+      ],
+      "lower_total": 9,
+      "residual": 38,
+      "eligible_sums": [
+        30
+      ],
+      "overlap": 1
+    },
+    {
+      "support": [
+        0,
+        20,
+        30,
+        40,
+        50,
+        60,
+        70,
+        90
+      ],
+      "lower_total": 10,
+      "residual": 40,
+      "eligible_sums": [
+        30,
+        40
+      ],
+      "overlap": 2
+    }
+  ],
+  "decimal_family": {
+    "block_limit": 3,
+    "rows": [
+      {
+        "items": 3,
+        "blocks": 1,
+        "distinct_global_sums_by_proof": "8",
+        "retained_support_records": 8,
+        "overlap_product": 1,
+        "candidate_blocks_scored": 6,
+        "support_candidates_including_reconstruction": 46,
+        "yes_search_nodes": 2,
+        "no_search_nodes": 1
+      },
+      {
+        "items": 6,
+        "blocks": 2,
+        "distinct_global_sums_by_proof": "64",
+        "retained_support_records": 16,
+        "overlap_product": 1,
+        "candidate_blocks_scored": 15,
+        "support_candidates_including_reconstruction": 126,
+        "yes_search_nodes": 3,
+        "no_search_nodes": 1
+      },
+      {
+        "items": 12,
+        "blocks": 4,
+        "distinct_global_sums_by_proof": "4096",
+        "retained_support_records": 32,
+        "overlap_product": 1,
+        "candidate_blocks_scored": 33,
+        "support_candidates_including_reconstruction": 286,
+        "yes_search_nodes": 5,
+        "no_search_nodes": 1
+      },
+      {
+        "items": 24,
+        "blocks": 8,
+        "distinct_global_sums_by_proof": "16777216",
+        "retained_support_records": 64,
+        "overlap_product": 1,
+        "candidate_blocks_scored": 69,
+        "support_candidates_including_reconstruction": 606,
+        "yes_search_nodes": 9,
+        "no_search_nodes": 1
+      },
+      {
+        "items": 48,
+        "blocks": 16,
+        "distinct_global_sums_by_proof": "281474976710656",
+        "retained_support_records": 128,
+        "overlap_product": 1,
+        "candidate_blocks_scored": 141,
+        "support_candidates_including_reconstruction": 1246,
+        "yes_search_nodes": 17,
+        "no_search_nodes": 1
+      },
+      {
+        "items": 96,
+        "blocks": 32,
+        "distinct_global_sums_by_proof": "79228162514264337593543950336",
+        "retained_support_records": 256,
+        "overlap_product": 1,
+        "candidate_blocks_scored": 285,
+        "support_candidates_including_reconstruction": 2526,
+        "yes_search_nodes": 33,
+        "no_search_nodes": 1
+      },
+      {
+        "items": 192,
+        "blocks": 64,
+        "distinct_global_sums_by_proof": "6277101735386680763835789423207666416102355444464034512896",
+        "retained_support_records": 512,
+        "overlap_product": 1,
+        "candidate_blocks_scored": 573,
+        "support_candidates_including_reconstruction": 5086,
+        "yes_search_nodes": 65,
+        "no_search_nodes": 1
+      },
+      {
+        "items": 300,
+        "blocks": 100,
+        "distinct_global_sums_by_proof": "2037035976334486086268445688409378161051468393665936250636140449354381299763336706183397376",
+        "retained_support_records": 800,
+        "overlap_product": 1,
+        "candidate_blocks_scored": 897,
+        "support_candidates_including_reconstruction": 7966,
+        "yes_search_nodes": 101,
+        "no_search_nodes": 1
+      }
+    ]
+  },
+  "verification": {
+    "status": "passed",
+    "kind": "finite correctness checks; no timing or empirical speedup claims",
+    "exhaustive_domain": "all sorted multisets of 0..6 items with values 1..5",
+    "exhaustive_inputs": 462,
+    "partition_optimality_checks": 1386,
+    "random_inputs": 120,
+    "random_seed": 20261104,
+    "target_checks": 37055,
+    "large_constructed_family": {
+      "items": 300,
+      "blocks": 100,
+      "distinct_subset_sums_by_proof": "2037035976334486086268445688409378161051468393665936250636140449354381299763336706183397376",
+      "overlap_product": 1,
+      "discovery_intervals_checked": 897,
+      "support_candidates_constructed_including_reconstruction": 7966,
+      "yes_search_nodes": 101,
+      "no_search_nodes": 1
+    },
+    "source_sha256": {
+      "solver.py": "b94ca1d230c4f5e54b4c7bb04d366c92034a6262b61ed3a0d032d505c3c8637e",
+      "verify.py": "c769422fba440d719a99cff2565348ea8f23d16e3b41899243713c94488fddb8"
+    }
+  }
+}
