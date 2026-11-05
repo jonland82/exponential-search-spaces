@@ -71,6 +71,8 @@ Its `KEY_EQUATIONS` entries give each paper one or two manuscript-based
 equations with concise captions that preserve the relevant assumptions.
 `tools/render_home.py` owns the thematic home-page layout and reading path;
 run it to regenerate `index.html` after editing its template or catalog.
+`CONCEPTUAL_HIGHLIGHTS` in the catalog selects the four compass-marked conceptual
+papers; these editorial highlights are separate from publication and evidence status.
 The link checker requires every catalog PDF in both the home page and the
 Markdown inventory, and checks each format declared available. Home-only CSS
 is scoped under `.research-home` so paper pages retain their typography.

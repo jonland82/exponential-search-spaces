@@ -6,7 +6,9 @@ import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
-from tools.paper_catalog import ALL_PAPERS, KEY_EQUATIONS, artifact, paper_id
+from tools.paper_catalog import ALL_PAPERS, CONCEPTUAL_HIGHLIGHTS, KEY_EQUATIONS, artifact, paper_id
+
+COMPASS_ICON = '''<span class="concept-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" focusable="false"><circle cx="12" cy="12" r="9"/><path class="compass-north" d="m16.5 7.5-2.8 6.2-6.2 2.8 2.8-6.2z"/><path class="compass-south" d="m7.5 16.5 2.8-6.2 3.4 3.4z"/><circle class="compass-center" cx="12" cy="12" r="1"/></svg></span>'''
 
 MATHJAX = r'''  <script>
     window.MathJax = {
@@ -70,6 +72,12 @@ def card(paper):
     links.append(f'<a href="{escape(guide)}">Guide and evidence</a>')
     alias = ' id="connections"' if key == "connections" else ""
     featured = " paper-featured" if key == "difficulty-buckets" else ""
+    conceptual = " paper-conceptual" if key in CONCEPTUAL_HIGHLIGHTS else ""
+    badge = (
+        f'\n          <p class="concept-badge" title="{escape(CONCEPTUAL_HIGHLIGHTS[key])}">'
+        f'{COMPASS_ICON}<span>Conceptual highlight</span></p>'
+        if conceptual else ""
+    )
     highlights = "\n".join(
         f'''            <figure class="equation-highlight">
               <div class="equation-math">\\[{escape(latex)}\\]</div>
@@ -77,8 +85,8 @@ def card(paper):
             </figure>'''
         for latex, caption in KEY_EQUATIONS[key]
     )
-    return f'''        <article class="paper-entry{featured}" data-paper-id="{key}"{alias}>
-          <p class="paper-kicker">{kicker}</p>
+    return f'''        <article class="paper-entry{featured}{conceptual}" data-paper-id="{key}"{alias}>
+          <p class="paper-kicker">{kicker}</p>{badge}
           <h4><a href="{relative_asset(paper, primary)}">{escape(paper['title'])}</a></h4>
           <p>{escape(paper['description'])}</p>
           <div class="paper-equations" aria-label="Key equations">
@@ -97,6 +105,8 @@ def render():
     ordered = [key for theme in THEMES for key in theme[5]]
     if len(ordered) != len(set(ordered)) or set(ordered) != set(papers):
         raise ValueError("reading themes must include every paper exactly once")
+    if not set(CONCEPTUAL_HIGHLIGHTS) <= set(papers):
+        raise ValueError("conceptual highlights must identify catalog papers")
     steps, groups = [], []
     for number, (key, label, summary, question, context, keys) in enumerate(THEMES, 1):
         steps.append(f'''      <li><a href="#{key}"><span class="arc-step">{number:02}</span><h3>{escape(label)}</h3><p>{escape(summary)}</p></a></li>''')
@@ -113,7 +123,7 @@ def render():
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="description" content="{count} research papers by Jonathan R. Landers on the cost of representing exponential search: exact structure, subset-sum experiments, solver prediction, runtime distributions, and certified difficulty buckets.">
-  <meta name="theme-color" content="#f7f8f5">
+  <meta name="theme-color" content="#f3f7fc">
   <title>Certified Coverage of Exponential Search Spaces — Jonathan R. Landers</title>
   <link rel="stylesheet" href="paper.css">
 {MATHJAX}
@@ -150,6 +160,7 @@ def render():
   <section class="paper-library" aria-labelledby="papers">
     <div class="section-heading library-heading"><div><p class="eyebrow">Research library</p><h2 id="papers">{count} papers, organized by question</h2></div><a href="notes/README.md">Full inventory and build guides <span aria-hidden="true">↗</span></a></div>
     <p class="library-intro" id="companions">{sum('number' in p for p in ALL_PAPERS)} numbered notes and {sum('number' not in p for p in ALL_PAPERS)} companions or standalone papers. Working drafts are marked; links show the formats available in this repository.</p>
+    <p class="concept-legend">{COMPASS_ICON}<span><strong>Conceptual highlights</strong> mark the foundational framework, conservation, clustering, and difficulty buckets—the ideas connecting the research story.</span></p>
 {chr(10).join(groups)}
   </section>
   <section class="research-drafts" aria-labelledby="drafts">

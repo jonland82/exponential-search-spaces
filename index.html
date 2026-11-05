@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="description" content="14 research papers by Jonathan R. Landers on the cost of representing exponential search: exact structure, subset-sum experiments, solver prediction, runtime distributions, and certified difficulty buckets.">
-  <meta name="theme-color" content="#f7f8f5">
+  <meta name="theme-color" content="#f3f7fc">
   <title>Certified Coverage of Exponential Search Spaces — Jonathan R. Landers</title>
   <link rel="stylesheet" href="paper.css">
   <script>
@@ -53,11 +53,13 @@
   <section class="paper-library" aria-labelledby="papers">
     <div class="section-heading library-heading"><div><p class="eyebrow">Research library</p><h2 id="papers">14 papers, organized by question</h2></div><a href="notes/README.md">Full inventory and build guides <span aria-hidden="true">↗</span></a></div>
     <p class="library-intro" id="companions">7 numbered notes and 7 companions or standalone papers. Working drafts are marked; links show the formats available in this repository.</p>
+    <p class="concept-legend"><span class="concept-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" focusable="false"><circle cx="12" cy="12" r="9"/><path class="compass-north" d="m16.5 7.5-2.8 6.2-6.2 2.8 2.8-6.2z"/><path class="compass-south" d="m7.5 16.5 2.8-6.2 3.4 3.4z"/><circle class="compass-center" cx="12" cy="12" r="1"/></svg></span><span><strong>Conceptual highlights</strong> mark the foundational framework, conservation, clustering, and difficulty buckets—the ideas connecting the research story.</span></p>
     <section class="theme-group" aria-labelledby="accounting">
       <div class="theme-heading"><span class="theme-number">01</span><div><h3 id="accounting">What does a shortcut actually cost?</h3><p>The framework begins with an accounting rule. Lower-bound claims then require explicit computational assumptions.</p></div></div>
       <div class="paper-grid">
-        <article class="paper-entry" data-paper-id="note-i">
+        <article class="paper-entry paper-conceptual" data-paper-id="note-i">
           <p class="paper-kicker">Note I</p>
+          <p class="concept-badge" title="The foundation: certified coverage and the cost of structure."><span class="concept-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" focusable="false"><circle cx="12" cy="12" r="9"/><path class="compass-north" d="m16.5 7.5-2.8 6.2-6.2 2.8 2.8-6.2z"/><path class="compass-south" d="m7.5 16.5 2.8-6.2 3.4 3.4z"/><circle class="compass-center" cx="12" cy="12" r="1"/></svg></span><span>Conceptual highlight</span></p>
           <h4><a href="notes/01-certified-coverage/Certified_Coverage_of_Exponential_Search_Spaces.html">Certified Coverage of Exponential Search Spaces</a></h4>
           <p>Accounts for collectively represented or excluded candidates, residual search, and the full cost of acquiring and checking structure.</p>
           <div class="paper-equations" aria-label="Key equations">
@@ -72,8 +74,9 @@
           </div>
           <div class="link-row"><a href="notes/01-certified-coverage/Certified_Coverage_of_Exponential_Search_Spaces.html">HTML</a> <a href="notes/01-certified-coverage/Certified_Coverage_of_Exponential_Search_Spaces.pdf">PDF</a> <a href="notes/01-certified-coverage/Certified_Coverage_of_Exponential_Search_Spaces.tex">LaTeX</a> <a href="notes/01-certified-coverage/README.md">Guide and evidence</a></div>
         </article>
-        <article class="paper-entry" data-paper-id="conservation">
+        <article class="paper-entry paper-conceptual" data-paper-id="conservation">
           <p class="paper-kicker">Standalone note · PDF available</p>
+          <p class="concept-badge" title="The foundation: account for discovery and residual search together."><span class="concept-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" focusable="false"><circle cx="12" cy="12" r="9"/><path class="compass-north" d="m16.5 7.5-2.8 6.2-6.2 2.8 2.8-6.2z"/><path class="compass-south" d="m7.5 16.5 2.8-6.2 3.4 3.4z"/><circle class="compass-center" cx="12" cy="12" r="1"/></svg></span><span>Conceptual highlight</span></p>
           <h4><a href="notes/conservation-of-computational-work/conservation_of_search_work.pdf">A Conservation Law for Search Work</a></h4>
           <p>Discovery/search tradeoffs, model-specific lower bounds, and pruning break-even costs.</p>
           <div class="paper-equations" aria-label="Key equations">
@@ -244,8 +247,9 @@
     <section class="theme-group" aria-labelledby="patterns">
       <div class="theme-heading"><span class="theme-number">05</span><div><h3 id="patterns">Why do difficulty and runtime form patterns?</h3><p>The observed landscape reflects the inputs, available representations, and the policy that chooses among solving routes.</p></div></div>
       <div class="paper-grid">
-        <article class="paper-entry" data-paper-id="clusters">
+        <article class="paper-entry paper-conceptual" data-paper-id="clusters">
           <p class="paper-kicker">Companion to Note VI</p>
+          <p class="concept-badge" title="The landscape: structural routes and the geography of unresolved cases."><span class="concept-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" focusable="false"><circle cx="12" cy="12" r="9"/><path class="compass-north" d="m16.5 7.5-2.8 6.2-6.2 2.8 2.8-6.2z"/><path class="compass-south" d="m7.5 16.5 2.8-6.2 3.4 3.4z"/><circle class="compass-center" cx="12" cy="12" r="1"/></svg></span><span>Conceptual highlight</span></p>
           <h4><a href="notes/06-learned-solvability/Why_Unresolved_Inputs_Cluster.html">Why Unresolved Inputs Cluster: A Structural and Statistical Account</a></h4>
           <p>Solver routes and descriptive clustering of unresolved inputs.</p>
           <div class="paper-equations" aria-label="Key equations">
@@ -273,8 +277,9 @@
     <section class="theme-group" aria-labelledby="shaping">
       <div class="theme-heading"><span class="theme-number">06</span><div><h3 id="shaping">Can we make expensive regions easier to identify?</h3><p>Use learned cost information to build a chosen geometry, then independently establish which regions have reliable meaning.</p></div></div>
       <div class="paper-grid">
-        <article class="paper-entry paper-featured" data-paper-id="difficulty-buckets">
+        <article class="paper-entry paper-featured paper-conceptual" data-paper-id="difficulty-buckets">
           <p class="paper-kicker">Standalone note · <span class="draft-tag">Working draft</span></p>
+          <p class="concept-badge" title="The synthesis: chosen geometry with independently checked difficulty."><span class="concept-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" focusable="false"><circle cx="12" cy="12" r="9"/><path class="compass-north" d="m16.5 7.5-2.8 6.2-6.2 2.8 2.8-6.2z"/><path class="compass-south" d="m7.5 16.5 2.8-6.2 3.4 3.4z"/><circle class="compass-center" cx="12" cy="12" r="1"/></svg></span><span>Conceptual highlight</span></p>
           <h4><a href="notes/01-certified-coverage/distribution-shaping/Distribution_Shaped_Difficulty_Buckets.pdf">Distribution-Shaped Difficulty Buckets</a></h4>
           <p>Chosen representation shapes and independently certified bucket mass and difficulty.</p>
           <div class="paper-equations" aria-label="Key equations">

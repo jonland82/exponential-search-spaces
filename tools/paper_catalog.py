@@ -92,6 +92,14 @@ SUPPLEMENTS = (
 )
 ALL_PAPERS = PAPERS + SUPPLEMENTS
 
+# Editorial reading highlights, distinct from publication or evidence status.
+CONCEPTUAL_HIGHLIGHTS = {
+    "note-i": "The foundation: certified coverage and the cost of structure.",
+    "conservation": "The foundation: account for discovery and residual search together.",
+    "clusters": "The landscape: structural routes and the geography of unresolved cases.",
+    "difficulty-buckets": "The synthesis: chosen geometry with independently checked difficulty.",
+}
+
 # Homepage highlights, transcribed from each manuscript. Captions retain the
 # assumptions that distinguish models, exact algorithms and population claims.
 KEY_EQUATIONS = {
