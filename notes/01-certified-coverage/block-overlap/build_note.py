@@ -126,12 +126,12 @@ def make_figures(rows):
     save_figure(fig, FIGURES[0])
 
     n = [row["items"] for row in rows]
-    fig, axes = plt.subplots(1, 2, figsize=(7.0, 2.6), layout="constrained")
+    fig, axes = plt.subplots(1, 2, figsize=(7.0, 3.05), layout="constrained")
     axes[0].plot(n, n, color=ORANGE, marker="o", ms=3,
                  label=r"Global sums: $\log_2(2^n)=n$")
     axes[0].plot(n, [math.log2(row["retained_support_records"]) for row in rows],
                  color=TEAL, marker="s", ms=3, label=r"Stored local sums: $\log_2(8m)$")
-    axes[0].set_title("A  Exponential support, small dictionaries", loc="left")
+    axes[0].set_title("A  Global and local support", loc="left")
     axes[0].set_ylabel(r"$\log_2$(number of sum records)")
     axes[0].yaxis.set_major_locator(MaxNLocator(integer=True, nbins=5))
     for key, label, color, marker in (
@@ -142,13 +142,14 @@ def make_figures(rows):
         axes[1].plot(n, [row[key] for row in rows], label=label,
                      color=color, marker=marker, ms=3)
     axes[1].set_yscale("log")
-    axes[1].set_title("B  Discovery is charged separately", loc="left")
+    axes[1].set_title("B  Paid construction and search", loc="left")
     axes[1].set_ylabel("Separate exact counters (log scale)")
     for ax in axes:
         ax.set_xlabel(r"Items $n=3m$")
         ax.grid(color="#e2e5e3", lw=.6)
         ax.set_axisbelow(True)
-        ax.legend(frameon=False, fontsize=7, loc="upper left")
+        ax.legend(frameon=False, fontsize=7, loc="upper left",
+                  bbox_to_anchor=(0, -.28), borderaxespad=0)
     save_figure(fig, FIGURES[1])
     return geometry
 

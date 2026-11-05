@@ -4,12 +4,12 @@
     "solver.py": "b94ca1d230c4f5e54b4c7bb04d366c92034a6262b61ed3a0d032d505c3c8637e",
     "verify.py": "c769422fba440d719a99cff2565348ea8f23d16e3b41899243713c94488fddb8",
     "validation.json": "f6b54ec04b7039e63649215cefdffd8d7d315ff2ad5eacfd586ee6f3b0951fbc",
-    "build_note.py": "a1ce9d555e5edbfe54c9822cdb56ced28db4e975db505b59d94012cebb4107c4",
+    "build_note.py": "d1737bc2a3d2784fdd804344ba5e92ba6bc20d7ab3ff9cebed291fa25893990e",
     "Certified_Block_Overlap_in_Subset_Sum.tex": "5e316da7c407e4769ba3354f03f5f482163d57cf853d25fa13a3a500688f10a8"
   },
   "artifact_sha256": {
     "block_overlap_geometry.pdf": "6a155ad625fa107d391c6f749dd120d57b654c778ba7b770d77bd27a1c82ebc3",
-    "block_overlap_scaling.pdf": "7e6241d22621a0b032d23d1a677bc8f3e9dc6032f555e433d33c094f5c5709a5",
+    "block_overlap_scaling.pdf": "89f2c78e7df46c8971f91cfc48bf4b867b7813f24ca321bd0a06872a96bf7518",
     "paper_values.tex": "10fa7a57f8d3822ea559359528b9d59a1cb3ea9ca99b936cf578d6cf42e1e844"
   },
   "geometry": [
